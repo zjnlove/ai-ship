@@ -29,6 +29,39 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* Custom scrollbar - hidden by default, visible on scroll/hover */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+/* Show scrollbar on hover, focus, or active state */
+*:hover::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb,
+*:active::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.5);
+}
+
+*:hover,
+*:focus,
+*:active {
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
 input,
 select,
 textarea {

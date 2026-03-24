@@ -1,19 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Check, Globe, Languages } from 'lucide-react';
 import { useLocale } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 
 import { usePathname, useRouter } from '@/core/i18n/navigation';
 import { localeNames } from '@/config/locale';
 import { Button } from '@/shared/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/shared/components/ui/dropdown-menu';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/shared/components/ui/hover-card';
 import { cacheSet } from '@/shared/lib/cache';
 
 export function LocaleSelector({
@@ -55,7 +54,7 @@ export function LocaleSelector({
         disabled
       >
         {type === 'icon' ? (
-          <Languages size={18} />
+          <Globe className="size-6" />
         ) : (
           <>
             <Globe size={16} />
@@ -67,11 +66,15 @@ export function LocaleSelector({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <HoverCard openDelay={0} closeDelay={100}>
+      <HoverCardTrigger asChild>
         {type === 'icon' ? (
-          <Button variant="ghost" size="icon" className="h-auto w-auto p-0">
-            <Languages size={18} />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mr-[-8px] h-auto w-auto p-0"
+          >
+            <Globe className="size-6" />
           </Button>
         ) : (
           <Button variant="outline" size="sm" className="hover:bg-primary/10">
@@ -79,20 +82,23 @@ export function LocaleSelector({
             {localeNames[currentLocale]}
           </Button>
         )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {Object.keys(localeNames).map((locale) => (
-          <DropdownMenuItem
-            key={locale}
-            onClick={() => handleSwitchLanguage(locale)}
-          >
-            <span>{localeNames[locale]}</span>
-            {locale === currentLocale && (
-              <Check size={16} className="text-primary" />
-            )}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </HoverCardTrigger>
+      <HoverCardContent className="w-auto p-1" align="end">
+        <div className="flex flex-col">
+          {Object.keys(localeNames).map((locale) => (
+            <button
+              key={locale}
+              onClick={() => handleSwitchLanguage(locale)}
+              className="hover:bg-accent hover:text-accent-foreground flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-sm"
+            >
+              <span>{localeNames[locale]}</span>
+              {locale === currentLocale && (
+                <Check size={16} className="text-primary" />
+              )}
+            </button>
+          ))}
+        </div>
+      </HoverCardContent>
+    </HoverCard>
   );
 }
