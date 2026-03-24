@@ -40,66 +40,9 @@
             "variant": "outline"
           }
         ],
-        "show_avatars": true,
+        "show_avatars": false,
         "avatars_tip": "999+ users are using ShipAny",
-        "show_award": false,
-        "image": {
-          "src": "/imgs/features/admin.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
-        "image_invert": {
-          "src": "/imgs/features/admin-dark.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
-        "background_image": {
-          "src": "/imgs/bg/tree.jpg",
-          "alt": "hero"
-        }
-      },
-      "logos": {
-        "id": "logos",
-        "title": "ShipAny is built on the shoulders of giants",
-        "items": [
-          {
-            "title": "Next.js",
-            "image": {
-              "src": "/imgs/logos/nextjs.svg",
-              "alt": "Next.js"
-            }
-          },
-          {
-            "title": "React",
-            "image": {
-              "src": "/imgs/logos/react.svg",
-              "alt": "React"
-            }
-          },
-          {
-            "title": "TailwindCSS",
-            "image": {
-              "src": "/imgs/logos/tailwindcss.svg",
-              "alt": "TailwindCSS"
-            }
-          },
-          {
-            "title": "Shadcn/UI",
-            "image": {
-              "src": "/imgs/logos/shadcn.svg",
-              "alt": "Shadcn/UI"
-            }
-          },
-          {
-            "title": "Vercel",
-            "image": {
-              "src": "/imgs/logos/vercel.svg",
-              "alt": "Vercel"
-            }
-          }
-        ]
+        "show_award": false
       },
       "introduce": {
         "block": "features-list",
