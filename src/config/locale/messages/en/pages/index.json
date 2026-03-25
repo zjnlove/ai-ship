@@ -307,9 +307,10 @@
       },
       "faq": {
         "id": "faq",
-        "title": "Frequently Asked Questions About ShipAny",
+        "title": "Frequently Asked Questions",
         "highlight_text": "Frequently Asked Questions",
         "description": "Have another question? Contact us on Discord or by email.",
+        "className": "bg-muted",
         "items": [
           {
             "question": "What exactly is ShipAny and how does it work?",

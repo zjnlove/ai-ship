@@ -3,6 +3,7 @@
 import { Link } from '@/core/i18n/navigation';
 import { LazyImage, SmartIcon } from '@/shared/blocks/common';
 import { Button } from '@/shared/components/ui/button';
+import { Card, CardContent } from '@/shared/components/ui/card';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
@@ -104,30 +105,32 @@ export function FeaturesList({
         <ScrollAnimation delay={0.1}>
           <div className="relative grid min-w-0 grid-cols-1 gap-6 border-t border-white/10 pt-12 break-words sm:grid-cols-2 lg:grid-cols-4">
             {section.items?.map((item, idx) => (
-              <div
-                className="group card-hover glass hover:border-primary/30 min-w-0 space-y-4 rounded-2xl border border-white/10 p-6 break-words transition-all duration-300"
+              <Card
+                className="group card-hover hover:border-primary/30 min-w-0 break-words transition-all duration-300"
                 key={idx}
               >
-                {/* 图标容器 */}
-                <div className="bg-gradient-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
-                  {item.icon && (
-                    <SmartIcon
-                      name={item.icon as string}
-                      size={24}
-                      className="text-white"
-                    />
-                  )}
-                </div>
+                <CardContent className="space-y-4">
+                  {/* 图标容器 */}
+                  <div className="bg-gradient-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
+                    {item.icon && (
+                      <SmartIcon
+                        name={item.icon as string}
+                        size={24}
+                        className="text-white"
+                      />
+                    )}
+                  </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-foreground font-semibold">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.description ?? ''}
-                  </p>
-                </div>
-              </div>
+                  <div className="space-y-2">
+                    <h3 className="text-foreground font-semibold">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {item.description ?? ''}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </ScrollAnimation>
