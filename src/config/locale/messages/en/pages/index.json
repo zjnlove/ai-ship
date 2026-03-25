@@ -103,6 +103,7 @@
         "block": "features-accordion",
         "id": "benefits",
         "title": "Why Choose ShipAny",
+        "highlight_text": "ShipAny",
         "label": "Benefits",
         "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
         "items": [
