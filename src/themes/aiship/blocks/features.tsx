@@ -34,7 +34,6 @@ export function Features({
       <div className="relative z-10 container space-y-8 md:space-y-16">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center text-balance">
-            {/* <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl"> */}
             <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {' '}
               {texts && texts.length > 0 ? (

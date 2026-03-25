@@ -246,6 +246,7 @@
       "testimonials": {
         "id": "testimonials",
         "title": "What Users Say About ShipAny",
+        "highlight_text": "Users Say",
         "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
         "items": [
           {
