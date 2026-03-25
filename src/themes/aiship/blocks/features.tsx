@@ -61,7 +61,7 @@ export function Features({
           <div className="relative mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {section.items?.map((item, idx) => (
               <Card
-                className="group card-hover relative bg-transparent transition-all duration-300"
+                className="group card-hover relative flex flex-col gap-4 transition-all duration-300"
                 key={idx}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >

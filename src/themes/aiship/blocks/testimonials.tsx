@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { LazyImage } from '@/shared/blocks/common';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
@@ -18,6 +20,11 @@ export function Testimonials({
   if (highlightText) {
     texts = section.title?.split(highlightText, 2);
   }
+  const [randomHour, setRandomHour] = useState<number | null>(null);
+
+  useEffect(() => {
+    setRandomHour(Math.floor(Math.random() * 24) + 1);
+  }, []);
   const TestimonialCard = ({
     item,
     index,
@@ -32,9 +39,7 @@ export function Testimonials({
     return (
       <Card
         className={cn(
-          'group card-hover relative flex flex-col gap-4 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10',
-          isLarge && 'row-span-2',
-          isMedium && ''
+          'group card-hover relative flex flex-col gap-4 transition-all duration-300'
         )}
         style={{ animationDelay: `${index * 0.1}s` }}
       >
@@ -80,67 +85,17 @@ export function Testimonials({
                 </svg>
               </div>
               <p className="text-muted-foreground text-xs">
-                @{item.role || item.title}
+                @{item.role ?? item.title ?? ''}
               </p>
             </div>
 
             {/* 时间戳 */}
             <div className="text-muted-foreground text-xs">
-              {Math.floor(Math.random() * 24) + 1}h
+              {randomHour !== null ? `${randomHour}h` : ''}
             </div>
           </div>
 
           {/* 互动图标 */}
-          <div className="flex items-center gap-6 border-t border-white/10 pt-3">
-            <button className="text-muted-foreground hover:text-primary flex items-center gap-1 text-xs transition-colors">
-              <svg
-                className="size-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
-              {Math.floor(Math.random() * 50) + 5}
-            </button>
-            <button className="text-muted-foreground flex items-center gap-1 text-xs transition-colors hover:text-green-500">
-              <svg
-                className="size-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              {Math.floor(Math.random() * 20) + 2}
-            </button>
-            <button className="text-muted-foreground flex items-center gap-1 text-xs transition-colors hover:text-red-500">
-              <svg
-                className="size-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-              {Math.floor(Math.random() * 100) + 10}
-            </button>
-          </div>
         </CardContent>
       </Card>
     );
