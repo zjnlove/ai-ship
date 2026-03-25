@@ -39,7 +39,7 @@ export function FeaturesStep({
           <ScrollAnimation>
             <div className="mx-auto max-w-2xl text-center">
               <span className="text-primary font-medium">{section.label}</span>
-              <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-4xl">
+              <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
                 {texts && texts.length > 0 ? (
                   <>
                     <span className="text-black dark:text-white">

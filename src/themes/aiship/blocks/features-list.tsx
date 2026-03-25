@@ -43,7 +43,7 @@ export function FeaturesList({
           </ScrollAnimation>
           <div className="w-full min-w-0 flex-1">
             <ScrollAnimation delay={0.1}>
-              <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
+              <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
                 {texts && texts.length > 0 ? (
                   <>
                     <span className="text-black dark:text-white">

@@ -12,6 +12,11 @@ export function Features({
   section: Section;
   className?: string;
 }) {
+  const highlightText = section.highlight_text ?? '';
+  let texts = null;
+  if (highlightText) {
+    texts = section.title?.split(highlightText, 2);
+  }
   return (
     <section
       id={section.id}
@@ -30,8 +35,22 @@ export function Features({
       <div className="relative z-10 container space-y-8 md:space-y-16">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center text-balance">
+            {/* <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl"> */}
             <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              <span className="text-gradient-primary">{section.title}</span>
+              {' '}
+              {texts && texts.length > 0 ? (
+                <>
+                  <span className="text-black dark:text-white">{texts[0]}</span>
+                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    {highlightText}
+                  </span>
+                  <span className="text-black dark:text-white">{texts[1]}</span>
+                </>
+              ) : (
+                <span className="text-black dark:text-white">
+                  {section.title}
+                </span>
+              )}
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl">
               {section.description}
