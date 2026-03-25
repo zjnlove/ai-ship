@@ -17,6 +17,11 @@ export function Faq({
   section: Section;
   className?: string;
 }) {
+  const highlightText = section.highlight_text ?? '';
+  let texts = null;
+  if (highlightText) {
+    texts = section.title?.split(highlightText, 2);
+  }
   return (
     <section
       id={section.id}
@@ -26,11 +31,24 @@ export function Faq({
         className
       )}
     >
-      <div className="relative z-10 mx-auto max-w-full px-4 md:max-w-3xl md:px-8">
+      <div className="relative z-10 container">
         <ScrollAnimation>
-          <div className="mx-auto max-w-2xl text-center text-balance">
-            <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              <span>{section.title}</span>
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              {' '}
+              {texts && texts.length > 0 ? (
+                <>
+                  <span className="text-black dark:text-white">{texts[0]}</span>
+                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    {highlightText}
+                  </span>
+                  <span className="text-black dark:text-white">{texts[1]}</span>
+                </>
+              ) : (
+                <span className="text-black dark:text-white">
+                  {section.title}
+                </span>
+              )}
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl">
               {section.description}
