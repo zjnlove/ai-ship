@@ -144,12 +144,12 @@ export function Header({ header }: { header: HeaderType }) {
     return (
       <nav
         role="navigation"
-        className="w-full [--color-border:--alpha(var(--color-foreground)/5%)] [--color-muted:--alpha(var(--color-foreground)/5%)]"
+        className="bg-background/95 w-full backdrop-blur [--color-border:--alpha(var(--color-foreground)/5%)] [--color-muted:--alpha(var(--color-foreground)/5%)]"
       >
         <Accordion
           type="single"
           collapsible
-          className="-mx-4 mt-0.5 space-y-0.5 **:hover:no-underline"
+          className="mt-0.5 space-y-0.5 **:hover:no-underline"
         >
           {header.nav?.items?.map((item, idx) => {
             return (
@@ -191,7 +191,7 @@ export function Header({ header }: { header: HeaderType }) {
                   <Link
                     href={item.url || ''}
                     onClick={closeMenu}
-                    className="data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg **:!font-normal"
+                    className="data-[state=open]:bg-muted hover:bg-primary/10 hover:text-primary flex items-center justify-between px-4 py-3 text-lg transition-colors **:!font-normal"
                   >
                     {item.title}
                   </Link>
@@ -200,6 +200,13 @@ export function Header({ header }: { header: HeaderType }) {
             );
           })}
         </Accordion>
+
+        {/* Mobile menu footer: theme toggler, locale selector, sign */}
+        <div className="flex items-center justify-center gap-4 border-t px-4 py-4">
+          {header.show_theme ? <ThemeToggler /> : null}
+          {header.show_locale ? <LocaleSelector /> : null}
+          {header.show_sign ? <SignUser userNav={header.user_nav} /> : null}
+        </div>
       </nav>
     );
   };
@@ -215,7 +222,7 @@ export function Header({ header }: { header: HeaderType }) {
           className={cn(
             'absolute inset-x-0 top-0 z-50 h-18 border-transparent ring-1 ring-transparent transition-all duration-300',
             'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:border-b in-data-scrolled:backdrop-blur',
-            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:backdrop-blur'
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-14 max-lg:border-b max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
           <div className="container">
@@ -241,11 +248,13 @@ export function Header({ header }: { header: HeaderType }) {
 
               {/* Show mobile menu if needed */}
               {!isLarge && isMobileMenuOpen && (
-                <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
+                <div className="absolute inset-x-0 top-full z-50">
+                  <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
+                </div>
               )}
 
               {/* Header right section: theme toggler, locale selector, sign, buttons */}
-              <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 in-data-[state=active]:flex max-lg:in-data-[state=active]:mt-6 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+              <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 max-lg:hidden md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
                 <div className="flex w-full flex-row items-center gap-4 sm:flex-row sm:gap-6 sm:space-y-0 md:w-fit">
                   {header.buttons &&
                     header.buttons.map((button, idx) => (
