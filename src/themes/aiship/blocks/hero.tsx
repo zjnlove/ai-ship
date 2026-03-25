@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
@@ -12,6 +12,148 @@ import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
 
 import { SocialAvatars } from './social-avatars';
+
+// 渐进式入场动画组件（左右方向）
+function FadeInDirection({
+  children,
+  direction = 'left',
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  direction?: 'left' | 'right';
+  delay?: number;
+  className?: string;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        'transition-all duration-700 ease-out',
+        isVisible
+          ? 'translate-x-0 opacity-100'
+          : direction === 'left'
+            ? 'translate-x-[-30px] opacity-0'
+            : 'translate-x-[30px] opacity-0',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+// 渐进式入场动画组件（从下到上）
+function FadeInUp({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        'transition-all duration-700 ease-out',
+        isVisible
+          ? 'translate-y-0 opacity-100'
+          : 'translate-y-[20px] opacity-0',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+// 渐进式入场动画组件（从上到下）
+function FadeInDown({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        'transition-all duration-700 ease-out',
+        isVisible
+          ? 'translate-y-0 opacity-100'
+          : 'translate-y-[-20px] opacity-0',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 
 // 粒子背景组件
 function ParticleBackground() {
@@ -148,78 +290,94 @@ export function Hero({
         <div className="absolute bottom-1/4 left-1/2 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
       </div>
       {section.announcement && (
-        <Link
-          href={section.announcement.url || ''}
-          target={section.announcement.target || '_self'}
-          className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto mb-8 flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
-        >
-          <span className="text-foreground text-sm">
-            {section.announcement.title}
-          </span>
-          <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
+        <FadeInDown delay={0}>
+          <Link
+            href={section.announcement.url || ''}
+            target={section.announcement.target || '_self'}
+            className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto mb-8 flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
+          >
+            <span className="text-foreground text-sm">
+              {section.announcement.title}
+            </span>
+            <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
-          <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
-            <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-              <span className="flex size-6">
-                <ArrowRight className="m-auto size-3" />
-              </span>
-              <span className="flex size-6">
-                <ArrowRight className="m-auto size-3" />
-              </span>
+            <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
+              <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
+                <span className="flex size-6">
+                  <ArrowRight className="m-auto size-3" />
+                </span>
+                <span className="flex size-6">
+                  <ArrowRight className="m-auto size-3" />
+                </span>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </FadeInDown>
       )}
 
       <div className="relative z-10 mx-auto max-w-full px-4 text-center md:max-w-5xl">
-        {texts && texts.length > 0 ? (
-          <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
-            <span className="text-gradient-hero">{texts[0]}</span>
-            <Highlighter action="underline" color="#A855F7">
-              {highlightText}
-            </Highlighter>
-            <span className="text-gradient-hero">{texts[1]}</span>
-          </h1>
-        ) : (
-          <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
-            <span className="text-gradient-hero">{section.title}</span>
-          </h1>
-        )}
+        {/* 标题 - 从左到右 */}
+        <FadeInDirection direction="left" delay={0}>
+          {texts && texts.length > 0 ? (
+            <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
+              <span className="text-gradient-hero">{texts[0]}</span>
+              <Highlighter action="underline" color="#A855F7">
+                {highlightText}
+              </Highlighter>
+              <span className="text-gradient-hero">{texts[1]}</span>
+            </h1>
+          ) : (
+            <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
+              <span className="text-gradient-hero">{section.title}</span>
+            </h1>
+          )}
+        </FadeInDirection>
 
-        <p
-          className="text-muted-foreground mt-8 mb-8 text-lg text-balance"
-          dangerouslySetInnerHTML={{ __html: section.description ?? '' }}
-        />
+        {/* 描述 - 从左到右，延迟 */}
+        <FadeInDirection direction="left" delay={200}>
+          <p
+            className="text-muted-foreground mt-8 mb-8 text-lg text-balance"
+            dangerouslySetInnerHTML={{ __html: section.description ?? '' }}
+          />
+        </FadeInDirection>
 
+        {/* 按钮 - 从右到左 */}
         {section.buttons && (
-          <div className="mt-8 flex items-center justify-center gap-4">
-            {section.buttons.map((button, idx) => (
-              <Button
-                asChild
-                size={button.size || 'lg'}
-                variant={button.variant || 'default'}
-                className={cn(
-                  'btn-glow px-6 text-base font-medium transition-all duration-300',
-                  button.variant === 'default' || !button.variant
-                    ? 'animate-glow bg-gradient-primary hover:scale-105 hover:shadow-xl'
-                    : 'border-primary/50 hover:border-primary hover:bg-primary/10'
-                )}
-                key={idx}
-              >
-                <Link href={button.url ?? ''} target={button.target ?? '_self'}>
-                  {button.icon && <SmartIcon name={button.icon as string} />}
-                  <span>{button.title}</span>
-                </Link>
-              </Button>
-            ))}
-          </div>
+          <FadeInDirection direction="right" delay={400}>
+            <div className="mt-8 flex items-center justify-center gap-4">
+              {section.buttons.map((button, idx) => (
+                <Button
+                  asChild
+                  size={button.size || 'lg'}
+                  variant={button.variant || 'default'}
+                  className={cn(
+                    'btn-glow px-6 text-base font-medium transition-all duration-300',
+                    button.variant === 'default' || !button.variant
+                      ? 'animate-glow bg-gradient-primary hover:scale-105 hover:shadow-xl'
+                      : 'border-primary/50 hover:border-primary hover:bg-primary/10'
+                  )}
+                  key={idx}
+                >
+                  <Link
+                    href={button.url ?? ''}
+                    target={button.target ?? '_self'}
+                  >
+                    {button.icon && <SmartIcon name={button.icon as string} />}
+                    <span>{button.title}</span>
+                  </Link>
+                </Button>
+              ))}
+            </div>
+          </FadeInDirection>
         )}
 
         {section.tip && (
-          <p
-            className="text-muted-foreground mt-6 block text-center text-sm"
-            dangerouslySetInnerHTML={{ __html: section.tip ?? '' }}
-          />
+          <FadeInUp delay={600}>
+            <p
+              className="text-muted-foreground mt-6 block text-center text-sm"
+              dangerouslySetInnerHTML={{ __html: section.tip ?? '' }}
+            />
+          </FadeInUp>
         )}
 
         {section.show_avatars && (
