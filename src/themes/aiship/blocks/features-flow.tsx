@@ -32,19 +32,28 @@ export function FeaturesFlow({ section }: { section: Section }) {
   return (
     <section
       id={section.id || section.name}
-      className={cn('py-16 md:py-24', section.className)}
+      className={cn(
+        'relative overflow-hidden py-16 md:py-24',
+        section.className
+      )}
     >
+      {/* 背景装饰 */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+      </div>
+
       <motion.div
-        className="container mb-12 text-center"
+        className="relative z-10 container mb-12 text-center"
         {...createFadeInVariant(0)}
       >
         {section.sr_only_title && (
           <h1 className="sr-only">{section.sr_only_title}</h1>
         )}
-        <h2 className="mx-auto mb-6 max-w-full text-3xl font-bold text-pretty md:max-w-5xl lg:text-4xl">
-          {section.title}
+        <h2 className="animate-text-gradient mx-auto mb-6 max-w-full text-3xl font-bold text-pretty md:max-w-5xl lg:text-4xl xl:text-5xl">
+          <span className="text-gradient-primary">{section.title}</span>
         </h2>
-        <p className="text-muted-foreground text-md mx-auto mb-4 max-w-full md:max-w-5xl">
+        <p className="text-muted-foreground mx-auto mb-4 max-w-full text-lg md:max-w-5xl md:text-xl">
           {section.description}
         </p>
       </motion.div>
@@ -84,15 +93,17 @@ export function FeaturesFlow({ section }: { section: Section }) {
                   ease: [0.22, 1, 0.36, 1] as const,
                 }}
               >
-                <LazyImage
-                  src={item.image?.src ?? ''}
-                  className="rounded-2xl"
-                  alt={item.image?.alt ?? ''}
-                />
+                <div className="group card-hover overflow-hidden rounded-2xl border border-white/10 shadow-xl">
+                  <LazyImage
+                    src={item.image?.src ?? ''}
+                    className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    alt={item.image?.alt ?? ''}
+                  />
+                </div>
               </motion.div>
 
               <motion.div
-                className="relative space-y-4"
+                className="relative space-y-6"
                 initial={{ opacity: 0, x: isImageRight ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -102,10 +113,18 @@ export function FeaturesFlow({ section }: { section: Section }) {
                   ease: [0.22, 1, 0.36, 1] as const,
                 }}
               >
-                <h3 className="text-xl font-medium md:text-2xl lg:text-2xl">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground">{item.description}</p>
+                {/* 序号装饰 */}
+                <div className="flex items-center gap-4">
+                  <span className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold text-white shadow-lg">
+                    {index + 1}
+                  </span>
+                  <div className="from-primary/50 h-px flex-1 bg-gradient-to-r to-transparent" />
+                </div>
+
+                <h3 className="text-2xl font-bold md:text-3xl">{item.title}</h3>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {item.description}
+                </p>
               </motion.div>
             </motion.div>
           );

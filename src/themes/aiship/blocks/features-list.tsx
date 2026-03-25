@@ -15,33 +15,40 @@ export function FeaturesList({
   className?: string;
 }) {
   return (
-    // Prevent horizontal scrolling
     <section
       className={cn(
-        'overflow-x-hidden py-16 md:py-24',
+        'relative overflow-hidden py-16 md:py-24',
         section.className,
         className
       )}
     >
-      <div className="container overflow-x-hidden">
+      {/* 背景装饰 */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 container overflow-x-hidden">
         <div className="flex flex-wrap items-center gap-8 pb-12 md:gap-24">
           <ScrollAnimation direction="left">
             <div className="mx-auto w-full max-w-[500px] flex-shrink-0 md:mx-0">
-              <LazyImage
-                src={section.image?.src ?? ''}
-                alt={section.image?.alt ?? ''}
-                className="h-auto w-full rounded-lg object-cover"
-              />
+              <div className="group card-hover overflow-hidden rounded-2xl border border-white/10 shadow-xl">
+                <LazyImage
+                  src={section.image?.src ?? ''}
+                  alt={section.image?.alt ?? ''}
+                  className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </div>
           </ScrollAnimation>
           <div className="w-full min-w-0 flex-1">
             <ScrollAnimation delay={0.1}>
-              <h2 className="text-foreground text-4xl font-semibold text-balance break-words">
-                {section.title}
+              <h2 className="animate-text-gradient text-4xl font-bold text-balance break-words lg:text-5xl">
+                <span className="text-gradient-primary">{section.title}</span>
               </h2>
             </ScrollAnimation>
             <ScrollAnimation delay={0.2}>
-              <p className="text-md text-muted-foreground my-6 text-balance break-words">
+              <p className="text-muted-foreground my-6 text-lg text-balance break-words md:text-xl">
                 {section.description}
               </p>
             </ScrollAnimation>
@@ -79,21 +86,31 @@ export function FeaturesList({
         </div>
 
         <ScrollAnimation delay={0.1}>
-          {/* Prevent horizontal scrolling, min-w-0 and break-words */}
-          <div className="relative grid min-w-0 grid-cols-1 gap-x-3 gap-y-6 border-t pt-12 break-words sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+          <div className="relative grid min-w-0 grid-cols-1 gap-6 border-t border-white/10 pt-12 break-words sm:grid-cols-2 lg:grid-cols-4">
             {section.items?.map((item, idx) => (
-              <div className="min-w-0 space-y-3 break-words" key={idx}>
-                <div className="flex min-w-0 items-center gap-2">
+              <div
+                className="group card-hover glass hover:border-primary/30 min-w-0 space-y-4 rounded-2xl border border-white/10 p-6 break-words transition-all duration-300"
+                key={idx}
+              >
+                {/* 图标容器 */}
+                <div className="bg-gradient-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
                   {item.icon && (
-                    <SmartIcon name={item.icon as string} size={16} />
+                    <SmartIcon
+                      name={item.icon as string}
+                      size={24}
+                      className="text-white"
+                    />
                   )}
-                  <h3 className="min-w-0 text-sm font-medium break-words">
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="text-foreground font-semibold">
                     {item.title}
                   </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description ?? ''}
+                  </p>
                 </div>
-                <p className="text-muted-foreground min-w-0 text-sm break-words">
-                  {item.description ?? ''}
-                </p>
               </div>
             ))}
           </div>

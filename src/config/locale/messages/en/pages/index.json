@@ -344,8 +344,7 @@
             "variant": "outline",
             "icon": "BookOpenText"
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "subscribe": {
         "id": "subscribe",

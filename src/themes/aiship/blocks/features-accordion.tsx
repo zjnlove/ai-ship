@@ -33,22 +33,26 @@ export function FeaturesAccordion({
   });
 
   return (
-    // overflow-x-hidden to prevent horizontal scroll
     <section
       className={cn(
-        'overflow-x-hidden py-16 md:py-24',
+        'relative overflow-hidden py-16 md:py-24',
         section.className,
         className
       )}
     >
-      {/* add overflow-x-hidden to container */}
-      <div className="container space-y-8 overflow-x-hidden px-2 sm:px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
+      {/* 背景装饰 */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 container space-y-8 overflow-x-hidden px-2 sm:px-6 md:space-y-16 lg:space-y-20">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center text-balance">
-            <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              {section.title}
+            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              <span className="text-gradient-primary">{section.title}</span>
             </h2>
-            <p className="text-muted-foreground mb-6 md:mb-12 lg:mb-16">
+            <p className="text-muted-foreground text-lg md:text-xl">
               {section.description}
             </p>
           </div>
@@ -61,19 +65,31 @@ export function FeaturesAccordion({
               type="single"
               value={activeItem}
               onValueChange={(value) => setActiveItem(value as string)}
-              className="w-full"
+              className="glass w-full rounded-2xl border border-white/10 p-4"
             >
               {section.items?.map((item, idx) => (
-                <AccordionItem value={`item-${idx + 1}`} key={idx}>
-                  <AccordionTrigger>
-                    <div className="flex items-center gap-2 text-base">
+                <AccordionItem
+                  value={`item-${idx + 1}`}
+                  key={idx}
+                  className="rounded-xl border-none px-4 py-1 data-[state=open]:bg-white/5"
+                >
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="flex items-center gap-3 text-base">
                       {item.icon && (
-                        <SmartIcon name={item.icon as string} size={24} />
+                        <div className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-lg">
+                          <SmartIcon
+                            name={item.icon as string}
+                            size={20}
+                            className="text-white"
+                          />
+                        </div>
                       )}
-                      {item.title}
+                      <span className="font-medium">{item.title}</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent>{item.description}</AccordionContent>
+                  <AccordionContent className="text-muted-foreground px-13">
+                    {item.description}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
