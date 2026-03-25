@@ -42,7 +42,11 @@
         ],
         "show_avatars": false,
         "avatars_tip": "999+ users are using ShipAny",
-        "show_award": false
+        "show_award": false,
+        "background_image": {
+          "src": "/imgs/bg/tree.jpg",
+          "alt": "hero"
+        }
       },
       "introduce": {
         "block": "features-list",

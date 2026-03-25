@@ -335,8 +335,8 @@ export function Pricing({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto mb-12 px-4 text-center md:px-8">
@@ -410,12 +410,12 @@ export function Pricing({
                 {/* 推荐卡片的旋转边框效果 */}
                 {item.is_featured && (
                   <div className="pointer-events-none absolute inset-0">
-                    <div className="animate-gradient absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-20" />
+                    <div className="animate-gradient absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 opacity-20" />
                   </div>
                 )}
 
                 {item.label && (
-                  <span className="absolute inset-x-0 -top-3 z-10 mx-auto flex h-6 w-fit items-center rounded-full bg-gradient-to-r from-purple-400 to-pink-400 px-3 py-1 text-xs font-medium text-white shadow-lg">
+                  <span className="absolute inset-x-0 -top-3 z-10 mx-auto flex h-6 w-fit items-center rounded-full bg-gradient-to-r from-green-400 to-emerald-400 px-3 py-1 text-xs font-medium text-white shadow-lg">
                     {item.label}
                   </span>
                 )}

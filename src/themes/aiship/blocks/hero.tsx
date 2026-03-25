@@ -217,7 +217,7 @@ function ParticleBackground() {
         // 绘制粒子
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(108, 92, 231, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(34, 197, 94, ${particle.opacity})`;
         ctx.fill();
       });
 
@@ -232,7 +232,7 @@ function ParticleBackground() {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(108, 92, 231, ${0.1 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(34, 197, 94, ${0.1 * (1 - distance / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -285,9 +285,9 @@ export function Hero({
 
       {/* 渐变背景光晕 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 h-96 w-96 rounded-full bg-pink-500/20 blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/2 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-green-500/20 blur-3xl" />
+        <div className="absolute top-1/2 right-1/4 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/2 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
       </div>
       {section.announcement && (
         <FadeInDown delay={0}>
@@ -321,7 +321,7 @@ export function Hero({
           {texts && texts.length > 0 ? (
             <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
               <span className="text-gradient-hero">{texts[0]}</span>
-              <Highlighter action="underline" color="#A855F7">
+              <Highlighter action="underline" color="#22C55E">
                 {highlightText}
               </Highlighter>
               <span className="text-gradient-hero">{texts[1]}</span>

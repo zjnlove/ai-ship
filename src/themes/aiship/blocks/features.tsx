@@ -23,8 +23,8 @@ export function Features({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 container space-y-8 md:space-y-16">
@@ -68,7 +68,7 @@ export function Features({
 
                 {/* 悬浮时的光效 */}
                 <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-cyan-500/5" />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-teal-500/5" />
                 </div>
               </div>
             ))}

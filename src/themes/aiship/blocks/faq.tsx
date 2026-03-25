@@ -28,8 +28,8 @@ export function Faq({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-full px-4 md:max-w-3xl md:px-8">
@@ -60,13 +60,13 @@ export function Faq({
                     <AccordionTrigger className="data-[state=open]:text-primary cursor-pointer text-base font-medium hover:no-underline">
                       <span className="flex items-center gap-3">
                         {/* 左侧指示条 */}
-                        <span className="h-6 w-1 rounded-full bg-gradient-to-b from-purple-500 to-pink-500 opacity-0 transition-opacity group-data-[state=open]:opacity-100" />
+                        <span className="h-6 w-1 rounded-full bg-gradient-to-b from-green-500 to-emerald-500 opacity-0 transition-opacity group-data-[state=open]:opacity-100" />
                         {item.question || item.title || ''}
                       </span>
                     </AccordionTrigger>
                     <AccordionContent className="relative overflow-hidden">
                       {/* 展开时的光效 */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-cyan-500/5 opacity-0 transition-opacity duration-500 data-[state=open]:opacity-100" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-teal-500/5 opacity-0 transition-opacity duration-500 data-[state=open]:opacity-100" />
                       <p className="text-muted-foreground relative z-10 px-9 text-base leading-relaxed">
                         {item.answer || item.description || ''}
                       </p>

@@ -24,8 +24,8 @@ export function FeaturesList({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 container overflow-x-hidden">

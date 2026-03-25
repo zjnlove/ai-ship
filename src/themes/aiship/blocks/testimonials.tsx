@@ -36,7 +36,7 @@ export function Testimonials({
         <div className="flex items-center gap-4">
           <div className="relative">
             {/* 头像发光边框 */}
-            <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 blur transition-opacity duration-300 group-hover:opacity-50" />
+            <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 blur transition-opacity duration-300 group-hover:opacity-50" />
             <div className="relative aspect-square size-12 overflow-hidden rounded-xl border border-white/20 shadow-lg">
               <LazyImage
                 src={item.image?.src || item.avatar?.src || ''}
@@ -70,8 +70,8 @@ export function Testimonials({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute top-1/2 right-0 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+        <div className="absolute top-1/2 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute top-1/2 right-0 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 container">

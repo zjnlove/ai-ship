@@ -20,8 +20,8 @@ export function FeaturesMedia({ section }: { section: Section }) {
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute top-0 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 container flex flex-col items-center justify-center space-y-8 px-6 md:space-y-16">

@@ -22,9 +22,9 @@ export function Stats({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pink-500/5 blur-3xl" />
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/5 blur-3xl" />
       </div>
 
       <div className="relative z-10 container space-y-12 md:space-y-16">
@@ -47,7 +47,7 @@ export function Stats({
                 className="group card-hover glass hover:border-primary/30 relative overflow-hidden rounded-2xl border border-white/10 p-8 text-center transition-all duration-300"
               >
                 {/* 背景渐变 */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-teal-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 {/* 装饰圆环 */}
                 <div className="border-primary/10 pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full border transition-transform duration-500 group-hover:scale-110" />
