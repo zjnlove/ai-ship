@@ -248,8 +248,10 @@ export function Header({ header }: { header: HeaderType }) {
 
               {/* Show mobile menu if needed */}
               {!isLarge && isMobileMenuOpen && (
-                <div className="absolute inset-x-0 top-full z-50">
-                  <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
+                <div className="animate-in slide-in-from-top-2 fade-in-0 fixed inset-0 top-14 z-50 duration-300">
+                  <div className="bg-background/95 h-full backdrop-blur">
+                    <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
+                  </div>
                 </div>
               )}
 
