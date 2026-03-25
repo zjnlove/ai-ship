@@ -1,5 +1,7 @@
 'use client';
 
+import { Minus, Plus } from 'lucide-react';
+
 import {
   Accordion,
   AccordionContent,
@@ -58,34 +60,38 @@ export function Faq({
 
         <ScrollAnimation delay={0.2}>
           <div className="mx-auto mt-12 max-w-full">
-            <Accordion
-              type="single"
-              collapsible
-              className="border-primary/30 w-full rounded-2xl border p-2"
-            >
+            <div className="space-y-6">
               {section.items?.map((item, idx) => (
                 <div className="group" key={idx}>
-                  <AccordionItem
-                    value={item.question || item.title || ''}
-                    className="peer rounded-xl border-none px-6 py-1 data-[state=open]:border-none"
-                  >
-                    <AccordionTrigger className="data-[state=open]:text-primary hover:text-primary cursor-pointer text-base font-medium transition-all duration-300 hover:no-underline">
-                      <span className="flex items-center gap-3">
-                        {/* 左侧指示条 */}
-                        <span className="h-6 w-1 rounded-full bg-gradient-to-b from-green-500 to-emerald-500 opacity-0 transition-opacity group-data-[state=open]:opacity-100" />
-                        {item.question || item.title || ''}
-                      </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="data-[state=open]:animate-accordion-open data-[state=closed]:animate-accordion-closed">
-                      <p className="text-muted-foreground px-9 pb-4 text-base leading-relaxed">
-                        {item.answer || item.description || ''}
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <hr className="border-primary/30 mx-6 border-dashed group-last:hidden peer-data-[state=open]:opacity-0" />
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem
+                      value={item.question || item.title || ''}
+                      className="border-none"
+                    >
+                      <AccordionTrigger className="data-[state=open]:text-primary hover:text-primary cursor-pointer text-base font-medium transition-all duration-300 hover:no-underline [&>svg]:hidden">
+                        <span className="flex w-full items-center justify-between">
+                          <span className="flex items-center gap-3">
+                            {/* 左侧指示条 */}
+                            <span className="h-6 w-1 rounded-full bg-gradient-to-b from-green-500 to-emerald-500 opacity-0 transition-opacity group-data-[state=open]:opacity-100" />
+                            {item.question || item.title || ''}
+                          </span>
+                          <span className="text-primary">
+                            <Minus className="hidden h-4 w-4 transition-all duration-300 group-data-[state=open]:block" />
+                            <Plus className="h-4 w-4 transition-all duration-300 group-data-[state=open]:hidden" />
+                          </span>
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="data-[state=open]:animate-accordion-open data-[state=closed]:animate-accordion-closed">
+                        <p className="text-muted-foreground px-9 pb-4 text-base leading-relaxed">
+                          {item.answer || item.description || ''}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                  <hr className="border-primary/30 border-1" />
                 </div>
               ))}
-            </Accordion>
+            </div>
 
             {section.tip && (
               <p

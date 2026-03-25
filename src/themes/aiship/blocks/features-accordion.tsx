@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/shared/components/ui/accordion';
+import { Card, CardContent } from '@/shared/components/ui/card';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
@@ -73,86 +74,94 @@ export function FeaturesAccordion({
         {/* grid: clamp min-w-0 and fix px padding/breakpoints */}
         <div className="grid min-w-0 gap-12 sm:px-6 md:grid-cols-2 lg:gap-20 lg:px-0">
           <ScrollAnimation delay={0.1} direction="left">
-            <Accordion
-              type="single"
-              value={activeItem}
-              onValueChange={(value) => setActiveItem(value as string)}
-              className="border-primary/30 bg-primary/10 w-full rounded-2xl border p-4"
-            >
-              {section.items?.map((item, idx) => (
-                <AccordionItem
-                  value={`item-${idx + 1}`}
-                  key={idx}
-                  className="rounded-xl border-none px-4 py-1 data-[state=open]:bg-white/5"
+            <Card>
+              <CardContent className="p-4">
+                <Accordion
+                  type="single"
+                  value={activeItem}
+                  onValueChange={(value) => setActiveItem(value as string)}
+                  className="w-full"
                 >
-                  <AccordionTrigger className="hover:no-underline">
-                    <motion.div
-                      className="flex items-center gap-3 text-base"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      initial={false}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                  {section.items?.map((item, idx) => (
+                    <AccordionItem
+                      value={`item-${idx + 1}`}
+                      key={idx}
+                      className="rounded-xl border-none px-4 py-1 data-[state=open]:bg-white/5"
                     >
-                      {item.icon && (
+                      <AccordionTrigger className="hover:no-underline">
                         <motion.div
-                          className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-lg"
-                          whileHover={{ rotate: 5 }}
+                          className="flex items-center gap-3 text-base"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
                           initial={false}
                           animate={{
-                            scale: activeItem === `item-${idx + 1}` ? 1.1 : 1,
-                            rotate: activeItem === `item-${idx + 1}` ? 5 : 0,
+                            opacity: 1,
+                            x: 0,
                           }}
-                          transition={{ type: 'spring', stiffness: 300 }}
+                          transition={{ duration: 0.3, ease: 'easeOut' }}
                         >
-                          <SmartIcon
-                            name={item.icon as string}
-                            size={20}
-                            className="text-white"
-                          />
+                          {item.icon && (
+                            <motion.div
+                              className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-lg"
+                              whileHover={{ rotate: 5 }}
+                              initial={false}
+                              animate={{
+                                scale:
+                                  activeItem === `item-${idx + 1}` ? 1.1 : 1,
+                                rotate:
+                                  activeItem === `item-${idx + 1}` ? 5 : 0,
+                              }}
+                              transition={{ type: 'spring', stiffness: 300 }}
+                            >
+                              <SmartIcon
+                                name={item.icon as string}
+                                size={20}
+                                className="text-white"
+                              />
+                            </motion.div>
+                          )}
+                          <motion.span
+                            className="data-[state=open]:text-primary font-medium transition-colors duration-300"
+                            initial={false}
+                            animate={{
+                              color:
+                                activeItem === `item-${idx + 1}`
+                                  ? 'var(--primary)'
+                                  : 'inherit',
+                              opacity:
+                                activeItem === `item-${idx + 1}` ? 1 : 0.8,
+                            }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {item.title}
+                          </motion.span>
                         </motion.div>
-                      )}
-                      <motion.span
-                        className="data-[state=open]:text-primary font-medium transition-colors duration-300"
-                        initial={false}
-                        animate={{
-                          color:
-                            activeItem === `item-${idx + 1}`
-                              ? 'var(--primary)'
-                              : 'inherit',
-                          opacity: activeItem === `item-${idx + 1}` ? 1 : 0.8,
-                        }}
-                        transition={{ duration: 0.3 }}
+                      </AccordionTrigger>
+                      <AccordionContent
+                        className="text-muted-foreground px-13"
+                        forceMount
                       >
-                        {item.title}
-                      </motion.span>
-                    </motion.div>
-                  </AccordionTrigger>
-                  <AccordionContent
-                    className="text-muted-foreground px-13"
-                    forceMount
-                  >
-                    <motion.div
-                      initial={false}
-                      animate={{
-                        height: activeItem === `item-${idx + 1}` ? 'auto' : 0,
-                        opacity: activeItem === `item-${idx + 1}` ? 1 : 0,
-                      }}
-                      transition={{
-                        duration: 0.6,
-                        ease: [0.4, 0, 0.2, 1],
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pb-4">{item.description}</div>
-                    </motion.div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+                        <motion.div
+                          initial={false}
+                          animate={{
+                            height:
+                              activeItem === `item-${idx + 1}` ? 'auto' : 0,
+                            opacity: activeItem === `item-${idx + 1}` ? 1 : 0,
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.4, 0, 0.2, 1],
+                          }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-4">{item.description}</div>
+                        </motion.div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
           </ScrollAnimation>
 
           <ScrollAnimation delay={0.2} direction="right">

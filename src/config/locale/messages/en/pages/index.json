@@ -308,9 +308,9 @@
       "faq": {
         "id": "faq",
         "title": "Frequently Asked Questions",
-        "highlight_text": "Frequently Asked Questions",
+        "highlight_text": "Questions",
         "description": "Have another question? Contact us on Discord or by email.",
-        "className": "bg-muted",
+
         "items": [
           {
             "question": "What exactly is ShipAny and how does it work?",
@@ -336,7 +336,8 @@
             "question": "Can I customize the templates to match my brand?",
             "answer": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
           }
-        ]
+        ],
+        "className": "bg-muted"
       },
       "cta": {
         "id": "cta",
@@ -357,8 +358,7 @@
             "variant": "outline",
             "icon": "BookOpenText"
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "subscribe": {
         "id": "subscribe",
