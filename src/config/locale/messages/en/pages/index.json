@@ -140,6 +140,7 @@
         "block": "features-step",
         "id": "usage",
         "title": "How to Launch with ShipAny",
+        "highlight_text": "ShipAny",
         "description": "Get your AI SaaS startup running in three simple steps:",
         "image": {
           "src": "/imgs/features/1.png",

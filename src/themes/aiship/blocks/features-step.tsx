@@ -14,6 +14,12 @@ export function FeaturesStep({
   section: Section;
   className?: string;
 }) {
+  const highlightText = section.highlight_text ?? '';
+  let texts = null;
+  if (highlightText) {
+    texts = section.title?.split(highlightText, 2);
+  }
+
   return (
     <section
       id={section.id}
@@ -26,7 +32,6 @@ export function FeaturesStep({
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute top-1/3 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
-        <div className="absolute right-0 bottom-1/3 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 m-4 rounded-[2rem]">
@@ -34,8 +39,24 @@ export function FeaturesStep({
           <ScrollAnimation>
             <div className="mx-auto max-w-2xl text-center">
               <span className="text-primary font-medium">{section.label}</span>
-              <h2 className="animate-text-gradient mt-4 text-4xl font-bold lg:text-5xl">
-                <span className="text-gradient-primary">{section.title}</span>
+              <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-4xl">
+                {texts && texts.length > 0 ? (
+                  <>
+                    <span className="text-black dark:text-white">
+                      {texts[0]}
+                    </span>
+                    <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                      {highlightText}
+                    </span>
+                    <span className="text-black dark:text-white">
+                      {texts[1]}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-black dark:text-white">
+                    {section.title}
+                  </span>
+                )}
               </h2>
               <p className="text-muted-foreground mt-4 text-lg text-balance md:text-xl">
                 {section.description}
