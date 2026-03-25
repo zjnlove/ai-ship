@@ -28,7 +28,6 @@ export function Features({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
         <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
       </div>
 
@@ -62,7 +61,7 @@ export function Features({
           <div className="relative mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {section.items?.map((item, idx) => (
               <div
-                className="group card-hover glass hover:border-primary/30 rounded-2xl border border-white/10 p-8 transition-all duration-300"
+                className="group card-hover hover:border-primary/50 border-primary/30 rounded-2xl border bg-transparent p-8 transition-all duration-300"
                 key={idx}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
