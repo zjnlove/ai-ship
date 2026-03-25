@@ -184,17 +184,21 @@ export function Cta({
           <FadeInBox>
             <div className="py-8 md:py-10">
               <div className="text-center">
-                <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl xl:text-6xl">
+                <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
                   {texts && texts.length > 0 ? (
                     <>
-                      <span className="text-gradient-hero">{texts[0]}</span>
-                      <Highlighter action="underline" color="#22C55E">
-                        {highlightText}
-                      </Highlighter>
-                      <span className="text-gradient-hero">{texts[1]}</span>
+                      <span className="text-black dark:text-white">
+                        {texts[0]}
+                      </span>
+                      <span className="text-primary">{highlightText}</span>
+                      <span className="text-black dark:text-white">
+                        {texts[1]}
+                      </span>
                     </>
                   ) : (
-                    <span className="text-gradient-hero">{section.title}</span>
+                    <span className="text-black dark:text-white">
+                      {section.title}
+                    </span>
                   )}
                 </h2>
 
