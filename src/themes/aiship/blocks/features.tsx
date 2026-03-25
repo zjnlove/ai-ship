@@ -1,6 +1,7 @@
 'use client';
 
 import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { Card, CardContent } from '@/shared/components/ui/card';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
@@ -59,35 +60,37 @@ export function Features({
         <ScrollAnimation delay={0.2}>
           <div className="relative mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {section.items?.map((item, idx) => (
-              <div
-                className="group card-hover hover:border-primary/50 border-primary/30 rounded-2xl border bg-transparent p-8 transition-all duration-300"
+              <Card
+                className="group card-hover relative bg-transparent transition-all duration-300"
                 key={idx}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
-                {/* 图标容器 */}
-                <div className="bg-gradient-primary mb-6 flex h-14 w-14 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  <SmartIcon
-                    name={item.icon as string}
-                    size={28}
-                    className="text-white"
-                  />
-                </div>
+                <CardContent className="p-8">
+                  {/* 图标容器 */}
+                  <div className="bg-gradient-primary mb-6 flex h-14 w-14 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <SmartIcon
+                      name={item.icon as string}
+                      size={28}
+                      className="text-white"
+                    />
+                  </div>
 
-                {/* 标题 */}
-                <h3 className="text-foreground group-hover:text-primary mb-3 text-xl font-semibold transition-colors">
-                  {item.title}
-                </h3>
+                  {/* 标题 */}
+                  <h3 className="text-foreground group-hover:text-primary mb-3 text-xl font-semibold transition-colors">
+                    {item.title}
+                  </h3>
 
-                {/* 描述 */}
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+                  {/* 描述 */}
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
 
-                {/* 悬浮时的光效 */}
-                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-teal-500/5" />
-                </div>
-              </div>
+                  {/* 悬浮时的光效 */}
+                  <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-teal-500/5" />
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </ScrollAnimation>

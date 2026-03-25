@@ -37,7 +37,7 @@ export function FeaturesStep({
       <div className="relative z-10 m-4 rounded-[2rem]">
         <div className="@container relative container">
           <ScrollAnimation>
-            <div className="mx-auto max-w-2xl text-center">
+            <div className="mx-auto max-w-4xl text-center">
               <span className="text-primary font-medium">{section.label}</span>
               <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
                 {texts && texts.length > 0 ? (
