@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import {
@@ -18,30 +18,14 @@ import {
   AccordionTrigger,
 } from '@/shared/components/ui/accordion';
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger as RawNavigationMenuTrigger,
-} from '@/shared/components/ui/navigation-menu';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/shared/components/ui/hover-card';
 import { useMedia } from '@/shared/hooks/use-media';
 import { cn } from '@/shared/lib/utils';
 import { NavItem } from '@/shared/types/blocks/common';
 import { Header as HeaderType } from '@/shared/types/blocks/landing';
-
-// For Next.js hydration mismatch warning, conditionally render NavigationMenuTrigger only after mount to avoid inconsistency between server/client render
-function NavigationMenuTrigger(
-  props: React.ComponentProps<typeof RawNavigationMenuTrigger>
-) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  // Only render after client has mounted, to avoid SSR/client render id mismatch
-  if (!mounted) return null;
-  return <RawNavigationMenuTrigger {...props} />;
-}
 
 export function Header({ header }: { header: HeaderType }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -79,66 +63,79 @@ export function Header({ header }: { header: HeaderType }) {
     };
   }, []);
 
-  // Navigation menu for large screens
+  // Navigation menu for large screens using HoverCard
   const NavMenu = () => {
     return (
-      <NavigationMenu
-        viewport={false}
-        className="**:data-[slot=navigation-menu-content]:top-10 max-lg:hidden"
-      >
-        <NavigationMenuList className="gap-2">
-          {header.nav?.items?.map((item, idx) => {
-            if (!item.children || item.children.length === 0) {
-              return (
-                <NavigationMenuLink key={idx} asChild>
-                  <Link
-                    href={item.url || ''}
-                    target={item.target || '_self'}
-                    className={`flex flex-row items-center gap-2 px-4 py-1.5 text-sm ${
-                      item.is_active || pathname.endsWith(item.url as string)
-                        ? 'bg-muted/40 text-muted-foreground'
-                        : ''
-                    }`}
-                  >
-                    {item.icon && <SmartIcon name={item.icon as string} />}
-                    {item.title}
-                  </Link>
-                </NavigationMenuLink>
-              );
-            }
-
+      <nav className="hidden items-center gap-2 lg:flex">
+        {header.nav?.items?.map((item, idx) => {
+          // Simple link without children
+          if (!item.children || item.children.length === 0) {
             return (
-              <NavigationMenuItem key={idx}>
-                <NavigationMenuTrigger className="flex flex-row items-center gap-2 text-sm">
+              <Link
+                key={idx}
+                href={item.url || ''}
+                target={item.target || '_self'}
+                className={`hover:bg-primary/10 hover:text-primary flex flex-row items-center gap-2 rounded-md px-4 py-1.5 text-sm transition-colors ${
+                  item.is_active || pathname.endsWith(item.url as string)
+                    ? 'bg-muted/40 text-muted-foreground'
+                    : ''
+                }`}
+              >
+                {item.icon && <SmartIcon name={item.icon as string} />}
+                {item.title}
+              </Link>
+            );
+          }
+
+          // Link with children - use HoverCard
+          return (
+            <HoverCard key={idx} openDelay={100} closeDelay={200}>
+              <HoverCardTrigger asChild>
+                <button className="group hover:bg-primary/10 hover:text-primary flex flex-row items-center gap-2 rounded-md px-4 py-1.5 text-sm transition-colors">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} className="h-4 w-4" />
                   )}
                   {item.title}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="min-w-2xs origin-top p-0.5">
-                  <div className="border-foreground/5 bg-card ring-foreground/5 rounded-[calc(var(--radius)-2px)] border border-transparent p-2 shadow ring-1">
-                    <ul className="mt-1 space-y-2">
-                      {item.children?.map((subItem: NavItem, index: number) => (
-                        <ListItem
-                          key={index}
-                          href={subItem.url || ''}
-                          target={subItem.target || '_self'}
-                          title={subItem.title || ''}
-                          description={subItem.description || ''}
-                        >
+                  <ChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+              </HoverCardTrigger>
+              <HoverCardContent
+                sideOffset={8}
+                align="start"
+                className="w-64 rounded-xl p-2"
+              >
+                <ul className="space-y-1">
+                  {item.children?.map((subItem: NavItem, index: number) => (
+                    <li key={index}>
+                      <Link
+                        href={subItem.url || ''}
+                        target={subItem.target || '_self'}
+                        className="hover:bg-primary/10 grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
+                      >
+                        <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
                           {subItem.icon && (
                             <SmartIcon name={subItem.icon as string} />
                           )}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            );
-          })}
-        </NavigationMenuList>
-      </NavigationMenu>
+                        </div>
+                        <div className="space-y-0.5">
+                          <div className="text-foreground text-sm font-medium">
+                            {subItem.title}
+                          </div>
+                          {subItem.description && (
+                            <p className="text-muted-foreground line-clamp-1 text-xs">
+                              {subItem.description}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </HoverCardContent>
+            </HoverCard>
+          );
+        })}
+      </nav>
     );
   };
 
@@ -163,7 +160,7 @@ export function Header({ header }: { header: HeaderType }) {
               >
                 {item.children && item.children.length > 0 ? (
                   <>
-                    <AccordionTrigger className="data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg **:!font-normal">
+                    <AccordionTrigger className="data-[state=open]:bg-muted hover:bg-primary/10 hover:text-primary flex items-center justify-between px-4 py-3 text-lg transition-colors **:!font-normal">
                       {item.title}
                     </AccordionTrigger>
                     <AccordionContent className="pb-5">
@@ -173,7 +170,7 @@ export function Header({ header }: { header: HeaderType }) {
                             <Link
                               href={subItem.url || ''}
                               onClick={closeMenu}
-                              className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2"
+                              className="hover:bg-primary/10 hover:text-primary grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2 transition-colors"
                             >
                               <div
                                 aria-hidden
@@ -207,56 +204,18 @@ export function Header({ header }: { header: HeaderType }) {
     );
   };
 
-  // List item for submenus in NavigationMenu
-  function ListItem({
-    title,
-    description,
-    children,
-    href,
-    target,
-    ...props
-  }: React.ComponentPropsWithoutRef<'li'> & {
-    href: string;
-    title: string;
-    description?: string;
-    target?: string;
-  }) {
-    return (
-      <li {...props}>
-        <NavigationMenuLink asChild>
-          <Link
-            href={href}
-            target={target || '_self'}
-            className="grid grid-cols-[auto_1fr] gap-3.5"
-          >
-            <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
-              {children}
-            </div>
-            <div className="space-y-0.5">
-              <div className="text-foreground text-sm font-medium">{title}</div>
-              <p className="text-muted-foreground line-clamp-1 text-xs">
-                {description}
-              </p>
-            </div>
-          </Link>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
-
   return (
     <>
       <header
         data-state={isMobileMenuOpen ? 'active' : 'inactive'}
         {...(isScrolled && { 'data-scrolled': true })}
-        className="has-data-[state=open]:bg-background/50 fixed inset-x-0 top-0 z-50 has-data-[state=open]:h-screen has-data-[state=open]:backdrop-blur"
+        className="fixed inset-x-0 top-0 z-50"
       >
         <div
           className={cn(
             'absolute inset-x-0 top-0 z-50 h-18 border-transparent ring-1 ring-transparent transition-all duration-300',
             'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:border-b in-data-scrolled:backdrop-blur',
-            'has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:h-[calc(var(--navigation-menu-viewport-height)+3.4rem)] has-data-[state=open]:border-b has-data-[state=open]:shadow-lg has-data-[state=open]:shadow-black/10 has-data-[state=open]:backdrop-blur',
-            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:backdrop-blur'
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
           <div className="container">
