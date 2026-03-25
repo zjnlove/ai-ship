@@ -14,6 +14,12 @@ export function FeaturesList({
   section: Section;
   className?: string;
 }) {
+  const highlightText = section.highlight_text ?? '';
+  let texts = null;
+  if (highlightText) {
+    texts = section.title?.split(highlightText, 2);
+  }
+
   return (
     <section
       className={cn(
@@ -22,12 +28,6 @@ export function FeaturesList({
         className
       )}
     >
-      {/* 背景装饰 */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
-      </div>
-
       <div className="relative z-10 container overflow-x-hidden">
         <div className="flex flex-wrap items-center gap-8 pb-12 md:gap-24">
           <ScrollAnimation direction="left">
@@ -43,8 +43,24 @@ export function FeaturesList({
           </ScrollAnimation>
           <div className="w-full min-w-0 flex-1">
             <ScrollAnimation delay={0.1}>
-              <h2 className="animate-text-gradient text-4xl font-bold text-balance break-words lg:text-5xl">
-                <span className="text-gradient-primary">{section.title}</span>
+              <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
+                {texts && texts.length > 0 ? (
+                  <>
+                    <span className="text-black dark:text-white">
+                      {texts[0]}
+                    </span>
+                    <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                      {highlightText}
+                    </span>
+                    <span className="text-black dark:text-white">
+                      {texts[1]}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-black dark:text-white">
+                    {section.title}
+                  </span>
+                )}
               </h2>
             </ScrollAnimation>
             <ScrollAnimation delay={0.2}>

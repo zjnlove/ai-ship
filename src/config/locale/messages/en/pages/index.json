@@ -52,6 +52,7 @@
         "block": "features-list",
         "id": "introduce",
         "title": "What is ShipAny",
+        "highlight_text": "ShipAny",
         "label": "Introduce",
         "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups, including templates, components, and documentation.",
         "image": {
