@@ -302,6 +302,7 @@
       "faq": {
         "id": "faq",
         "title": "Frequently Asked Questions About ShipAny",
+        "highlight_text": "Frequently Asked Questions",
         "description": "Have another question? Contact us on Discord or by email.",
         "items": [
           {
@@ -333,6 +334,7 @@
       "cta": {
         "id": "cta",
         "title": "Ship your first AI SaaS Startup",
+        "highlight_text": "first AI SaaS",
         "description": "Start from here, ship with ShipAny.",
         "buttons": [
           {
@@ -348,7 +350,8 @@
             "variant": "outline",
             "icon": "BookOpenText"
           }
-        ]
+        ],
+        "className": "bg-muted"
       },
       "subscribe": {
         "id": "subscribe",
