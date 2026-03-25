@@ -46,19 +46,10 @@ function NavigationMenuTrigger(
 export function Header({ header }: { header: HeaderType }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const isScrolledRef = useRef(false);
   const scrollRafRef = useRef<number | null>(null);
   const isLarge = useMedia('(min-width: 64rem)');
   const pathname = usePathname();
-
-  useEffect(() => {
-    // Trigger slide-in animation after component mounts
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     // Listen to scroll event to enable header styles on scroll
@@ -262,24 +253,14 @@ export function Header({ header }: { header: HeaderType }) {
       >
         <div
           className={cn(
-            'absolute inset-x-0 top-0 z-50 h-16.5 border-transparent ring-1 ring-transparent transition-all duration-300',
+            'absolute inset-x-0 top-0 z-50 h-18 border-transparent ring-1 ring-transparent transition-all duration-300',
             'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:border-b in-data-scrolled:backdrop-blur',
-            'has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:border-b has-data-[state=open]:shadow-lg has-data-[state=open]:shadow-black/10 has-data-[state=open]:backdrop-blur',
-            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:backdrop-blur',
-            // OpenArt style: rounded corners and border
-            'border-foreground/10 bg-background/80 rounded-full border shadow-sm backdrop-blur-md',
-            // Dark mode support
-            'dark:border-foreground/20 dark:bg-background/90',
-            // Top and side margins
-            'mx-4 mt-4',
-            // Mobile expanded state: remove rounded corners and disable transition
-            'max-lg:in-data-[state=active]:mx-0 max-lg:in-data-[state=active]:mt-0 max-lg:in-data-[state=active]:rounded-none max-lg:in-data-[state=active]:transition-none',
-            // Slide-in animation
-            isLoaded ? 'animate-slide-down' : 'translate-y-[-100%] opacity-0'
+            'has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:h-[calc(var(--navigation-menu-viewport-height)+3.4rem)] has-data-[state=open]:border-b has-data-[state=open]:shadow-lg has-data-[state=open]:shadow-black/10 has-data-[state=open]:backdrop-blur',
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:h-14 max-lg:overflow-hidden max-lg:border-b max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
-          <div className="container mx-auto max-w-7xl px-4 md:px-8">
-            <div className="relative flex flex-wrap items-center justify-between lg:py-4">
+          <div className="container">
+            <div className="relative flex flex-wrap items-center justify-between lg:py-5">
               <div className="flex justify-between gap-8 max-lg:h-14 max-lg:w-full max-lg:border-b">
                 {/* Brand Logo */}
                 {header.brand && <BrandLogo brand={header.brand} />}
