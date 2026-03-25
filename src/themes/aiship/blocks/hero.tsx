@@ -13,6 +13,115 @@ import { Section } from '@/shared/types/blocks/landing';
 
 import { SocialAvatars } from './social-avatars';
 
+// 弧线布局媒体画廊组件
+function ArcMediaGallery({
+  media,
+}: {
+  media?: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // 默认媒体数据（如果没有提供）
+  const defaultMedia = [
+    { type: 'image' as const, src: '/imgs/features/1.png', alt: 'Feature 1' },
+    { type: 'image' as const, src: '/imgs/features/2.png', alt: 'Feature 2' },
+    { type: 'image' as const, src: '/imgs/features/3.png', alt: 'Feature 3' },
+    { type: 'image' as const, src: '/imgs/features/4.png', alt: 'Feature 4' },
+    { type: 'image' as const, src: '/imgs/features/5.png', alt: 'Feature 5' },
+    { type: 'image' as const, src: '/imgs/features/6.png', alt: 'Feature 6' },
+  ];
+
+  const mediaItems = media || defaultMedia;
+
+  // 弧线位置配置
+  const positions = [
+    // 左侧两个（靠近中间）
+    { top: '20%', left: '5%', rotate: -15, delay: 100 },
+    { top: '50%', left: '3%', rotate: -25, delay: 200 },
+    // 右侧两个（靠近中间）
+    { top: '20%', right: '5%', rotate: 15, delay: 300 },
+    { top: '50%', right: '3%', rotate: 25, delay: 400 },
+    // 底部两个（弧线排列）
+    { bottom: '5%', left: '25%', rotate: -10, delay: 500 },
+    { bottom: '5%', right: '25%', rotate: 10, delay: 600 },
+  ];
+
+  const renderMedia = (item: (typeof mediaItems)[0], index: number) => {
+    const pos = positions[index];
+    if (!pos) return null;
+
+    const positionStyle: React.CSSProperties = {
+      position: 'absolute',
+      top: pos.top,
+      bottom: pos.bottom,
+      left: pos.left,
+      right: pos.right,
+      transform: `rotate(${pos.rotate}deg) scale(${isVisible ? 1 : 0.8})`,
+      transition: `all 0.8s ease-out ${pos.delay}ms`,
+      opacity: isVisible ? 1 : 0,
+    };
+
+    return (
+      <div
+        key={index}
+        style={positionStyle}
+        className="group z-20 hidden md:block"
+      >
+        <div className="border-border/30 bg-background/80 hover:border-primary/50 relative h-24 w-32 overflow-hidden rounded-xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-xl lg:h-28 lg:w-40">
+          {item.type === 'video' ? (
+            <video
+              src={item.src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <Image
+              src={item.src}
+              alt={item.alt || `Media ${index + 1}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 0vw, 160px"
+              loading="lazy"
+            />
+          )}
+          {/* 悬停时的光晕效果 */}
+          <div className="from-primary/20 absolute inset-0 rounded-xl bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
+    >
+      {mediaItems.slice(0, 6).map((item, index) => renderMedia(item, index))}
+    </div>
+  );
+}
+
 // 渐进式入场动画组件（左右方向）
 function FadeInDirection({
   children,
@@ -275,13 +384,16 @@ export function Hero({
     <section
       id={section.id}
       className={cn(
-        `relative overflow-hidden pt-24 pb-8 md:pt-36 md:pb-8`,
+        `relative overflow-hidden pt-24 pb-32 md:pt-36 md:pb-48`,
         section.className,
         className
       )}
     >
       {/* 粒子背景 */}
       <ParticleBackground />
+
+      {/* 弧线布局媒体画廊 */}
+      <ArcMediaGallery media={section.media} />
 
       {/* 渐变背景光晕 */}
       {/* <div className="pointer-events-none absolute inset-0 z-0">
@@ -434,7 +546,7 @@ export function Hero({
         </div>
       )}
 
-      {section.background_image?.src && (
+      {/* {section.background_image?.src && (
         <div className="absolute inset-0 -z-10 hidden h-full w-full overflow-hidden md:block">
           <div className="from-background/80 via-background/80 to-background absolute inset-0 z-10 bg-gradient-to-b" />
           <Image
@@ -448,7 +560,7 @@ export function Hero({
             unoptimized={section.background_image.src.startsWith('http')}
           />
         </div>
-      )}
+      )} */}
     </section>
   );
 }
