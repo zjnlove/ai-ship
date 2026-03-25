@@ -62,13 +62,13 @@ export function Faq({
           <div className="mx-auto mt-12 max-w-full">
             <div className="space-y-6">
               {section.items?.map((item, idx) => (
-                <div className="group" key={idx}>
+                <div key={idx}>
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem
                       value={item.question || item.title || ''}
                       className="border-none"
                     >
-                      <AccordionTrigger className="data-[state=open]:text-primary hover:text-primary cursor-pointer text-base font-medium transition-all duration-300 hover:no-underline [&>svg]:hidden">
+                      <AccordionTrigger className="group data-[state=open]:text-primary hover:text-primary cursor-pointer text-base font-medium transition-all duration-300 hover:no-underline [&>svg]:hidden">
                         <span className="flex w-full items-center justify-between">
                           <span className="flex items-center gap-3">
                             {/* 左侧指示条 */}
@@ -81,7 +81,7 @@ export function Faq({
                           </span>
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="data-[state=open]:animate-accordion-open data-[state=closed]:animate-accordion-closed">
+                      <AccordionContent>
                         <p className="text-muted-foreground px-9 pb-4 text-base leading-relaxed">
                           {item.answer || item.description || ''}
                         </p>
