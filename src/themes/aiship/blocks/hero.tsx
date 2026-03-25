@@ -20,6 +20,7 @@ function ArcMediaGallery({
   media?: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
 }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,6 +38,20 @@ function ArcMediaGallery({
     }
 
     return () => observer.disconnect();
+  }, []);
+
+  // 监听滚动事件
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      // 计算滚动进度（0-1），在滚动一个屏幕高度内完成动画
+      const progress = Math.min(scrollY / windowHeight, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // 默认媒体数据（如果没有提供）
@@ -68,15 +83,42 @@ function ArcMediaGallery({
     const pos = positions[index];
     if (!pos) return null;
 
+    // 目标位置：左侧 button 区域
+    const targetLeft = '12%';
+    const targetTop = '65%';
+
+    // 根据滚动进度计算当前位置
+    const currentTop = pos.top
+      ? `${parseFloat(pos.top) + (parseFloat(targetTop) - parseFloat(pos.top)) * scrollProgress}%`
+      : undefined;
+    const currentBottom = pos.bottom
+      ? `${parseFloat(pos.bottom) - scrollProgress * parseFloat(pos.bottom)}%`
+      : undefined;
+    const currentLeft = pos.left
+      ? `${parseFloat(pos.left) + (parseFloat(targetLeft) - parseFloat(pos.left)) * scrollProgress}%`
+      : undefined;
+    const currentRight = pos.right
+      ? `${parseFloat(pos.right) - scrollProgress * parseFloat(pos.right)}%`
+      : undefined;
+
+    // 旋转角度逐渐归零
+    const currentRotate = pos.rotate * (1 - scrollProgress);
+
+    // 缩放逐渐变小
+    const currentScale = isVisible ? 1 - scrollProgress * 0.3 : 0.8;
+
+    // 透明度逐渐降低
+    const currentOpacity = isVisible ? 1 - scrollProgress * 0.5 : 0;
+
     const positionStyle: React.CSSProperties = {
       position: 'absolute',
-      top: pos.top,
-      bottom: pos.bottom,
-      left: pos.left,
-      right: pos.right,
-      transform: `rotate(${pos.rotate}deg) scale(${isVisible ? 1 : 0.8})`,
-      transition: `all 0.8s ease-out ${pos.delay}ms`,
-      opacity: isVisible ? 1 : 0,
+      top: currentTop,
+      bottom: currentBottom,
+      left: currentLeft,
+      right: currentRight,
+      transform: `rotate(${currentRotate}deg) scale(${currentScale})`,
+      transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
+      opacity: currentOpacity,
     };
 
     return (
