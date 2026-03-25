@@ -588,7 +588,7 @@ export function Hero({
         </div>
       )}
 
-      {/* {section.background_image?.src && (
+      {section.background_image?.src && (
         <div className="absolute inset-0 -z-10 hidden h-full w-full overflow-hidden md:block">
           <div className="from-background/80 via-background/80 to-background absolute inset-0 z-10 bg-gradient-to-b" />
           <Image
@@ -602,7 +602,7 @@ export function Hero({
             unoptimized={section.background_image.src.startsWith('http')}
           />
         </div>
-      )} */}
+      )}
     </section>
   );
 }
