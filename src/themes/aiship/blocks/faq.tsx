@@ -26,17 +26,11 @@ export function Faq({
         className
       )}
     >
-      {/* 背景装饰 */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
-      </div>
-
       <div className="relative z-10 mx-auto max-w-full px-4 md:max-w-3xl md:px-8">
         <ScrollAnimation>
           <div className="mx-auto max-w-2xl text-center text-balance">
-            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              <span className="text-gradient-primary">{section.title}</span>
+            <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
+              <span>{section.title}</span>
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl">
               {section.description}
@@ -49,7 +43,7 @@ export function Faq({
             <Accordion
               type="single"
               collapsible
-              className="glass w-full rounded-2xl border border-white/10 p-2"
+              className="w-full rounded-2xl border border-white/10 p-2"
             >
               {section.items?.map((item, idx) => (
                 <div className="group" key={idx}>
@@ -64,10 +58,8 @@ export function Faq({
                         {item.question || item.title || ''}
                       </span>
                     </AccordionTrigger>
-                    <AccordionContent className="relative overflow-hidden">
-                      {/* 展开时的光效 */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-teal-500/5 opacity-0 transition-opacity duration-500 data-[state=open]:opacity-100" />
-                      <p className="text-muted-foreground relative z-10 px-9 text-base leading-relaxed">
+                    <AccordionContent>
+                      <p className="text-muted-foreground px-9 text-base leading-relaxed">
                         {item.answer || item.description || ''}
                       </p>
                     </AccordionContent>

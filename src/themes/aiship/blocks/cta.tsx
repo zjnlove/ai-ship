@@ -190,7 +190,9 @@ export function Cta({
                       <span className="text-black dark:text-white">
                         {texts[0]}
                       </span>
-                      <span className="text-primary">{highlightText}</span>
+                      <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                        {highlightText}
+                      </span>
                       <span className="text-black dark:text-white">
                         {texts[1]}
                       </span>
