@@ -49,7 +49,7 @@ export function FeaturesAccordion({
     >
       <div className="relative z-10 container space-y-8 overflow-x-hidden px-2 sm:px-6 md:space-y-16 lg:space-y-20">
         <ScrollAnimation>
-          <div className="mx-auto max-w-4xl text-center text-balance">
+          <div className="mx-auto max-w-4xl pt-1.5 text-center">
             <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {texts && texts.length > 0 ? (
                 <>

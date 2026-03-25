@@ -179,6 +179,9 @@ export function Cta({
       {/* 粒子背景 */}
       <ParticleBackground />
 
+      {/* 底部渐变分割线 */}
+      <div className="via-primary absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-transparent to-transparent" />
+
       <div className="relative z-10 container">
         <div className="mx-auto max-w-4xl">
           <FadeInBox>

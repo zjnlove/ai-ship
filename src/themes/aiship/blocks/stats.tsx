@@ -27,9 +27,8 @@ export function Stats({
     >
       <div className="relative z-10 container space-y-12 md:space-y-16">
         <ScrollAnimation>
-          <div className="mx-auto max-w-xl space-y-6 text-center">
-            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              {' '}
+          <div className="text-center">
+            <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
               {texts && texts.length > 0 ? (
                 <>
                   <span className="text-black dark:text-white">{texts[0]}</span>
