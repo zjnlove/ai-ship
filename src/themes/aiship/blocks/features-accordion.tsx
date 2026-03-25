@@ -131,8 +131,24 @@ export function FeaturesAccordion({
                       </motion.span>
                     </motion.div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground px-13">
-                    {item.description}
+                  <AccordionContent
+                    className="text-muted-foreground px-13"
+                    forceMount
+                  >
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        height: activeItem === `item-${idx + 1}` ? 'auto' : 0,
+                        opacity: activeItem === `item-${idx + 1}` ? 1 : 0,
+                      }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-4">{item.description}</div>
+                    </motion.div>
                   </AccordionContent>
                 </AccordionItem>
               ))}
