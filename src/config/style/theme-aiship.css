@@ -1,122 +1,256 @@
 :root {
+  /* ===== 基础色彩系统 ===== */
   --background: oklch(0.9842 0.0034 247.8575);
   --foreground: oklch(0.2795 0.0368 260.031);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2795 0.0368 260.031);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2795 0.0368 260.031);
-  --primary: oklch(0.65 0.25 300); /* #6C5CE7 - OpenArt Purple */
+
+  /* ===== 主色调：更鲜明的紫色 ===== */
+  --primary: oklch(0.65 0.28 300);
   --primary-foreground: oklch(1 0 0);
+
+  /* ===== 辅助色 ===== */
   --secondary: oklch(0.9276 0.0058 264.5313);
   --secondary-foreground: oklch(0.3729 0.0306 259.7328);
   --muted: oklch(0.967 0.0029 264.5419);
   --muted-foreground: oklch(0.551 0.0234 264.3637);
-  --accent: oklch(0.93 0.03 300); /* Light purple accent */
+  --accent: oklch(0.93 0.03 300);
   --accent-foreground: oklch(0.3729 0.0306 259.7328);
   --destructive: oklch(0.6368 0.2078 25.3313);
   --destructive-foreground: oklch(1 0 0);
+
+  /* ===== 边框和输入 ===== */
   --border: oklch(0.8717 0.0093 258.3382);
   --input: oklch(0.8717 0.0093 258.3382);
-  --ring: oklch(0.65 0.25 300); /* #6C5CE7 - OpenArt Purple */
-  --chart-1: oklch(0.65 0.25 300);
-  --chart-2: oklch(0.68 0.24 300);
-  --chart-3: oklch(0.71 0.23 300);
-  --chart-4: oklch(0.74 0.22 300);
-  --chart-5: oklch(0.77 0.21 300);
+  --ring: oklch(0.65 0.28 300);
+
+  /* ===== 渐变色彩 ===== */
+  --gradient-purple: oklch(0.65 0.28 300);
+  --gradient-pink: oklch(0.7 0.22 350);
+  --gradient-cyan: oklch(0.75 0.15 200);
+
+  /* ===== 图表色彩 ===== */
+  --chart-1: oklch(0.65 0.28 300);
+  --chart-2: oklch(0.68 0.26 310);
+  --chart-3: oklch(0.71 0.24 320);
+  --chart-4: oklch(0.74 0.22 330);
+  --chart-5: oklch(0.77 0.2 340);
+
+  /* ===== 侧边栏 ===== */
   --sidebar: oklch(0.967 0.0029 264.5419);
   --sidebar-foreground: oklch(0.2795 0.0368 260.031);
-  --sidebar-primary: oklch(0.65 0.25 300);
+  --sidebar-primary: oklch(0.65 0.28 300);
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.93 0.03 300);
   --sidebar-accent-foreground: oklch(0.3729 0.0306 259.7328);
   --sidebar-border: oklch(0.8717 0.0093 258.3382);
-  --sidebar-ring: oklch(0.65 0.25 300);
+  --sidebar-ring: oklch(0.65 0.28 300);
+
+  /* ===== 字体 ===== */
   --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, serif;
-  --radius: 0.5rem;
+
+  /* ===== 圆角 ===== */
+  --radius: 0.75rem;
+
+  /* ===== 阴影系统 ===== */
   --shadow-x: 0px;
   --shadow-y: 4px;
-  --shadow-blur: 8px;
-  --shadow-spread: -1px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
+  --shadow-blur: 12px;
+  --shadow-spread: -2px;
+  --shadow-opacity: 0.15;
+  --shadow-color: hsl(270 100% 50%);
+  --shadow-2xs: 0px 4px 12px -2px hsl(270 100% 50% / 0.08);
+  --shadow-xs: 0px 4px 12px -2px hsl(270 100% 50% / 0.08);
   --shadow-sm:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 50% / 0.15),
+    0px 1px 3px -2px hsl(270 100% 50% / 0.1);
   --shadow:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 50% / 0.15),
+    0px 1px 3px -2px hsl(270 100% 50% / 0.1);
   --shadow-md:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 50% / 0.15),
+    0px 2px 6px -2px hsl(270 100% 50% / 0.1);
   --shadow-lg:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 50% / 0.15),
+    0px 4px 8px -2px hsl(270 100% 50% / 0.1);
   --shadow-xl:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+    0px 4px 12px -2px hsl(270 100% 50% / 0.15),
+    0px 8px 16px -2px hsl(270 100% 50% / 0.1);
+  --shadow-2xl: 0px 4px 12px -2px hsl(270 100% 50% / 0.25);
+
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
+/* ===== 暗色模式 ===== */
 .dark {
-  --background: oklch(0.2077 0.0398 265.7549);
-  --foreground: oklch(0.9288 0.0126 255.5078);
-  --card: oklch(0.2795 0.0368 260.031);
-  --card-foreground: oklch(0.9288 0.0126 255.5078);
-  --popover: oklch(0.2795 0.0368 260.031);
-  --popover-foreground: oklch(0.9288 0.0126 255.5078);
-  --primary: oklch(
-    0.7 0.25 300
-  ); /* #A855F7 - OpenArt Purple (lighter for dark mode) */
-  --primary-foreground: oklch(0.2077 0.0398 265.7549);
-  --secondary: oklch(0.3351 0.0331 260.912);
-  --secondary-foreground: oklch(0.8717 0.0093 258.3382);
-  --muted: oklch(0.2395 0.0368 260.031);
-  --muted-foreground: oklch(0.7137 0.0192 261.3246);
-  --accent: oklch(0.38 0.03 300);
-  --accent-foreground: oklch(0.8717 0.0093 258.3382);
+  --background: oklch(0.12 0.03 270);
+  --foreground: oklch(0.95 0.01 270);
+  --card: oklch(0.18 0.04 270);
+  --card-foreground: oklch(0.95 0.01 270);
+  --popover: oklch(0.18 0.04 270);
+  --popover-foreground: oklch(0.95 0.01 270);
+  --primary: oklch(0.72 0.28 300);
+  --primary-foreground: oklch(0.12 0.03 270);
+  --secondary: oklch(0.25 0.05 270);
+  --secondary-foreground: oklch(0.9 0.01 270);
+  --muted: oklch(0.22 0.04 270);
+  --muted-foreground: oklch(0.7 0.02 270);
+  --accent: oklch(0.28 0.06 300);
+  --accent-foreground: oklch(0.9 0.01 270);
   --destructive: oklch(0.6368 0.2078 25.3313);
-  --destructive-foreground: oklch(0.2077 0.0398 265.7549);
-  --border: oklch(0.4461 0.0263 256.8018);
-  --input: oklch(0.4461 0.0263 256.8018);
-  --ring: oklch(0.7 0.25 300);
-  --chart-1: oklch(0.7 0.25 300);
-  --chart-2: oklch(0.68 0.24 300);
-  --chart-3: oklch(0.66 0.23 300);
-  --chart-4: oklch(0.64 0.22 300);
-  --chart-5: oklch(0.62 0.21 300);
-  --sidebar: oklch(0.2795 0.0368 260.031);
-  --sidebar-foreground: oklch(0.9288 0.0126 255.5078);
-  --sidebar-primary: oklch(0.7 0.25 300);
-  --sidebar-primary-foreground: oklch(0.2077 0.0398 265.7549);
-  --sidebar-accent: oklch(0.38 0.03 300);
-  --sidebar-accent-foreground: oklch(0.8717 0.0093 258.3382);
-  --sidebar-border: oklch(0.4461 0.0263 256.8018);
-  --sidebar-ring: oklch(0.7 0.25 300);
-  --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Merriweather, serif;
-  --radius: 0.5rem;
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 8px;
-  --shadow-spread: -1px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
+  --destructive-foreground: oklch(0.12 0.03 270);
+  --border: oklch(0.3 0.05 270);
+  --input: oklch(0.3 0.05 270);
+  --ring: oklch(0.72 0.28 300);
+  --chart-1: oklch(0.72 0.28 300);
+  --chart-2: oklch(0.7 0.26 310);
+  --chart-3: oklch(0.68 0.24 320);
+  --chart-4: oklch(0.66 0.22 330);
+  --chart-5: oklch(0.64 0.2 340);
+  --sidebar: oklch(0.18 0.04 270);
+  --sidebar-foreground: oklch(0.95 0.01 270);
+  --sidebar-primary: oklch(0.72 0.28 300);
+  --sidebar-primary-foreground: oklch(0.12 0.03 270);
+  --sidebar-accent: oklch(0.28 0.06 300);
+  --sidebar-accent-foreground: oklch(0.9 0.01 270);
+  --sidebar-border: oklch(0.3 0.05 270);
+  --sidebar-ring: oklch(0.72 0.28 300);
+  --shadow-color: hsl(270 100% 60%);
+  --shadow-2xs: 0px 4px 12px -2px hsl(270 100% 60% / 0.12);
+  --shadow-xs: 0px 4px 12px -2px hsl(270 100% 60% / 0.12);
   --shadow-sm:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 60% / 0.2),
+    0px 1px 3px -2px hsl(270 100% 60% / 0.15);
   --shadow:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 60% / 0.2),
+    0px 1px 3px -2px hsl(270 100% 60% / 0.15);
   --shadow-md:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 60% / 0.2),
+    0px 2px 6px -2px hsl(270 100% 60% / 0.15);
   --shadow-lg:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
+    0px 4px 12px -2px hsl(270 100% 60% / 0.2),
+    0px 4px 8px -2px hsl(270 100% 60% / 0.15);
   --shadow-xl:
-    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+    0px 4px 12px -2px hsl(270 100% 60% / 0.2),
+    0px 8px 16px -2px hsl(270 100% 60% / 0.15);
+  --shadow-2xl: 0px 4px 12px -2px hsl(270 100% 60% / 0.35);
 }
 
-/* Slide-down animation for header with subtle bouncy effect */
+/* ===== 动画系统 ===== */
+
+/* 渐变背景动画 */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 发光脉冲动画 */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(108, 92, 231, 0.4),
+      0 0 40px rgba(108, 92, 231, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(108, 92, 231, 0.6),
+      0 0 60px rgba(108, 92, 231, 0.3);
+  }
+}
+
+/* 浮动动画 */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 旋转边框动画 */
+@keyframes rotate-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 粒子闪烁动画 */
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* 滑入动画 */
+@keyframes slide-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 滑入动画（从左） */
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 滑入动画（从右） */
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 缩放动画 */
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header 滑下动画 */
 @keyframes slide-down {
   0% {
     transform: translateY(-100%) scale(0.98);
@@ -143,10 +277,211 @@
   }
 }
 
+/* 文字渐变动画 */
+@keyframes text-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 脉冲动画 */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* 无限滚动动画 */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== 动画类 ===== */
 .animate-slide-down {
   animation: slide-down 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-in-up 0.6s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slide-in-left 0.6s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+.animate-text-gradient {
+  background-size: 200% 200%;
+  animation: text-gradient 3s ease infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+/* ===== 渐变背景类 ===== */
+.bg-gradient-primary {
+  background: linear-gradient(
+    135deg,
+    var(--gradient-purple) 0%,
+    var(--gradient-pink) 50%,
+    var(--gradient-cyan) 100%
+  );
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(108, 92, 231, 0.15) 0%,
+    transparent 70%
+  );
+}
+
+.bg-gradient-mesh {
+  background:
+    radial-gradient(at 40% 20%, rgba(108, 92, 231, 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(236, 72, 153, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(34, 211, 238, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(108, 92, 231, 0.2) 0px, transparent 50%);
+}
+
+/* ===== 文字渐变类 ===== */
+.text-gradient-primary {
+  background: linear-gradient(
+    135deg,
+    var(--gradient-purple) 0%,
+    var(--gradient-pink) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(
+    135deg,
+    #6c5ce7 0%,
+    #a855f7 25%,
+    #ec4899 50%,
+    #a855f7 75%,
+    #6c5ce7 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-gradient 4s ease infinite;
+}
+
+/* ===== 毛玻璃效果 ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 发光边框 ===== */
+.border-glow {
+  box-shadow:
+    0 0 15px rgba(108, 92, 231, 0.3),
+    inset 0 0 15px rgba(108, 92, 231, 0.1);
+}
+
+.border-glow-hover:hover {
+  box-shadow:
+    0 0 25px rgba(108, 92, 231, 0.5),
+    inset 0 0 25px rgba(108, 92, 231, 0.15);
+}
+
+/* ===== 卡片悬浮效果 ===== */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(108, 92, 231, 0.2);
+}
+
+/* ===== 按钮增强 ===== */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* ===== 主题内联变量 ===== */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

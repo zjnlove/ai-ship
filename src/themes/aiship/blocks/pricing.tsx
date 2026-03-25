@@ -327,16 +327,26 @@ export function Pricing({
   return (
     <section
       id={section.id}
-      className={cn('py-24 md:py-36', section.className, className)}
+      className={cn(
+        'relative overflow-hidden py-24 md:py-36',
+        section.className,
+        className
+      )}
     >
-      <div className="mx-auto mb-12 px-4 text-center md:px-8">
+      {/* 背景装饰 */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 mx-auto mb-12 px-4 text-center md:px-8">
         {section.sr_only_title && (
           <h1 className="sr-only">{section.sr_only_title}</h1>
         )}
-        <h2 className="mb-6 text-3xl font-bold text-pretty lg:text-4xl">
-          {section.title}
+        <h2 className="animate-text-gradient mb-6 text-3xl font-bold text-pretty lg:text-4xl xl:text-5xl">
+          <span className="text-gradient-primary">{section.title}</span>
         </h2>
-        <p className="text-muted-foreground mx-auto mb-4 max-w-xl lg:max-w-none lg:text-lg">
+        <p className="text-muted-foreground mx-auto mb-4 max-w-xl text-lg lg:max-w-none lg:text-xl">
           {section.description}
         </p>
       </div>
@@ -388,9 +398,24 @@ export function Pricing({
             const currencies = getCurrenciesFromItem(item);
 
             return (
-              <Card key={idx} className="relative">
+              <Card
+                key={idx}
+                className={cn(
+                  'group card-hover relative overflow-hidden transition-all duration-300',
+                  item.is_featured
+                    ? 'border-glow border-primary/50 shadow-primary/20 scale-105 shadow-2xl'
+                    : 'hover:border-primary/30 hover:shadow-primary/10 border-white/10 hover:shadow-xl'
+                )}
+              >
+                {/* 推荐卡片的旋转边框效果 */}
+                {item.is_featured && (
+                  <div className="pointer-events-none absolute inset-0">
+                    <div className="animate-gradient absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-20" />
+                  </div>
+                )}
+
                 {item.label && (
-                  <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-linear-to-br/increasing from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-white/20 ring-offset-1 ring-offset-gray-950/5 ring-inset">
+                  <span className="absolute inset-x-0 -top-3 z-10 mx-auto flex h-6 w-fit items-center rounded-full bg-gradient-to-r from-purple-400 to-pink-400 px-3 py-1 text-xs font-medium text-white shadow-lg">
                     {item.label}
                   </span>
                 )}
@@ -460,27 +485,26 @@ export function Pricing({
                   {isCurrentPlan ? (
                     <Button
                       variant="outline"
-                      className="mt-4 h-9 w-full px-4 py-2"
+                      className="mt-4 h-10 w-full px-4 py-2"
                       disabled
                     >
-                      <span className="hidden text-sm md:block">
-                        {t('current_plan')}
-                      </span>
+                      <span className="text-sm">{t('current_plan')}</span>
                     </Button>
                   ) : (
                     <Button
                       onClick={() => handlePayment(item)}
                       disabled={isLoading}
                       className={cn(
-                        'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
-                        'mt-4 h-9 w-full px-4 py-2',
-                        'bg-primary text-primary-foreground hover:bg-primary/90 border-[0.5px] border-white/25 shadow-md shadow-black/20'
+                        'btn-glow mt-4 h-10 w-full px-4 py-2 text-sm font-medium transition-all duration-300',
+                        item.is_featured
+                          ? 'animate-glow bg-gradient-primary hover:scale-105 hover:shadow-lg'
+                          : 'bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md'
                       )}
                     >
                       {isLoading && item.product_id === productId ? (
                         <>
                           <Loader2 className="size-4 animate-spin" />
-                          <span className="block">{t('processing')}</span>
+                          <span>{t('processing')}</span>
                         </>
                       ) : (
                         <>
@@ -490,7 +514,7 @@ export function Pricing({
                               className="size-4"
                             />
                           )}
-                          <span className="block">{item.button?.title}</span>
+                          <span>{item.button?.title}</span>
                         </>
                       )}
                     </Button>

@@ -7,6 +7,7 @@ import {
   ThemeToggler,
 } from '@/shared/blocks/common';
 import { SmartIcon } from '@/shared/blocks/common/smart-icon';
+import { cn } from '@/shared/lib/utils';
 import { NavItem } from '@/shared/types/blocks/common';
 import { Footer as FooterType } from '@/shared/types/blocks/landing';
 
@@ -14,9 +15,35 @@ export function Footer({ footer }: { footer: FooterType }) {
   return (
     <footer
       id={footer.id}
-      className={`py-8 sm:py-8 ${footer.className || ''} overflow-x-hidden`}
-      // overflow-x-hidden防止-footer-撑出水平滚动条
+      className={cn(
+        'relative overflow-hidden py-12 sm:py-16',
+        footer.className
+      )}
     >
+      {/* 星空背景效果 */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {/* 渐变背景 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 via-transparent to-transparent" />
+
+        {/* 星星装饰 */}
+        <div className="animate-sparkle absolute top-1/4 left-1/4 h-2 w-2 rounded-full bg-white" />
+        <div
+          className="animate-sparkle absolute top-1/3 left-1/3 h-1 w-1 rounded-full bg-white"
+          style={{ animationDelay: '0.5s' }}
+        />
+        <div
+          className="animate-sparkle absolute top-1/4 right-1/4 h-2 w-2 rounded-full bg-white"
+          style={{ animationDelay: '1s' }}
+        />
+        <div
+          className="animate-sparkle absolute top-1/3 right-1/3 h-1 w-1 rounded-full bg-white"
+          style={{ animationDelay: '1.5s' }}
+        />
+        <div
+          className="animate-sparkle absolute top-1/2 left-1/2 h-1.5 w-1.5 rounded-full bg-white"
+          style={{ animationDelay: '2s' }}
+        />
+      </div>
       <div className="container space-y-8 overflow-x-hidden">
         <div className="grid min-w-0 gap-12 md:grid-cols-5">
           <div className="min-w-0 space-y-4 break-words md:col-span-2 md:space-y-6">
@@ -95,17 +122,21 @@ export function Footer({ footer }: { footer: FooterType }) {
           ) : null}
 
           {footer.social ? (
-            <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-wrap items-center gap-3">
               {footer.social?.items.map((item: NavItem, index) => (
                 <Link
                   key={index}
                   href={item.url || ''}
                   target={item.target || ''}
-                  className="text-muted-foreground hover:text-primary bg-background block cursor-pointer rounded-full p-2 duration-150"
+                  className="group text-muted-foreground hover:text-primary glass hover:border-primary/30 block cursor-pointer rounded-full p-2.5 transition-all duration-300 hover:scale-110"
                   aria-label={item.title || 'Social media link'}
                 >
                   {item.icon && (
-                    <SmartIcon name={item.icon as string} size={20} />
+                    <SmartIcon
+                      name={item.icon as string}
+                      size={18}
+                      className="transition-transform group-hover:rotate-12"
+                    />
                   )}
                 </Link>
               ))}
