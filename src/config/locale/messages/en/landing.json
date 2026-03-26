@@ -34,18 +34,21 @@
               "title": "AI Image Generator",
               "description": "Use AI to generate images",
               "url": "/ai-image-generator",
+              "target": "_blank",
               "icon": "RiImage2Line"
             },
             {
               "title": "AI Music Generator",
               "description": "Use AI to generate music",
               "url": "/ai-music-generator",
+              "target": "_blank",
               "icon": "RiMusic2Line"
             },
             {
               "title": "AI Video Generator",
               "description": "Use AI to generate videos",
               "url": "/ai-video-generator",
+              "target": "_blank",
               "icon": "RiVideoLine",
               "tip": "New",
               "tip_color": "bg-emerald-500"
@@ -54,6 +57,7 @@
               "title": "AI Chatbot",
               "description": "Chat with AI chatbot",
               "url": "/chat",
+              "target": "_blank",
               "icon": "RiMessage2Line"
             }
           ]
