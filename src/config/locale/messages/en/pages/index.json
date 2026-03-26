@@ -39,7 +39,45 @@
         "background_image": {
           "src": "/imgs/bg/tree.jpg",
           "alt": "hero"
-        }
+        },
+        "items": [
+          {
+            "image": {
+              "src": "/imgs/hero/1.gif",
+              "alt": "introduce"
+            }
+          },
+          {
+            "image": {
+              "src": "/imgs/hero/2.gif",
+              "alt": "introduce"
+            }
+          },
+          {
+            "image": {
+              "src": "/imgs/hero/3.gif",
+              "alt": "introduce"
+            }
+          },
+          {
+            "image": {
+              "src": "/imgs/hero/1.gif",
+              "alt": "introduce"
+            }
+          },
+          {
+            "image": {
+              "src": "/imgs/hero/2.gif",
+              "alt": "introduce"
+            }
+          },
+          {
+            "image": {
+              "src": "/imgs/hero/3.gif",
+              "alt": "introduce"
+            }
+          }
+        ]
       },
       "introduce": {
         "block": "features-list",

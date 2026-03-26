@@ -64,25 +64,7 @@ function ArcMediaGallery({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 默认媒体数据（如果没有提供）
-  const defaultMedia = [
-    { type: 'image' as const, src: '/imgs/hero/1.gif', alt: 'Nana Banana' },
-    { type: 'image' as const, src: '/imgs/hero/2.gif', alt: 'Seedance2.0' },
-    { type: 'image' as const, src: '/imgs/hero/3.gif', alt: 'AI Image' },
-    { type: 'image' as const, src: '/imgs/hero/1.gif', alt: 'AI Video' },
-    {
-      type: 'image' as const,
-      src: '/imgs/hero/2.gif',
-      alt: 'Music Generator',
-    },
-    {
-      type: 'image' as const,
-      src: '/imgs/hero/3.gif',
-      alt: 'Image Transformer',
-    },
-  ];
-
-  const mediaItems = media || defaultMedia;
+  const mediaItems = media || [];
 
   // 弧线位置配置（不同形状）
   const positions = [
@@ -159,18 +141,23 @@ function ArcMediaGallery({
       }
     };
 
+    // 使用 CSS 变量减少内联样式大小
     const positionStyle: React.CSSProperties = {
       position: 'absolute',
       top: currentTop,
       bottom: currentBottom,
       left: currentLeft,
       right: currentRight,
-      transform: `rotate(${currentRotate}deg) scale(${currentScale}) ${getInitialTransform()}`,
+      '--rotate': `${currentRotate}deg`,
+      '--scale': currentScale,
+      '--initial-transform': getInitialTransform(),
+      '--opacity': isVisible ? (isAnimated ? 1 - scrollProgress * 0.5 : 0) : 0,
+      transform: `rotate(var(--rotate)) scale(var(--scale)) var(--initial-transform)`,
       transition: isAnimated
         ? 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
         : 'all 0.3s ease-out',
-      opacity: isVisible ? (isAnimated ? 1 - scrollProgress * 0.5 : 0) : 0,
-    };
+      opacity: 'var(--opacity)',
+    } as React.CSSProperties;
 
     return (
       <div
@@ -507,6 +494,15 @@ export function Hero({
     texts = section.title?.split(highlightText, 2);
   }
 
+  const mediaItems =
+    section.items
+      ?.filter((item) => item.image?.src)
+      .map((item) => ({
+        type: 'image' as const,
+        src: item.image!.src as string,
+        alt: item.image?.alt,
+      })) || [];
+
   return (
     <section
       id={section.id}
@@ -520,7 +516,7 @@ export function Hero({
       <ParticleBackground />
 
       {/* 弧线布局媒体画廊 */}
-      <ArcMediaGallery media={section.media} />
+      <ArcMediaGallery media={mediaItems} />
 
       {/* 渐变背景光晕 */}
       {/* <div className="pointer-events-none absolute inset-0 z-0">
