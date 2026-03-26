@@ -87,11 +87,11 @@ function ArcMediaGallery({
   // 弧线位置配置（不同形状）
   const positions = [
     // 左侧两个（靠近中间）
-    { top: '18%', left: '12%', rotate: -15, delay: 100, shape: 'rounded-3xl' },
-    { top: '50%', left: '6%', rotate: -25, delay: 200, shape: 'rounded-3xl' },
+    { top: '18%', left: '20%', rotate: -15, delay: 100, shape: 'rounded-3xl' },
+    { top: '50%', left: '10%', rotate: -25, delay: 200, shape: 'rounded-3xl' },
     // 右侧两个（靠近中间）
-    { top: '20%', right: '15%', rotate: 15, delay: 300, shape: 'rounded-3xl' },
-    { top: '50%', right: '6%', rotate: 25, delay: 400, shape: 'rounded-3xl' },
+    { top: '15%', right: '20%', rotate: 15, delay: 300, shape: 'rounded-3xl' },
+    { top: '50%', right: '10%', rotate: 25, delay: 400, shape: 'rounded-3xl' },
     // 底部两个（弧线排列）
     {
       bottom: '6%',
@@ -102,7 +102,7 @@ function ArcMediaGallery({
     },
     {
       bottom: '6%',
-      right: '20%',
+      right: '30%',
       rotate: 10,
       delay: 600,
       shape: 'rounded-3xl',

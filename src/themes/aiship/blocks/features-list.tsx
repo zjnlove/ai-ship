@@ -106,7 +106,7 @@ export function FeaturesList({
           <div className="relative grid min-w-0 grid-cols-1 gap-6 border-t border-white/10 pt-12 break-words sm:grid-cols-2 lg:grid-cols-4">
             {section.items?.map((item, idx) => (
               <Card
-                className="group card-hover hover:border-primary/30 min-w-0 break-words transition-all duration-300"
+                className="group card-hover min-w-0 break-words transition-all duration-300"
                 key={idx}
               >
                 <CardContent className="space-y-4">
