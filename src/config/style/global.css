@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* 防止下拉框打开时滚动条消失导致页面跳动 */
+html {
+  scrollbar-gutter: stable;
+}
+
 @plugin 'tailwindcss-animate';
 
 @layer base {

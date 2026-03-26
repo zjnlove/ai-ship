@@ -19,6 +19,7 @@ const extFromMime = (mimeType: string) => {
 
 export async function POST(req: Request) {
   try {
+    console.log('[API] Received upload request');
     const formData = await req.formData();
     const files = formData.getAll('files') as File[];
 

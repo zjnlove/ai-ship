@@ -27,6 +27,7 @@ interface ImageUploaderProps {
   className?: string;
   defaultPreviews?: string[];
   onChange?: (items: ImageUploaderValue[]) => void;
+  onBeforeUpload?: () => boolean;
 }
 
 interface UploadItem extends ImageUploaderValue {
@@ -58,6 +59,7 @@ const uploadImageFile = async (file: File) => {
 
   const result = await response.json();
   if (result.code !== 0 || !result.data?.urls?.length) {
+    console.error('Upload error response:', result);
     throw new Error(result.message || 'Upload failed');
   }
 
@@ -73,6 +75,7 @@ export function ImageUploader({
   className,
   defaultPreviews,
   onChange,
+  onBeforeUpload,
 }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isInitializedRef = useRef(false);
@@ -435,6 +438,9 @@ export function ImageUploader({
   };
 
   const openFilePicker = () => {
+    if (onBeforeUpload && !onBeforeUpload()) {
+      return;
+    }
     inputRef.current?.click();
   };
 

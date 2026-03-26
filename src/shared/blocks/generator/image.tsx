@@ -681,6 +681,13 @@ export function ImageGenerator({
                       maxSizeMB={maxSizeMB}
                       onChange={handleReferenceImagesChange}
                       emptyHint={t('form.reference_image_placeholder')}
+                      onBeforeUpload={() => {
+                        if (!user) {
+                          setIsShowSignModal(true);
+                          return false;
+                        }
+                        return true;
+                      }}
                     />
 
                     {hasReferenceUploadError && (
