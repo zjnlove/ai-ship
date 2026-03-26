@@ -75,8 +75,8 @@ export function FeaturesMedia({ section }: { section: Section }) {
               ease: [0.22, 1, 0.36, 1] as const,
             }}
           >
-            <h2 className="animate-text-gradient text-2xl font-bold md:text-3xl">
-              <span className="text-gradient-primary">{section.title}</span>
+            <h2 className="text-2xl font-bold md:text-3xl">
+              <span className="-primary">{section.title}</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               {section.description}
@@ -87,7 +87,7 @@ export function FeaturesMedia({ section }: { section: Section }) {
                   key={item.title}
                   className="group/item glass hover:border-primary/30 rounded-xl border border-white/10 p-4 transition-all duration-300"
                 >
-                  <div className="bg-gradient-primary mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                  <div className="bg-primary mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
                     <SmartIcon
                       name={item.icon as string}
                       size={20}

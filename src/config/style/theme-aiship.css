@@ -1,492 +1,133 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  /* ===== 基础色彩系统 ===== */
-  --background: oklch(0.9842 0.0034 247.8575);
-  --foreground: oklch(0.2795 0.0368 260.031);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2795 0.0368 260.031);
+  --background: oklch(0.9818 0.0054 95.0986);
+  --foreground: oklch(0.3438 0.0269 95.7226);
+  --card: oklch(0.9818 0.0054 95.0986);
+  --card-foreground: oklch(0.1908 0.002 106.5859);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2795 0.0368 260.031);
-
-  /* ===== 主色调：绿色 ===== */
-  --primary: oklch(0.55 0.18 160);
+  --popover-foreground: oklch(0.2671 0.0196 98.939);
+  --primary: oklch(0.6171 0.1375 39.0427);
   --primary-foreground: oklch(1 0 0);
-
-  /* ===== 辅助色 ===== */
-  --secondary: oklch(0.9276 0.0058 264.5313);
-  --secondary-foreground: oklch(0.3729 0.0306 259.7328);
-  --muted: oklch(0.967 0.0029 264.5419);
-  --muted-foreground: oklch(0.551 0.0234 264.3637);
-  --accent: oklch(0.93 0.03 300);
-  --accent-foreground: oklch(0.3729 0.0306 259.7328);
-  --destructive: oklch(0.6368 0.2078 25.3313);
+  --secondary: oklch(0.9245 0.0138 92.9892);
+  --secondary-foreground: oklch(0.4334 0.0177 98.6048);
+  --muted: oklch(0.9341 0.0153 90.239);
+  --muted-foreground: oklch(0.6059 0.0075 97.4233);
+  --accent: oklch(0.9245 0.0138 92.9892);
+  --accent-foreground: oklch(0.2671 0.0196 98.939);
+  --destructive: oklch(0.1908 0.002 106.5859);
   --destructive-foreground: oklch(1 0 0);
-
-  /* ===== 边框和输入 ===== */
-  --border: oklch(0.8717 0.0093 258.3382);
-  --input: oklch(0.8717 0.0093 258.3382);
-  --ring: oklch(0.55 0.18 160);
-
-  /* ===== 渐变色彩（改为绿色系纯色） ===== */
-  --gradient-purple: oklch(0.55 0.18 160);
-  --gradient-pink: oklch(0.7 0.22 170);
-  --gradient-cyan: oklch(0.75 0.15 130);
-
-  /* ===== 图表色彩（绿色系） ===== */
-  --chart-1: oklch(0.55 0.18 160);
-  --chart-2: oklch(0.68 0.26 155);
-  --chart-3: oklch(0.71 0.24 165);
-  --chart-4: oklch(0.74 0.22 175);
-  --chart-5: oklch(0.77 0.2 185);
-
-  /* ===== 侧边栏 ===== */
-  --sidebar: oklch(0.967 0.0029 264.5419);
-  --sidebar-foreground: oklch(0.2795 0.0368 260.031);
-  --sidebar-primary: oklch(0.55 0.18 160);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.93 0.03 300);
-  --sidebar-accent-foreground: oklch(0.3729 0.0306 259.7328);
-  --sidebar-border: oklch(0.8717 0.0093 258.3382);
-  --sidebar-ring: oklch(0.55 0.18 160);
-
-  /* ===== 字体 ===== */
-  --font-sans: Noto Sans Mono, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Merriweather, serif;
-  --font-mono: JetBrains Mono, monospace;
-
-  /* ===== 圆角 ===== */
-  --radius: 0.75rem;
-
-  /* ===== 阴影系统 ===== */
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 12px;
-  --shadow-spread: -2px;
-  --shadow-opacity: 0.15;
-  --shadow-color: hsl(145 100% 35%);
-  --shadow-2xs: 0px 4px 12px -2px hsl(145 100% 35% / 0.08);
-  --shadow-xs: 0px 4px 12px -2px hsl(145 100% 35% / 0.08);
+  --border: oklch(0.8847 0.0069 97.3627);
+  --input: oklch(0.7621 0.0156 98.3528);
+  --ring: oklch(0.6171 0.1375 39.0427);
+  --chart-1: oklch(0.5583 0.1276 42.9956);
+  --chart-2: oklch(0.6898 0.1581 290.4107);
+  --chart-3: oklch(0.8816 0.0276 93.128);
+  --chart-4: oklch(0.8822 0.0403 298.1792);
+  --chart-5: oklch(0.5608 0.1348 42.0584);
+  --sidebar: oklch(0.9663 0.008 98.8792);
+  --sidebar-foreground: oklch(0.359 0.0051 106.6524);
+  --sidebar-primary: oklch(0.6171 0.1375 39.0427);
+  --sidebar-primary-foreground: oklch(0.9881 0 0);
+  --sidebar-accent: oklch(0.9245 0.0138 92.9892);
+  --sidebar-accent-foreground: oklch(0.325 0 0);
+  --sidebar-border: oklch(0.9401 0 0);
+  --sidebar-ring: oklch(0.7731 0 0);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --radius: 0.5rem;
+  --shadow-x: 0;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.1;
+  --shadow-color: oklch(0 0 0);
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 4px 12px -2px hsl(145 100% 35% / 0.15),
-    0px 1px 3px -2px hsl(145 100% 35% / 0.1);
-  --shadow:
-    0px 4px 12px -2px hsl(145 100% 35% / 0.15),
-    0px 1px 3px -2px hsl(145 100% 35% / 0.1);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 4px 12px -2px hsl(145 100% 35% / 0.15),
-    0px 2px 6px -2px hsl(145 100% 35% / 0.1);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 4px 12px -2px hsl(145 100% 35% / 0.15),
-    0px 4px 8px -2px hsl(145 100% 35% / 0.1);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 4px 12px -2px hsl(145 100% 35% / 0.15),
-    0px 8px 16px -2px hsl(145 100% 35% / 0.1);
-  --shadow-2xl: 0px 4px 12px -2px hsl(145 100% 35% / 0.25);
-
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
-/* ===== 暗色模式 ===== */
 .dark {
-  --background: oklch(0.12 0.03 270);
-  --foreground: oklch(0.95 0.01 270);
-  --card: oklch(0.18 0.04 270);
-  --card-foreground: oklch(0.95 0.01 270);
-  --popover: oklch(0.18 0.04 270);
-  --popover-foreground: oklch(0.95 0.01 270);
-  --primary: oklch(0.55 0.18 160);
-  --primary-foreground: oklch(0.12 0.03 270);
-  --secondary: oklch(0.25 0.05 270);
-  --secondary-foreground: oklch(0.9 0.01 270);
-  --muted: oklch(0.22 0.04 270);
-  --muted-foreground: oklch(0.7 0.02 270);
-  --accent: oklch(0.28 0.06 145);
-  --accent-foreground: oklch(0.9 0.01 270);
+  --background: oklch(0.2679 0.0036 106.6427);
+  --foreground: oklch(0.8074 0.0142 93.0137);
+  --card: oklch(0.2679 0.0036 106.6427);
+  --card-foreground: oklch(0.9818 0.0054 95.0986);
+  --popover: oklch(0.3085 0.0035 106.6039);
+  --popover-foreground: oklch(0.9211 0.004 106.4781);
+  --primary: oklch(0.6724 0.1308 38.7559);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9818 0.0054 95.0986);
+  --secondary-foreground: oklch(0.3085 0.0035 106.6039);
+  --muted: oklch(0.2213 0.0038 106.707);
+  --muted-foreground: oklch(0.7713 0.0169 99.0657);
+  --accent: oklch(0.213 0.0078 95.4245);
+  --accent-foreground: oklch(0.9663 0.008 98.8792);
   --destructive: oklch(0.6368 0.2078 25.3313);
-  --destructive-foreground: oklch(0.12 0.03 270);
-  --border: oklch(0.3 0.05 270);
-  --input: oklch(0.3 0.05 270);
-  --ring: oklch(0.55 0.18 160);
-  --chart-1: oklch(0.55 0.18 160);
-  --chart-2: oklch(0.7 0.26 155);
-  --chart-3: oklch(0.68 0.24 165);
-  --chart-4: oklch(0.66 0.22 175);
-  --chart-5: oklch(0.64 0.2 185);
-  --sidebar: oklch(0.18 0.04 270);
-  --sidebar-foreground: oklch(0.95 0.01 270);
-  --sidebar-primary: oklch(0.55 0.18 160);
-  --sidebar-primary-foreground: oklch(0.12 0.03 270);
-  --sidebar-accent: oklch(0.28 0.06 145);
-  --sidebar-accent-foreground: oklch(0.9 0.01 270);
-  --sidebar-border: oklch(0.3 0.05 270);
-  --sidebar-ring: oklch(0.55 0.18 160);
-  --font-sans: Noto Sans Mono, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Merriweather, serif;
-  --font-mono: JetBrains Mono, monospace;
-  --shadow-color: hsl(145 100% 40%);
-  --shadow-2xs: 0px 4px 12px -2px hsl(145 100% 40% / 0.12);
-  --shadow-xs: 0px 4px 12px -2px hsl(145 100% 40% / 0.12);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.3618 0.0101 106.8928);
+  --input: oklch(0.4336 0.0113 100.2195);
+  --ring: oklch(0.6724 0.1308 38.7559);
+  --chart-1: oklch(0.5583 0.1276 42.9956);
+  --chart-2: oklch(0.6898 0.1581 290.4107);
+  --chart-3: oklch(0.213 0.0078 95.4245);
+  --chart-4: oklch(0.3074 0.0516 289.323);
+  --chart-5: oklch(0.5608 0.1348 42.0584);
+  --sidebar: oklch(0.2357 0.0024 67.7077);
+  --sidebar-foreground: oklch(0.8074 0.0142 93.0137);
+  --sidebar-primary: oklch(0.325 0 0);
+  --sidebar-primary-foreground: oklch(0.9881 0 0);
+  --sidebar-accent: oklch(0.168 0.002 106.6177);
+  --sidebar-accent-foreground: oklch(0.8074 0.0142 93.0137);
+  --sidebar-border: oklch(0.9401 0 0);
+  --sidebar-ring: oklch(0.7731 0 0);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --radius: 0.5rem;
+  --shadow-x: 0;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.1;
+  --shadow-color: oklch(0 0 0);
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
-    0px 4px 12px -2px hsl(145 100% 40% / 0.2),
-    0px 1px 3px -2px hsl(145 100% 40% / 0.15);
-  --shadow:
-    0px 4px 12px -2px hsl(145 100% 40% / 0.2),
-    0px 1px 3px -2px hsl(145 100% 40% / 0.15);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow-md:
-    0px 4px 12px -2px hsl(145 100% 40% / 0.2),
-    0px 2px 6px -2px hsl(145 100% 40% / 0.15);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
   --shadow-lg:
-    0px 4px 12px -2px hsl(145 100% 40% / 0.2),
-    0px 4px 8px -2px hsl(145 100% 40% / 0.15);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0px 4px 12px -2px hsl(145 100% 40% / 0.2),
-    0px 8px 16px -2px hsl(145 100% 40% / 0.15);
-  --shadow-2xl: 0px 4px 12px -2px hsl(145 100% 40% / 0.35);
+    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
-/* ===== 动画系统 ===== */
-
-/* 渐变背景动画 */
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* 发光脉冲动画（绿色） */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 20px rgba(34, 197, 94, 0.4),
-      0 0 40px rgba(34, 197, 94, 0.2);
-  }
-  50% {
-    box-shadow:
-      0 0 30px rgba(34, 197, 94, 0.6),
-      0 0 60px rgba(34, 197, 94, 0.3);
-  }
-}
-
-/* 浮动动画 */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* 旋转边框动画 */
-@keyframes rotate-border {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* 粒子闪烁动画 */
-@keyframes sparkle {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-/* 滑入动画 */
-@keyframes slide-in-up {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 滑入动画（从左） */
-@keyframes slide-in-left {
-  0% {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* 滑入动画（从右） */
-@keyframes slide-in-right {
-  0% {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* 缩放动画 */
-@keyframes scale-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Header 滑下动画 */
-@keyframes slide-down {
-  0% {
-    transform: translateY(-100%) scale(0.98);
-    opacity: 0;
-  }
-  30% {
-    transform: translateY(3px) scale(1.01);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(-2px) scale(0.99);
-    opacity: 0.9;
-  }
-  70% {
-    transform: translateY(1px) scale(1.005);
-    opacity: 1;
-  }
-  85% {
-    transform: translateY(-0.5px) scale(0.998);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* 文字渐变动画 */
-@keyframes text-gradient {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* 脉冲动画 */
-@keyframes pulse-glow {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-/* 无限滚动动画 */
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* 渐变文字动画 */
-@keyframes gradient-text {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* ===== 动画类 ===== */
-.animate-slide-down {
-  animation: slide-down 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-.animate-glow {
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-sparkle {
-  animation: sparkle 2s ease-in-out infinite;
-}
-
-.animate-slide-up {
-  animation: slide-in-up 0.6s ease-out forwards;
-}
-
-.animate-slide-left {
-  animation: slide-in-left 0.6s ease-out forwards;
-}
-
-.animate-slide-right {
-  animation: slide-in-right 0.6s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.5s ease-out forwards;
-}
-
-.animate-text-gradient {
-  background-size: 200% 200%;
-  animation: text-gradient 3s ease infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-scroll-left {
-  animation: scroll-left 30s linear infinite;
-}
-
-.animate-gradient-text {
-  background-size: 200% 200%;
-  animation: gradient-text 3s ease infinite;
-}
-
-/* ===== 渐变背景类（改为纯色） ===== */
-.bg-gradient-primary {
-  background: var(--primary);
-}
-
-.bg-gradient-radial {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(34, 197, 94, 0.15) 0%,
-    transparent 70%
-  );
-}
-
-.bg-gradient-mesh {
-  background:
-    radial-gradient(at 40% 20%, rgba(34, 197, 94, 0.3) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(74, 222, 128, 0.2) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(52, 211, 153, 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(134, 239, 172, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(34, 197, 94, 0.2) 0px, transparent 50%);
-}
-
-/* ===== 文字渐变类（改为纯色） ===== */
-.text-gradient-primary {
-  color: var(--primary);
-}
-
-.text-gradient-hero {
-  color: var(--primary);
-}
-
-/* ===== 模块标题颜色（统一） ===== */
-.text-section-title {
-  color: #000000;
-}
-
-.dark .text-section-title {
-  color: #ffffff;
-}
-
-/* ===== 毛玻璃效果 ===== */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ===== 发光边框（绿色） ===== */
-.border-glow {
-  box-shadow:
-    0 0 15px rgba(34, 197, 94, 0.3),
-    inset 0 0 15px rgba(34, 197, 94, 0.1);
-}
-
-.border-glow-hover:hover {
-  box-shadow:
-    0 0 25px rgba(34, 197, 94, 0.5),
-    inset 0 0 25px rgba(34, 197, 94, 0.15);
-}
-
-/* ===== 卡片悬浮效果 ===== */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.2);
-}
-
-/* ===== 按钮增强 ===== */
-.btn-glow {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-glow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s;
-}
-
-.btn-glow:hover::before {
-  left: 100%;
-}
-
-/* ===== 主题内联变量 ===== */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -538,4 +179,52 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+/* **************************************************** */
+
+/* 粒子闪烁动画 */
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* ===== 动画类 ===== */
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+.animate-gradient-text {
+  background-size: 200% 200%;
+  animation: gradient-move 3s linear infinite;
+}
+
+/* ===== 卡片悬浮效果 ===== */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(223, 191, 12, 0.2);
 }

@@ -23,7 +23,7 @@ export function Footer({ footer }: { footer: FooterType }) {
       {/* 星空背景效果 */}
       <div className="pointer-events-none absolute inset-0 z-0">
         {/* 渐变背景 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 via-transparent to-transparent" />
+        <div className="from-primary/20 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
 
         {/* 星星装饰 */}
         <div className="animate-sparkle absolute top-1/4 left-1/4 h-2 w-2 rounded-full bg-white" />

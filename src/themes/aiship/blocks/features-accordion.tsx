@@ -50,11 +50,11 @@ export function FeaturesAccordion({
       <div className="relative z-10 container space-y-8 overflow-x-hidden px-2 sm:px-6 md:space-y-16 lg:space-y-20">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl pt-1.5 text-center">
-            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {texts && texts.length > 0 ? (
                 <>
                   <span className="text-black dark:text-white">{texts[0]}</span>
-                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                     {highlightText}
                   </span>
                   <span className="text-black dark:text-white">{texts[1]}</span>
@@ -102,7 +102,7 @@ export function FeaturesAccordion({
                         >
                           {item.icon && (
                             <motion.div
-                              className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-lg"
+                              className="bg-primary flex h-10 w-10 items-center justify-center rounded-lg"
                               whileHover={{ rotate: 5 }}
                               initial={false}
                               animate={{

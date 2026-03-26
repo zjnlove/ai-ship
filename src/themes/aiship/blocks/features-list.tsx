@@ -44,13 +44,13 @@ export function FeaturesList({
           </ScrollAnimation>
           <div className="w-full min-w-0 flex-1">
             <ScrollAnimation delay={0.1}>
-              <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
                 {texts && texts.length > 0 ? (
                   <>
                     <span className="text-black dark:text-white">
                       {texts[0]}
                     </span>
-                    <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                       {highlightText}
                     </span>
                     <span className="text-black dark:text-white">
@@ -111,7 +111,7 @@ export function FeaturesList({
               >
                 <CardContent className="space-y-4">
                   {/* 图标容器 */}
-                  <div className="bg-gradient-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
+                  <div className="bg-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
                     {item.icon && (
                       <SmartIcon
                         name={item.icon as string}

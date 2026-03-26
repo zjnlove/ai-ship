@@ -60,7 +60,7 @@ export function Testimonials({
           <div className="flex items-center gap-3">
             <div className="relative">
               {/* 圆形头像 */}
-              <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 blur transition-opacity duration-300 group-hover:opacity-30" />
+              <div className="from-primary absolute -inset-0.5 rounded-full bg-gradient-to-r to-purple-500 opacity-0 blur transition-opacity duration-300 group-hover:opacity-30" />
               <div className="relative size-10 overflow-hidden rounded-full border-2 border-white/20 shadow-lg">
                 <LazyImage
                   src={item.image?.src || item.avatar?.src || ''}
@@ -112,19 +112,18 @@ export function Testimonials({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl" />
-        <div className="absolute top-1/2 right-0 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="bg-primary/5 absolute top-1/2 right-0 h-96 w-96 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 container">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {' '}
               {texts && texts.length > 0 ? (
                 <>
                   <span className="text-black dark:text-white">{texts[0]}</span>
-                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                     {highlightText}
                   </span>
                   <span className="text-black dark:text-white">{texts[1]}</span>

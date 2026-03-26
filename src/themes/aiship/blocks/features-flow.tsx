@@ -50,8 +50,8 @@ export function FeaturesFlow({ section }: { section: Section }) {
         {section.sr_only_title && (
           <h1 className="sr-only">{section.sr_only_title}</h1>
         )}
-        <h2 className="animate-text-gradient mx-auto mb-6 max-w-full text-3xl font-bold text-pretty md:max-w-5xl lg:text-4xl xl:text-5xl">
-          <span className="text-gradient-primary">{section.title}</span>
+        <h2 className="mx-auto mb-6 max-w-full text-3xl font-bold text-pretty md:max-w-5xl lg:text-4xl xl:text-5xl">
+          <span className="-primary">{section.title}</span>
         </h2>
         <p className="text-muted-foreground mx-auto mb-4 max-w-full text-lg md:max-w-5xl md:text-xl">
           {section.description}
@@ -115,7 +115,7 @@ export function FeaturesFlow({ section }: { section: Section }) {
               >
                 {/* 序号装饰 */}
                 <div className="flex items-center gap-4">
-                  <span className="bg-gradient-primary flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold text-white shadow-lg">
+                  <span className="bg-primary flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold text-white shadow-lg">
                     {index + 1}
                   </span>
                   <div className="from-primary/50 h-px flex-1 bg-gradient-to-r to-transparent" />

@@ -28,11 +28,11 @@ export function Stats({
       <div className="relative z-10 container space-y-12 md:space-y-16">
         <ScrollAnimation>
           <div className="text-center">
-            <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
+            <h2 className="mb-6 text-4xl font-bold text-balance lg:text-5xl">
               {texts && texts.length > 0 ? (
                 <>
                   <span className="text-black dark:text-white">{texts[0]}</span>
-                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                     {highlightText}
                   </span>
                   <span className="text-black dark:text-white">{texts[1]}</span>
@@ -62,8 +62,8 @@ export function Stats({
 
                 <div className="relative z-10 space-y-4">
                   {/* 数字 */}
-                  <div className="animate-text-gradient text-5xl font-bold md:text-6xl">
-                    <span className="text-gradient-primary">{item.title}</span>
+                  <div className="text-5xl font-bold md:text-6xl">
+                    <span className="text-primary">{item.title}</span>
                   </div>
 
                   {/* 描述 */}

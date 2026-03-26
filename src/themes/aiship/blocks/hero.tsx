@@ -473,16 +473,16 @@ export function Hero({
         {/* 标题 - 从左到右 */}
         <FadeInDirection direction="left" delay={0}>
           {texts && texts.length > 0 ? (
-            <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
-              <span className="text-gradient-hero">{texts[0]}</span>
+            <h1 className="text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
+              <span className="text-primary">{texts[0]}</span>
               <Highlighter action="underline" color="#22C55E">
                 {highlightText}
               </Highlighter>
-              <span className="text-gradient-hero">{texts[1]}</span>
+              <span className="text-primary">{texts[1]}</span>
             </h1>
           ) : (
-            <h1 className="animate-text-gradient text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
-              <span className="text-gradient-hero">{section.title}</span>
+            <h1 className="text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
+              <span className="text-primary">{section.title}</span>
             </h1>
           )}
         </FadeInDirection>
@@ -505,10 +505,10 @@ export function Hero({
                   size={button.size || 'lg'}
                   variant={button.variant || 'default'}
                   className={cn(
-                    'btn-glow px-6 text-base font-medium transition-all duration-300',
+                    'rounded-lg px-8 py-6 text-lg font-semibold transition-all duration-300',
                     button.variant === 'default' || !button.variant
-                      ? 'animate-glow bg-gradient-primary hover:scale-105 hover:shadow-xl'
-                      : 'border-primary/50 hover:border-primary hover:bg-primary/10'
+                      ? 'bg-primary hover:bg-primary/90 shadow-primary/40 hover:shadow-primary/60 text-white shadow-[0_0_20px] hover:scale-105 hover:text-black hover:shadow-[0_0_30px] dark:text-black hover:dark:text-white'
+                      : 'border-primary text-primary hover:bg-primary border-2 bg-transparent hover:scale-105 hover:text-black hover:dark:text-white'
                   )}
                   key={idx}
                 >
@@ -588,7 +588,7 @@ export function Hero({
         </div>
       )}
 
-      {section.background_image?.src && (
+      {/* {section.background_image?.src && (
         <div className="absolute inset-0 -z-10 hidden h-full w-full overflow-hidden md:block">
           <div className="from-background/80 via-background/80 to-background absolute inset-0 z-10 bg-gradient-to-b" />
           <Image
@@ -602,7 +602,7 @@ export function Hero({
             unoptimized={section.background_image.src.startsWith('http')}
           />
         </div>
-      )}
+      )} */}
     </section>
   );
 }

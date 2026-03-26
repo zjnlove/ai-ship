@@ -64,8 +64,8 @@ function ParticleBackground() {
 
     // 设置画布大小
     const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -187,13 +187,13 @@ export function Cta({
           <FadeInBox>
             <div className="py-8 md:py-10">
               <div className="text-center">
-                <h2 className="animate-text-gradient mb-6 text-4xl font-bold text-balance lg:text-5xl">
+                <h2 className="mb-6 text-4xl font-bold text-balance lg:text-5xl">
                   {texts && texts.length > 0 ? (
                     <>
                       <span className="text-black dark:text-white">
                         {texts[0]}
                       </span>
-                      <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                      <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                         {highlightText}
                       </span>
                       <span className="text-black dark:text-white">
@@ -223,8 +223,8 @@ export function Cta({
                       className={cn(
                         'rounded-lg px-8 py-6 text-lg font-semibold transition-all duration-300',
                         button.variant === 'default' || !button.variant
-                          ? 'bg-primary hover:bg-primary/90 text-white shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)]'
-                          : 'border-primary text-primary hover:bg-primary border-2 bg-transparent hover:text-white'
+                          ? 'bg-primary hover:bg-primary/90 shadow-primary/40 hover:shadow-primary/60 text-white shadow-[0_0_20px] hover:scale-105 hover:text-black hover:shadow-[0_0_30px] dark:text-black hover:dark:text-white'
+                          : 'border-primary text-primary hover:bg-primary border-2 bg-transparent hover:scale-105 hover:text-black hover:dark:text-white'
                       )}
                       key={idx}
                     >

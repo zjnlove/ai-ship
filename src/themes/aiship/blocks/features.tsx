@@ -29,18 +29,18 @@ export function Features({
     >
       {/* 背景装饰 */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
+        <div className="bg-primary/5 absolute right-0 bottom-1/4 h-96 w-96 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 container space-y-8 md:space-y-16">
         <ScrollAnimation>
           <div className="mx-auto max-w-4xl text-center text-balance">
-            <h2 className="animate-text-gradient mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {' '}
               {texts && texts.length > 0 ? (
                 <>
                   <span className="text-black dark:text-white">{texts[0]}</span>
-                  <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                     {highlightText}
                   </span>
                   <span className="text-black dark:text-white">{texts[1]}</span>
@@ -61,13 +61,13 @@ export function Features({
           <div className="relative mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {section.items?.map((item, idx) => (
               <Card
-                className="group card-hover relative flex flex-col gap-4 transition-all duration-300"
+                className="card-hover relative flex flex-col gap-4 transition-all duration-300"
                 key={idx}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <CardContent className="p-8">
                   {/* 图标容器 */}
-                  <div className="bg-gradient-primary mb-6 flex h-14 w-14 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <div className="bg-primary mb-6 flex h-14 w-14 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <SmartIcon
                       name={item.icon as string}
                       size={28}
