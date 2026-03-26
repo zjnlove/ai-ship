@@ -54,5 +54,6 @@ export const localeMessagesPaths = [
   'pages/showcases',
   'pages/blog',
   'pages/updates',
-  'pages/aitools/ai-image-generator',
+  'ai/ai-image-generator/text-to-image',
+  'ai/ai-image-generator/image-to-image',
 ];

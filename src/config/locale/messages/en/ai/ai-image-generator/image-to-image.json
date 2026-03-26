@@ -6,7 +6,7 @@
   "page": {
     "sections": {
       "hero": {
-        "title": "AI Image Generator",
+        "title": "Image To Image",
         "description": "Generate images with AI models, support text-to-image and image-to-image.",
         "buttons": [
           {

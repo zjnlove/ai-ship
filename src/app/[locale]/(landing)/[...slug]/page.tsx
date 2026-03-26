@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
 import { envConfigs } from '@/config';
+import { ImageGenerator } from '@/shared/blocks/generator';
 import { getLocalPage } from '@/shared/models/post';
 
 export const revalidate = 3600;
@@ -56,19 +58,20 @@ export async function generateMetadata({
   }
 
   // 2. static page not found, try to get dynamic page metadata from
-  // src/config/locale/messages/{locale}/pages/**/*.json
+  // src/config/locale/messages/{locale}/pages/**/*.json or ai/**/*.json
 
   // dynamic page slug
   const dynamicPageSlug =
     typeof slug === 'string' ? slug : (slug as string[]).join('.') || '';
 
-  const messageKey = `pages.${dynamicPageSlug}`;
-  const t = await getTranslations({ locale, namespace: messageKey });
+  // convert dots to slashes for file path
+  const dynamicPagePath = dynamicPageSlug.replace(/\./g, '/');
 
-  // return dynamic page metadata
-  if (t.has('metadata')) {
-    title = t.raw('metadata.title');
-    description = t.raw('metadata.description');
+  // try pages namespace first
+  const pagesMessages = await loadMessages(`pages/${dynamicPagePath}`, locale);
+  if (pagesMessages && pagesMessages.metadata) {
+    title = pagesMessages.metadata.title || '';
+    description = pagesMessages.metadata.description || '';
 
     return {
       title,
@@ -79,7 +82,22 @@ export async function generateMetadata({
     };
   }
 
-  // 3. return common metadata
+  // 3. try ai namespace
+  const aiMessages = await loadMessages(`ai/${dynamicPagePath}`, locale);
+  if (aiMessages && aiMessages.metadata) {
+    title = aiMessages.metadata.title || '';
+    description = aiMessages.metadata.description || '';
+
+    return {
+      title,
+      description,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    };
+  }
+
+  // 4. return common metadata
   const tc = await getTranslations('common.metadata');
 
   title = tc('title');
@@ -126,27 +144,52 @@ export default async function DynamicPage({
 
   // 2. static page not found
   // try to get dynamic page content from
-  // src/config/locale/messages/{locale}/pages/**/*.json
+  // src/config/locale/messages/{locale}/pages/**/*.json or ai/**/*.json
 
   // dynamic page slug
   const dynamicPageSlug =
     typeof slug === 'string' ? slug : (slug as string[]).join('.') || '';
 
-  const messageKey = `pages.${dynamicPageSlug}`;
+  // convert dots to slashes for file path
+  const dynamicPagePath = dynamicPageSlug.replace(/\./g, '/');
 
-  try {
-    const t = await getTranslations({ locale, namespace: messageKey });
-
-    // return dynamic page
-    if (t.has('page')) {
-      const Page = await getThemePage('dynamic-page');
-      return <Page locale={locale} page={t.raw('page')} />;
-    }
-  } catch (error) {
-    // ignore error if translation not found
-    return notFound();
+  // try pages namespace first
+  const pagesMessages = await loadMessages(`pages/${dynamicPagePath}`, locale);
+  if (pagesMessages && pagesMessages.page) {
+    const Page = await getThemePage('dynamic-page');
+    return <Page locale={locale} page={pagesMessages.page} />;
   }
 
-  // 3. page not found
+  // 3. try ai namespace
+  const aiMessages = await loadMessages(`ai/${dynamicPagePath}`, locale);
+  if (aiMessages && aiMessages.page) {
+    // check if it's ai-image-generator subpage
+    if (staticPageSlug.includes('ai-image-generator')) {
+      const { hero, ...restSections } = aiMessages.page.sections || {};
+
+      const page = {
+        sections: {
+          ...(hero && { hero }),
+          generator: {
+            component: (
+              <ImageGenerator
+                srOnlyTitle={aiMessages.generator?.title}
+                className="md:py-0"
+              />
+            ),
+          },
+          ...restSections,
+        },
+      };
+
+      const Page = await getThemePage('dynamic-page');
+      return <Page locale={locale} page={page} />;
+    }
+
+    const Page = await getThemePage('dynamic-page');
+    return <Page locale={locale} page={aiMessages.page} />;
+  }
+
+  // 4. page not found
   return notFound();
 }

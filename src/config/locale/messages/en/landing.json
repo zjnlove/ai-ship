@@ -39,13 +39,13 @@
                 {
                   "title": "Text-to-Image",
                   "description": "Generate images from text",
-                  "url": "/ai-image-generator#text-to-image",
+                  "url": "/ai-image-generator/text-to-image",
                   "target": "_blank"
                 },
                 {
                   "title": "Image-to-Image",
                   "description": "Generate images from images",
-                  "url": "/ai-image-generator#image-to-image",
+                  "url": "/ai-image-generator/image-to-image",
                   "target": "_blank"
                 }
               ]

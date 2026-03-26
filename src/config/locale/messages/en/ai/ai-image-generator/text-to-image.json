@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "title": "AI Image Generator",
+    "description": "Generate images with AI models, support text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Text To Image",
+        "description": "Generate images with AI models, support text-to-image and image-to-image.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Frequently Asked Questions",
+        "items": [
+          {
+            "title": "What is AI Image Generator?",
+            "description": "AI Image Generator is a tool that allows you to generate images with AI models, support text-to-image and image-to-image."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Create Images?",
+        "description": "Start creating images with AI models, support text-to-image and image-to-image.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#create",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}
