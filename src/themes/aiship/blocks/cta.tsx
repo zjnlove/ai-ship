@@ -62,6 +62,38 @@ function ParticleBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // 获取主题色
+    const getPrimaryColor = () => {
+      const primary = getComputedStyle(document.documentElement)
+        .getPropertyValue('--primary')
+        .trim();
+      // oklch 格式: oklch(0.65 0.18 45)
+      // 转换为 rgb
+      const match = primary.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+      if (match) {
+        const l = parseFloat(match[1]);
+        const c = parseFloat(match[2]);
+        const h = parseFloat(match[3]);
+        // oklch 转 rgb 的简化计算
+        const a = c * Math.cos((h * Math.PI) / 180);
+        const b = c * Math.sin((h * Math.PI) / 180);
+        const r = Math.round(
+          Math.max(0, Math.min(255, (l + 0.3963 * a + 0.2158 * b) * 255))
+        );
+        const g = Math.round(
+          Math.max(0, Math.min(255, (l - 0.1055 * a - 0.0638 * b) * 255))
+        );
+        const blue = Math.round(
+          Math.max(0, Math.min(255, (l - 0.0894 * a - 1.2914 * b) * 255))
+        );
+        return { r, g, b: blue };
+      }
+      // 默认橙金色
+      return { r: 255, g: 180, b: 50 };
+    };
+
+    const primaryColor = getPrimaryColor();
+
     // 设置画布大小
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -113,7 +145,7 @@ function ParticleBackground() {
         // 绘制粒子
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34, 197, 94, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${particle.opacity})`;
         ctx.fill();
       });
 
@@ -128,7 +160,7 @@ function ParticleBackground() {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(34, 197, 94, ${0.1 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${0.1 * (1 - distance / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -193,7 +225,7 @@ export function Cta({
                       <span className="text-black dark:text-white">
                         {texts[0]}
                       </span>
-                      <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                      <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                         {highlightText}
                       </span>
                       <span className="text-black dark:text-white">

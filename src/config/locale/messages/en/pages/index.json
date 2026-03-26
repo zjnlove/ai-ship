@@ -90,7 +90,7 @@
             }
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "benefits": {
         "block": "features-accordion",
@@ -175,7 +175,7 @@
             }
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "features": {
         "id": "features",
@@ -234,7 +234,7 @@
             "description": "Templates"
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "testimonials": {
         "id": "testimonials",
@@ -330,7 +330,7 @@
             "answer": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "cta": {
         "id": "cta",
@@ -359,7 +359,7 @@
           },
           "action": "/api/subscribe"
         },
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       }
     }
   }

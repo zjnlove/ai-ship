@@ -45,7 +45,7 @@ export function FeaturesStep({
                     <span className="text-black dark:text-white">
                       {texts[0]}
                     </span>
-                    <span className="from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
                       {highlightText}
                     </span>
                     <span className="text-black dark:text-white">
