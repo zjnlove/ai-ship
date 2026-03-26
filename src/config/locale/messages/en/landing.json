@@ -14,23 +14,21 @@
     "nav": {
       "items": [
         {
-          "title": "Features",
+          "title": "Seedance2.0",
           "url": "/#features",
-          "icon": "Sparkles"
+          "tip": "New",
+          "tip_color": "bg-emerald-500"
         },
         {
-          "title": "Showcases",
+          "title": "Nana Banana Pro",
           "url": "/showcases",
-          "icon": "Box"
+          "tip": "Hot",
+          "tip_color": "bg-rose-500"
         },
         {
-          "title": "Pricing",
-          "url": "/pricing",
-          "icon": "DollarSign"
-        },
-        {
-          "title": "AI",
-          "icon": "RiRobot2Line",
+          "title": "AI Tools",
+          "tip": "Video Hot",
+          "tip_color": "bg-rose-500",
           "children": [
             {
               "title": "AI Image Generator",
@@ -48,7 +46,9 @@
               "title": "AI Video Generator",
               "description": "Use AI to generate videos",
               "url": "/ai-video-generator",
-              "icon": "RiVideoLine"
+              "icon": "RiVideoLine",
+              "tip": "New",
+              "tip_color": "bg-emerald-500"
             },
             {
               "title": "AI Chatbot",
@@ -59,8 +59,37 @@
           ]
         },
         {
+          "title": "Models",
+          "tip": "Nana Banana",
+          "tip_color": "bg-rose-500",
+          "children": [
+            {
+              "title": "Nana Banana Pro",
+              "description": "Nana Banana Pro Model",
+              "url": "/",
+              "icon": "Newspaper",
+              "tip": "New",
+              "tip_color": "bg-emerald-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "description": "Seedance2.0 Model",
+              "url": "/updates",
+              "icon": "Clock",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Docs",
+              "description": "Read Documentation",
+              "url": "/docs",
+              "target": "_blank",
+              "icon": "BookOpenText"
+            }
+          ]
+        },
+        {
           "title": "Content",
-          "icon": "FileText",
           "children": [
             {
               "title": "Blog",
@@ -82,6 +111,10 @@
               "icon": "BookOpenText"
             }
           ]
+        },
+        {
+          "title": "Pricing",
+          "url": "/pricing"
         }
       ]
     },

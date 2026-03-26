@@ -66,7 +66,7 @@ export function Header({ header }: { header: HeaderType }) {
   // Navigation menu for large screens using HoverCard
   const NavMenu = () => {
     return (
-      <nav className="hidden items-center gap-2 lg:flex">
+      <nav className="hidden items-center lg:flex">
         {header.nav?.items?.map((item, idx) => {
           // Simple link without children
           if (!item.children || item.children.length === 0) {
@@ -75,7 +75,7 @@ export function Header({ header }: { header: HeaderType }) {
                 key={idx}
                 href={item.url || ''}
                 target={item.target || '_self'}
-                className={`hover:bg-primary/10 hover:text-primary flex flex-row items-center gap-2 rounded-md px-4 py-1.5 text-sm transition-colors ${
+                className={`hover:bg-primary/10 hover:text-primary relative flex flex-row items-center gap-1.5 rounded-md px-4 py-1 text-sm transition-colors ${
                   item.is_active || pathname.endsWith(item.url as string)
                     ? 'bg-muted/40 text-muted-foreground'
                     : ''
@@ -83,6 +83,13 @@ export function Header({ header }: { header: HeaderType }) {
               >
                 {item.icon && <SmartIcon name={item.icon as string} />}
                 {item.title}
+                {item.tip && (
+                  <span
+                    className={`${item.tip_color || 'bg-primary'} absolute -top-2 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
+                  >
+                    {item.tip}
+                  </span>
+                )}
               </Link>
             );
           }
@@ -91,11 +98,18 @@ export function Header({ header }: { header: HeaderType }) {
           return (
             <HoverCard key={idx} openDelay={100} closeDelay={200}>
               <HoverCardTrigger asChild>
-                <button className="group hover:bg-primary/10 hover:text-primary flex flex-row items-center gap-2 rounded-md px-4 py-1.5 text-sm transition-colors">
+                <button className="group hover:bg-primary/10 hover:text-primary relative flex flex-row items-center gap-1.5 rounded-md px-4 py-1 text-sm transition-colors">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} className="h-4 w-4" />
                   )}
                   {item.title}
+                  {item.tip && (
+                    <span
+                      className={`${item.tip_color || 'bg-primary'} absolute -top-2.5 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
+                    >
+                      {item.tip}
+                    </span>
+                  )}
                   <ChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                 </button>
               </HoverCardTrigger>
@@ -110,7 +124,7 @@ export function Header({ header }: { header: HeaderType }) {
                       <Link
                         href={subItem.url || ''}
                         target={subItem.target || '_self'}
-                        className="hover:bg-primary/10 grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
+                        className="hover:bg-primary/10 relative grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
                       >
                         <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
                           {subItem.icon && (
@@ -118,8 +132,15 @@ export function Header({ header }: { header: HeaderType }) {
                           )}
                         </div>
                         <div className="space-y-0.5">
-                          <div className="text-foreground text-sm font-medium">
+                          <div className="text-foreground flex items-center gap-1 text-sm font-medium">
                             {subItem.title}
+                            {subItem.tip && (
+                              <span
+                                className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
+                              >
+                                {subItem.tip}
+                              </span>
+                            )}
                           </div>
                           {subItem.description && (
                             <p className="text-muted-foreground line-clamp-1 text-xs">
@@ -161,7 +182,16 @@ export function Header({ header }: { header: HeaderType }) {
                 {item.children && item.children.length > 0 ? (
                   <>
                     <AccordionTrigger className="data-[state=open]:bg-muted hover:bg-primary/10 hover:text-primary flex items-center justify-between px-4 py-3 text-lg transition-colors **:!font-normal">
-                      {item.title}
+                      <div className="flex items-center gap-2">
+                        {item.title}
+                        {item.tip && (
+                          <span
+                            className={`${item.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                          >
+                            {item.tip}
+                          </span>
+                        )}
+                      </div>
                     </AccordionTrigger>
                     <AccordionContent className="pb-5">
                       <ul>
@@ -180,7 +210,16 @@ export function Header({ header }: { header: HeaderType }) {
                                   <SmartIcon name={subItem.icon as string} />
                                 )}
                               </div>
-                              <div className="text-base">{subItem.title}</div>
+                              <div className="flex items-center gap-2 text-base">
+                                {subItem.title}
+                                {subItem.tip && (
+                                  <span
+                                    className={`${subItem.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                  >
+                                    {subItem.tip}
+                                  </span>
+                                )}
+                              </div>
                             </Link>
                           </li>
                         ))}
@@ -193,7 +232,16 @@ export function Header({ header }: { header: HeaderType }) {
                     onClick={closeMenu}
                     className="data-[state=open]:bg-muted hover:bg-primary/10 hover:text-primary flex items-center justify-between px-4 py-3 text-lg transition-colors **:!font-normal"
                   >
-                    {item.title}
+                    <div className="flex items-center gap-2">
+                      {item.title}
+                      {item.tip && (
+                        <span
+                          className={`${item.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                        >
+                          {item.tip}
+                        </span>
+                      )}
+                    </div>
                   </Link>
                 )}
               </AccordionItem>

@@ -16,12 +16,16 @@
         {
           "title": "功能亮点",
           "url": "/#features",
-          "icon": "Sparkles"
+          "icon": "Sparkles",
+          "tip": "新功能",
+          "tip_color": "bg-emerald-500"
         },
         {
           "title": "案例展示",
           "url": "/showcases",
-          "icon": "Box"
+          "icon": "Box",
+          "tip": "热门",
+          "tip_color": "bg-rose-500"
         },
         {
           "title": "价格",
