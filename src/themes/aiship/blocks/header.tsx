@@ -18,6 +18,12 @@ import {
   AccordionTrigger,
 } from '@/shared/components/ui/accordion';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu';
+import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
@@ -121,34 +127,102 @@ export function Header({ header }: { header: HeaderType }) {
                 <ul className="space-y-1">
                   {item.children?.map((subItem: NavItem, index: number) => (
                     <li key={index}>
-                      <Link
-                        href={subItem.url || ''}
-                        target={subItem.target || '_self'}
-                        className="hover:bg-primary/10 relative grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
-                      >
-                        <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                      {subItem.children && subItem.children.length > 0 ? (
+                        <HoverCard openDelay={100} closeDelay={200}>
+                          <HoverCardTrigger asChild>
+                            <Link
+                              href={subItem.url || ''}
+                              target={subItem.target || '_self'}
+                              className="hover:bg-primary/10 relative flex items-center justify-between rounded-md p-2 transition-colors"
+                            >
+                              <div className="flex items-center gap-3.5">
+                                {subItem.icon && (
+                                  <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                                    <SmartIcon name={subItem.icon as string} />
+                                  </div>
+                                )}
+                                <div className="space-y-0.5">
+                                  <div className="text-foreground flex items-center gap-1 text-sm font-medium">
+                                    {subItem.title}
+                                    {subItem.tip && (
+                                      <span
+                                        className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
+                                      >
+                                        {subItem.tip}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {subItem.description && (
+                                    <p className="text-muted-foreground line-clamp-1 text-xs">
+                                      {subItem.description}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              <ChevronDown className="h-4 w-4 -rotate-90" />
+                            </Link>
+                          </HoverCardTrigger>
+                          <HoverCardContent
+                            side="right"
+                            align="start"
+                            className="w-48 rounded-xl p-2"
+                            sideOffset={10}
+                          >
+                            <ul className="space-y-1">
+                              {subItem.children.map(
+                                (thirdItem: NavItem, thirdIndex: number) => (
+                                  <li key={thirdIndex}>
+                                    <Link
+                                      href={thirdItem.url || ''}
+                                      target={thirdItem.target || '_self'}
+                                      className="hover:bg-primary/10 flex items-center gap-2 rounded-md p-2 transition-colors"
+                                    >
+                                      {thirdItem.icon && (
+                                        <SmartIcon
+                                          name={thirdItem.icon as string}
+                                          className="h-4 w-4"
+                                        />
+                                      )}
+                                      <span className="text-sm">
+                                        {thirdItem.title}
+                                      </span>
+                                    </Link>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </HoverCardContent>
+                        </HoverCard>
+                      ) : (
+                        <Link
+                          href={subItem.url || ''}
+                          target={subItem.target || '_self'}
+                          className="hover:bg-primary/10 relative grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
+                        >
                           {subItem.icon && (
-                            <SmartIcon name={subItem.icon as string} />
+                            <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                              <SmartIcon name={subItem.icon as string} />
+                            </div>
                           )}
-                        </div>
-                        <div className="space-y-0.5">
-                          <div className="text-foreground flex items-center gap-1 text-sm font-medium">
-                            {subItem.title}
-                            {subItem.tip && (
-                              <span
-                                className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
-                              >
-                                {subItem.tip}
-                              </span>
+                          <div className="space-y-0.5">
+                            <div className="text-foreground flex items-center gap-1 text-sm font-medium">
+                              {subItem.title}
+                              {subItem.tip && (
+                                <span
+                                  className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
+                                >
+                                  {subItem.tip}
+                                </span>
+                              )}
+                            </div>
+                            {subItem.description && (
+                              <p className="text-muted-foreground line-clamp-1 text-xs">
+                                {subItem.description}
+                              </p>
                             )}
                           </div>
-                          {subItem.description && (
-                            <p className="text-muted-foreground line-clamp-1 text-xs">
-                              {subItem.description}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -197,30 +271,103 @@ export function Header({ header }: { header: HeaderType }) {
                       <ul>
                         {item.children?.map((subItem: NavItem, iidx) => (
                           <li key={iidx}>
-                            <Link
-                              href={subItem.url || ''}
-                              onClick={closeMenu}
-                              className="hover:bg-primary/10 hover:text-primary grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2 transition-colors"
-                            >
-                              <div
-                                aria-hidden
-                                className="flex items-center justify-center *:size-4"
+                            {subItem.children && subItem.children.length > 0 ? (
+                              <div>
+                                <div className="flex items-center">
+                                  <Link
+                                    href={subItem.url || ''}
+                                    onClick={closeMenu}
+                                    className="hover:bg-primary/10 hover:text-primary flex flex-1 items-center gap-2.5 px-4 py-2 transition-colors"
+                                  >
+                                    {subItem.icon && (
+                                      <div
+                                        aria-hidden
+                                        className="flex items-center justify-center *:size-4"
+                                      >
+                                        <SmartIcon
+                                          name={subItem.icon as string}
+                                        />
+                                      </div>
+                                    )}
+                                    <div className="flex items-center gap-2 text-base">
+                                      {subItem.title}
+                                      {subItem.tip && (
+                                        <span
+                                          className={`${subItem.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                        >
+                                          {subItem.tip}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </Link>
+                                  <Accordion type="single" collapsible>
+                                    <AccordionItem
+                                      value={subItem.title || ''}
+                                      className="border-b-0"
+                                    >
+                                      <AccordionTrigger className="hover:bg-primary/10 hover:text-primary justify-center px-4 py-2 transition-colors **:!font-normal" />
+                                      <AccordionContent>
+                                        <ul className="ml-4 space-y-1">
+                                          {subItem.children.map(
+                                            (
+                                              thirdItem: NavItem,
+                                              thirdIdx: number
+                                            ) => (
+                                              <li key={thirdIdx}>
+                                                <Link
+                                                  href={thirdItem.url || ''}
+                                                  onClick={closeMenu}
+                                                  className="hover:bg-primary/10 hover:text-primary flex items-center gap-2.5 px-4 py-2 text-sm transition-colors"
+                                                >
+                                                  {thirdItem.icon && (
+                                                    <div
+                                                      aria-hidden
+                                                      className="flex items-center justify-center *:size-4"
+                                                    >
+                                                      <SmartIcon
+                                                        name={
+                                                          thirdItem.icon as string
+                                                        }
+                                                      />
+                                                    </div>
+                                                  )}
+                                                  <span>{thirdItem.title}</span>
+                                                </Link>
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      </AccordionContent>
+                                    </AccordionItem>
+                                  </Accordion>
+                                </div>
+                              </div>
+                            ) : (
+                              <Link
+                                href={subItem.url || ''}
+                                onClick={closeMenu}
+                                className="hover:bg-primary/10 hover:text-primary grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2 transition-colors"
                               >
                                 {subItem.icon && (
-                                  <SmartIcon name={subItem.icon as string} />
-                                )}
-                              </div>
-                              <div className="flex items-center gap-2 text-base">
-                                {subItem.title}
-                                {subItem.tip && (
-                                  <span
-                                    className={`${subItem.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                  <div
+                                    aria-hidden
+                                    className="flex items-center justify-center *:size-4"
                                   >
-                                    {subItem.tip}
-                                  </span>
+                                    <SmartIcon name={subItem.icon as string} />
+                                  </div>
                                 )}
-                              </div>
-                            </Link>
+                                <div className="flex items-center gap-2 text-base">
+                                  {subItem.title}
+                                  {subItem.tip && (
+                                    <span
+                                      className={`${subItem.tip_color || 'bg-primary'} rounded px-1.5 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                    >
+                                      {subItem.tip}
+                                    </span>
+                                  )}
+                                </div>
+                              </Link>
+                            )}
                           </li>
                         ))}
                       </ul>

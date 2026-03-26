@@ -35,21 +35,32 @@
               "description": "Use AI to generate images",
               "url": "/ai-image-generator",
               "target": "_blank",
-              "icon": "RiImage2Line"
+              "children": [
+                {
+                  "title": "Text-to-Image",
+                  "description": "Generate images from text",
+                  "url": "/ai-image-generator#text-to-image",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Image-to-Image",
+                  "description": "Generate images from images",
+                  "url": "/ai-image-generator#image-to-image",
+                  "target": "_blank"
+                }
+              ]
             },
             {
               "title": "AI Music Generator",
               "description": "Use AI to generate music",
               "url": "/ai-music-generator",
-              "target": "_blank",
-              "icon": "RiMusic2Line"
+              "target": "_blank"
             },
             {
               "title": "AI Video Generator",
               "description": "Use AI to generate videos",
               "url": "/ai-video-generator",
               "target": "_blank",
-              "icon": "RiVideoLine",
               "tip": "New",
               "tip_color": "bg-emerald-500"
             },
@@ -57,8 +68,7 @@
               "title": "AI Chatbot",
               "description": "Chat with AI chatbot",
               "url": "/chat",
-              "target": "_blank",
-              "icon": "RiMessage2Line"
+              "target": "_blank"
             }
           ]
         },
@@ -71,7 +81,6 @@
               "title": "Nana Banana Pro",
               "description": "Nana Banana Pro Model",
               "url": "/",
-              "icon": "Newspaper",
               "tip": "New",
               "tip_color": "bg-emerald-500"
             },
@@ -79,7 +88,6 @@
               "title": "Seedance2.0",
               "description": "Seedance2.0 Model",
               "url": "/updates",
-              "icon": "Clock",
               "tip": "Video Hot",
               "tip_color": "bg-rose-500"
             },
@@ -87,8 +95,7 @@
               "title": "Docs",
               "description": "Read Documentation",
               "url": "/docs",
-              "target": "_blank",
-              "icon": "BookOpenText"
+              "target": "_blank"
             }
           ]
         },
@@ -98,21 +105,18 @@
             {
               "title": "Blog",
               "description": "Read Blog Posts",
-              "url": "/blog",
-              "icon": "Newspaper"
+              "url": "/blog"
             },
             {
               "title": "Updates",
               "description": "Read Update Logs",
-              "url": "/updates",
-              "icon": "Clock"
+              "url": "/updates"
             },
             {
               "title": "Docs",
               "description": "Read Documentation",
               "url": "/docs",
-              "target": "_blank",
-              "icon": "BookOpenText"
+              "target": "_blank"
             }
           ]
         },
