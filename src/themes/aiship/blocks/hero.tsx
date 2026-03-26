@@ -21,6 +21,7 @@ function ArcMediaGallery({
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [animatedItems, setAnimatedItems] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,15 @@ function ArcMediaGallery({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // 逐个触发图片进场动画
+          mediaItems.forEach((_, index) => {
+            setTimeout(
+              () => {
+                setAnimatedItems((prev) => new Set([...prev, index]));
+              },
+              index * 200 // 每张图片间隔200ms
+            );
+          });
         }
       },
       { threshold: 0.1 }
@@ -56,27 +66,47 @@ function ArcMediaGallery({
 
   // 默认媒体数据（如果没有提供）
   const defaultMedia = [
-    { type: 'image' as const, src: '/imgs/features/1.png', alt: 'Feature 1' },
-    { type: 'image' as const, src: '/imgs/features/2.png', alt: 'Feature 2' },
-    { type: 'image' as const, src: '/imgs/features/3.png', alt: 'Feature 3' },
-    { type: 'image' as const, src: '/imgs/features/4.png', alt: 'Feature 4' },
-    { type: 'image' as const, src: '/imgs/features/5.png', alt: 'Feature 5' },
-    { type: 'image' as const, src: '/imgs/features/6.png', alt: 'Feature 6' },
+    { type: 'image' as const, src: '/imgs/hero/1.gif', alt: 'Nana Banana' },
+    { type: 'image' as const, src: '/imgs/hero/2.gif', alt: 'Seedance2.0' },
+    { type: 'image' as const, src: '/imgs/hero/3.gif', alt: 'AI Image' },
+    { type: 'image' as const, src: '/imgs/hero/1.gif', alt: 'AI Video' },
+    {
+      type: 'image' as const,
+      src: '/imgs/hero/2.gif',
+      alt: 'Music Generator',
+    },
+    {
+      type: 'image' as const,
+      src: '/imgs/hero/3.gif',
+      alt: 'Image Transformer',
+    },
   ];
 
   const mediaItems = media || defaultMedia;
 
-  // 弧线位置配置
+  // 弧线位置配置（不同形状）
   const positions = [
     // 左侧两个（靠近中间）
-    { top: '20%', left: '5%', rotate: -15, delay: 100 },
-    { top: '50%', left: '3%', rotate: -25, delay: 200 },
+    { top: '18%', left: '12%', rotate: -15, delay: 100, shape: 'rounded-3xl' },
+    { top: '50%', left: '6%', rotate: -25, delay: 200, shape: 'rounded-3xl' },
     // 右侧两个（靠近中间）
-    { top: '20%', right: '5%', rotate: 15, delay: 300 },
-    { top: '50%', right: '3%', rotate: 25, delay: 400 },
+    { top: '20%', right: '15%', rotate: 15, delay: 300, shape: 'rounded-3xl' },
+    { top: '50%', right: '6%', rotate: 25, delay: 400, shape: 'rounded-3xl' },
     // 底部两个（弧线排列）
-    { bottom: '5%', left: '25%', rotate: -10, delay: 500 },
-    { bottom: '5%', right: '25%', rotate: 10, delay: 600 },
+    {
+      bottom: '6%',
+      left: '25%',
+      rotate: -10,
+      delay: 500,
+      shape: 'rounded-3xl',
+    },
+    {
+      bottom: '6%',
+      right: '20%',
+      rotate: 10,
+      delay: 600,
+      shape: 'rounded-3xl',
+    },
   ];
 
   const renderMedia = (item: (typeof mediaItems)[0], index: number) => {
@@ -107,8 +137,27 @@ function ArcMediaGallery({
     // 缩放逐渐变小
     const currentScale = isVisible ? 1 - scrollProgress * 0.3 : 0.8;
 
-    // 透明度逐渐降低
-    const currentOpacity = isVisible ? 1 - scrollProgress * 0.5 : 0;
+    // 进场动画效果
+    const isAnimated = animatedItems.has(index);
+    const getInitialTransform = () => {
+      if (isAnimated) return '';
+      switch (index) {
+        case 0:
+          return 'translate-x-[-200px] translate-y-[-100px] scale(0.3) rotate(-45deg)';
+        case 1:
+          return 'translate-y-[-200px] scale(0.2) rotate(90deg)';
+        case 2:
+          return 'translate-x-[200px] translate-y-[-100px] scale(0.3) rotate(45deg)';
+        case 3:
+          return 'translate-x-[-150px] translate-y-[100px] scale(0.2) rotate(-90deg)';
+        case 4:
+          return 'translate-y-[200px] scale(0.3) rotate(120deg)';
+        case 5:
+          return 'translate-x-[150px] translate-y-[100px] scale(0.2) rotate(90deg)';
+        default:
+          return 'translate-y-[-200px] scale(0.3) rotate(45deg)';
+      }
+    };
 
     const positionStyle: React.CSSProperties = {
       position: 'absolute',
@@ -116,18 +165,22 @@ function ArcMediaGallery({
       bottom: currentBottom,
       left: currentLeft,
       right: currentRight,
-      transform: `rotate(${currentRotate}deg) scale(${currentScale})`,
-      transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
-      opacity: currentOpacity,
+      transform: `rotate(${currentRotate}deg) scale(${currentScale}) ${getInitialTransform()}`,
+      transition: isAnimated
+        ? 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+        : 'all 0.3s ease-out',
+      opacity: isVisible ? (isAnimated ? 1 - scrollProgress * 0.5 : 0) : 0,
     };
 
     return (
       <div
         key={index}
         style={positionStyle}
-        className="group z-20 hidden md:block"
+        className="group gallery-item z-20 hidden md:block"
       >
-        <div className="border-border/30 bg-background/80 hover:border-primary/50 relative h-24 w-32 overflow-hidden rounded-xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-xl lg:h-28 lg:w-40">
+        <div
+          className={`border-border/30 bg-background/80 hover:border-primary/50 relative h-24 w-24 overflow-hidden ${pos.shape} border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-xl lg:h-32 lg:w-32`}
+        >
           {item.type === 'video' ? (
             <video
               src={item.src}
@@ -506,11 +559,13 @@ export function Hero({
         <FadeInDirection direction="left" delay={0}>
           {texts && texts.length > 0 ? (
             <h1 className="text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
-              <span className="text-primary">{texts[0]}</span>
-              <Highlighter action="underline" color="#22C55E">
-                {highlightText}
-              </Highlighter>
-              <span className="text-primary">{texts[1]}</span>
+              <>
+                <span className="text-black dark:text-white">{texts[0]}</span>
+                <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  {highlightText}
+                </span>
+                <span className="text-black dark:text-white">{texts[1]}</span>
+              </>
             </h1>
           ) : (
             <h1 className="text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
