@@ -12,7 +12,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { Link } from '@/core/i18n/navigation';
+import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
 import {
   ImageUploader,
@@ -239,9 +239,18 @@ export function ImageGenerator({
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
     useAppContext();
 
+  const pathname = usePathname();
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (pathname.includes('image-to-image')) {
+      setActiveTab('image-to-image');
+      setCostCredits(4);
+    }
+  }, [pathname]);
 
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
