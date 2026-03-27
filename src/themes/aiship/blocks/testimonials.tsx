@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { LazyImage } from '@/shared/blocks/common';
 import { Card, CardContent } from '@/shared/components/ui/card';
+import { Marquee } from '@/shared/components/ui/marquee';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section, SectionItem } from '@/shared/types/blocks/landing';
@@ -25,25 +26,15 @@ export function Testimonials({
   useEffect(() => {
     setRandomHour(Math.floor(Math.random() * 24) + 1);
   }, []);
-  const TestimonialCard = ({
-    item,
-    index,
-  }: {
-    item: SectionItem;
-    index: number;
-  }) => {
-    // 推特风格：错落有致的布局
-    const isLarge = index === 0 || index === 3;
-    const isMedium = index === 1 || index === 4;
 
+  const TestimonialCard = ({ item }: { item: SectionItem }) => {
     return (
       <Card
         className={cn(
-          'group card-hover relative flex flex-col gap-4 transition-all duration-300'
+          'group card-hover relative flex w-[350px] shrink-0 flex-col gap-4 transition-all duration-300'
         )}
-        style={{ animationDelay: `${index * 0.1}s` }}
       >
-        <CardContent className={cn('p-6', isLarge && 'p-8', isMedium && 'p-7')}>
+        <CardContent className="p-6">
           {/* 推特图标装饰 */}
           <div className="text-primary/20 group-hover:text-primary/40 absolute top-4 right-4 transition-colors">
             <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -57,10 +48,11 @@ export function Testimonials({
           </p>
 
           {/* 用户信息 - 推特风格 */}
-          <div className="flex items-center gap-3">
+          <div className="mt-4 flex items-center gap-3">
             <div className="relative">
-              {/* 圆形头像 */}
-              <div className="from-primary absolute -inset-0.5 rounded-full bg-gradient-to-r to-purple-500 opacity-0 blur transition-opacity duration-300 group-hover:opacity-30" />
+              {/* 彩色模糊背景 */}
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-75 blur-sm" />
+              <div className="from-primary absolute -inset-0.5 rounded-full bg-gradient-to-r via-blue-500 to-purple-500 opacity-50 blur" />
               <div className="relative size-10 overflow-hidden rounded-full border-2 border-white/20 shadow-lg">
                 <LazyImage
                   src={item.image?.src || item.avatar?.src || ''}
@@ -94,12 +86,15 @@ export function Testimonials({
               {randomHour !== null ? `${randomHour}h` : ''}
             </div>
           </div>
-
-          {/* 互动图标 */}
         </CardContent>
       </Card>
     );
   };
+
+  // 将 items 分成两组用于不同的滚动行
+  const items = section.items || [];
+  const firstRow = items.slice(0, Math.ceil(items.length / 2));
+  const secondRow = items.slice(Math.ceil(items.length / 2));
 
   return (
     <section
@@ -117,7 +112,7 @@ export function Testimonials({
 
       <div className="relative z-10 container">
         <ScrollAnimation>
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto mb-12 max-w-4xl text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {' '}
               {texts && texts.length > 0 ? (
@@ -140,13 +135,28 @@ export function Testimonials({
           </div>
         </ScrollAnimation>
 
-        <ScrollAnimation delay={0.2}>
-          <div className="relative mx-auto mt-12 grid auto-rows-auto gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {section.items?.map((item, index) => (
-              <TestimonialCard key={index} item={item} index={index} />
+        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+          {/* 第一行 - 正向滚动 */}
+          <Marquee pauseOnHover className="[--duration:40s]">
+            {firstRow.map((item, index) => (
+              <TestimonialCard key={`first-${index}`} item={item} />
             ))}
-          </div>
-        </ScrollAnimation>
+          </Marquee>
+
+          {/* 第二行 - 反向滚动 */}
+          {secondRow.length > 0 && (
+            <Marquee reverse pauseOnHover className="mt-4 [--duration:40s]">
+              {secondRow.map((item, index) => (
+                <TestimonialCard key={`second-${index}`} item={item} />
+              ))}
+            </Marquee>
+          )}
+
+          {/* 渐变遮罩 - 左侧 */}
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
+          {/* 渐变遮罩 - 右侧 */}
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
+        </div>
       </div>
     </section>
   );

@@ -20,7 +20,7 @@
         "label": "AI Models",
         "description": "Marble AI integrates the most powerful text-to-image AI models, giving you access to cutting-edge image generation technology in one platform.",
         "image": {
-          "src": "/imgs/features/landing-page.png",
+          "src": "/imgs/models/grok-imagine.mp4",
           "alt": "Marble AI Text To Image"
         },
         "items": [
