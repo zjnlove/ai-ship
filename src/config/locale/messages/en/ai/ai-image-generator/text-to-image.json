@@ -99,8 +99,8 @@
         ],
         "className": "bg-muted/80"
       },
-      "case": {
-        "id": "features-case",
+      "model": {
+        "id": "features-model",
         "title": "Explore Our AI Image Models",
         "highlight_text": "AI Image Models",
         "description": "Choose from the world's most advanced text-to-image models, each with unique strengths for different creative needs.",
@@ -108,7 +108,7 @@
           {
             "title": "Qwen Image 2.0",
             "text": "Qwen",
-            "description": "Unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative workflows.",
+            "description": "Alibaba Qwen Image 2.0 is a unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative and visual design workflows.",
             "image": {
               "src": "/imgs/models/qwen-image-2.png",
               "alt": "Qwen Image 2.0"
@@ -117,7 +117,7 @@
           {
             "title": "Qwen Image",
             "text": "Qwen",
-            "description": "Multilingual text rendering and advanced editing capabilities that rival top models for design and creative automation.",
+            "description": "The Qwen Image API empowers creators, developers, and businesses to generate and edit photorealistic images effortlessly. Whether you're crafting intricate designs or refining existing visuals, this powerful Qwen API integrates seamlessly into your workflow, delivering multilingual text rendering and advanced editing capabilities that rival top models.",
             "image": {
               "src": "/imgs/models/qwen-image.png",
               "alt": "Qwen Image"
@@ -126,7 +126,7 @@
           {
             "title": "Nano Banana 2",
             "text": "Google",
-            "description": "Gemini 3.1 Flash Image model with lightning-fast speed, Pro-level quality, accurate text rendering, and strong character consistency.",
+            "description": "Meet Nano Banana 2, Google’s Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers, it combines lightning-fast speed with Pro-level quality, accurate text rendering, strong character consistency, and scalable image generation and editing workflows.",
             "image": {
               "src": "/imgs/models/nano-banana-2.png",
               "alt": "Nano Banana 2"
@@ -135,7 +135,7 @@
           {
             "title": "Nano Banana Pro",
             "text": "Google",
-            "description": "Sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency for professional workflows.",
+            "description": "Google DeepMind’s Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency—offering a major leap in visual quality for creative and API-driven workflows.",
             "image": {
               "src": "/imgs/models/nano-banana-pro.png",
               "alt": "Nano Banana Pro"
@@ -144,7 +144,7 @@
           {
             "title": "Imagen 4",
             "text": "Google",
-            "description": "State-of-the-art text-to-image generation with exceptional detail, photorealistic visuals, and creative versatility.",
+            "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art text-to-image generation model that transforms prompts into photorealistic, high-quality visuals with exceptional detail and creative versatility. Its enhanced variant, Google Imagen 4 Ultra, delivers even greater precision, speed, and resolution, making both models ideal for commercial, marketing, design, and creative applications.",
             "image": {
               "src": "/imgs/models/imagen-4.webp",
               "alt": "Imagen 4"
@@ -153,7 +153,7 @@
           {
             "title": "gpt-image-1.5",
             "text": "OpenAI",
-            "description": "Flagship image generation model for high-quality creation and precise editing with strong instruction following.",
+            "description": "GPT Image 1.5 is OpenAI’s flagship image generation model for high-quality image creation and precise image editing, with strong instruction following and improved text rendering.",
             "image": {
               "src": "/imgs/models/gpt-image-1.5.webp",
               "alt": "gpt-image-1.5"
@@ -162,7 +162,7 @@
           {
             "title": "4o Image",
             "text": "OpenAI",
-            "description": "GPT-Image-1 model that understands text and visual context, supports consistent styles and renders legible text.",
+            "description": "The GPT-Image-1 model, also known as ChatGPT 4o Image, is OpenAI’s latest AI image generation model. It understands both text and visual context, allowing developers to create and edit images with remarkable accuracy. Unlike traditional diffusion models, GPT-Image-1 follows instructions precisely, supports consistent styles, and renders legible text — making it ideal for applications in design, marketing, and creative automation.",
             "image": {
               "src": "/imgs/models/4o-image.png",
               "alt": "4o Image"
@@ -171,7 +171,7 @@
           {
             "title": "FLUX.2",
             "text": "Black Forest Labs",
-            "description": "Advanced image generation with photoreal detail, strong multi-reference consistency, and accurate text rendering.",
+            "description": "Flux 2 is Black Forest Labs’ advanced image generation model that delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
             "image": {
               "src": "/imgs/models/flux-2.png",
               "alt": "FLUX.2"
@@ -180,7 +180,7 @@
           {
             "title": "Flux Kontext",
             "text": "Black Forest Labs",
-            "description": "Edit images with simple text commands, delivering professional results for e-commerce and marketing visuals.",
+            "description": "In a world where visuals drive engagement, FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands, delivering professional results that save time and boost creativity. Whether you're optimizing e-commerce listings or crafting marketing masterpieces, Kie.ai's FLUX.1 Kontext API is your gateway to efficient, high-quality image innovation.",
             "image": {
               "src": "/imgs/models/flux-kontext.png",
               "alt": "Flux Kontext"
@@ -189,7 +189,7 @@
           {
             "title": "Grok Imagine",
             "text": "Grok",
-            "description": "Multimodal image and video generation model that converts text or images into short visual outputs with coherent motion.",
+            "description": "Grok Imagine is xAI’s multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio.",
             "image": {
               "src": "/imgs/models/grok-imagine.png",
               "alt": "Grok Imagine"
@@ -198,11 +198,58 @@
           {
             "title": "Ideogram V3",
             "text": "Ideogram",
-            "description": "Latest generation with text-to-image, editing, reframing, and remixing with improved consistency and creative control.",
+            "description": "Ideogram V3 API is the latest generation of Ideogram’s image generation model, offering text-to-image, image editing, reframing, and remixing with improved consistency and creative control.",
             "image": {
               "src": "/imgs/models/ideogram-v3.webp",
               "alt": "Ideogram V3"
             }
+          },
+          {
+            "title": "Google",
+            "text": "NanoBanana-Gemini 2.5 Flash",
+            "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image generation and editing. It produces hyper-realistic, physics-aware visuals with seamless style transformations.",
+            "image": {
+              "src": "/imgs/models/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash"
+            }
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Text To Image?",
+        "highlight_text": "Text To Image",
+        "description": "Experience the most powerful and versatile AI image generation platform with unmatched quality and speed.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access 11+ leading models including Qwen Image, Imagen 4, FLUX.2, and GPT Image in one platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Generate stunning images in 5-15 seconds with our optimized infrastructure.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "4K Quality",
+            "description": "Create high-resolution images up to 4K with exceptional detail and clarity.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated images. Use them anywhere without restrictions.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Style Control",
+            "description": "Extensive customization with style presets, aspect ratios, and advanced parameters.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Seamless API integration for developers to build AI-powered applications.",
+            "icon": "RiCodeLine"
           }
         ]
       },

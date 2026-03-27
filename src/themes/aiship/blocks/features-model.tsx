@@ -7,7 +7,7 @@ import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
 
-export function FeaturesCase({
+export function FeaturesModel({
   section,
   className,
 }: {
