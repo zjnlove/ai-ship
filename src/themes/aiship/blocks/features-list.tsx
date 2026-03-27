@@ -2,6 +2,7 @@
 
 import { Link } from '@/core/i18n/navigation';
 import { LazyImage, SmartIcon } from '@/shared/blocks/common';
+import { AnimatedGroup } from '@/shared/components/ui/animated-group';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
@@ -29,7 +30,7 @@ export function FeaturesList({
         className
       )}
     >
-      <div className="relative z-10 container overflow-x-hidden">
+      <div className="relative z-10 container overflow-hidden">
         <div className="flex flex-wrap items-center gap-8 pb-12 md:gap-24">
           <ScrollAnimation direction="left">
             <div className="mx-auto w-full max-w-[500px] flex-shrink-0 md:mx-8">
@@ -113,38 +114,41 @@ export function FeaturesList({
           </div>
         </div>
 
-        <ScrollAnimation delay={0.1}>
-          <div className="relative grid min-w-0 grid-cols-1 gap-6 border-t border-white/10 pt-12 break-words sm:grid-cols-2 lg:grid-cols-4">
-            {section.items?.map((item, idx) => (
-              <Card
-                className="group card-hover min-w-0 break-words transition-all duration-300"
-                key={idx}
-              >
-                <CardContent className="space-y-4">
-                  {/* 图标容器 */}
-                  <div className="bg-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
-                    {item.icon && (
-                      <SmartIcon
-                        name={item.icon as string}
-                        size={24}
-                        className="text-white"
-                      />
-                    )}
-                  </div>
+        <AnimatedGroup
+          preset="blur-slide"
+          scrollTrigger={true}
+          delay={0.4}
+          className="relative grid min-w-0 grid-cols-1 gap-6 border-t border-white/10 pt-12 break-words sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {section.items?.map((item, idx) => (
+            <Card
+              className="group card-hover h-full min-w-0 break-words transition-all duration-300"
+              key={idx}
+            >
+              <CardContent className="space-y-4">
+                {/* 图标容器 */}
+                <div className="bg-primary flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-110">
+                  {item.icon && (
+                    <SmartIcon
+                      name={item.icon as string}
+                      size={24}
+                      className="text-white"
+                    />
+                  )}
+                </div>
 
-                  <div className="space-y-2">
-                    <h3 className="text-foreground font-semibold">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {item.description ?? ''}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </ScrollAnimation>
+                <div className="space-y-2">
+                  <h3 className="text-foreground font-semibold">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description ?? ''}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </AnimatedGroup>
       </div>
     </section>
   );
