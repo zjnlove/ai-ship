@@ -222,6 +222,18 @@
   }
 }
 
+/* 慢速淡入缩放动画（用于大图展示） */
+@keyframes slow-fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* 渐变文本动画 */
 @keyframes gradient-move {
   0% {
@@ -265,6 +277,24 @@
 
 .animate-scale-in {
   animation: scale-in 0.5s ease-out forwards;
+}
+
+.animate-slow-fade-in-scale {
+  animation: slow-fade-in-scale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* 缩略图无限循环滚动动画 */
+@keyframes scroll-thumbnails {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-thumbnails {
+  animation: scroll-thumbnails 30s linear infinite;
 }
 
 .animate-gradient-text {

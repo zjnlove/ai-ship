@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Marble AI - Text To Image Generator",
-    "description": "Transform your ideas into stunning visuals with Marble AI's Text To Image generator. Powered by leading AI models including DALL-E 3, Imagen, Stable Diffusion, Flux, and more."
+    "description": "Transform your ideas into stunning visuals with Marble AI's Text To Image generator. Powered by leading AI models including Qwen Image, Imagen 4, FLUX.2, GPT Image, Grok Imagine, and more."
   },
   "page": {
     "sections": {
@@ -25,57 +25,39 @@
         },
         "items": [
           {
-            "title": "DALL-E 3",
-            "description": "OpenAI's latest model delivers exceptional image quality with precise prompt understanding and stunning photorealistic outputs.",
+            "title": "Qwen",
+            "description": "Alibaba's Qwen team delivers powerful image generation models with multilingual text rendering and advanced editing capabilities.",
             "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/1.png",
-              "alt": "DALL-E 3"
+              "alt": "Qwen"
             }
           },
           {
-            "title": "Imagen",
-            "description": "Google's state-of-the-art model excels at photorealism, text rendering, and understanding complex spatial relationships in images.",
+            "title": "Google",
+            "description": "Google DeepMind's Imagen and Gemini series excel at photorealism, text rendering, and understanding complex spatial relationships.",
             "icon": "RiGoogleLine",
             "image": {
               "src": "/imgs/features/2.png",
-              "alt": "Imagen"
+              "alt": "Google"
             }
           },
           {
-            "title": "Nana Banana",
-            "description": "A versatile AI model known for creative interpretations and vibrant color palettes, perfect for artistic and illustrative content.",
+            "title": "OpenAI",
+            "description": "GPT-powered image models that understand both text and visual context, delivering precise instruction following and consistent styles.",
             "icon": "RiSparklingLine",
             "image": {
               "src": "/imgs/features/3.png",
-              "alt": "Nana Banana"
+              "alt": "OpenAI"
             }
           },
           {
-            "title": "Nana Banana Pro",
-            "description": "The professional version with enhanced detail rendering, faster generation speeds, and superior quality for commercial applications.",
-            "icon": "RiVipCrownLine",
-            "image": {
-              "src": "/imgs/features/4.png",
-              "alt": "Nana Banana Pro"
-            }
-          },
-          {
-            "title": "Stable Diffusion",
-            "description": "The open-source powerhouse offering incredible flexibility, customizability, and a vibrant community of fine-tuned models.",
+            "title": "Black Forest Labs",
+            "description": "The original Stable Diffusion team's next-generation models with exceptional detail, accurate text rendering, and flexible control.",
             "icon": "RiImageLine",
             "image": {
-              "src": "/imgs/features/5.png",
-              "alt": "Stable Diffusion"
-            }
-          },
-          {
-            "title": "Flux",
-            "description": "Next-generation AI model known for exceptional detail, accurate text rendering, and superior artistic style control.",
-            "icon": "RiSparklingLine",
-            "image": {
-              "src": "/imgs/features/6.png",
-              "alt": "Flux"
+              "src": "/imgs/features/4.png",
+              "alt": "Black Forest Labs"
             }
           },
           {
@@ -83,8 +65,26 @@
             "description": "Renowned for creating artistic, dreamlike visuals with exceptional aesthetic quality and creative interpretation.",
             "icon": "RiPaletteLine",
             "image": {
-              "src": "/imgs/features/7.png",
+              "src": "/imgs/features/5.png",
               "alt": "Midjourney"
+            }
+          },
+          {
+            "title": "Stability AI",
+            "description": "Creators of Stable Diffusion, offering open-source and commercial models with incredible flexibility and community-driven innovation.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Stability AI"
+            }
+          },
+          {
+            "title": "Grok (xAI)",
+            "description": "xAI's multimodal image and video generation model with coherent motion and synchronized audio capabilities.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Grok"
             }
           },
           {
@@ -99,56 +99,110 @@
         ],
         "className": "bg-muted/80"
       },
-      "features": {
-        "id": "features",
-        "title": "Why Choose Marble AI Text To Image for Generation?",
-        "highlight_text": "Why Choose",
-        "description": "Everything you need to create professional-quality images from your imagination.",
+      "case": {
+        "id": "features-case",
+        "title": "Explore Our AI Image Models",
+        "highlight_text": "AI Image Models",
+        "description": "Choose from the world's most advanced text-to-image models, each with unique strengths for different creative needs.",
         "items": [
           {
-            "title": "Multiple AI Models",
-            "description": "Access DALL-E 3, Imagen, Stable Diffusion, Flux, Midjourney, Ideogram and more in one unified platform.",
-            "icon": "RiRobot2Line"
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "Unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative workflows.",
+            "image": {
+              "src": "/imgs/models/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
+            }
           },
           {
-            "title": "High-Resolution Output",
-            "description": "Generate stunning 4K+ images with incredible detail and clarity for any use case.",
-            "icon": "RiHdLine"
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "Multilingual text rendering and advanced editing capabilities that rival top models for design and creative automation.",
+            "image": {
+              "src": "/imgs/models/qwen-image.png",
+              "alt": "Qwen Image"
+            }
           },
           {
-            "title": "Style Diversity",
-            "description": "Create anything from photorealistic images to artistic illustrations, anime, oil paintings, and more.",
-            "icon": "RiPaletteLine"
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "Gemini 3.1 Flash Image model with lightning-fast speed, Pro-level quality, accurate text rendering, and strong character consistency.",
+            "image": {
+              "src": "/imgs/models/nano-banana-2.png",
+              "alt": "Nano Banana 2"
+            }
           },
           {
-            "title": "Lightning Fast",
-            "description": "Optimized infrastructure delivers your images in seconds, not minutes.",
-            "icon": "RiFlashlightLine"
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency for professional workflows.",
+            "image": {
+              "src": "/imgs/models/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
           },
           {
-            "title": "Precise Control",
-            "description": "Fine-tune your results with advanced parameters, negative prompts, and style presets.",
-            "icon": "RiSettings3Line"
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "State-of-the-art text-to-image generation with exceptional detail, photorealistic visuals, and creative versatility.",
+            "image": {
+              "src": "/imgs/models/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
           },
           {
-            "title": "Commercial License",
-            "description": "All generated images come with full commercial rights for your business needs.",
-            "icon": "RiShieldCheckLine"
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "Flagship image generation model for high-quality creation and precise editing with strong instruction following.",
+            "image": {
+              "src": "/imgs/models/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
           },
           {
-            "title": "Batch Generation",
-            "description": "Generate multiple variations at once to find the perfect image for your project.",
-            "icon": "RiStackLine"
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "GPT-Image-1 model that understands text and visual context, supports consistent styles and renders legible text.",
+            "image": {
+              "src": "/imgs/models/4o-image.png",
+              "alt": "4o Image"
+            }
           },
           {
-            "title": "API Access",
-            "description": "Integrate Marble AI into your applications with our developer-friendly REST API.",
-            "icon": "RiCodeLine"
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Advanced image generation with photoreal detail, strong multi-reference consistency, and accurate text rendering.",
+            "image": {
+              "src": "/imgs/models/flux-2.png",
+              "alt": "FLUX.2"
+            }
           },
           {
-            "title": "24/7 Support",
-            "description": "Our dedicated support team is always ready to help you get the most out of Marble AI.",
-            "icon": "RiCustomerService2Line"
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "Edit images with simple text commands, delivering professional results for e-commerce and marketing visuals.",
+            "image": {
+              "src": "/imgs/models/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Multimodal image and video generation model that converts text or images into short visual outputs with coherent motion.",
+            "image": {
+              "src": "/imgs/models/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Latest generation with text-to-image, editing, reframing, and remixing with improved consistency and creative control.",
+            "image": {
+              "src": "/imgs/models/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
           }
         ]
       },
@@ -161,7 +215,7 @@
           {
             "name": "Sarah Mitchell",
             "role": "Digital Artist",
-            "quote": "Marble AI has revolutionized my creative workflow. Having DALL-E 3, Imagen, and Flux in one place saves me hours of switching between tools. The quality is outstanding!",
+            "quote": "Marble AI has revolutionized my creative workflow. Having Qwen Image, Imagen 4, and FLUX.2 in one place saves me hours of switching between tools. The quality is outstanding!",
             "image": {
               "src": "/imgs/avatars/1.png",
               "alt": "sarah"
@@ -179,7 +233,7 @@
           {
             "name": "Emily Chen",
             "role": "Game Developer",
-            "quote": "The Flux model on Marble AI produces incredible concept art for our games. The detail and consistency are exactly what we need for rapid prototyping.",
+            "quote": "The FLUX.2 model on Marble AI produces incredible concept art for our games. The detail and consistency are exactly what we need for rapid prototyping.",
             "image": {
               "src": "/imgs/avatars/3.png",
               "alt": "emily"
@@ -215,7 +269,7 @@
           {
             "name": "Amanda Foster",
             "role": "Social Media Manager",
-            "quote": "Imagen on Marble AI creates the most realistic product mockups I've ever seen. Our Instagram engagement has doubled since we started using it!",
+            "quote": "Imagen 4 on Marble AI creates the most realistic product mockups I've ever seen. Our Instagram engagement has doubled since we started using it!",
             "image": {
               "src": "/imgs/avatars/7.png",
               "alt": "amanda"
@@ -270,7 +324,7 @@
           },
           {
             "question": "Which AI models does Marble AI support?",
-            "answer": "Marble AI integrates the leading text-to-image models including DALL-E 3 (OpenAI), Imagen (Google), Nana Banana, Nana Banana Pro, Stable Diffusion, Flux, Midjourney, Ideogram, Leonardo AI, and Playground AI. Each model has unique strengths, and you can choose the best one for your specific needs."
+            "answer": "Marble AI integrates the leading text-to-image models including Qwen Image 2.0 (Qwen), Imagen 4 (Google), Nano Banana 2 (Google), Nano Banana Pro (Google), gpt-image-1.5 (OpenAI), 4o Image (OpenAI), FLUX.2 (Black Forest Labs), Flux Kontext (Black Forest Labs), Grok Imagine (Grok), and Ideogram V3 (Ideogram). Each model has unique strengths, and you can choose the best one for your specific needs."
           },
           {
             "question": "How do I use Marble AI's Text To Image generator?",
