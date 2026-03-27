@@ -174,7 +174,7 @@ export default async function DynamicPage({
             component: (
               <ImageGenerator
                 srOnlyTitle={aiMessages.generator?.title}
-                className="md:py-0"
+                className=""
               />
             ),
           },

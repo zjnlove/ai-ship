@@ -1,29 +1,304 @@
 {
   "metadata": {
-    "title": "AI Image Generator",
-    "description": "Generate images with AI models, support text-to-image and image-to-image."
+    "title": "Marble AI - Text To Image Generator",
+    "description": "Transform your ideas into stunning visuals with Marble AI's Text To Image generator. Powered by leading AI models including DALL-E 3, Imagen, Stable Diffusion, Flux, and more."
   },
   "page": {
     "sections": {
       "hero": {
         "title": "Text To Image",
-        "description": "Generate images with AI models, support text-to-image and image-to-image.",
+        "highlight_text": "Text To Image",
+        "description": "Unleash your creativity with Marble AI. Generate stunning, high-quality images from text descriptions using the world's most advanced AI models.",
         "show_bg": false,
         "className": "hero-custom"
       },
-      "faq": {
-        "title": "FAQ",
-        "description": "Frequently Asked Questions",
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "Powered by Leading AI Models",
+        "highlight_text": "Leading AI Models",
+        "label": "AI Models",
+        "description": "Marble AI integrates the most powerful text-to-image AI models, giving you access to cutting-edge image generation technology in one platform.",
+        "image": {
+          "src": "/imgs/features/landing-page.png",
+          "alt": "Marble AI Text To Image"
+        },
         "items": [
           {
-            "title": "What is AI Image Generator?",
-            "description": "AI Image Generator is a tool that allows you to generate images with AI models, support text-to-image and image-to-image."
+            "title": "DALL-E 3",
+            "description": "OpenAI's latest model delivers exceptional image quality with precise prompt understanding and stunning photorealistic outputs.",
+            "icon": "RiRobot2Line",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "DALL-E 3"
+            }
+          },
+          {
+            "title": "Imagen",
+            "description": "Google's state-of-the-art model excels at photorealism, text rendering, and understanding complex spatial relationships in images.",
+            "icon": "RiGoogleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Imagen"
+            }
+          },
+          {
+            "title": "Nana Banana",
+            "description": "A versatile AI model known for creative interpretations and vibrant color palettes, perfect for artistic and illustrative content.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/3.png",
+              "alt": "Nana Banana"
+            }
+          },
+          {
+            "title": "Nana Banana Pro",
+            "description": "The professional version with enhanced detail rendering, faster generation speeds, and superior quality for commercial applications.",
+            "icon": "RiVipCrownLine",
+            "image": {
+              "src": "/imgs/features/4.png",
+              "alt": "Nana Banana Pro"
+            }
+          },
+          {
+            "title": "Stable Diffusion",
+            "description": "The open-source powerhouse offering incredible flexibility, customizability, and a vibrant community of fine-tuned models.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/5.png",
+              "alt": "Stable Diffusion"
+            }
+          },
+          {
+            "title": "Flux",
+            "description": "Next-generation AI model known for exceptional detail, accurate text rendering, and superior artistic style control.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Flux"
+            }
+          },
+          {
+            "title": "Midjourney",
+            "description": "Renowned for creating artistic, dreamlike visuals with exceptional aesthetic quality and creative interpretation.",
+            "icon": "RiPaletteLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Midjourney"
+            }
+          },
+          {
+            "title": "Ideogram",
+            "description": "Specializes in accurate text rendering within images, perfect for logos, posters, and typography-focused designs.",
+            "icon": "RiText",
+            "image": {
+              "src": "/imgs/features/8.png",
+              "alt": "Ideogram"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Text To Image for Generation?",
+        "highlight_text": "Why Choose",
+        "description": "Everything you need to create professional-quality images from your imagination.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access DALL-E 3, Imagen, Stable Diffusion, Flux, Midjourney, Ideogram and more in one unified platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "High-Resolution Output",
+            "description": "Generate stunning 4K+ images with incredible detail and clarity for any use case.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Style Diversity",
+            "description": "Create anything from photorealistic images to artistic illustrations, anime, oil paintings, and more.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Optimized infrastructure delivers your images in seconds, not minutes.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Precise Control",
+            "description": "Fine-tune your results with advanced parameters, negative prompts, and style presets.",
+            "icon": "RiSettings3Line"
+          },
+          {
+            "title": "Commercial License",
+            "description": "All generated images come with full commercial rights for your business needs.",
+            "icon": "RiShieldCheckLine"
+          },
+          {
+            "title": "Batch Generation",
+            "description": "Generate multiple variations at once to find the perfect image for your project.",
+            "icon": "RiStackLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Integrate Marble AI into your applications with our developer-friendly REST API.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "24/7 Support",
+            "description": "Our dedicated support team is always ready to help you get the most out of Marble AI.",
+            "icon": "RiCustomerService2Line"
           }
         ]
       },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "What Creators Say About Marble AI Text To Image",
+        "highlight_text": "What Creators Say",
+        "description": "Join thousands of artists, designers, and creators who trust Marble AI for their image generation needs.",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "Digital Artist",
+            "quote": "Marble AI has revolutionized my creative workflow. Having DALL-E 3, Imagen, and Flux in one place saves me hours of switching between tools. The quality is outstanding!",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "Marketing Director",
+            "quote": "We generate all our campaign visuals with Marble AI. The commercial license and variety of models give us everything we need for professional marketing materials.",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "Game Developer",
+            "quote": "The Flux model on Marble AI produces incredible concept art for our games. The detail and consistency are exactly what we need for rapid prototyping.",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "Content Creator",
+            "quote": "I've tried every AI image generator out there. Marble AI stands out with its speed, quality, and the ability to compare results across different models instantly.",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "E-commerce Entrepreneur",
+            "quote": "Marble AI helps us create stunning product visualizations without expensive photoshoots. Our conversion rates have increased by 40% since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "Graphic Designer",
+            "quote": "The style diversity is unmatched. Whether I need photorealistic renders or artistic illustrations, Marble AI delivers perfect results every time.",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "Social Media Manager",
+            "quote": "Imagen on Marble AI creates the most realistic product mockups I've ever seen. Our Instagram engagement has doubled since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "Architect",
+            "quote": "The batch generation feature is a game-changer. I can explore dozens of design concepts in minutes instead of hours. Absolutely essential for my workflow.",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "Startup Founder",
+            "quote": "The API integration was seamless. We built our entire product visualization pipeline with Marble AI in just one week. The documentation is excellent!",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "Freelance Illustrator",
+            "quote": "As a freelancer, Marble AI's commercial license gives me peace of mind. I can create for clients without worrying about usage rights. Worth every penny!",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "Education Content Creator",
+            "quote": "The 24/7 support team is incredible. They helped me optimize my prompts and now I'm creating educational visuals that my students absolutely love!",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "FAQ - Text To Image Generator",
+        "highlight_text": "FAQ",
+        "description": "Everything you need to know about Marble AI's Text To Image generator.",
+        "items": [
+          {
+            "title": "What is Text To Image?",
+            "description": "Text To Image is an AI-powered technology that transforms written descriptions into visual images. Simply describe what you want to see, and Marble AI's advanced models will generate it for you."
+          },
+          {
+            "question": "Which AI models does Marble AI support?",
+            "answer": "Marble AI integrates the leading text-to-image models including DALL-E 3 (OpenAI), Imagen (Google), Nana Banana, Nana Banana Pro, Stable Diffusion, Flux, Midjourney, Ideogram, Leonardo AI, and Playground AI. Each model has unique strengths, and you can choose the best one for your specific needs."
+          },
+          {
+            "question": "How do I use Marble AI's Text To Image generator?",
+            "answer": "Simply enter a text description of the image you want to create, select your preferred AI model and style settings, and click generate. Our intuitive interface makes it easy for anyone to create professional-quality images in seconds."
+          },
+          {
+            "question": "What image quality can I expect?",
+            "answer": "Marble AI generates high-resolution images up to 4K quality. The exact output depends on the model you choose, but all our models are optimized for exceptional detail, color accuracy, and visual appeal."
+          },
+          {
+            "question": "Can I use generated images commercially?",
+            "answer": "Yes! All images generated through Marble AI come with full commercial rights. You can use them for marketing, products, websites, social media, and any other business purposes without restrictions."
+          },
+          {
+            "question": "How fast is the image generation?",
+            "answer": "Most images are generated within 5-15 seconds depending on the model and complexity. Our optimized infrastructure ensures you get your results quickly without compromising quality."
+          },
+          {
+            "question": "Can I customize the style of generated images?",
+            "answer": "Absolutely! Marble AI offers extensive customization options including style presets, negative prompts, aspect ratios, and advanced parameters. You have full control over the artistic direction of your images."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
       "cta": {
-        "title": "Ready to Create Images?",
-        "description": "Start creating images with AI models, support text-to-image and image-to-image.",
+        "title": "Ready to Create Amazing Images?",
+        "highlight_text": "Amazing Images",
+        "description": "Start generating stunning visuals with Marble AI's powerful Text To Image technology. Choose from the world's best AI models.",
         "buttons": [
           {
             "title": "Start Creating",
