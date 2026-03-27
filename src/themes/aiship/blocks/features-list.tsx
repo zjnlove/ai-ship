@@ -33,7 +33,7 @@ export function FeaturesList({
       <div className="relative z-10 container overflow-hidden">
         <div className="flex flex-wrap items-center gap-8 pb-12 md:gap-24">
           <ScrollAnimation direction="left">
-            <div className="mx-auto w-full max-w-[500px] flex-shrink-0 md:mx-8">
+            <div className="mx-auto w-full max-w-[500px] flex-shrink-0 md:mx-4">
               <div className="group card-hover overflow-hidden rounded-2xl border border-white/10 shadow-xl">
                 {section.image?.src?.match(/\.(mp4|webm|ogg|mov)$/i) ? (
                   <video
