@@ -403,7 +403,7 @@
         "buttons": [
           {
             "title": "Start Creating",
-            "url": "#create",
+            "url": "#",
             "icon": "Sparkles"
           }
         ],

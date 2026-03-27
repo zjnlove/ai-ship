@@ -1,39 +1,409 @@
 {
   "metadata": {
-    "title": "AI Image Generator",
-    "description": "Generate images with AI models, support text-to-image and image-to-image."
+    "title": "Marble AI - Image To Image Generator",
+    "description": "Transform and enhance your images with Marble AI's Image To Image generator. Powered by leading AI models including Qwen Image, Imagen 4, FLUX.2, GPT Image, Grok Imagine, and more."
   },
   "page": {
     "sections": {
       "hero": {
         "title": "Image To Image",
-        "description": "Generate images with AI models, support text-to-image and image-to-image.",
-        "buttons": [
-          {
-            "title": "Start Creating",
-            "url": "#create",
-            "icon": "Sparkles"
-          }
-        ],
-        "show_bg": false
+        "highlight_text": "Image To Image",
+        "description": "Transform your images with the power of AI. Upload any image and let Marble AI's advanced models enhance, edit, and reimagine it with stunning results.",
+        "show_bg": false,
+        "className": "hero-custom"
       },
-      "faq": {
-        "title": "FAQ",
-        "description": "Frequently Asked Questions",
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "Powered by Leading AI Models",
+        "highlight_text": "Leading AI Models",
+        "label": "AI Models",
+        "description": "Marble AI integrates the most powerful image-to-image AI models, giving you access to cutting-edge image editing and transformation technology in one platform.",
+        "image": {
+          "src": "/imgs/models/grok-imagine.mp4",
+          "alt": "Marble AI Image To Image"
+        },
         "items": [
           {
-            "title": "What is AI Image Generator?",
-            "description": "AI Image Generator is a tool that allows you to generate images with AI models, support text-to-image and image-to-image."
+            "title": "Qwen",
+            "description": "Alibaba's Qwen team delivers powerful image editing models with advanced transformation capabilities and precise control over style and content.",
+            "icon": "RiRobot2Line",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "Qwen"
+            }
+          },
+          {
+            "title": "Google",
+            "description": "Google DeepMind's Imagen and Gemini series excel at image enhancement, style transfer, and understanding complex visual relationships for seamless edits.",
+            "icon": "RiGoogleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Google"
+            }
+          },
+          {
+            "title": "OpenAI",
+            "description": "GPT-powered image models that understand visual context, delivering precise image editing and consistent style transformations.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/3.png",
+              "alt": "OpenAI"
+            }
+          },
+          {
+            "title": "Black Forest Labs",
+            "description": "The original Stable Diffusion team's next-generation models with exceptional detail preservation and flexible image manipulation control.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/4.png",
+              "alt": "Black Forest Labs"
+            }
+          },
+          {
+            "title": "Midjourney",
+            "description": "Renowned for transforming images into artistic, dreamlike visuals with exceptional aesthetic quality and creative interpretation.",
+            "icon": "RiPaletteLine",
+            "image": {
+              "src": "/imgs/features/5.png",
+              "alt": "Midjourney"
+            }
+          },
+          {
+            "title": "Stability AI",
+            "description": "Creators of Stable Diffusion, offering open-source and commercial models with incredible flexibility for image-to-image transformations.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Stability AI"
+            }
+          },
+          {
+            "title": "Grok (xAI)",
+            "description": "xAI's multimodal image and video editing model with coherent transformations and synchronized audio capabilities.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Grok"
+            }
+          },
+          {
+            "title": "Ideogram",
+            "description": "Specializes in accurate text rendering within edited images, perfect for updating logos, posters, and typography-focused designs.",
+            "icon": "RiText",
+            "image": {
+              "src": "/imgs/features/8.png",
+              "alt": "Ideogram"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "model": {
+        "id": "features-model",
+        "title": "Explore Our AI Image Editing Models",
+        "highlight_text": "AI Image Editing Models",
+        "description": "Choose from the world's most advanced image-to-image models, each with unique strengths for different editing and transformation needs.",
+        "items": [
+          {
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "Alibaba Qwen Image 2.0 is a unified image model for realistic editing, style transformation, native 2K output, and flexible manipulation across creative and visual design workflows.",
+            "image": {
+              "src": "/imgs/models/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
+            }
+          },
+          {
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "The Qwen Image API empowers creators, developers, and businesses to edit and transform images effortlessly. Whether you're refining existing visuals or applying creative transformations, this powerful Qwen API integrates seamlessly into your workflow, delivering precise editing capabilities that rival top models.",
+            "image": {
+              "src": "/imgs/models/qwen-image.png",
+              "alt": "Qwen Image"
+            }
+          },
+          {
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "Meet Nano Banana 2, Google's Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers, it combines lightning-fast speed with Pro-level quality, accurate style transfer, strong character consistency, and scalable image editing workflows.",
+            "image": {
+              "src": "/imgs/models/nano-banana-2.png",
+              "alt": "Nano Banana 2"
+            }
+          },
+          {
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind's Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved detail preservation, and enhanced style consistency—offering a major leap in image editing quality for creative and API-driven workflows.",
+            "image": {
+              "src": "/imgs/models/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art image-to-image editing model that transforms your images into photorealistic, high-quality visuals with exceptional detail and creative versatility. Its enhanced variant, Google Imagen 4 Ultra, delivers even greater precision, speed, and resolution, making both models ideal for commercial, marketing, design, and creative applications.",
+            "image": {
+              "src": "/imgs/models/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 is OpenAI's flagship image editing model for high-quality image transformation and precise image manipulation, with strong instruction following and improved detail preservation.",
+            "image": {
+              "src": "/imgs/models/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "The GPT-Image-1 model, also known as ChatGPT 4o Image, is OpenAI's latest AI image editing model. It understands visual context, allowing developers to edit and transform images with remarkable accuracy. Unlike traditional models, GPT-Image-1 follows instructions precisely, supports consistent styles, and preserves important details — making it ideal for applications in design, marketing, and creative automation.",
+            "image": {
+              "src": "/imgs/models/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 is Black Forest Labs' advanced image editing model that delivers photoreal detail preservation, strong style consistency, and accurate transformation with flexible control.",
+            "image": {
+              "src": "/imgs/models/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "In a world where visuals drive engagement, FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands, delivering professional results that save time and boost creativity. Whether you're optimizing e-commerce listings or crafting marketing masterpieces, Kie.ai's FLUX.1 Kontext API is your gateway to efficient, high-quality image innovation.",
+            "image": {
+              "src": "/imgs/models/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine is xAI's multimodal image and video editing model that transforms images into enhanced visual outputs with coherent motion and synchronized audio.",
+            "image": {
+              "src": "/imgs/models/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API is the latest generation of Ideogram's image editing model, offering image-to-image transformation, style editing, reframing, and remixing with improved consistency and creative control.",
+            "image": {
+              "src": "/imgs/models/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Google",
+            "text": "NanoBanana-Gemini 2.5 Flash",
+            "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image editing and transformation. It produces hyper-realistic, physics-aware visuals with seamless style transformations.",
+            "image": {
+              "src": "/imgs/models/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash"
+            }
           }
         ]
       },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Image To Image?",
+        "highlight_text": "Image To Image",
+        "description": "Experience the most powerful and versatile AI image editing platform with unmatched quality and speed.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access 11+ leading models including Qwen Image, Imagen 4, FLUX.2, and GPT Image in one platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Transform your images in 5-15 seconds with our optimized infrastructure.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "4K Quality",
+            "description": "Create high-resolution edited images up to 4K with exceptional detail and clarity.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all edited images. Use them anywhere without restrictions.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Style Control",
+            "description": "Extensive customization with style presets, aspect ratios, and advanced transformation parameters.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Seamless API integration for developers to build AI-powered image editing applications.",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "What Creators Say About Marble AI Image To Image",
+        "highlight_text": "What Creators Say",
+        "description": "Join thousands of artists, designers, and creators who trust Marble AI for their image editing and transformation needs.",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "Digital Artist",
+            "quote": "Marble AI has revolutionized my creative workflow. Having Qwen Image, Imagen 4, and FLUX.2 in one place saves me hours of switching between tools for image editing. The quality is outstanding!",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "Marketing Director",
+            "quote": "We transform all our campaign visuals with Marble AI. The commercial license and variety of models give us everything we need for professional image editing.",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "Game Developer",
+            "quote": "The FLUX.2 model on Marble AI produces incredible concept art transformations for our games. The detail preservation and style consistency are exactly what we need for rapid prototyping.",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "Content Creator",
+            "quote": "I've tried every AI image editor out there. Marble AI stands out with its speed, quality, and the ability to compare editing results across different models instantly.",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "E-commerce Entrepreneur",
+            "quote": "Marble AI helps us create stunning product visualizations by transforming existing photos. Our conversion rates have increased by 40% since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "Graphic Designer",
+            "quote": "The style diversity is unmatched. Whether I need photorealistic edits or artistic transformations, Marble AI delivers perfect results every time.",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "Social Media Manager",
+            "quote": "Imagen 4 on Marble AI creates the most realistic product mockups I've ever seen by transforming our photos. Our Instagram engagement has doubled since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "Architect",
+            "quote": "The batch editing feature is a game-changer. I can explore dozens of design variations in minutes instead of hours. Absolutely essential for my workflow.",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "Startup Founder",
+            "quote": "The API integration was seamless. We built our entire product image editing pipeline with Marble AI in just one week. The documentation is excellent!",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "Freelance Illustrator",
+            "quote": "As a freelancer, Marble AI's commercial license gives me peace of mind. I can edit images for clients without worrying about usage rights. Worth every penny!",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "Education Content Creator",
+            "quote": "The 24/7 support team is incredible. They helped me optimize my editing prompts and now I'm creating educational visuals that my students absolutely love!",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "FAQ - Image To Image Generator",
+        "highlight_text": "FAQ",
+        "description": "Everything you need to know about Marble AI's Image To Image generator.",
+        "items": [
+          {
+            "title": "What is Image To Image?",
+            "description": "Image To Image is an AI-powered technology that transforms and edits existing images using advanced AI models. Simply upload your image, describe the changes you want, and Marble AI's advanced models will transform it for you."
+          },
+          {
+            "question": "Which AI models does Marble AI support?",
+            "answer": "Marble AI integrates the leading image-to-image models including Qwen Image 2.0 (Qwen), Imagen 4 (Google), Nano Banana 2 (Google), Nano Banana Pro (Google), gpt-image-1.5 (OpenAI), 4o Image (OpenAI), FLUX.2 (Black Forest Labs), Flux Kontext (Black Forest Labs), Grok Imagine (Grok), and Ideogram V3 (Ideogram). Each model has unique strengths, and you can choose the best one for your specific editing needs."
+          },
+          {
+            "question": "How do I use Marble AI's Image To Image generator?",
+            "answer": "Simply upload the image you want to edit, describe the changes or transformations you want to apply, select your preferred AI model and style settings, and click generate. Our intuitive interface makes it easy for anyone to create professional-quality edited images in seconds."
+          },
+          {
+            "question": "What image quality can I expect?",
+            "answer": "Marble AI generates high-resolution edited images up to 4K quality. The exact output depends on the model you choose, but all our models are optimized for exceptional detail preservation, color accuracy, and visual appeal."
+          },
+          {
+            "question": "Can I use edited images commercially?",
+            "answer": "Yes! All images edited through Marble AI come with full commercial rights. You can use them for marketing, products, websites, social media, and any other business purposes without restrictions."
+          },
+          {
+            "question": "How fast is the image editing?",
+            "answer": "Most images are edited within 5-15 seconds depending on the model and complexity. Our optimized infrastructure ensures you get your results quickly without compromising quality."
+          },
+          {
+            "question": "Can I customize the style of edited images?",
+            "answer": "Absolutely! Marble AI offers extensive customization options including style presets, negative prompts, aspect ratios, and advanced transformation parameters. You have full control over the artistic direction of your edited images."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
       "cta": {
-        "title": "Ready to Create Images?",
-        "description": "Start creating images with AI models, support text-to-image and image-to-image.",
+        "title": "Ready to Transform Your Images?",
+        "highlight_text": "Transform Your Images",
+        "description": "Start editing and enhancing your images with Marble AI's powerful Image To Image technology. Choose from the world's best AI models.",
         "buttons": [
           {
-            "title": "Start Creating",
-            "url": "#create",
+            "title": "Start Editing",
+            "url": "#",
             "icon": "Sparkles"
           }
         ],
