@@ -384,7 +384,7 @@ function InfiniteScrollGallery({
           <div
             key={`first-${idx}`}
             className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
-            style={{ width: '320px', height: '500px' }}
+            style={{ width: '280px', height: '450px' }}
           >
             {item.type === 'video' ? (
               <video
@@ -427,7 +427,7 @@ function InfiniteScrollGallery({
           <div
             key={`second-${idx}`}
             className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
-            style={{ width: '320px', height: '500px' }}
+            style={{ width: '280px', height: '450px' }}
           >
             {item.type === 'video' ? (
               <video
