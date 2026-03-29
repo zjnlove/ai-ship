@@ -434,7 +434,7 @@ export function Header({ header }: { header: HeaderType }) {
       >
         <div
           className={cn(
-            'border-foreground/10 absolute inset-x-0 top-0 z-50 h-18 border-b ring-1 ring-transparent transition-all duration-300',
+            'border-foreground/10 absolute inset-x-0 top-0 z-50 h-18 ring-1 ring-transparent transition-all duration-300',
             'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur',
             'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-14 max-lg:in-data-[state=active]:backdrop-blur'
           )}
