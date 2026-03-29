@@ -112,7 +112,7 @@ export function Header({ header }: { header: HeaderType }) {
             // Link with children - use NavigationMenu
             return (
               <NavigationMenuItem key={idx}>
-                <NavigationMenuTrigger className="group relative [&_svg]:!transition-transform [&_svg]:!duration-200 group-data-[state=open]:[&_svg]:!rotate-180">
+                <NavigationMenuTrigger className="group relative [&_svg]:!transition-transform [&_svg]:!duration-200 [&>svg:last-child]:group-data-[state=open]:rotate-180">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} className="h-4 w-4" />
                   )}
