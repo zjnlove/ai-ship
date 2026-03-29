@@ -253,7 +253,7 @@ export function Cta({
                       size="lg"
                       variant={button.variant || 'default'}
                       className={cn(
-                        'rounded-lg px-8 py-6 text-lg font-semibold transition-all duration-300',
+                        'rounded-full px-8 py-7 text-lg font-semibold transition-all duration-300',
                         button.variant === 'default' || !button.variant
                           ? 'bg-primary hover:bg-primary/90 shadow-primary/40 hover:shadow-primary/60 text-white shadow-[0_0_20px] hover:scale-105 hover:text-black hover:shadow-[0_0_30px] dark:text-black hover:dark:text-white'
                           : 'border-primary text-primary hover:bg-primary border-2 bg-transparent hover:scale-105 hover:text-black hover:dark:text-white'

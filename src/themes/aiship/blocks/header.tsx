@@ -420,79 +420,81 @@ export function Header({ header }: { header: HeaderType }) {
       >
         <div
           className={cn(
-            'absolute inset-x-0 top-0 z-50 h-18 border-transparent ring-1 ring-transparent transition-all duration-300',
-            'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:border-b in-data-scrolled:backdrop-blur',
-            'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-14 max-lg:border-b max-lg:in-data-[state=active]:backdrop-blur'
+            'border-foreground/10 absolute inset-x-0 top-0 z-50 h-18 border-b ring-1 ring-transparent transition-all duration-300',
+            'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur',
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-14 max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
           <div className="container">
-            <div className="relative flex flex-wrap items-center justify-between lg:py-5">
-              <div className="flex justify-between gap-8 max-lg:h-14 max-lg:w-full max-lg:border-b">
-                {/* Brand Logo */}
+            <div className="relative flex items-center justify-between pt-5">
+              {/* Brand Logo */}
+              <div className="flex-shrink-0">
                 {header.brand && <BrandLogo brand={header.brand} />}
-
-                {/* Desktop Navigation Menu */}
-                {isLarge && <NavMenu />}
-                {/* Hamburger menu button for mobile navigation */}
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  aria-label={
-                    isMobileMenuOpen == true ? 'Close Menu' : 'Open Menu'
-                  }
-                  className="relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 lg:hidden"
-                >
-                  <Menu className="m-auto size-5 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
-                  <X className="absolute inset-0 m-auto size-5 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
-                </button>
               </div>
 
-              {/* Show mobile menu if needed */}
-              {!isLarge && isMobileMenuOpen && (
-                <div className="animate-in slide-in-from-top-2 fade-in-0 fixed inset-0 top-14 z-50 duration-300">
-                  <div className="bg-background/95 h-full backdrop-blur">
-                    <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
-                  </div>
+              {/* Desktop Navigation Menu - Centered */}
+              {isLarge && (
+                <div className="absolute left-1/2 -translate-x-1/2">
+                  <NavMenu />
                 </div>
               )}
 
               {/* Header right section: theme toggler, locale selector, sign, buttons */}
-              <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 max-lg:hidden md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                <div className="flex w-full flex-row items-center gap-4 sm:flex-row sm:gap-6 sm:space-y-0 md:w-fit">
-                  {header.buttons &&
-                    header.buttons.map((button, idx) => (
-                      <Link
-                        key={idx}
-                        href={button.url || ''}
-                        target={button.target || '_self'}
-                        className={cn(
-                          'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
-                          'h-7 px-3 ring-0',
-                          button.variant === 'outline'
-                            ? 'bg-background border-primary ring-foreground/10 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50 border border-transparent shadow-sm ring-1 shadow-black/15 duration-200'
-                            : 'bg-primary text-primary-foreground hover:bg-primary/90 border-[0.5px] border-white/25 shadow-md ring-1 shadow-black/20 ring-(--ring-color) [--ring-color:color-mix(in_oklab,var(--color-foreground)15%,var(--color-primary))]'
-                        )}
-                      >
-                        {button.icon && (
-                          <SmartIcon
-                            name={button.icon as string}
-                            className="size-4"
-                          />
-                        )}
-                        <span>{button.title}</span>
-                      </Link>
-                    ))}
+              <div className="hidden items-center gap-4 lg:flex">
+                {header.buttons &&
+                  header.buttons.map((button, idx) => (
+                    <Link
+                      key={idx}
+                      href={button.url || ''}
+                      target={button.target || '_self'}
+                      className={cn(
+                        'focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+                        'h-7 px-3 ring-0',
+                        button.variant === 'outline'
+                          ? 'bg-background border-primary ring-foreground/10 hover:bg-muted/50 dark:ring-foreground/15 dark:hover:bg-muted/50 border border-transparent shadow-sm ring-1 shadow-black/15 duration-200'
+                          : 'bg-primary text-primary-foreground hover:bg-primary/90 border-[0.5px] border-white/25 shadow-md ring-1 shadow-black/20 ring-(--ring-color) [--ring-color:color-mix(in_oklab,var(--color-foreground)15%,var(--color-primary))]'
+                      )}
+                    >
+                      {button.icon && (
+                        <SmartIcon
+                          name={button.icon as string}
+                          className="size-4"
+                        />
+                      )}
+                      <span>{button.title}</span>
+                    </Link>
+                  ))}
 
-                  {header.show_theme ? <ThemeToggler /> : null}
-                  {header.show_locale ? <LocaleSelector /> : null}
-                  <div className="flex-1 md:hidden"></div>
-                  {header.show_sign ? (
-                    <SignUser userNav={header.user_nav} />
-                  ) : null}
-                </div>
+                {header.show_theme ? <ThemeToggler /> : null}
+                {header.show_locale ? <LocaleSelector /> : null}
+                {header.show_sign ? (
+                  <SignUser userNav={header.user_nav} />
+                ) : null}
               </div>
+
+              {/* Hamburger menu button for mobile navigation */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={
+                  isMobileMenuOpen == true ? 'Close Menu' : 'Open Menu'
+                }
+                className="relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 lg:hidden"
+              >
+                <Menu className="m-auto size-5 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
+                <X className="absolute inset-0 m-auto size-5 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Show mobile menu if needed */}
+        {!isLarge && isMobileMenuOpen && (
+          <div className="animate-in slide-in-from-top-2 fade-in-0 fixed inset-0 top-14 z-50 duration-300">
+            <div className="bg-background/95 h-full backdrop-blur">
+              <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
+            </div>
+          </div>
+        )}
       </header>
     </>
   );
