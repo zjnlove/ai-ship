@@ -350,7 +350,13 @@ function FadeInDown({
 function InfiniteScrollGallery({
   items,
 }: {
-  items: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
+  items: Array<{
+    type: 'image' | 'video';
+    src: string;
+    alt?: string;
+    title?: string;
+    text?: string;
+  }>;
 }) {
   if (!items || items.length === 0) return null;
 
@@ -399,6 +405,19 @@ function InfiniteScrollGallery({
                 loading="lazy"
               />
             )}
+            {/* 左下角文字覆盖层 */}
+            <div className="absolute right-0 bottom-0 left-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+              {item.text && (
+                <div className="mb-1 text-xs font-medium tracking-wider text-white/80 uppercase">
+                  {item.text}
+                </div>
+              )}
+              {item.title && (
+                <div className="text-lg leading-tight font-bold text-white">
+                  {item.title}
+                </div>
+              )}
+            </div>
             {/* 悬停时的光晕效果 */}
             <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </div>
@@ -429,6 +448,19 @@ function InfiniteScrollGallery({
                 loading="lazy"
               />
             )}
+            {/* 左下角文字覆盖层 */}
+            <div className="absolute right-0 bottom-0 left-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+              {item.text && (
+                <div className="mb-1 text-xs font-medium tracking-wider text-white/80 uppercase">
+                  {item.text}
+                </div>
+              )}
+              {item.title && (
+                <div className="text-lg leading-tight font-bold text-white">
+                  {item.title}
+                </div>
+              )}
+            </div>
             {/* 悬停时的光晕效果 */}
             <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </div>
@@ -593,6 +625,8 @@ export function Hero({
         type: 'image' as const,
         src: item.image!.src as string,
         alt: item.image?.alt,
+        title: item.title,
+        text: item.text,
       })) || [];
 
   return (

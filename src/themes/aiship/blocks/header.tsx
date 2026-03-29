@@ -39,10 +39,19 @@ import { Header as HeaderType } from '@/shared/types/blocks/landing';
 export function Header({ header }: { header: HeaderType }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const isScrolledRef = useRef(false);
   const scrollRafRef = useRef<number | null>(null);
   const isLarge = useMedia('(min-width: 64rem)');
   const pathname = usePathname();
+
+  useEffect(() => {
+    // Set mounted state to trigger entrance animation
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Listen to scroll event to enable header styles on scroll
@@ -416,7 +425,12 @@ export function Header({ header }: { header: HeaderType }) {
       <header
         data-state={isMobileMenuOpen ? 'active' : 'inactive'}
         {...(isScrolled && { 'data-scrolled': true })}
-        className="fixed inset-x-0 top-0 z-50"
+        className={cn(
+          'fixed inset-x-0 top-0 z-50',
+          isMounted
+            ? 'animate-in slide-in-from-top-full fade-in-0 duration-500'
+            : 'opacity-0'
+        )}
       >
         <div
           className={cn(
@@ -428,19 +442,40 @@ export function Header({ header }: { header: HeaderType }) {
           <div className="container">
             <div className="relative flex items-center justify-between pt-5">
               {/* Brand Logo */}
-              <div className="flex-shrink-0">
+              <div
+                className={cn(
+                  'flex-shrink-0',
+                  isMounted
+                    ? 'animate-in slide-in-from-left-4 fade-in-0 delay-100 duration-500'
+                    : 'opacity-0'
+                )}
+              >
                 {header.brand && <BrandLogo brand={header.brand} />}
               </div>
 
               {/* Desktop Navigation Menu - Centered */}
               {isLarge && (
-                <div className="absolute left-1/2 -translate-x-1/2">
+                <div
+                  className={cn(
+                    'absolute left-1/2 -translate-x-1/2',
+                    isMounted
+                      ? 'animate-in slide-in-from-top-4 fade-in-0 delay-200 duration-500'
+                      : 'opacity-0'
+                  )}
+                >
                   <NavMenu />
                 </div>
               )}
 
               {/* Header right section: theme toggler, locale selector, sign, buttons */}
-              <div className="hidden items-center gap-4 lg:flex">
+              <div
+                className={cn(
+                  'hidden items-center gap-4 lg:flex',
+                  isMounted
+                    ? 'animate-in slide-in-from-right-4 fade-in-0 delay-300 duration-500'
+                    : 'opacity-0'
+                )}
+              >
                 {header.buttons &&
                   header.buttons.map((button, idx) => (
                     <Link
