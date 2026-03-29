@@ -107,7 +107,7 @@ export function Header({ header }: { header: HeaderType }) {
                       {item.title}
                       {item.tip && (
                         <span
-                          className={`${item.tip_color || 'bg-primary'} absolute -top-2 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
+                          className={`${item.tip_color || 'bg-primary'} absolute -top-3 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
                         >
                           {item.tip}
                         </span>
@@ -128,7 +128,7 @@ export function Header({ header }: { header: HeaderType }) {
                   {item.title}
                   {item.tip && (
                     <span
-                      className={`${item.tip_color || 'bg-primary'} absolute -top-2.5 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
+                      className={`${item.tip_color || 'bg-primary'} absolute -top-3 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
                     >
                       {item.tip}
                     </span>
