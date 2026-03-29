@@ -680,7 +680,7 @@ export function Hero({
         {/* 标题 - 从左到右 */}
         <FadeInDirection direction="left" delay={0}>
           {texts && texts.length > 0 ? (
-            <h1 className="text-4xl font-bold sm:mt-12 sm:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-bold sm:mt-12 sm:text-5xl lg:text-6xl">
               <>
                 <span className="text-black dark:text-white">{texts[0]}</span>
                 <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
@@ -690,7 +690,7 @@ export function Hero({
               </>
             </h1>
           ) : (
-            <h1 className="text-4xl font-bold text-balance sm:mt-12 sm:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-bold text-balance sm:mt-12 sm:text-5xl lg:text-6xl">
               <span className="text-primary">{section.title}</span>
             </h1>
           )}
