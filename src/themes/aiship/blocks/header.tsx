@@ -18,16 +18,19 @@ import {
   AccordionTrigger,
 } from '@/shared/components/ui/accordion';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/shared/components/ui/dropdown-menu';
-import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/shared/components/ui/hover-card';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from '@/shared/components/ui/navigation-menu';
 import { useMedia } from '@/shared/hooks/use-media';
 import { cn } from '@/shared/lib/utils';
 import { NavItem } from '@/shared/types/blocks/common';
@@ -69,42 +72,47 @@ export function Header({ header }: { header: HeaderType }) {
     };
   }, []);
 
-  // Navigation menu for large screens using HoverCard
+  // Navigation menu for large screens using NavigationMenu
   const NavMenu = () => {
     return (
-      <nav className="hidden items-center lg:flex">
-        {header.nav?.items?.map((item, idx) => {
-          // Simple link without children
-          if (!item.children || item.children.length === 0) {
-            return (
-              <Link
-                key={idx}
-                href={item.url || ''}
-                target={item.target || '_self'}
-                className={`hover:bg-primary/10 hover:text-primary relative flex flex-row items-center gap-1.5 rounded-md px-4 py-1 text-sm transition-colors ${
-                  item.is_active || pathname.endsWith(item.url as string)
-                    ? 'bg-muted/40 text-muted-foreground'
-                    : ''
-                }`}
-              >
-                {item.icon && <SmartIcon name={item.icon as string} />}
-                {item.title}
-                {item.tip && (
-                  <span
-                    className={`${item.tip_color || 'bg-primary'} absolute -top-2 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
-                  >
-                    {item.tip}
-                  </span>
-                )}
-              </Link>
-            );
-          }
+      <NavigationMenu className="hidden lg:flex" viewport={false}>
+        <NavigationMenuList>
+          {header.nav?.items?.map((item, idx) => {
+            // Simple link without children
+            if (!item.children || item.children.length === 0) {
+              return (
+                <NavigationMenuItem key={idx}>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href={item.url || ''}
+                      target={item.target || '_self'}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        'relative',
+                        (item.is_active ||
+                          pathname.endsWith(item.url as string)) &&
+                          'bg-muted/40 text-muted-foreground'
+                      )}
+                    >
+                      {item.icon && <SmartIcon name={item.icon as string} />}
+                      {item.title}
+                      {item.tip && (
+                        <span
+                          className={`${item.tip_color || 'bg-primary'} absolute -top-2 -right-0 rounded-full px-2 py-0.5 text-[12px] leading-none font-medium text-white`}
+                        >
+                          {item.tip}
+                        </span>
+                      )}
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              );
+            }
 
-          // Link with children - use HoverCard
-          return (
-            <HoverCard key={idx} openDelay={100} closeDelay={200}>
-              <HoverCardTrigger asChild>
-                <button className="group hover:bg-primary/10 hover:text-primary relative flex flex-row items-center gap-1.5 rounded-md px-4 py-1 text-sm transition-colors">
+            // Link with children - use NavigationMenu
+            return (
+              <NavigationMenuItem key={idx}>
+                <NavigationMenuTrigger className="group relative [&_svg]:!transition-transform [&_svg]:!duration-200 group-data-[state=open]:[&_svg]:!rotate-180">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} className="h-4 w-4" />
                   )}
@@ -116,121 +124,118 @@ export function Header({ header }: { header: HeaderType }) {
                       {item.tip}
                     </span>
                   )}
-                  <ChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
-                </button>
-              </HoverCardTrigger>
-              <HoverCardContent
-                sideOffset={8}
-                align="start"
-                className="w-64 rounded-xl p-2"
-              >
-                <ul className="space-y-1">
-                  {item.children?.map((subItem: NavItem, index: number) => (
-                    <li key={index}>
-                      {subItem.children && subItem.children.length > 0 ? (
-                        <HoverCard openDelay={100} closeDelay={200}>
-                          <HoverCardTrigger asChild>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {item.children?.map((subItem: NavItem, index: number) => (
+                      <li key={index}>
+                        {subItem.children && subItem.children.length > 0 ? (
+                          <HoverCard openDelay={100} closeDelay={200}>
+                            <HoverCardTrigger asChild>
+                              <button className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center justify-between rounded-md p-3 text-left leading-none no-underline transition-colors outline-none select-none">
+                                <div className="flex items-center gap-3">
+                                  {subItem.icon && (
+                                    <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                                      <SmartIcon
+                                        name={subItem.icon as string}
+                                      />
+                                    </div>
+                                  )}
+                                  <div className="space-y-1">
+                                    <div className="text-sm leading-none font-medium">
+                                      {subItem.title}
+                                      {subItem.tip && (
+                                        <span
+                                          className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                        >
+                                          {subItem.tip}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {subItem.description && (
+                                      <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                                        {subItem.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <ChevronDown className="h-3 w-3 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                              </button>
+                            </HoverCardTrigger>
+                            <HoverCardContent
+                              side="bottom"
+                              align="start"
+                              className="w-[186px] rounded-xl p-2 md:w-[236px] lg:w-[286px]"
+                              sideOffset={8}
+                            >
+                              <ul className="space-y-1">
+                                {subItem.children.map(
+                                  (thirdItem: NavItem, thirdIndex: number) => (
+                                    <li key={thirdIndex}>
+                                      <Link
+                                        href={thirdItem.url || ''}
+                                        target={thirdItem.target || '_self'}
+                                        className="hover:bg-accent hover:text-accent-foreground flex items-center gap-2 rounded-md p-2 transition-colors"
+                                      >
+                                        {thirdItem.icon && (
+                                          <SmartIcon
+                                            name={thirdItem.icon as string}
+                                            className="h-4 w-4"
+                                          />
+                                        )}
+                                        <span className="text-sm">
+                                          {thirdItem.title}
+                                        </span>
+                                      </Link>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </HoverCardContent>
+                          </HoverCard>
+                        ) : (
+                          <NavigationMenuLink asChild>
                             <Link
                               href={subItem.url || ''}
                               target={subItem.target || '_self'}
-                              className="hover:bg-primary/10 relative flex items-center justify-between rounded-md p-2 transition-colors"
+                              className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
                             >
-                              <div className="flex items-center gap-3.5">
+                              <div className="flex items-center gap-3">
                                 {subItem.icon && (
                                   <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
                                     <SmartIcon name={subItem.icon as string} />
                                   </div>
                                 )}
-                                <div className="space-y-0.5">
-                                  <div className="text-foreground flex items-center gap-1 text-sm font-medium">
+                                <div className="space-y-1">
+                                  <div className="text-sm leading-none font-medium">
                                     {subItem.title}
                                     {subItem.tip && (
                                       <span
-                                        className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
+                                        className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
                                       >
                                         {subItem.tip}
                                       </span>
                                     )}
                                   </div>
                                   {subItem.description && (
-                                    <p className="text-muted-foreground line-clamp-1 text-xs">
+                                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
                                       {subItem.description}
                                     </p>
                                   )}
                                 </div>
                               </div>
-                              <ChevronDown className="h-4 w-4 -rotate-90" />
                             </Link>
-                          </HoverCardTrigger>
-                          <HoverCardContent
-                            side="right"
-                            align="start"
-                            className="w-48 rounded-xl p-2"
-                            sideOffset={10}
-                          >
-                            <ul className="space-y-1">
-                              {subItem.children.map(
-                                (thirdItem: NavItem, thirdIndex: number) => (
-                                  <li key={thirdIndex}>
-                                    <Link
-                                      href={thirdItem.url || ''}
-                                      target={thirdItem.target || '_self'}
-                                      className="hover:bg-primary/10 flex items-center gap-2 rounded-md p-2 transition-colors"
-                                    >
-                                      {thirdItem.icon && (
-                                        <SmartIcon
-                                          name={thirdItem.icon as string}
-                                          className="h-4 w-4"
-                                        />
-                                      )}
-                                      <span className="text-sm">
-                                        {thirdItem.title}
-                                      </span>
-                                    </Link>
-                                  </li>
-                                )
-                              )}
-                            </ul>
-                          </HoverCardContent>
-                        </HoverCard>
-                      ) : (
-                        <Link
-                          href={subItem.url || ''}
-                          target={subItem.target || '_self'}
-                          className="hover:bg-primary/10 relative grid grid-cols-[auto_1fr] gap-3.5 rounded-md p-2 transition-colors"
-                        >
-                          {subItem.icon && (
-                            <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
-                              <SmartIcon name={subItem.icon as string} />
-                            </div>
-                          )}
-                          <div className="space-y-0.5">
-                            <div className="text-foreground flex items-center gap-1 text-sm font-medium">
-                              {subItem.title}
-                              {subItem.tip && (
-                                <span
-                                  className={`${subItem.tip_color || 'bg-primary'} rounded-full px-2 py-1 text-[10px] leading-none font-medium text-white`}
-                                >
-                                  {subItem.tip}
-                                </span>
-                              )}
-                            </div>
-                            {subItem.description && (
-                              <p className="text-muted-foreground line-clamp-1 text-xs">
-                                {subItem.description}
-                              </p>
-                            )}
-                          </div>
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </HoverCardContent>
-            </HoverCard>
-          );
-        })}
-      </nav>
+                          </NavigationMenuLink>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            );
+          })}
+        </NavigationMenuList>
+      </NavigationMenu>
     );
   };
 
