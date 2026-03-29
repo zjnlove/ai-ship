@@ -17,12 +17,7 @@
         "id": "hero",
         "title": "Ship AI Startups in hours, not days",
         "highlight_text": "in hours",
-        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
-        "announcement": {
-          "badge": "New",
-          "title": "🎉 ShipAny Template Two",
-          "url": "/pricing"
-        },
+        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
         "tip": "🎁 Special offer for the first 1000 users",
         "buttons": [
           {
@@ -33,7 +28,7 @@
             "variant": "default"
           }
         ],
-        "show_avatars": false,
+        "show_avatars": true,
         "avatars_tip": "999+ users are using ShipAny",
         "show_award": false,
         "background_image": {
@@ -42,39 +37,165 @@
         },
         "items": [
           {
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "Alibaba Qwen Image 2.0 is a unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative and visual design workflows.",
             "image": {
-              "src": "/imgs/hero/1.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
             }
           },
           {
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "The Qwen Image API empowers creators, developers, and businesses to generate and edit photorealistic images effortlessly. Whether you're crafting intricate designs or refining existing visuals, this powerful Qwen API integrates seamlessly into your workflow, delivering multilingual text rendering and advanced editing capabilities that rival top models.",
             "image": {
-              "src": "/imgs/hero/2.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/qwen-image.png",
+              "alt": "Qwen Image"
             }
           },
           {
+            "title": "Qwen Image Edit",
+            "text": "Qwen",
+            "description": "Qwen-Image-Edit is an open-source image editing model based on Qwen-Image, supporting semantic and appearance editing with precise, visually coherent results. It also handles bilingual (Chinese and English) text editing while preserving font, size, and style, making it a versatile tool for advanced visual content manipulation.",
             "image": {
-              "src": "/imgs/hero/3.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
             }
           },
           {
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "Meet Nano Banana 2, Google's Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers, it combines lightning-fast speed with Pro-level quality, accurate text rendering, strong character consistency, and scalable image generation and editing workflows.",
             "image": {
-              "src": "/imgs/hero/1.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/nano-banana-2.png",
+              "alt": "Nano Banana 2"
             }
           },
           {
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind's Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency—offering a major leap in visual quality for creative and API-driven workflows.",
             "image": {
-              "src": "/imgs/hero/2.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
             }
           },
           {
+            "title": "NanoBanana-Gemini 2.5 Flash Image Preview",
+            "text": "Google",
+            "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image generation and editing. It produces hyper-realistic, physics-aware visuals with seamless style transformations.",
             "image": {
-              "src": "/imgs/hero/3.gif",
-              "alt": "introduce"
+              "src": "/imgs/models/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash Image Preview"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art text-to-image generation model that transforms prompts into photorealistic, high-quality visuals with exceptional detail and creative versatility. Its enhanced variant, Google Imagen 4 Ultra, delivers even greater precision, speed, and resolution, making both models ideal for commercial, marketing, design, and creative applications.",
+            "image": {
+              "src": "/imgs/models/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 is OpenAI's flagship image generation model for high-quality image creation and precise image editing, with strong instruction following and improved text rendering.",
+            "image": {
+              "src": "/imgs/models/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "The GPT-Image-1 model, also known as ChatGPT 4o Image, is OpenAI's latest AI image generation model. It understands both text and visual context, allowing developers to create and edit images with remarkable accuracy. Unlike traditional diffusion models, GPT-Image-1 follows instructions precisely, supports consistent styles, and renders legible text — making it ideal for applications in design, marketing, and creative automation.",
+            "image": {
+              "src": "/imgs/models/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 is Black Forest Labs' advanced image generation model that delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
+            "image": {
+              "src": "/imgs/models/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "In a world where visuals drive engagement, FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands, delivering professional results that save time and boost creativity. Whether you're optimizing e-commerce listings or crafting marketing masterpieces, Kie.ai's FLUX.1 Kontext API is your gateway to efficient, high-quality image innovation.",
+            "image": {
+              "src": "/imgs/models/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine is xAI's multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio.",
+            "image": {
+              "src": "/imgs/models/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3 Reframe Image",
+            "text": "Ideogram",
+            "description": "Ideogram V3 Reframe is a specialized image-to-image model built on Ideogram 3.0, designed to intelligently extend and adapt images across diverse aspect ratios and resolutions. Leveraging advanced AI outpainting, it preserves visual consistency while enabling creative reframing for digital, print, and video content.",
+            "image": {
+              "src": "/imgs/models/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            }
+          },
+          {
+            "title": "Ideogram Character",
+            "text": "Ideogram",
+            "description": "Ideogram Character is the latest feature released by Ideogram AI, ensuring characters retain core features such as facial traits, proportions, and hairstyles across different scenes, artistic styles, and contexts. Whether creating characters from a single reference image or fine-tuning existing ones, Kie.ai's Ideogram Character API offers flexibility and precision through its Base, Edit, and Remix operations.",
+            "image": {
+              "src": "/imgs/models/ideogram-character.png",
+              "alt": "Ideogram Character"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API is the latest generation of Ideogram's image generation model, offering text-to-image, image editing, reframing, and remixing with improved consistency and creative control.",
+            "image": {
+              "src": "/imgs/models/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Topaz Image Upscale",
+            "text": "Topaz",
+            "description": "Topaz Labs Image Upscale is an AI image enhancement model that increases resolution and restores detail with high-fidelity upscaling, natural texture reconstruction, and improved clarity across low-quality images.",
+            "image": {
+              "src": "/imgs/models/topaz-image-upscale.png",
+              "alt": "Topaz Image Upscale"
+            }
+          },
+          {
+            "title": "Recraft Remove Background",
+            "text": "Recraft",
+            "description": "Built by Recraft AI, the Remove Background API accurately separates subjects from any background and delivers clean, transparent outputs—optimized for seamless integration into websites, eCommerce platforms, and creative workflows.",
+            "image": {
+              "src": "/imgs/models/recraft-remove-background.png",
+              "alt": "Recraft Remove Background"
+            }
+          },
+          {
+            "title": "Recraft Crisp Upscale",
+            "text": "Recraft",
+            "description": "Transform blurry photos into crystal-clear masterpieces using the Recraft Crisp Upscale API. As the ultimate free image upscaler, this tool leverages advanced AI to deliver professional-grade results without costing a dime. Whether you're a designer, marketer, or hobbyist, experience seamless picture upscaler capabilities that make free image upscaling a breeze.",
+            "image": {
+              "src": "/imgs/models/recraft-crisp-upscale.webp",
+              "alt": "Recraft Crisp Upscale"
             }
           }
         ]

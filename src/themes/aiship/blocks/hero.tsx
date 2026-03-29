@@ -14,195 +14,195 @@ import { Section } from '@/shared/types/blocks/landing';
 import { SocialAvatars } from './social-avatars';
 
 // 弧线布局媒体画廊组件
-function ArcMediaGallery({
-  media,
-}: {
-  media?: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
-}) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [animatedItems, setAnimatedItems] = useState<Set<number>>(new Set());
-  const containerRef = useRef<HTMLDivElement>(null);
+// function ArcMediaGallery({
+//   media,
+// }: {
+//   media?: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
+// }) {
+//   const [isVisible, setIsVisible] = useState(false);
+//   const [scrollProgress, setScrollProgress] = useState(0);
+//   const [animatedItems, setAnimatedItems] = useState<Set<number>>(new Set());
+//   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          // 逐个触发图片进场动画
-          mediaItems.forEach((_, index) => {
-            setTimeout(
-              () => {
-                setAnimatedItems((prev) => new Set([...prev, index]));
-              },
-              index * 200 // 每张图片间隔200ms
-            );
-          });
-        }
-      },
-      { threshold: 0.1 }
-    );
+//   useEffect(() => {
+//     const observer = new IntersectionObserver(
+//       ([entry]) => {
+//         if (entry.isIntersecting) {
+//           setIsVisible(true);
+//           // 逐个触发图片进场动画
+//           mediaItems.forEach((_, index) => {
+//             setTimeout(
+//               () => {
+//                 setAnimatedItems((prev) => new Set([...prev, index]));
+//               },
+//               index * 200 // 每张图片间隔200ms
+//             );
+//           });
+//         }
+//       },
+//       { threshold: 0.1 }
+//     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
+//     if (containerRef.current) {
+//       observer.observe(containerRef.current);
+//     }
 
-    return () => observer.disconnect();
-  }, []);
+//     return () => observer.disconnect();
+//   }, []);
 
-  // 监听滚动事件
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      // 计算滚动进度（0-1），在滚动一个屏幕高度内完成动画
-      const progress = Math.min(scrollY / windowHeight, 1);
-      setScrollProgress(progress);
-    };
+//   // 监听滚动事件
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       const scrollY = window.scrollY;
+//       const windowHeight = window.innerHeight;
+//       // 计算滚动进度（0-1），在滚动一个屏幕高度内完成动画
+//       const progress = Math.min(scrollY / windowHeight, 1);
+//       setScrollProgress(progress);
+//     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+//     window.addEventListener('scroll', handleScroll, { passive: true });
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
 
-  const mediaItems = media || [];
+//   const mediaItems = media || [];
 
-  // 弧线位置配置（不同形状）
-  const positions = [
-    // 左侧两个（靠近中间）
-    { top: '18%', left: '20%', rotate: -15, delay: 100, shape: 'rounded-3xl' },
-    { top: '50%', left: '10%', rotate: -25, delay: 200, shape: 'rounded-3xl' },
-    // 右侧两个（靠近中间）
-    { top: '15%', right: '20%', rotate: 15, delay: 300, shape: 'rounded-3xl' },
-    { top: '50%', right: '10%', rotate: 25, delay: 400, shape: 'rounded-3xl' },
-    // 底部两个（弧线排列）
-    {
-      bottom: '6%',
-      left: '25%',
-      rotate: -10,
-      delay: 500,
-      shape: 'rounded-3xl',
-    },
-    {
-      bottom: '6%',
-      right: '30%',
-      rotate: 10,
-      delay: 600,
-      shape: 'rounded-3xl',
-    },
-  ];
+//   // 弧线位置配置（不同形状）
+//   const positions = [
+//     // 左侧两个（靠近中间）
+//     { top: '18%', left: '20%', rotate: -15, delay: 100, shape: 'rounded-3xl' },
+//     { top: '50%', left: '10%', rotate: -25, delay: 200, shape: 'rounded-3xl' },
+//     // 右侧两个（靠近中间）
+//     { top: '15%', right: '20%', rotate: 15, delay: 300, shape: 'rounded-3xl' },
+//     { top: '50%', right: '10%', rotate: 25, delay: 400, shape: 'rounded-3xl' },
+//     // 底部两个（弧线排列）
+//     {
+//       bottom: '6%',
+//       left: '25%',
+//       rotate: -10,
+//       delay: 500,
+//       shape: 'rounded-3xl',
+//     },
+//     {
+//       bottom: '6%',
+//       right: '30%',
+//       rotate: 10,
+//       delay: 600,
+//       shape: 'rounded-3xl',
+//     },
+//   ];
 
-  const renderMedia = (item: (typeof mediaItems)[0], index: number) => {
-    const pos = positions[index];
-    if (!pos) return null;
+//   const renderMedia = (item: (typeof mediaItems)[0], index: number) => {
+//     const pos = positions[index];
+//     if (!pos) return null;
 
-    // 目标位置：左侧 button 区域
-    const targetLeft = '12%';
-    const targetTop = '65%';
+//     // 目标位置：左侧 button 区域
+//     const targetLeft = '12%';
+//     const targetTop = '65%';
 
-    // 根据滚动进度计算当前位置
-    const currentTop = pos.top
-      ? `${parseFloat(pos.top) + (parseFloat(targetTop) - parseFloat(pos.top)) * scrollProgress}%`
-      : undefined;
-    const currentBottom = pos.bottom
-      ? `${parseFloat(pos.bottom) - scrollProgress * parseFloat(pos.bottom)}%`
-      : undefined;
-    const currentLeft = pos.left
-      ? `${parseFloat(pos.left) + (parseFloat(targetLeft) - parseFloat(pos.left)) * scrollProgress}%`
-      : undefined;
-    const currentRight = pos.right
-      ? `${parseFloat(pos.right) - scrollProgress * parseFloat(pos.right)}%`
-      : undefined;
+//     // 根据滚动进度计算当前位置
+//     const currentTop = pos.top
+//       ? `${parseFloat(pos.top) + (parseFloat(targetTop) - parseFloat(pos.top)) * scrollProgress}%`
+//       : undefined;
+//     const currentBottom = pos.bottom
+//       ? `${parseFloat(pos.bottom) - scrollProgress * parseFloat(pos.bottom)}%`
+//       : undefined;
+//     const currentLeft = pos.left
+//       ? `${parseFloat(pos.left) + (parseFloat(targetLeft) - parseFloat(pos.left)) * scrollProgress}%`
+//       : undefined;
+//     const currentRight = pos.right
+//       ? `${parseFloat(pos.right) - scrollProgress * parseFloat(pos.right)}%`
+//       : undefined;
 
-    // 旋转角度逐渐归零
-    const currentRotate = pos.rotate * (1 - scrollProgress);
+//     // 旋转角度逐渐归零
+//     const currentRotate = pos.rotate * (1 - scrollProgress);
 
-    // 缩放逐渐变小
-    const currentScale = isVisible ? 1 - scrollProgress * 0.3 : 0.8;
+//     // 缩放逐渐变小
+//     const currentScale = isVisible ? 1 - scrollProgress * 0.3 : 0.8;
 
-    // 进场动画效果
-    const isAnimated = animatedItems.has(index);
-    const getInitialTransform = () => {
-      if (isAnimated) return '';
-      switch (index) {
-        case 0:
-          return 'translate-x-[-200px] translate-y-[-100px] scale(0.3) rotate(-45deg)';
-        case 1:
-          return 'translate-y-[-200px] scale(0.2) rotate(90deg)';
-        case 2:
-          return 'translate-x-[200px] translate-y-[-100px] scale(0.3) rotate(45deg)';
-        case 3:
-          return 'translate-x-[-150px] translate-y-[100px] scale(0.2) rotate(-90deg)';
-        case 4:
-          return 'translate-y-[200px] scale(0.3) rotate(120deg)';
-        case 5:
-          return 'translate-x-[150px] translate-y-[100px] scale(0.2) rotate(90deg)';
-        default:
-          return 'translate-y-[-200px] scale(0.3) rotate(45deg)';
-      }
-    };
+//     // 进场动画效果
+//     const isAnimated = animatedItems.has(index);
+//     const getInitialTransform = () => {
+//       if (isAnimated) return '';
+//       switch (index) {
+//         case 0:
+//           return 'translate-x-[-200px] translate-y-[-100px] scale(0.3) rotate(-45deg)';
+//         case 1:
+//           return 'translate-y-[-200px] scale(0.2) rotate(90deg)';
+//         case 2:
+//           return 'translate-x-[200px] translate-y-[-100px] scale(0.3) rotate(45deg)';
+//         case 3:
+//           return 'translate-x-[-150px] translate-y-[100px] scale(0.2) rotate(-90deg)';
+//         case 4:
+//           return 'translate-y-[200px] scale(0.3) rotate(120deg)';
+//         case 5:
+//           return 'translate-x-[150px] translate-y-[100px] scale(0.2) rotate(90deg)';
+//         default:
+//           return 'translate-y-[-200px] scale(0.3) rotate(45deg)';
+//       }
+//     };
 
-    // 使用 CSS 变量减少内联样式大小
-    const positionStyle: React.CSSProperties = {
-      position: 'absolute',
-      top: currentTop,
-      bottom: currentBottom,
-      left: currentLeft,
-      right: currentRight,
-      '--rotate': `${currentRotate}deg`,
-      '--scale': currentScale,
-      '--initial-transform': getInitialTransform(),
-      '--opacity': isVisible ? (isAnimated ? 1 - scrollProgress * 0.5 : 0) : 0,
-      transform: `rotate(var(--rotate)) scale(var(--scale)) var(--initial-transform)`,
-      transition: isAnimated
-        ? 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
-        : 'all 0.3s ease-out',
-      opacity: 'var(--opacity)',
-    } as React.CSSProperties;
+//     // 使用 CSS 变量减少内联样式大小
+//     const positionStyle: React.CSSProperties = {
+//       position: 'absolute',
+//       top: currentTop,
+//       bottom: currentBottom,
+//       left: currentLeft,
+//       right: currentRight,
+//       '--rotate': `${currentRotate}deg`,
+//       '--scale': currentScale,
+//       '--initial-transform': getInitialTransform(),
+//       '--opacity': isVisible ? (isAnimated ? 1 - scrollProgress * 0.5 : 0) : 0,
+//       transform: `rotate(var(--rotate)) scale(var(--scale)) var(--initial-transform)`,
+//       transition: isAnimated
+//         ? 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+//         : 'all 0.3s ease-out',
+//       opacity: 'var(--opacity)',
+//     } as React.CSSProperties;
 
-    return (
-      <div
-        key={index}
-        style={positionStyle}
-        className="group gallery-item z-20 hidden md:block"
-      >
-        <div
-          className={`border-border/30 bg-background/80 hover:border-primary/50 relative h-24 w-24 overflow-hidden ${pos.shape} border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-xl lg:h-32 lg:w-32`}
-        >
-          {item.type === 'video' ? (
-            <video
-              src={item.src}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <Image
-              src={item.src}
-              alt={item.alt || `Media ${index + 1}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 0vw, 160px"
-              loading="lazy"
-            />
-          )}
-          {/* 悬停时的光晕效果 */}
-          <div className="from-primary/20 absolute inset-0 rounded-xl bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        </div>
-      </div>
-    );
-  };
+//     return (
+//       <div
+//         key={index}
+//         style={positionStyle}
+//         className="group gallery-item z-20 hidden md:block"
+//       >
+//         <div
+//           className={`border-border/30 bg-background/80 hover:border-primary/50 relative h-24 w-24 overflow-hidden ${pos.shape} border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-xl lg:h-32 lg:w-32`}
+//         >
+//           {item.type === 'video' ? (
+//             <video
+//               src={item.src}
+//               autoPlay
+//               loop
+//               muted
+//               playsInline
+//               className="h-full w-full object-cover"
+//             />
+//           ) : (
+//             <Image
+//               src={item.src}
+//               alt={item.alt || `Media ${index + 1}`}
+//               fill
+//               className="object-cover"
+//               sizes="(max-width: 768px) 0vw, 160px"
+//               loading="lazy"
+//             />
+//           )}
+//           {/* 悬停时的光晕效果 */}
+//           <div className="from-primary/20 absolute inset-0 rounded-xl bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+//         </div>
+//       </div>
+//     );
+//   };
 
-  return (
-    <div
-      ref={containerRef}
-      className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
-    >
-      {mediaItems.slice(0, 6).map((item, index) => renderMedia(item, index))}
-    </div>
-  );
-}
+//   return (
+//     <div
+//       ref={containerRef}
+//       className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
+//     >
+//       {mediaItems.slice(0, 6).map((item, index) => renderMedia(item, index))}
+//     </div>
+//   );
+// }
 
 // 渐进式入场动画组件（左右方向）
 function FadeInDirection({
@@ -342,6 +342,98 @@ function FadeInDown({
       )}
     >
       {children}
+    </div>
+  );
+}
+
+// 无限循环滚动卡片画廊组件
+function InfiniteScrollGallery({
+  items,
+}: {
+  items: Array<{ type: 'image' | 'video'; src: string; alt?: string }>;
+}) {
+  if (!items || items.length === 0) return null;
+
+  return (
+    <div className="relative w-full overflow-hidden py-8">
+      {/* 渐变遮罩 */}
+      <div className="from-background pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-32 bg-gradient-to-r to-transparent" />
+      <div className="from-background pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-32 bg-gradient-to-l to-transparent" />
+
+      {/* 滚动容器 */}
+      <div
+        className="animate-scroll-thumbnails flex gap-4"
+        style={{
+          width: `${items.length * 2 * 280}px`, // 264px + 16px gap
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.animationPlayState = 'paused';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.animationPlayState = 'running';
+        }}
+      >
+        {/* 第一份卡片 */}
+        {items.map((item, idx) => (
+          <div
+            key={`first-${idx}`}
+            className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            style={{ width: '320px', height: '500px' }}
+          >
+            {item.type === 'video' ? (
+              <video
+                src={item.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Image
+                src={item.src}
+                alt={item.alt || `Gallery item ${idx + 1}`}
+                fill
+                className="object-cover"
+                sizes="264px"
+                loading="lazy"
+              />
+            )}
+            {/* 悬停时的光晕效果 */}
+            <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </div>
+        ))}
+        {/* 第二份卡片（实现无缝循环） */}
+        {items.map((item, idx) => (
+          <div
+            key={`second-${idx}`}
+            className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            style={{ width: '320px', height: '500px' }}
+          >
+            {item.type === 'video' ? (
+              <video
+                src={item.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Image
+                src={item.src}
+                alt={item.alt || `Gallery item ${idx + 1}`}
+                fill
+                className="object-cover"
+                sizes="264px"
+                loading="lazy"
+              />
+            )}
+            {/* 悬停时的光晕效果 */}
+            <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -507,7 +599,7 @@ export function Hero({
     <section
       id={section.id}
       className={cn(
-        `relative overflow-hidden pt-24 pb-32 md:pt-36 md:pb-48`,
+        `relative overflow-hidden pt-20 pb-10`,
         section.className,
         className
       )}
@@ -516,7 +608,7 @@ export function Hero({
       <ParticleBackground />
 
       {/* 弧线布局媒体画廊 */}
-      <ArcMediaGallery media={mediaItems} />
+      {/* <ArcMediaGallery media={mediaItems} /> */}
 
       {/* 渐变背景光晕 */}
       {/* <div className="pointer-events-none absolute inset-0 z-0">
@@ -588,7 +680,7 @@ export function Hero({
                   size={button.size || 'lg'}
                   variant={button.variant || 'default'}
                   className={cn(
-                    'rounded-lg px-8 py-6 text-lg font-semibold transition-all duration-300',
+                    'rounded-full px-8 py-7 text-lg font-semibold transition-all duration-300',
                     button.variant === 'default' || !button.variant
                       ? 'bg-primary hover:bg-primary/90 shadow-primary/40 hover:shadow-primary/60 text-white shadow-[0_0_20px] hover:scale-105 hover:text-black hover:shadow-[0_0_30px] dark:text-black hover:dark:text-white'
                       : 'border-primary text-primary hover:bg-primary border-2 bg-transparent hover:scale-105 hover:text-black hover:dark:text-white'
@@ -618,7 +710,9 @@ export function Hero({
         )}
 
         {section.show_avatars && (
-          <SocialAvatars tip={section.avatars_tip || ''} />
+          <FadeInUp delay={600}>
+            <SocialAvatars tip={section.avatars_tip || ''} />
+          </FadeInUp>
         )}
       </div>
 
@@ -686,6 +780,15 @@ export function Hero({
           />
         </div>
       )} */}
+
+      {/* 底部循环滚动卡片画廊 */}
+      {mediaItems.length > 0 && (
+        <div className="relative z-20 mt-8 md:mt-8">
+          <FadeInUp delay={1000}>
+            <InfiniteScrollGallery items={mediaItems} />
+          </FadeInUp>
+        </div>
+      )}
     </section>
   );
 }
