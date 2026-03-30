@@ -29,6 +29,7 @@ import {
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Progress } from '@/shared/components/ui/progress';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import {
   Select,
   SelectContent,
@@ -443,340 +444,488 @@ export function MusicGenerator({ className, srOnlyTitle }: SongGeneratorProps) {
     }
   };
 
+  // 粒子背景组件
+  function ParticleBackground() {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // 获取主题色
+      const getPrimaryColor = () => {
+        const primary = getComputedStyle(document.documentElement)
+          .getPropertyValue('--primary')
+          .trim();
+        // oklch 格式: oklch(0.65 0.18 45)
+        // 转换为 rgb
+        const match = primary.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+        if (match) {
+          const l = parseFloat(match[1]);
+          const c = parseFloat(match[2]);
+          const h = parseFloat(match[3]);
+          // oklch 转 rgb 的简化计算
+          const a = c * Math.cos((h * Math.PI) / 180);
+          const b = c * Math.sin((h * Math.PI) / 180);
+          const r = Math.round(
+            Math.max(0, Math.min(255, (l + 0.3963 * a + 0.2158 * b) * 255))
+          );
+          const g = Math.round(
+            Math.max(0, Math.min(255, (l - 0.1055 * a - 0.0638 * b) * 255))
+          );
+          const blue = Math.round(
+            Math.max(0, Math.min(255, (l - 0.0894 * a - 1.2914 * b) * 255))
+          );
+          return { r, g, b: blue };
+        }
+        // 默认橙金色
+        return { r: 255, g: 180, b: 50 };
+      };
+
+      const primaryColor = getPrimaryColor();
+
+      // 设置画布大小
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // 粒子数组
+      const particles: Array<{
+        x: number;
+        y: number;
+        radius: number;
+        vx: number;
+        vy: number;
+        opacity: number;
+      }> = [];
+
+      // 创建粒子
+      const createParticles = () => {
+        const particleCount = Math.floor(
+          (canvas.width * canvas.height) / 15000
+        );
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 0.5,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.5 + 0.2,
+          });
+        }
+      };
+      createParticles();
+
+      // 动画循环
+      let animationId: number;
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 绘制粒子
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+
+          // 边界检测
+          if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+          if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+
+          // 绘制粒子
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${particle.opacity})`;
+          ctx.fill();
+        });
+
+        // 绘制连线
+        particles.forEach((p1, i) => {
+          particles.slice(i + 1).forEach((p2) => {
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${0.1 * (1 - distance / 150)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          });
+        });
+
+        animationId = requestAnimationFrame(animate);
+      };
+      animate();
+
+      return () => {
+        window.removeEventListener('resize', resizeCanvas);
+        cancelAnimationFrame(animationId);
+      };
+    }, []);
+
+    return (
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ opacity: 0.6 }}
+      />
+    );
+  }
+
   return (
-    <section id="create" className={cn('py-16 md:py-24', className)}>
-      {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-      <div className="container">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {/* Left side - Form */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  {t('generator.title')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+    // <section id="create" className={cn('py-16 md:py-24', className)}>
+    <section className={cn('pb-10', className)}>
+      {/* 粒子背景 */}
+      <ParticleBackground />
+      <ScrollAnimation>
+        {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
+        <div className="container">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              {/* Left side - Form */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    {t('generator.title')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        checked={customMode}
+                        onCheckedChange={setCustomMode}
+                      />
+                      <Label>{t('generator.form.custom_mode')}</Label>
+                    </div>
+                    <div className="flex-1"></div>
+                    <div className="flex items-center gap-4">
+                      <Label>{t('generator.form.model')}</Label>
+                      <Select value={model} onValueChange={setModel}>
+                        <SelectTrigger className="w-32">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="V5">Suno V5</SelectItem>
+                          <SelectItem value="V4_5PLUS">Suno V4.5+</SelectItem>
+                          <SelectItem value="V4_5">Suno V4.5</SelectItem>
+                          <SelectItem value="V4">Suno V4</SelectItem>
+                          <SelectItem value="V3_5">Suno V3.5</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+
+                <CardContent className="space-y-6">
+                  {customMode && (
+                    <div className="space-y-2">
+                      <Label htmlFor="title">{t('generator.form.title')}</Label>
+                      <Input
+                        id="title"
+                        placeholder={t('generator.form.title_placeholder')}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                    </div>
+                  )}
+
+                  {customMode && (
+                    <div className="space-y-2">
+                      <Label htmlFor="style">{t('generator.form.style')}</Label>
+                      <Textarea
+                        id="style"
+                        placeholder={t('generator.form.style_placeholder')}
+                        value={style}
+                        onChange={(e) => setStyle(e.target.value)}
+                        className="min-h-24"
+                      />
+                      <div className="text-muted-foreground text-right text-sm">
+                        {style.length}/1000
+                      </div>
+                    </div>
+                  )}
+
+                  {!customMode && (
+                    <div className="space-y-2">
+                      <Label htmlFor="prompt">
+                        {t('generator.form.prompt')}
+                      </Label>
+                      <Textarea
+                        id="prompt"
+                        placeholder={t('generator.form.prompt_placeholder')}
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        className="min-h-32"
+                        required
+                      />
+                    </div>
+                  )}
+
+                  <div className="flex items-center space-x-2">
                     <Switch
-                      checked={customMode}
-                      onCheckedChange={setCustomMode}
+                      id="instrumental"
+                      checked={instrumental}
+                      onCheckedChange={setInstrumental}
                     />
-                    <Label>{t('generator.form.custom_mode')}</Label>
+                    <Label htmlFor="instrumental">
+                      {t('generator.form.instrumental')}
+                    </Label>
                   </div>
-                  <div className="flex-1"></div>
-                  <div className="flex items-center gap-4">
-                    <Label>{t('generator.form.model')}</Label>
-                    <Select value={model} onValueChange={setModel}>
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="V5">Suno V5</SelectItem>
-                        <SelectItem value="V4_5PLUS">Suno V4.5+</SelectItem>
-                        <SelectItem value="V4_5">Suno V4.5</SelectItem>
-                        <SelectItem value="V4">Suno V4</SelectItem>
-                        <SelectItem value="V3_5">Suno V3.5</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardContent>
 
-              <CardContent className="space-y-6">
-                {customMode && (
-                  <div className="space-y-2">
-                    <Label htmlFor="title">{t('generator.form.title')}</Label>
-                    <Input
-                      id="title"
-                      placeholder={t('generator.form.title_placeholder')}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                )}
-
-                {customMode && (
-                  <div className="space-y-2">
-                    <Label htmlFor="style">{t('generator.form.style')}</Label>
-                    <Textarea
-                      id="style"
-                      placeholder={t('generator.form.style_placeholder')}
-                      value={style}
-                      onChange={(e) => setStyle(e.target.value)}
-                      className="min-h-24"
-                    />
-                    <div className="text-muted-foreground text-right text-sm">
-                      {style.length}/1000
+                  {customMode && !instrumental && (
+                    <div className="space-y-2">
+                      <Label htmlFor="lyrics">
+                        {t('generator.form.lyrics')}
+                      </Label>
+                      <Textarea
+                        id="lyrics"
+                        placeholder={t('generator.form.lyrics_placeholder')}
+                        value={lyrics}
+                        onChange={(e) => setLyrics(e.target.value)}
+                        className="min-h-32"
+                      />
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {!customMode && (
-                  <div className="space-y-2">
-                    <Label htmlFor="prompt">{t('generator.form.prompt')}</Label>
-                    <Textarea
-                      id="prompt"
-                      placeholder={t('generator.form.prompt_placeholder')}
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                      className="min-h-32"
-                      required
-                    />
-                  </div>
-                )}
+                  {!isMounted ? (
+                    <Button className="w-full" size="lg" disabled>
+                      <Music className="mr-2 h-4 w-4" />
+                      {t('generator.generate')}
+                    </Button>
+                  ) : isCheckSign ? (
+                    <Button className="w-full" size="lg">
+                      <Loader2 className="size-4 animate-spin" />{' '}
+                      {t('generator.loading')}
+                    </Button>
+                  ) : user ? (
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={isGenerating}
+                      className="w-full"
+                      size="lg"
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          {t('generator.generating')}
+                        </>
+                      ) : (
+                        <>
+                          <Music className="mr-2 h-4 w-4" />
+                          {t('generator.generate')}
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full"
+                      size="lg"
+                      onClick={() => setIsShowSignModal(true)}
+                    >
+                      <User className="mr-2 h-4 w-4" />{' '}
+                      {t('generator.sign_in_to_generate')}
+                    </Button>
+                  )}
 
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    id="instrumental"
-                    checked={instrumental}
-                    onCheckedChange={setInstrumental}
-                  />
-                  <Label htmlFor="instrumental">
-                    {t('generator.form.instrumental')}
-                  </Label>
-                </div>
-
-                {customMode && !instrumental && (
-                  <div className="space-y-2">
-                    <Label htmlFor="lyrics">{t('generator.form.lyrics')}</Label>
-                    <Textarea
-                      id="lyrics"
-                      placeholder={t('generator.form.lyrics_placeholder')}
-                      value={lyrics}
-                      onChange={(e) => setLyrics(e.target.value)}
-                      className="min-h-32"
-                    />
-                  </div>
-                )}
-
-                {!isMounted ? (
-                  <Button className="w-full" size="lg" disabled>
-                    <Music className="mr-2 h-4 w-4" />
-                    {t('generator.generate')}
-                  </Button>
-                ) : isCheckSign ? (
-                  <Button className="w-full" size="lg">
-                    <Loader2 className="size-4 animate-spin" />{' '}
-                    {t('generator.loading')}
-                  </Button>
-                ) : user ? (
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={isGenerating}
-                    className="w-full"
-                    size="lg"
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {t('generator.generating')}
-                      </>
-                    ) : (
-                      <>
-                        <Music className="mr-2 h-4 w-4" />
-                        {t('generator.generate')}
-                      </>
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    onClick={() => setIsShowSignModal(true)}
-                  >
-                    <User className="mr-2 h-4 w-4" />{' '}
-                    {t('generator.sign_in_to_generate')}
-                  </Button>
-                )}
-
-                {!isMounted ? (
-                  <div className="mb-6 flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('generator.credits_cost', { credits: costCredits })}
-                    </span>
-                    <span className="text-foreground font-medium">
-                      {t('generator.credits_remaining', { credits: 0 })}
-                    </span>
-                  </div>
-                ) : user &&
-                  user.credits &&
-                  user.credits.remainingCredits > 0 ? (
-                  <div className="mb-6 flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('generator.credits_cost', { credits: costCredits })}
-                    </span>
-                    <span className="text-foreground font-medium">
-                      {t('generator.credits_remaining', {
-                        credits: user.credits.remainingCredits,
-                      })}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="mb-6 flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('generator.credits_cost', { credits: costCredits })},{' '}
-                      {t('generator.credits_remaining', {
-                        credits: user?.credits?.remainingCredits || 0,
-                      })}
-                    </span>
-                    <Link href="/pricing">
-                      <Button className="w-full" size="lg" variant="outline">
-                        <CreditCard className="size-4" />{' '}
-                        {t('generator.buy_credits')}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-
-                {isGenerating && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>{t('generator.generation_progress')}</span>
-                      <span>{progress}%</span>
+                  {!isMounted ? (
+                    <div className="mb-6 flex items-center justify-between text-sm">
+                      <span className="text-primary">
+                        {t('generator.credits_cost', { credits: costCredits })}
+                      </span>
+                      <span className="text-foreground font-medium">
+                        {t('generator.credits_remaining', { credits: 0 })}
+                      </span>
                     </div>
-                    <Progress value={progress} className="w-full" />
-                    <p className="text-muted-foreground text-center text-sm">
-                      {t('generator.time_cost')}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                  ) : user &&
+                    user.credits &&
+                    user.credits.remainingCredits > 0 ? (
+                    <div className="mb-6 flex items-center justify-between text-sm">
+                      <span className="text-primary">
+                        {t('generator.credits_cost', { credits: costCredits })}
+                      </span>
+                      <span className="text-foreground font-medium">
+                        {t('generator.credits_remaining', {
+                          credits: user.credits.remainingCredits,
+                        })}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="mb-6 flex items-center justify-between text-sm">
+                      <span className="text-primary">
+                        {t('generator.credits_cost', { credits: costCredits })},{' '}
+                        {t('generator.credits_remaining', {
+                          credits: user?.credits?.remainingCredits || 0,
+                        })}
+                      </span>
+                      <Link href="/pricing">
+                        <Button className="w-full" size="lg" variant="outline">
+                          <CreditCard className="size-4" />{' '}
+                          {t('generator.buy_credits')}
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
 
-            {/* Right side - Generated Song Display */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Music className="h-5 w-5" />
-                  {t('generator.generated_song')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {generatedSongs.length > 0 ? (
-                  <div className="space-y-4">
-                    {generatedSongs.map((song, index) => {
-                      const isCurrentlyPlaying =
-                        currentPlayingSong?.id === song.id && isPlaying;
-                      const isCurrentlyLoading =
-                        currentPlayingSong?.id === song.id && isLoadingAudio;
+                  {isGenerating && (
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>{t('generator.generation_progress')}</span>
+                        <span>{progress}%</span>
+                      </div>
+                      <Progress value={progress} className="w-full" />
+                      <p className="text-muted-foreground text-center text-sm">
+                        {t('generator.time_cost')}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
-                      return (
-                        <div key={song.id} className="space-y-4">
-                          <div className="flex gap-4">
-                            <div className="relative flex-shrink-0">
-                              <div className="bg-muted relative h-20 w-20 overflow-hidden rounded-lg">
-                                {song.imageUrl ? (
-                                  <LazyImage
-                                    src={song.imageUrl}
-                                    alt={song.title}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                ) : (
-                                  <div className="from-primary/20 to-accent/20 flex h-full w-full items-center justify-center bg-gradient-to-br">
-                                    <Music className="text-muted-foreground h-6 w-6" />
-                                  </div>
-                                )}
-                              </div>
-                              {song.audioUrl && (
-                                <Button
-                                  size="sm"
-                                  variant="secondary"
-                                  className="absolute top-6 right-6 h-8 w-8 rounded-full p-0 shadow-lg"
-                                  onClick={() => togglePlay(song)}
-                                  disabled={isCurrentlyLoading}
-                                >
-                                  {isCurrentlyLoading ? (
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                  ) : isCurrentlyPlaying ? (
-                                    <Pause className="h-3 w-3" />
+              {/* Right side - Generated Song Display */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Music className="h-5 w-5" />
+                    {t('generator.generated_song')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {generatedSongs.length > 0 ? (
+                    <div className="space-y-4">
+                      {generatedSongs.map((song, index) => {
+                        const isCurrentlyPlaying =
+                          currentPlayingSong?.id === song.id && isPlaying;
+                        const isCurrentlyLoading =
+                          currentPlayingSong?.id === song.id && isLoadingAudio;
+
+                        return (
+                          <div key={song.id} className="space-y-4">
+                            <div className="flex gap-4">
+                              <div className="relative flex-shrink-0">
+                                <div className="bg-muted relative h-20 w-20 overflow-hidden rounded-lg">
+                                  {song.imageUrl ? (
+                                    <LazyImage
+                                      src={song.imageUrl}
+                                      alt={song.title}
+                                      fill
+                                      className="object-cover"
+                                    />
                                   ) : (
-                                    <Play className="h-3 w-3" />
+                                    <div className="from-primary/20 to-accent/20 flex h-full w-full items-center justify-center bg-gradient-to-br">
+                                      <Music className="text-muted-foreground h-6 w-6" />
+                                    </div>
                                   )}
-                                </Button>
-                              )}
-                            </div>
+                                </div>
+                                {song.audioUrl && (
+                                  <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    className="absolute top-6 right-6 h-8 w-8 rounded-full p-0 shadow-lg"
+                                    onClick={() => togglePlay(song)}
+                                    disabled={isCurrentlyLoading}
+                                  >
+                                    {isCurrentlyLoading ? (
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : isCurrentlyPlaying ? (
+                                      <Pause className="h-3 w-3" />
+                                    ) : (
+                                      <Play className="h-3 w-3" />
+                                    )}
+                                  </Button>
+                                )}
+                              </div>
 
-                            <div className="min-w-0 flex-1">
-                              <h3 className="text-foreground mb-1 text-lg font-semibold">
-                                {song.title}
-                              </h3>
-                              <div className="text-muted-foreground mb-2 flex items-center gap-2 text-sm">
-                                <User className="h-4 w-4" />
-                                <span>{song.artist}</span>
-                                <Clock className="ml-2 h-4 w-4" />
-                                <span>{formatDuration(song.duration)}</span>
+                              <div className="min-w-0 flex-1">
+                                <h3 className="text-foreground mb-1 text-lg font-semibold">
+                                  {song.title}
+                                </h3>
+                                <div className="text-muted-foreground mb-2 flex items-center gap-2 text-sm">
+                                  <User className="h-4 w-4" />
+                                  <span>{song.artist}</span>
+                                  <Clock className="ml-2 h-4 w-4" />
+                                  <span>{formatDuration(song.duration)}</span>
+                                </div>
+                                <div className="mb-2 line-clamp-1 flex flex-wrap gap-1">
+                                  {song.style &&
+                                    song.style
+                                      .split(',')
+                                      .slice(0, 2)
+                                      .map((tag, tagIndex) => (
+                                        <Badge
+                                          key={tagIndex}
+                                          variant="default"
+                                          className="text-xs"
+                                        >
+                                          {tag.trim()}
+                                        </Badge>
+                                      ))}
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                  {song.audioUrl ? (
+                                    <div className="flex items-center gap-2 text-green-600">
+                                      <CheckCircle className="h-4 w-4" />
+                                      <span>
+                                        {t('generator.ready_to_play')}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <div className="flex items-center gap-2 text-yellow-600">
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                      <span>
+                                        {t('generator.audio_generating')}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
-                              <div className="mb-2 line-clamp-1 flex flex-wrap gap-1">
-                                {song.style &&
-                                  song.style
-                                    .split(',')
-                                    .slice(0, 2)
-                                    .map((tag, tagIndex) => (
-                                      <Badge
-                                        key={tagIndex}
-                                        variant="default"
-                                        className="text-xs"
-                                      >
-                                        {tag.trim()}
-                                      </Badge>
-                                    ))}
-                              </div>
-                              <div className="flex items-center gap-2 text-sm">
-                                {song.audioUrl ? (
-                                  <div className="flex items-center gap-2 text-green-600">
-                                    <CheckCircle className="h-4 w-4" />
-                                    <span>{t('generator.ready_to_play')}</span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center gap-2 text-yellow-600">
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                    <span>
-                                      {t('generator.audio_generating')}
-                                    </span>
-                                  </div>
+
+                              <div className="flex flex-col gap-2">
+                                {song.audioUrl && (
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => downloadAudio(song)}
+                                  >
+                                    <Download className="h-4 w-4" />
+                                  </Button>
                                 )}
                               </div>
                             </div>
-
-                            <div className="flex flex-col gap-2">
-                              {song.audioUrl && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => downloadAudio(song)}
-                                >
-                                  <Download className="h-4 w-4" />
-                                </Button>
-                              )}
-                            </div>
+                            {index < generatedSongs.length - 1 && (
+                              <div className="border-t" />
+                            )}
                           </div>
-                          {index < generatedSongs.length - 1 && (
-                            <div className="border-t" />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                      <Music className="text-muted-foreground h-8 w-8" />
+                        );
+                      })}
                     </div>
-                    <p className="text-muted-foreground mb-2">
-                      {isGenerating
-                        ? t('generator.generating_song')
-                        : t('generator.no_song_generated')}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                        <Music className="text-muted-foreground h-8 w-8" />
+                      </div>
+                      <p className="text-muted-foreground mb-2">
+                        {isGenerating
+                          ? t('generator.generating_song')
+                          : t('generator.no_song_generated')}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }
