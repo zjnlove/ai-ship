@@ -211,9 +211,9 @@ export function Header({ header }: { header: HeaderType }) {
                             >
                               <div className="flex items-center gap-3">
                                 {subItem.icon && (
-                                  <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
-                                    <SmartIcon name={subItem.icon as string} />
-                                  </div>
+                                  // <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                                  <SmartIcon name={subItem.icon as string} />
+                                  // </div>
                                 )}
                                 <div className="space-y-1">
                                   <div className="text-sm leading-none font-medium">
@@ -363,12 +363,12 @@ export function Header({ header }: { header: HeaderType }) {
                                 className="hover:bg-primary/10 hover:text-primary grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2 transition-colors"
                               >
                                 {subItem.icon && (
-                                  <div
-                                    aria-hidden
-                                    className="flex items-center justify-center *:size-4"
-                                  >
-                                    <SmartIcon name={subItem.icon as string} />
-                                  </div>
+                                  // <div
+                                  //   aria-hidden
+                                  //   className="flex items-center justify-center *:size-4"
+                                  // >
+                                  <SmartIcon name={subItem.icon as string} />
+                                  // </div>
                                 )}
                                 <div className="flex items-center gap-2 text-base">
                                   {subItem.title}
