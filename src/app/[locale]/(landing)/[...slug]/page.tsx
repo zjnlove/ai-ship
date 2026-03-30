@@ -208,6 +208,28 @@ export default async function DynamicPage({
       return <Page locale={locale} page={page} />;
     }
 
+    if (staticPageSlug.includes('image-models')) {
+      const { hero, ...restSections } = aiMessages.page.sections || {};
+
+      const page = {
+        sections: {
+          ...(hero && { hero }),
+          generator: {
+            component: (
+              <ImageGenerator
+                srOnlyTitle={aiMessages.generator?.title}
+                className=""
+              />
+            ),
+          },
+          ...restSections,
+        },
+      };
+
+      const Page = await getThemePage('dynamic-page');
+      return <Page locale={locale} page={page} />;
+    }
+
     const Page = await getThemePage('dynamic-page');
     return <Page locale={locale} page={aiMessages.page} />;
   }

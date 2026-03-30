@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Qwen Image Edit - AI Image Editor | Marble AI",
+    "description": "Qwen Image Edit by Alibaba Qwen team. An open-source image editing model supporting semantic and appearance editing with precise, visually coherent results. Image-to-image editing only."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Qwen Image Edit",
+        "highlight_text": "Qwen Image Edit",
+        "description": "Alibaba's specialized image editing model. Transform your images with semantic and appearance editing, bilingual text editing, and precise visual control.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Qwen Image Edit",
+        "highlight_text": "Qwen Image Edit",
+        "label": "Model Overview",
+        "description": "Qwen-Image-Edit is an open-source image editing model based on Qwen-Image, supporting semantic and appearance editing with precise, visually coherent results.",
+        "image": {
+          "src": "/imgs/models/image/qwen-image-edit.png",
+          "alt": "Qwen Image Edit"
+        },
+        "items": [
+          {
+            "title": "Semantic Editing",
+            "description": "Make high-level changes to image content while maintaining visual coherence and natural-looking results.",
+            "icon": "RiMagicLine"
+          },
+          {
+            "title": "Appearance Editing",
+            "description": "Precisely control visual attributes like color, texture, lighting, and style transformations.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Bilingual Text Editing",
+            "description": "Edit Chinese and English text within images while preserving original font, size, and style characteristics.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Visual Coherence",
+            "description": "Advanced algorithms ensure edited regions blend seamlessly with the rest of the image.",
+            "icon": "RiCheckDoubleLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Qwen Image Edit a powerful image editing tool.",
+        "items": [
+          {
+            "title": "Open Source",
+            "description": "Built on open-source technology, allowing for customization and integration into various workflows.",
+            "icon": "RiCodeSSlashLine"
+          },
+          {
+            "title": "Precise Control",
+            "description": "Fine-grained control over editing parameters for professional-quality results.",
+            "icon": "RiSettings3Line"
+          },
+          {
+            "title": "Style Preservation",
+            "description": "Maintain original image style and quality while making targeted edits.",
+            "icon": "RiShieldCheckLine"
+          },
+          {
+            "title": "Fast Processing",
+            "description": "Optimized inference for quick editing results without compromising quality.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Easy-to-use API for seamless integration into applications and workflows.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all edited images, suitable for business use.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Qwen Image Edit.",
+        "items": [
+          {
+            "title": "Photo Retouching",
+            "description": "Professional photo editing and retouching for portraits, products, and commercial photography.",
+            "icon": "RiImageEditLine"
+          },
+          {
+            "title": "Text Updates",
+            "description": "Update text in signs, posters, and marketing materials while maintaining original styling.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Style Transfer",
+            "description": "Transform images to different artistic styles while preserving key content and composition.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Product Photography",
+            "description": "Edit product images for e-commerce, changing backgrounds, colors, or adding elements.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Creative Design",
+            "description": "Create unique visual content by combining semantic and appearance editing techniques.",
+            "icon": "RiPenNibLine"
+          },
+          {
+            "title": "Content Localization",
+            "description": "Adapt visual content for different markets by editing text and cultural elements.",
+            "icon": "RiGlobalLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Qwen Image Edit.",
+        "items": [
+          {
+            "title": "What is Qwen Image Edit?",
+            "description": "Qwen Image Edit is Alibaba Qwen's specialized image editing model that supports semantic and appearance editing with precise, visually coherent results."
+          },
+          {
+            "title": "What editing modes does it support?",
+            "description": "Qwen Image Edit supports Image To Image editing only, including semantic editing (content changes) and appearance editing (visual attribute changes)."
+          },
+          {
+            "title": "Can it edit text in images?",
+            "description": "Yes! Qwen Image Edit excels at bilingual text editing (Chinese and English) while preserving original font, size, and style."
+          },
+          {
+            "title": "Is it open source?",
+            "description": "Yes, Qwen Image Edit is based on open-source technology, allowing for customization and integration."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images edited with Qwen Image Edit through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How fast is the editing?",
+            "description": "Most edits are completed within 5-15 seconds, depending on complexity and the type of changes requested."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Qwen Image Edit?",
+        "highlight_text": "Qwen Image Edit",
+        "description": "Experience the power of Alibaba's specialized image editing model. Transform your images with precision and control.",
+        "buttons": [
+          {
+            "title": "Start Editing",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

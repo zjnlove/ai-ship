@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Nano Banana Pro - AI Image Generator & Editor | Marble AI",
+    "description": "Nano Banana Pro by Google DeepMind. Sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Nano Banana Pro",
+        "highlight_text": "Nano Banana Pro",
+        "description": "Google DeepMind's advanced image model. Sharper 2K imagery with intelligent 4K scaling, improved text rendering, and enhanced character consistency.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Nano Banana Pro",
+        "highlight_text": "Nano Banana Pro",
+        "label": "Model Overview",
+        "description": "Google DeepMind's Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency for creative and API-driven workflows.",
+        "image": {
+          "src": "/imgs/models/image/nano-banana-pro.png",
+          "alt": "Nano Banana Pro"
+        },
+        "items": [
+          {
+            "title": "2K Native Resolution",
+            "description": "Generate sharp, detailed images at 2K resolution natively with exceptional clarity and fine details.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Intelligent 4K Scaling",
+            "description": "Advanced upscaling technology that intelligently enhances images to 4K while preserving quality.",
+            "icon": "RiZoomInLine"
+          },
+          {
+            "title": "Enhanced Text Rendering",
+            "description": "Improved text rendering with better accuracy, font reproduction, and natural placement.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Character Consistency",
+            "description": "Enhanced character consistency across generations, perfect for storytelling and branding.",
+            "icon": "RiUserSmileLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Nano Banana Pro a major leap in visual quality.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for comprehensive creative workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Superior Quality",
+            "description": "Major leap in visual quality with sharper details, better colors, and more realistic textures.",
+            "icon": "RiStarLine"
+          },
+          {
+            "title": "API Optimized",
+            "description": "Designed for API-driven workflows with reliable performance and consistent output quality.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Fast Processing",
+            "description": "Optimized inference for quick generation without compromising the enhanced quality.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Style Control",
+            "description": "Extensive style control options for diverse artistic directions and visual aesthetics.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images, suitable for business use.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Nano Banana Pro.",
+        "items": [
+          {
+            "title": "Professional Photography",
+            "description": "Generate high-quality images for professional photography projects and commercial use.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Print Media",
+            "description": "Create images suitable for print media with high resolution and sharp details.",
+            "icon": "RiPrinterLine"
+          },
+          {
+            "title": "Marketing Campaigns",
+            "description": "Produce premium visual content for marketing campaigns and brand materials.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Digital Art",
+            "description": "Create stunning digital artwork with enhanced quality and artistic control.",
+            "icon": "RiBrushLine"
+          },
+          {
+            "title": "E-commerce",
+            "description": "Generate product images with superior quality for online retail and catalogs.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Creative Projects",
+            "description": "Power creative projects with high-quality visuals and consistent character designs.",
+            "icon": "RiLightbulbLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Nano Banana Pro.",
+        "items": [
+          {
+            "title": "What is Nano Banana Pro?",
+            "description": "Nano Banana Pro is Google DeepMind's advanced image model delivering sharper 2K imagery, intelligent 4K scaling, and enhanced character consistency."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Nano Banana Pro supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "What resolution can it generate?",
+            "description": "Nano Banana Pro natively generates 2K images with intelligent 4K upscaling available for even greater detail."
+          },
+          {
+            "title": "How does it differ from Nano Banana 2?",
+            "description": "Nano Banana Pro offers enhanced quality with sharper 2K imagery, better text rendering, and improved character consistency compared to Nano Banana 2."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited with Nano Banana Pro through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "Is it suitable for print?",
+            "description": "Yes! With native 2K resolution and intelligent 4K scaling, Nano Banana Pro produces images suitable for print media."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Nano Banana Pro?",
+        "highlight_text": "Nano Banana Pro",
+        "description": "Experience Google DeepMind's advanced image generation. Create stunning visuals with enhanced quality.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

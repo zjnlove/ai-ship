@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Qwen Image 2.0 - AI Image Generator & Editor | Marble AI",
+    "description": "Qwen Image 2.0 by Alibaba Qwen team. A unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Qwen Image 2.0",
+        "highlight_text": "Qwen Image 2.0",
+        "description": "Alibaba's next-generation unified image model. Generate stunning images from text or transform existing images with advanced AI capabilities, native 2K output, and precise text rendering.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Qwen Image 2.0",
+        "highlight_text": "Qwen Image 2.0",
+        "label": "Model Overview",
+        "description": "Qwen Image 2.0 is Alibaba Qwen's flagship unified image model, designed for creative professionals and developers who demand the highest quality image generation and editing capabilities.",
+        "image": {
+          "src": "/imgs/models/image/qwen-image-2.png",
+          "alt": "Qwen Image 2.0"
+        },
+        "items": [
+          {
+            "title": "Unified Architecture",
+            "description": "A single model that excels at both text-to-image generation and image-to-image editing, eliminating the need for multiple specialized models.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Native 2K Output",
+            "description": "Generate high-resolution images up to 2K natively, with intelligent 4K upscaling available for even greater detail and clarity.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Structured Text Rendering",
+            "description": "Industry-leading text rendering capabilities that accurately reproduce multilingual text with proper fonts, sizes, and layouts.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Flexible Editing",
+            "description": "Advanced image editing with precise control over style, content, and composition while preserving original image quality.",
+            "icon": "RiImageEditLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Qwen Image 2.0 stand out among AI image models.",
+        "items": [
+          {
+            "title": "Photorealistic Generation",
+            "description": "Create stunning, photorealistic images from detailed text descriptions with exceptional detail and natural lighting.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Multilingual Support",
+            "description": "Full support for Chinese and English text rendering, making it ideal for global creative workflows.",
+            "icon": "RiGlobalLine"
+          },
+          {
+            "title": "Style Consistency",
+            "description": "Maintain consistent artistic styles across multiple generations and edits for cohesive visual projects.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Fast Processing",
+            "description": "Optimized inference engine delivers high-quality results in seconds, perfect for iterative creative workflows.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Seamless API access for developers to integrate Qwen Image 2.0 into applications and automated workflows.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images, suitable for business and marketing use.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Qwen Image 2.0 across industries.",
+        "items": [
+          {
+            "title": "Marketing & Advertising",
+            "description": "Create compelling campaign visuals, product mockups, and promotional materials with professional quality.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "E-commerce",
+            "description": "Generate product images, lifestyle shots, and category banners that drive conversions.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Content Creation",
+            "description": "Produce engaging visuals for social media, blogs, and digital content at scale.",
+            "icon": "RiArticleLine"
+          },
+          {
+            "title": "Graphic Design",
+            "description": "Accelerate design workflows with AI-generated concepts, backgrounds, and design elements.",
+            "icon": "RiPenNibLine"
+          },
+          {
+            "title": "Game Development",
+            "description": "Create concept art, textures, and visual assets for games and interactive media.",
+            "icon": "RiGamepadLine"
+          },
+          {
+            "title": "Education",
+            "description": "Generate educational illustrations, diagrams, and visual learning materials.",
+            "icon": "RiBookOpenLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Qwen Image 2.0.",
+        "items": [
+          {
+            "title": "What is Qwen Image 2.0?",
+            "description": "Qwen Image 2.0 is Alibaba Qwen's advanced unified image model that supports both text-to-image generation and image-to-image editing. It features native 2K output, structured text rendering, and flexible editing capabilities."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Qwen Image 2.0 supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images). This dual capability makes it a versatile tool for various creative needs."
+          },
+          {
+            "title": "What resolution can I generate?",
+            "description": "Qwen Image 2.0 natively generates images up to 2K resolution. With intelligent upscaling, you can achieve 4K quality while maintaining exceptional detail and clarity."
+          },
+          {
+            "title": "Does it support text in images?",
+            "description": "Yes! Qwen Image 2.0 excels at structured text rendering, supporting both Chinese and English with accurate font reproduction, proper sizing, and natural placement within images."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Absolutely! All images generated or edited with Qwen Image 2.0 through Marble AI come with full commercial rights. You can use them for marketing, products, websites, and any business purposes."
+          },
+          {
+            "title": "How fast is the generation?",
+            "description": "Qwen Image 2.0 is optimized for speed. Most images are generated or edited within 5-15 seconds, depending on complexity and resolution requirements."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Qwen Image 2.0?",
+        "highlight_text": "Qwen Image 2.0",
+        "description": "Experience the power of Alibaba's unified image model. Generate stunning images from text or transform your existing visuals with advanced AI.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

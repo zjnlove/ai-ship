@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "NanoBanana-Gemini 2.5 Flash - AI Image Generator & Editor | Marble AI",
+    "description": "NanoBanana-Gemini 2.5 Flash Image Preview by Google. Advanced AI model excelling in natural language-driven image generation and editing with hyper-realistic, physics-aware visuals. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "NanoBanana-Gemini 2.5 Flash",
+        "highlight_text": "NanoBanana-Gemini 2.5 Flash",
+        "description": "Google's advanced AI model excelling in natural language-driven image generation and editing. Produces hyper-realistic, physics-aware visuals with seamless style transformations.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About NanoBanana-Gemini 2.5 Flash",
+        "highlight_text": "NanoBanana-Gemini 2.5 Flash",
+        "label": "Model Overview",
+        "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image generation and editing with hyper-realistic, physics-aware visuals.",
+        "image": {
+          "src": "/imgs/models/image/nano-banana-gemini.png",
+          "alt": "NanoBanana-Gemini 2.5 Flash"
+        },
+        "items": [
+          {
+            "title": "Natural Language Driven",
+            "description": "Advanced understanding of natural language prompts for intuitive image generation and editing.",
+            "icon": "RiChatSmile2Line"
+          },
+          {
+            "title": "Physics-Aware Visuals",
+            "description": "Produces images with realistic physics, lighting, and spatial relationships.",
+            "icon": "RiSunLine"
+          },
+          {
+            "title": "Hyper-Realistic Output",
+            "description": "Generate stunning hyper-realistic images with exceptional detail and natural appearance.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Style Transformations",
+            "description": "Seamless style transformations while maintaining visual coherence and quality.",
+            "icon": "RiPaletteLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes NanoBanana-Gemini 2.5 Flash unique.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for versatile workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Advanced Understanding",
+            "description": "Superior comprehension of complex prompts and visual concepts.",
+            "icon": "RiBrainLine"
+          },
+          {
+            "title": "Fast Inference",
+            "description": "Optimized for quick generation with Flash-level speed and efficiency.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Consistent Quality",
+            "description": "Reliable output quality across diverse generation tasks and styles.",
+            "icon": "RiCheckDoubleLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Easy API access for developers to integrate into applications.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of NanoBanana-Gemini 2.5 Flash.",
+        "items": [
+          {
+            "title": "Creative Content",
+            "description": "Generate creative visual content with natural language descriptions.",
+            "icon": "RiLightbulbLine"
+          },
+          {
+            "title": "Product Visualization",
+            "description": "Create realistic product visualizations and mockups.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Marketing Materials",
+            "description": "Produce engaging marketing visuals with hyper-realistic quality.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Concept Art",
+            "description": "Generate concept art with physics-aware lighting and composition.",
+            "icon": "RiBrushLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Create educational visuals with realistic representations.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Produce eye-catching social media content with style transformations.",
+            "icon": "RiShareLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about NanoBanana-Gemini 2.5 Flash.",
+        "items": [
+          {
+            "title": "What is NanoBanana-Gemini 2.5 Flash?",
+            "description": "It's Google's advanced AI model (Gemini 3 Image Preview) excelling in natural language-driven image generation and editing with hyper-realistic, physics-aware visuals."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "It supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Its advanced natural language understanding, physics-aware rendering, and hyper-realistic output set it apart from other models."
+          },
+          {
+            "title": "How fast is it?",
+            "description": "As a Flash model, it's optimized for speed while maintaining high quality output."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "Is it good for realistic images?",
+            "description": "Yes! It excels at producing hyper-realistic, physics-aware visuals with natural lighting and spatial relationships."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try NanoBanana-Gemini 2.5 Flash?",
+        "highlight_text": "NanoBanana-Gemini 2.5 Flash",
+        "description": "Experience Google's advanced natural language-driven image generation. Create hyper-realistic visuals.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}
