@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
 import { MusicGenerator } from '@/shared/blocks/generator';
 import { getMetadata } from '@/shared/lib/seo';
@@ -20,23 +21,46 @@ export default async function AiMusicGeneratorPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // get ai music data
-  const t = await getTranslations('ai.music');
+  //   // get ai music data
+  //   const t = await getTranslations('ai.music');
 
-  // build page sections
-  const page: DynamicPage = {
+  //   // build page sections
+  //   const page: DynamicPage = {
+  //     sections: {
+  //       hero: {
+  //         title: t.raw('page.title'),
+  //         description: t.raw('page.description'),
+  //         background_image: {
+  //           src: '/imgs/bg/tree.jpg',
+  //           alt: 'hero background',
+  //         },
+  //       },
+  //       generator: {
+  //         component: <MusicGenerator srOnlyTitle={t.raw('generator.title')} />,
+  //       },
+  //     },
+  //   };
+
+  //   // load page component
+  //   const Page = await getThemePage('dynamic-page');
+
+  //   return <Page locale={locale} page={page} />;
+  // }
+  const aiMessages = await loadMessages(`ai/music`, locale);
+  const { hero, ...restSections } = aiMessages.page.sections || {};
+
+  const page = {
     sections: {
-      hero: {
-        title: t.raw('page.title'),
-        description: t.raw('page.description'),
-        background_image: {
-          src: '/imgs/bg/tree.jpg',
-          alt: 'hero background',
-        },
-      },
+      ...(hero && { hero }),
       generator: {
-        component: <MusicGenerator srOnlyTitle={t.raw('generator.title')} />,
+        component: (
+          <MusicGenerator
+            srOnlyTitle={aiMessages.generator?.title}
+            className=""
+          />
+        ),
       },
+      ...restSections,
     },
   };
 
