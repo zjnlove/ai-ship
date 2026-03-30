@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
 import { ImageGenerator } from '@/shared/blocks/generator';
 import { getMetadata } from '@/shared/lib/seo';
@@ -24,19 +25,36 @@ export default async function AiImageGeneratorPage({
   const t = await getTranslations('ai.image');
 
   // build page sections
-  const page: DynamicPage = {
+  // const page: DynamicPage = {
+  //   sections: {
+  //     hero: {
+  //       title: t.raw('page.title'),
+  //       description: t.raw('page.description'),
+  //       background_image: {
+  //         src: '/imgs/bg/tree.jpg',
+  //         alt: 'hero background',
+  //       },
+  //     },
+  //     generator: {
+  //       component: <ImageGenerator srOnlyTitle={t.raw('generator.title')} />,
+  //     },
+  //   },
+  // };
+  const aiMessages = await loadMessages(`ai/image`, locale);
+  const { hero, ...restSections } = aiMessages.page.sections || {};
+
+  const page = {
     sections: {
-      hero: {
-        title: t.raw('page.title'),
-        description: t.raw('page.description'),
-        background_image: {
-          src: '/imgs/bg/tree.jpg',
-          alt: 'hero background',
-        },
-      },
+      ...(hero && { hero }),
       generator: {
-        component: <ImageGenerator srOnlyTitle={t.raw('generator.title')} />,
+        component: (
+          <ImageGenerator
+            srOnlyTitle={aiMessages.generator?.title}
+            className=""
+          />
+        ),
       },
+      ...restSections,
     },
   };
 
