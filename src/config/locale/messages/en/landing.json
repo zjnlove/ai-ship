@@ -62,7 +62,27 @@
               "url": "/ai-video-generator",
               "target": "_blank",
               "tip": "New",
-              "tip_color": "bg-emerald-500"
+              "tip_color": "bg-emerald-500",
+              "children": [
+                {
+                  "title": "Text-to-Video",
+                  "description": "Generate videos from text",
+                  "url": "/ai-video-generator/text-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Image-to-Video",
+                  "description": "Generate videos from images",
+                  "url": "/ai-video-generator/image-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Video-to-Video",
+                  "description": "Generate videos from videos",
+                  "url": "/ai-video-generator/video-to-video",
+                  "target": "_blank"
+                }
+              ]
             },
             {
               "title": "AI Chatbot",

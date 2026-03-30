@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
 import { envConfigs } from '@/config';
-import { ImageGenerator } from '@/shared/blocks/generator';
+import { ImageGenerator, VideoGenerator } from '@/shared/blocks/generator';
 import { getLocalPage } from '@/shared/models/post';
 
 export const revalidate = 3600;
@@ -173,6 +173,28 @@ export default async function DynamicPage({
           generator: {
             component: (
               <ImageGenerator
+                srOnlyTitle={aiMessages.generator?.title}
+                className=""
+              />
+            ),
+          },
+          ...restSections,
+        },
+      };
+
+      const Page = await getThemePage('dynamic-page');
+      return <Page locale={locale} page={page} />;
+    }
+
+    if (staticPageSlug.includes('ai-video-generator')) {
+      const { hero, ...restSections } = aiMessages.page.sections || {};
+
+      const page = {
+        sections: {
+          ...(hero && { hero }),
+          generator: {
+            component: (
+              <VideoGenerator
                 srOnlyTitle={aiMessages.generator?.title}
                 className=""
               />

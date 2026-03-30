@@ -7,6 +7,16 @@ import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import { cn } from '@/shared/lib/utils';
 import { Section } from '@/shared/types/blocks/landing';
 
+// 检测文件是否为视频
+const isVideo = (src?: string): boolean => {
+  if (!src) return false;
+  return (
+    src.toLowerCase().endsWith('.mp4') ||
+    src.toLowerCase().endsWith('.webm') ||
+    src.toLowerCase().endsWith('.mov')
+  );
+};
+
 export function FeaturesModel({
   section,
   className,
@@ -101,17 +111,28 @@ export function FeaturesModel({
           <div className="mx-auto max-w-6xl space-y-6">
             {/* 大图展示区域 */}
             <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-2xl">
-              {selectedItem?.image?.src && (
-                <Image
-                  key={selectedIndex}
-                  src={selectedItem.image.src}
-                  alt={selectedItem.image?.alt ?? selectedItem.title ?? ''}
-                  fill
-                  className="animate-slow-fade-in-scale object-cover"
-                  sizes="(max-width: 1280px) 100vw, 1280px"
-                  priority
-                />
-              )}
+              {selectedItem?.image?.src &&
+                (isVideo(selectedItem.image.src) ? (
+                  <video
+                    key={selectedIndex}
+                    src={selectedItem.image.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="animate-slow-fade-in-scale h-full w-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    key={selectedIndex}
+                    src={selectedItem.image.src}
+                    alt={selectedItem.image?.alt ?? selectedItem.title ?? ''}
+                    fill
+                    className="animate-slow-fade-in-scale object-cover"
+                    sizes="(max-width: 1280px) 100vw, 1280px"
+                    priority
+                  />
+                ))}
 
               {/* 渐变遮罩 */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -213,15 +234,24 @@ export function FeaturesModel({
                         : 'opacity-60 hover:scale-102 hover:opacity-100'
                     )}
                   >
-                    {item.image?.src && (
-                      <Image
-                        src={item.image.src}
-                        alt={item.image?.alt ?? item.title ?? ''}
-                        fill
-                        className="object-cover"
-                        sizes="160px"
-                      />
-                    )}
+                    {item.image?.src &&
+                      (isVideo(item.image.src) ? (
+                        <video
+                          src={item.image.src}
+                          muted
+                          loop
+                          playsInline
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image.src}
+                          alt={item.image?.alt ?? item.title ?? ''}
+                          fill
+                          className="object-cover"
+                          sizes="160px"
+                        />
+                      ))}
                     {selectedIndex === idx && (
                       <div className="bg-primary/10 absolute inset-0" />
                     )}
@@ -240,15 +270,24 @@ export function FeaturesModel({
                         : 'opacity-60 hover:scale-102 hover:opacity-100'
                     )}
                   >
-                    {item.image?.src && (
-                      <Image
-                        src={item.image.src}
-                        alt={item.image?.alt ?? item.title ?? ''}
-                        fill
-                        className="object-cover"
-                        sizes="160px"
-                      />
-                    )}
+                    {item.image?.src &&
+                      (isVideo(item.image.src) ? (
+                        <video
+                          src={item.image.src}
+                          muted
+                          loop
+                          playsInline
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image.src}
+                          alt={item.image?.alt ?? item.title ?? ''}
+                          fill
+                          className="object-cover"
+                          sizes="160px"
+                        />
+                      ))}
                     {selectedIndex === idx && (
                       <div className="bg-primary/10 absolute inset-0" />
                     )}
