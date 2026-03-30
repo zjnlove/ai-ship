@@ -32,33 +32,23 @@
           "children": [
             {
               "title": "AI Image Generator",
-              "description": "Use AI to generate images",
               "url": "/ai-image-generator",
               "target": "_blank",
               "children": [
                 {
                   "title": "Text-to-Image",
-                  "description": "Generate images from text",
                   "url": "/ai-image-generator/text-to-image",
                   "target": "_blank"
                 },
                 {
                   "title": "Image-to-Image",
-                  "description": "Generate images from images",
                   "url": "/ai-image-generator/image-to-image",
                   "target": "_blank"
                 }
               ]
             },
             {
-              "title": "AI Music Generator",
-              "description": "Use AI to generate music",
-              "url": "/ai-music-generator",
-              "target": "_blank"
-            },
-            {
               "title": "AI Video Generator",
-              "description": "Use AI to generate videos",
               "url": "/ai-video-generator",
               "target": "_blank",
               "tip": "New",
@@ -66,23 +56,25 @@
               "children": [
                 {
                   "title": "Text-to-Video",
-                  "description": "Generate videos from text",
                   "url": "/ai-video-generator/text-to-video",
                   "target": "_blank"
                 },
                 {
                   "title": "Image-to-Video",
-                  "description": "Generate videos from images",
                   "url": "/ai-video-generator/image-to-video",
                   "target": "_blank"
                 },
                 {
                   "title": "Video-to-Video",
-                  "description": "Generate videos from videos",
                   "url": "/ai-video-generator/video-to-video",
                   "target": "_blank"
                 }
               ]
+            },
+            {
+              "title": "AI Music Generator",
+              "url": "/ai-music-generator",
+              "target": "_blank"
             }
           ]
         },
@@ -93,44 +85,100 @@
           "children": [
             {
               "title": "Nana Banana Pro",
-              "description": "Nana Banana Pro Model",
               "url": "/",
               "tip": "New",
               "tip_color": "bg-emerald-500"
             },
             {
               "title": "Seedance2.0",
-              "description": "Seedance2.0 Model",
               "url": "/updates",
               "tip": "Video Hot",
               "tip_color": "bg-rose-500"
             },
             {
-              "title": "Docs",
-              "description": "Read Documentation",
-              "url": "/docs",
-              "target": "_blank"
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance2.0",
+              "url": "/updates",
+              "tip": "Video Hot",
+              "tip_color": "bg-rose-500"
             }
           ]
         },
         {
-          "title": "Content",
+          "title": "Resources",
           "children": [
             {
               "title": "Blog",
-              "description": "Read Blog Posts",
-              "url": "/blog"
+              "url": "/blog",
+              "icon": "RiArticleFill"
             },
             {
-              "title": "Updates",
-              "description": "Read Update Logs",
-              "url": "/updates"
+              "title": "Help Center",
+              "url": "/help-center",
+              "icon": "RiQuestionLine"
             },
             {
-              "title": "Docs",
-              "description": "Read Documentation",
-              "url": "/docs",
-              "target": "_blank"
+              "title": "About Us",
+              "url": "/about-us",
+              "icon": "RiInformationLine"
+            },
+            {
+              "title": "Contact",
+              "url": "/contact",
+              "icon": "RiContactsLine"
             }
           ]
         },
