@@ -22,7 +22,7 @@ export default async function AiImageGeneratorPage({
   setRequestLocale(locale);
 
   // get ai image data
-  const t = await getTranslations('ai.image');
+  // const t = await getTranslations('ai.image');
 
   // build page sections
   // const page: DynamicPage = {
