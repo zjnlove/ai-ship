@@ -130,105 +130,125 @@ export function Header({ header }: { header: HeaderType }) {
                   )}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul
-                    className="grid gap-3 p-2"
-                    style={{
-                      gridTemplateColumns: `repeat(${Math.ceil(item.children.length / 6)}, minmax(0, 1fr))`,
-                      width: `${Math.ceil(item.children.length / 6) * 230}px`,
-                    }}
-                  >
-                    {' '}
-                    {item.children?.map((subItem: NavItem, index: number) => (
-                      <li key={index}>
-                        {subItem.children && subItem.children.length > 0 ? (
-                          <div className="space-y-1">
-                            <Link
-                              href={subItem.url || ''}
-                              target={subItem.target || '_self'}
-                              className="hover:bg-accent hover:text-accent-foreground flex items-center gap-3 rounded-md p-3 transition-colors"
-                            >
-                              {subItem.icon && (
-                                <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
-                                  <SmartIcon name={subItem.icon as string} />
-                                </div>
-                              )}
-                              <div className="space-y-1">
-                                <div className="text-sm leading-none font-medium">
-                                  {subItem.title}
-                                  {subItem.tip && (
-                                    <span
-                                      className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
-                                    >
-                                      {subItem.tip}
-                                    </span>
-                                  )}
-                                </div>
-                                {subItem.description && (
-                                  <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                                    {subItem.description}
-                                  </p>
-                                )}
-                              </div>
-                            </Link>
-                            <ul className="ml-4 space-y-1 border-l pl-3">
-                              {subItem.children.map(
-                                (thirdItem: NavItem, thirdIndex: number) => (
-                                  <li key={thirdIndex}>
-                                    <Link
-                                      href={thirdItem.url || ''}
-                                      target={thirdItem.target || '_self'}
-                                      className="hover:bg-accent hover:text-accent-foreground flex items-center gap-2 rounded-md p-2 text-sm transition-colors"
-                                    >
-                                      {thirdItem.icon && (
-                                        <SmartIcon
-                                          name={thirdItem.icon as string}
-                                          className="h-4 w-4"
-                                        />
-                                      )}
-                                      <span>{thirdItem.title}</span>
-                                    </Link>
-                                  </li>
-                                )
-                              )}
-                            </ul>
-                          </div>
-                        ) : (
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href={subItem.url || ''}
-                              target={subItem.target || '_self'}
-                              className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
-                            >
-                              <div className="flex items-center gap-3">
-                                {subItem.icon && (
-                                  // <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
-                                  <SmartIcon name={subItem.icon as string} />
-                                  // </div>
-                                )}
+                  {(() => {
+                    const hasThirdLevel = item.children.some(
+                      (sub: NavItem) => sub.children && sub.children.length > 0
+                    );
+                    const cols = hasThirdLevel
+                      ? item.children.length
+                      : Math.ceil(item.children.length / 6);
+                    return (
+                      <ul
+                        className="grid gap-3 p-2"
+                        style={{
+                          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                          width: `${cols * 230}px`,
+                        }}
+                      >
+                        {' '}
+                        {item.children?.map(
+                          (subItem: NavItem, index: number) => (
+                            <li key={index}>
+                              {subItem.children &&
+                              subItem.children.length > 0 ? (
                                 <div className="space-y-1">
-                                  <div className="text-sm leading-none font-medium">
-                                    {subItem.title}
-                                    {subItem.tip && (
-                                      <span
-                                        className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
-                                      >
-                                        {subItem.tip}
-                                      </span>
+                                  <Link
+                                    href={subItem.url || ''}
+                                    target={subItem.target || '_self'}
+                                    className="hover:bg-accent hover:text-accent-foreground flex items-center gap-3 rounded-md p-3 transition-colors"
+                                  >
+                                    {subItem.icon && (
+                                      <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                                        <SmartIcon
+                                          name={subItem.icon as string}
+                                        />
+                                      </div>
                                     )}
-                                  </div>
-                                  {subItem.description && (
-                                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                                      {subItem.description}
-                                    </p>
-                                  )}
+                                    <div className="space-y-1">
+                                      <div className="text-sm leading-none font-medium">
+                                        {subItem.title}
+                                        {subItem.tip && (
+                                          <span
+                                            className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                          >
+                                            {subItem.tip}
+                                          </span>
+                                        )}
+                                      </div>
+                                      {subItem.description && (
+                                        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                                          {subItem.description}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </Link>
+                                  <ul className="ml-4 space-y-1 border-l pl-3">
+                                    {subItem.children.map(
+                                      (
+                                        thirdItem: NavItem,
+                                        thirdIndex: number
+                                      ) => (
+                                        <li key={thirdIndex}>
+                                          <Link
+                                            href={thirdItem.url || ''}
+                                            target={thirdItem.target || '_self'}
+                                            className="hover:bg-accent hover:text-accent-foreground flex items-center gap-2 rounded-md p-2 text-sm transition-colors"
+                                          >
+                                            {thirdItem.icon && (
+                                              <SmartIcon
+                                                name={thirdItem.icon as string}
+                                                className="h-4 w-4"
+                                              />
+                                            )}
+                                            <span>{thirdItem.title}</span>
+                                          </Link>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
                                 </div>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
+                              ) : (
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={subItem.url || ''}
+                                    target={subItem.target || '_self'}
+                                    className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      {subItem.icon && (
+                                        // <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow-sm ring-1">
+                                        <SmartIcon
+                                          name={subItem.icon as string}
+                                        />
+                                        // </div>
+                                      )}
+                                      <div className="space-y-1">
+                                        <div className="text-sm leading-none font-medium">
+                                          {subItem.title}
+                                          {subItem.tip && (
+                                            <span
+                                              className={`${subItem.tip_color || 'bg-primary'} ml-2 rounded-full px-2 py-0.5 text-[10px] leading-none font-medium text-white`}
+                                            >
+                                              {subItem.tip}
+                                            </span>
+                                          )}
+                                        </div>
+                                        {subItem.description && (
+                                          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                                            {subItem.description}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </NavigationMenuLink>
+                              )}
+                            </li>
+                          )
                         )}
-                      </li>
-                    ))}
-                  </ul>
+                      </ul>
+                    );
+                  })()}
                 </NavigationMenuContent>
               </NavigationMenuItem>
             );
