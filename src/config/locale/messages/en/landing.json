@@ -83,12 +83,6 @@
                   "target": "_blank"
                 }
               ]
-            },
-            {
-              "title": "AI Chatbot",
-              "description": "Chat with AI chatbot",
-              "url": "/chat",
-              "target": "_blank"
             }
           ]
         },

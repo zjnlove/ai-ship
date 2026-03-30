@@ -12,7 +12,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { Link } from '@/core/i18n/navigation';
+import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
 import { ImageUploader, ImageUploaderValue } from '@/shared/blocks/common';
 import { Button } from '@/shared/components/ui/button';
@@ -24,6 +24,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Label } from '@/shared/components/ui/label';
 import { Progress } from '@/shared/components/ui/progress';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import {
   Select,
   SelectContent,
@@ -237,12 +238,24 @@ export function VideoGenerator({
   );
   const [isMounted, setIsMounted] = useState(false);
 
+  const pathname = usePathname();
+
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
     useAppContext();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (pathname.includes('video-to-video')) {
+      setActiveTab('video-to-video');
+      setCostCredits(4);
+    } else if (pathname.includes('image-to-video')) {
+      setActiveTab('image-to-video');
+      setCostCredits(4);
+    }
+  }, [pathname]);
 
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
@@ -764,193 +777,187 @@ export function VideoGenerator({
     <section className={cn('pb-10', className)}>
       {/* 粒子背景 */}
       <ParticleBackground />
-      <div className="container">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <Card>
-              <CardHeader>
-                {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-                <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                  {t('title')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pb-8">
-                <Tabs value={activeTab} onValueChange={handleTabChange}>
-                  <TabsList className="bg-primary/10 grid w-full grid-cols-3">
-                    <TabsTrigger value="text-to-video">
-                      {t('tabs.text-to-video')}
-                    </TabsTrigger>
-                    <TabsTrigger value="image-to-video">
-                      {t('tabs.image-to-video')}
-                    </TabsTrigger>
-                    <TabsTrigger value="video-to-video">
-                      {t('tabs.video-to-video')}
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
+      <ScrollAnimation>
+        <div className="container">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <Card>
+                <CardHeader>
+                  {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
+                  <CardTitle className="flex items-center gap-2 text-xl font-semibold">
+                    {t('title')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 pb-8">
+                  <Tabs value={activeTab} onValueChange={handleTabChange}>
+                    <TabsList className="bg-primary/10 grid w-full grid-cols-3">
+                      <TabsTrigger value="text-to-video">
+                        {t('tabs.text-to-video')}
+                      </TabsTrigger>
+                      <TabsTrigger value="image-to-video">
+                        {t('tabs.image-to-video')}
+                      </TabsTrigger>
+                      <TabsTrigger value="video-to-video">
+                        {t('tabs.video-to-video')}
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>{t('form.provider')}</Label>
-                    <Select
-                      value={provider}
-                      onValueChange={handleProviderChange}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('form.select_provider')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {PROVIDER_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>{t('form.provider')}</Label>
+                      <Select
+                        value={provider}
+                        onValueChange={handleProviderChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue
+                            placeholder={t('form.select_provider')}
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {PROVIDER_OPTIONS.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>{t('form.model')}</Label>
+                      <Select value={model} onValueChange={setModel}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder={t('form.select_model')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {MODEL_OPTIONS.filter(
+                            (option) =>
+                              option.scenes.includes(activeTab) &&
+                              option.provider === provider
+                          ).map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
+                  {isImageToVideoMode && (
+                    <div className="space-y-4">
+                      <ImageUploader
+                        title={t('form.reference_image')}
+                        allowMultiple={true}
+                        maxImages={3}
+                        maxSizeMB={maxSizeMB}
+                        onChange={handleReferenceImagesChange}
+                        emptyHint={t('form.reference_image_placeholder')}
+                      />
+
+                      {hasReferenceUploadError && (
+                        <p className="text-destructive text-xs">
+                          {t('form.some_images_failed_to_upload')}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {isVideoToVideoMode && (
+                    <div className="space-y-2">
+                      <Label htmlFor="video-url">
+                        {t('form.reference_video')}
+                      </Label>
+                      <Textarea
+                        id="video-url"
+                        value={referenceVideoUrl}
+                        onChange={(e) => setReferenceVideoUrl(e.target.value)}
+                        placeholder={t('form.reference_video_placeholder')}
+                        className="min-h-20"
+                      />
+                    </div>
+                  )}
+
                   <div className="space-y-2">
-                    <Label>{t('form.model')}</Label>
-                    <Select value={model} onValueChange={setModel}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('form.select_model')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {MODEL_OPTIONS.filter(
-                          (option) =>
-                            option.scenes.includes(activeTab) &&
-                            option.provider === provider
-                        ).map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {isImageToVideoMode && (
-                  <div className="space-y-4">
-                    <ImageUploader
-                      title={t('form.reference_image')}
-                      allowMultiple={true}
-                      maxImages={3}
-                      maxSizeMB={maxSizeMB}
-                      onChange={handleReferenceImagesChange}
-                      emptyHint={t('form.reference_image_placeholder')}
-                    />
-
-                    {hasReferenceUploadError && (
-                      <p className="text-destructive text-xs">
-                        {t('form.some_images_failed_to_upload')}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {isVideoToVideoMode && (
-                  <div className="space-y-2">
-                    <Label htmlFor="video-url">
-                      {t('form.reference_video')}
-                    </Label>
+                    <Label htmlFor="video-prompt">{t('form.prompt')}</Label>
                     <Textarea
-                      id="video-url"
-                      value={referenceVideoUrl}
-                      onChange={(e) => setReferenceVideoUrl(e.target.value)}
-                      placeholder={t('form.reference_video_placeholder')}
-                      className="min-h-20"
+                      id="video-prompt"
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder={t('form.prompt_placeholder')}
+                      className="min-h-32"
                     />
-                  </div>
-                )}
-
-                <div className="space-y-2">
-                  <Label htmlFor="video-prompt">{t('form.prompt')}</Label>
-                  <Textarea
-                    id="video-prompt"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder={t('form.prompt_placeholder')}
-                    className="min-h-32"
-                  />
-                  <div className="text-muted-foreground flex items-center justify-between text-xs">
-                    <span>
-                      {promptLength} / {MAX_PROMPT_LENGTH}
-                    </span>
-                    {isPromptTooLong && (
-                      <span className="text-destructive">
-                        {t('form.prompt_too_long')}
+                    <div className="text-muted-foreground flex items-center justify-between text-xs">
+                      <span>
+                        {promptLength} / {MAX_PROMPT_LENGTH}
                       </span>
-                    )}
+                      {isPromptTooLong && (
+                        <span className="text-destructive">
+                          {t('form.prompt_too_long')}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                {!isMounted ? (
-                  <Button className="w-full" disabled size="lg">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('loading')}
-                  </Button>
-                ) : isCheckSign ? (
-                  <Button className="w-full" disabled size="lg">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('checking_account')}
-                  </Button>
-                ) : user ? (
-                  <Button
-                    size="lg"
-                    className="w-full"
-                    onClick={handleGenerate}
-                    disabled={
-                      isGenerating ||
-                      (isTextToVideoMode && !prompt.trim()) ||
-                      isPromptTooLong ||
-                      isReferenceUploading ||
-                      hasReferenceUploadError ||
-                      (isImageToVideoMode && referenceImageUrls.length === 0) ||
-                      (isVideoToVideoMode && !referenceVideoUrl)
-                    }
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {t('generating')}
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        {t('generate')}
-                      </>
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    size="lg"
-                    className="w-full"
-                    onClick={() => setIsShowSignModal(true)}
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    {t('sign_in_to_generate')}
-                  </Button>
-                )}
+                  {!isMounted ? (
+                    <Button className="w-full" disabled size="lg">
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('loading')}
+                    </Button>
+                  ) : isCheckSign ? (
+                    <Button className="w-full" disabled size="lg">
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('checking_account')}
+                    </Button>
+                  ) : user ? (
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      onClick={handleGenerate}
+                      disabled={
+                        isGenerating ||
+                        (isTextToVideoMode && !prompt.trim()) ||
+                        isPromptTooLong ||
+                        isReferenceUploading ||
+                        hasReferenceUploadError ||
+                        (isImageToVideoMode &&
+                          referenceImageUrls.length === 0) ||
+                        (isVideoToVideoMode && !referenceVideoUrl)
+                      }
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          {t('generating')}
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-4 w-4" />
+                          {t('generate')}
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      onClick={() => setIsShowSignModal(true)}
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      {t('sign_in_to_generate')}
+                    </Button>
+                  )}
 
-                {!isMounted ? (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('credits_cost', { credits: costCredits })}
-                    </span>
-                    <span>{t('credits_remaining', { credits: 0 })}</span>
-                  </div>
-                ) : user && remainingCredits > 0 ? (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('credits_cost', { credits: costCredits })}
-                    </span>
-                    <span>
-                      {t('credits_remaining', { credits: remainingCredits })}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
+                  {!isMounted ? (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-primary">
+                        {t('credits_cost', { credits: costCredits })}
+                      </span>
+                      <span>{t('credits_remaining', { credits: 0 })}</span>
+                    </div>
+                  ) : user && remainingCredits > 0 ? (
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-primary">
                         {t('credits_cost', { credits: costCredits })}
@@ -959,92 +966,105 @@ export function VideoGenerator({
                         {t('credits_remaining', { credits: remainingCredits })}
                       </span>
                     </div>
-                    <Link href="/pricing">
-                      <Button variant="outline" className="w-full" size="lg">
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        {t('buy_credits')}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-
-                {isGenerating && (
-                  <div className="space-y-2 rounded-lg border p-4">
-                    <div className="flex items-center justify-between text-sm">
-                      <span>{t('progress')}</span>
-                      <span>{progress}%</span>
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-primary">
+                          {t('credits_cost', { credits: costCredits })}
+                        </span>
+                        <span>
+                          {t('credits_remaining', {
+                            credits: remainingCredits,
+                          })}
+                        </span>
+                      </div>
+                      <Link href="/pricing">
+                        <Button variant="outline" className="w-full" size="lg">
+                          <CreditCard className="mr-2 h-4 w-4" />
+                          {t('buy_credits')}
+                        </Button>
+                      </Link>
                     </div>
-                    <Progress value={progress} />
-                    {taskStatusLabel && (
-                      <p className="text-muted-foreground text-center text-xs">
-                        {taskStatusLabel}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                  )}
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                  <Video className="h-5 w-5" />
-                  {t('generated_videos')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pb-8">
-                {generatedVideos.length > 0 ? (
-                  <div className="space-y-6">
-                    {generatedVideos.map((video) => (
-                      <div key={video.id} className="space-y-3">
-                        <div className="relative overflow-hidden rounded-lg border">
-                          <video
-                            src={video.url}
-                            controls
-                            className="h-auto w-full"
-                            preload="metadata"
-                          />
+                  {isGenerating && (
+                    <div className="space-y-2 rounded-lg border p-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span>{t('progress')}</span>
+                        <span>{progress}%</span>
+                      </div>
+                      <Progress value={progress} />
+                      {taskStatusLabel && (
+                        <p className="text-muted-foreground text-center text-xs">
+                          {taskStatusLabel}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
-                          <div className="absolute right-2 bottom-2 flex justify-end text-sm">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="ml-auto"
-                              onClick={() => handleDownloadVideo(video)}
-                              disabled={downloadingVideoId === video.id}
-                            >
-                              {downloadingVideoId === video.id ? (
-                                <>
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                </>
-                              ) : (
-                                <>
-                                  <Download className="h-4 w-4" />
-                                </>
-                              )}
-                            </Button>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl font-semibold">
+                    <Video className="h-5 w-5" />
+                    {t('generated_videos')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pb-8">
+                  {generatedVideos.length > 0 ? (
+                    <div className="space-y-6">
+                      {generatedVideos.map((video) => (
+                        <div key={video.id} className="space-y-3">
+                          <div className="relative overflow-hidden rounded-lg border">
+                            <video
+                              src={video.url}
+                              controls
+                              className="h-auto w-full"
+                              preload="metadata"
+                            />
+
+                            <div className="absolute right-2 bottom-2 flex justify-end text-sm">
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="ml-auto"
+                                onClick={() => handleDownloadVideo(video)}
+                                disabled={downloadingVideoId === video.id}
+                              >
+                                {downloadingVideoId === video.id ? (
+                                  <>
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <Download className="h-4 w-4" />
+                                  </>
+                                )}
+                              </Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                      <Video className="text-muted-foreground h-10 w-10" />
+                      ))}
                     </div>
-                    <p className="text-muted-foreground">
-                      {isGenerating
-                        ? t('ready_to_generate')
-                        : t('no_videos_generated')}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-16 text-center">
+                      <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                        <Video className="text-muted-foreground h-10 w-10" />
+                      </div>
+                      <p className="text-muted-foreground">
+                        {isGenerating
+                          ? t('ready_to_generate')
+                          : t('no_videos_generated')}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

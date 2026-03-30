@@ -1,0 +1,495 @@
+{
+  "metadata": {
+    "title": "Marble AI - Image To Video Generator",
+    "description": "Transform your ideas into stunning videos with Marble AI's Image To Video generator. Powered by leading AI models including Seedance, Kling, Wan, Sora, Veo, and more."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Image To Video",
+        "highlight_text": "Image To Video",
+        "description": "Unleash your creativity with Marble AI. Generate stunning, high-quality videos from images using the world's most advanced AI models.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "Powered by Leading AI Models",
+        "highlight_text": "Leading AI Models",
+        "label": "AI Models",
+        "description": "Marble AI integrates the most powerful image-to-video AI models, giving you access to cutting-edge video generation technology in one platform.",
+        "image": {
+          "src": "/imgs/models/video/seedance-1-5-pro.mp4",
+          "alt": "Marble AI Image To Video"
+        },
+        "items": [
+          {
+            "title": "ByteDance",
+            "description": "ByteDance's Seedance series delivers powerful video generation models with multimodal capabilities, cinematic quality, and synchronized audio.",
+            "icon": "RiRobot2Line",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "ByteDance"
+            }
+          },
+          {
+            "title": "Kling",
+            "description": "Kling AI's video generation models excel at multi-shot storytelling, realistic motion, and native audio synchronization.",
+            "icon": "RiVideoLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Kling"
+            }
+          },
+          {
+            "title": "OpenAI",
+            "description": "OpenAI's Sora series delivers cutting-edge video generation with realistic motion, physics consistency, and cinematic control.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/3.png",
+              "alt": "OpenAI"
+            }
+          },
+          {
+            "title": "Google",
+            "description": "Google DeepMind's Veo series offers next-generation AI video generation with high-fidelity visuals and advanced scene understanding.",
+            "icon": "RiGoogleLine",
+            "image": {
+              "src": "/imgs/features/4.png",
+              "alt": "Google"
+            }
+          },
+          {
+            "title": "Wan",
+            "description": "Alibaba's Wan models provide affordable multi-shot 1080p generation with stable characters and synchronized native audio.",
+            "icon": "RiMovieLine",
+            "image": {
+              "src": "/imgs/features/5.png",
+              "alt": "Wan"
+            }
+          },
+          {
+            "title": "Hailuo",
+            "description": "MiniMax's Hailuo models create high-fidelity videos with realistic motion, expressive characters, and cinematic visuals.",
+            "icon": "RiFilmLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Hailuo"
+            }
+          },
+          {
+            "title": "Grok (xAI)",
+            "description": "xAI's multimodal video generation model with coherent motion and synchronized audio capabilities.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Grok"
+            }
+          },
+          {
+            "title": "Runway",
+            "description": "Runway AI's Gen-4 architecture powers groundbreaking video generation from text, images, and scene editing.",
+            "icon": "RiVideoLine",
+            "image": {
+              "src": "/imgs/features/8.png",
+              "alt": "Runway"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "model": {
+        "id": "features-model",
+        "title": "Explore Our AI Video Models",
+        "highlight_text": "AI Video Models",
+        "description": "Choose from the world's most advanced image-to-video models, each with unique strengths for different creative needs.",
+        "items": [
+          {
+            "title": "Seedance 2.0",
+            "text": "ByteDance",
+            "description": "Seedance 2.0 is a multimodal AI video model by ByteDance that generates consistent, cinematic videos with strong multi-shot consistency and native audio using text, image, video, and audio references.",
+            "image": {
+              "src": "/imgs/models/video/seedance-2-0.mp4",
+              "alt": "Seedance 2.0"
+            }
+          },
+          {
+            "title": "Kling 3.0",
+            "text": "Kling",
+            "description": "Kling 3.0 is Kling AI's video generation model that creates videos from text and images, supports multi-shot storytelling, and produces native audio with cinematic control up to 15 seconds.",
+            "image": {
+              "src": "/imgs/models/video/kling-3-0.mp4",
+              "alt": "Kling 3.0"
+            }
+          },
+          {
+            "title": "Seedance 1.5 Pro",
+            "text": "ByteDance",
+            "description": "Seedance 1.5 Pro is ByteDance's audio-video generation model that creates cinema-quality video, synchronized audio, and multilingual dialogue with cinematic camera control.",
+            "image": {
+              "src": "/imgs/models/video/seedance-1-5-pro.mp4",
+              "alt": "Seedance 1.5 Pro"
+            }
+          },
+          {
+            "title": "Wan 2.6",
+            "text": "Wan",
+            "description": "Wan 2.6 is Alibaba's latest AI video model, offering affordable multi-shot 1080p generation with stable characters and synchronized native audio. Through the Wan 2.6 API—including T2V, I2V, and reference-guided modes—you can create up to 15-second cinematic videos with improved motion logic, consistent visuals, and production-ready quality.",
+            "image": {
+              "src": "/imgs/models/video/wan-2-6.mp4",
+              "alt": "Wan 2.6"
+            }
+          },
+          {
+            "title": "Kling 2.6",
+            "text": "Kling",
+            "description": "Kling 2.6 is Kling AI's audio-visual generation model that produces synchronized video, speech, ambient sound, and sound effects from text or image inputs.",
+            "image": {
+              "src": "/imgs/models/video/kling-2-6.mp4",
+              "alt": "Kling 2.6"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine is xAI's multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio.",
+            "image": {
+              "src": "/imgs/models/video/grok-imagine.mp4",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Hailuo 2.3",
+            "text": "Hailuo",
+            "description": "Hailuo 2.3 is MiniMax's high-fidelity AI video generation model designed to create realistic motion, expressive characters, and cinematic visuals. It supports both text-to-video and image-to-video, handling complex movements, lighting changes, and detailed facial expressions with stability and consistency.",
+            "image": {
+              "src": "/imgs/models/video/hailuo-2-3.mp4",
+              "alt": "Hailuo 2.3"
+            }
+          },
+          {
+            "title": "Sora 2 Pro Storyboard",
+            "text": "OpenAI",
+            "description": "OpenAI's advanced AI video model for structured video generation, supporting multi-scene sequencing, visual consistency, and 25-second output control.",
+            "image": {
+              "src": "/imgs/models/video/sora-2-pro-storyboard.mp4",
+              "alt": "Sora 2 Pro Storyboard"
+            }
+          },
+          {
+            "title": "Veo 3.1",
+            "text": "Google",
+            "description": "Google DeepMind's upgraded AI video model for realistic motion generation, extended clip duration, multi-image reference control, and synchronized audio output in native 1080p.",
+            "image": {
+              "src": "/imgs/models/video/veo-3-1.png",
+              "alt": "Veo 3.1"
+            }
+          },
+          {
+            "title": "Sora 2 Pro",
+            "text": "OpenAI",
+            "description": "An upgraded version of OpenAI's Sora 2 model, delivering more realistic motion, refined physics, and synchronized native audio, with text-to-video and image-to-video generation up to 15 seconds in 1080p HD.",
+            "image": {
+              "src": "/imgs/models/video/sora-2-pro.png",
+              "alt": "Sora 2 Pro"
+            }
+          },
+          {
+            "title": "Veo 3",
+            "text": "Google",
+            "description": "Google Veo 3 is a next-generation AI video generation model developed by Google DeepMind. It supports both text-to-video and image-to-video creation, producing high-fidelity, cinematic visuals with advanced scene understanding and natural motion simulation. Through Kie.ai, users can access Veo 3 Fast for rapid, cost-efficient workflows or Veo 3 Quality for premium output, all with transparent pricing and stable infrastructure.",
+            "image": {
+              "src": "/imgs/models/video/veo-3.mp4",
+              "alt": "Veo 3"
+            }
+          },
+          {
+            "title": "Sora 2",
+            "text": "OpenAI",
+            "description": "Sora 2 is OpenAI's latest AI video generation model, supporting both text-to-video and image-to-video. It delivers realistic motion, physics consistency, with improved control over style, scene, and aspect ratio—ideal for creative apps and social media content.",
+            "image": {
+              "src": "/imgs/models/video/sora-2.png",
+              "alt": "Sora 2"
+            }
+          },
+          {
+            "title": "Kling 2.5 Turbo",
+            "text": "Kling",
+            "description": "Kling 2.5 Turbo is the latest AI video generation model from Kuaishou Kling, designed for text-to-video and image-to-video creation. Compared to earlier versions, it features better prompt adherence, more fluid motion, consistent artistic styles, and realistic physics simulation.",
+            "image": {
+              "src": "/imgs/models/video/kling-2-5-turbo.mp4",
+              "alt": "Kling 2.5 Turbo"
+            }
+          },
+          {
+            "title": "Wan 2.5",
+            "text": "Wan",
+            "description": "Wan 2.5 API from Alibaba is designed for cinematic AI video generation, supporting both text-to-video (wan2.5-t2v-preview) and image-to-video (wan2.5-i2v-preview). It natively synchronizes visuals with dialogue, ambient sound, and background music. With support for multiple resolutions (720p, 1080p) and aspect ratios (16:9, 9:16, 1:1), the API delivers flexible outputs suitable for social media, advertising, and creative storytelling.",
+            "image": {
+              "src": "/imgs/models/video/wan-2-5.mp4",
+              "alt": "Wan 2.5"
+            }
+          },
+          {
+            "title": "Hailuo 02",
+            "text": "Other",
+            "description": "Hailuo 02 API is Minimax's advanced AI video generation model that turns text or images into short, cinematic clips. It supports high-quality output up to 1080P, with realistic motion, physics simulation, and precise camera control.",
+            "image": {
+              "src": "/imgs/models/video/hailuo-02.mp4",
+              "alt": "Hailuo 02"
+            }
+          },
+          {
+            "title": "Runway Video Generation",
+            "text": "Runway",
+            "description": "Step into the future of content creation with the Runway API, powered by Runway AI's groundbreaking Gen-4 architecture. Available exclusively through Kie.ai, this toolkit transforms ideas into stunning videos using Runway Gen 4 Turbo API and Runway Aleph API. Whether you're generating from text, editing scenes, or converting images to dynamic footage, Runway AI image to video capabilities deliver professional results instantly.",
+            "image": {
+              "src": "/imgs/models/video/runway.webp",
+              "alt": "Runway Video Generation"
+            }
+          },
+          {
+            "title": "Seedance V1",
+            "text": "ByteDance",
+            "description": "From Seeds of Ideas to Dancing Visuals: Seedance 1.0 API Brings Your Stories to Life",
+            "image": {
+              "src": "/imgs/models/video/seedance-v1.mp4",
+              "alt": "Seedance V1"
+            }
+          },
+          {
+            "title": "Kling V2.1",
+            "text": "Kling",
+            "description": "The Kling 2.1 model powers cutting-edge video generation with hyper-realistic motion, advanced physics, and high-resolution outputs up to 1080p. Its enhanced semantic understanding and fast rendering make it ideal for dynamic, professional-grade video creation.",
+            "image": {
+              "src": "/imgs/models/video/kling-v2-1.mp4",
+              "alt": "Kling V2.1"
+            }
+          },
+          {
+            "title": "Wan V2.2 A14B",
+            "text": "Wan",
+            "description": "Wan 2.2 A14B Turbo API, the latest generation of the Wan video model, is built with a Mixture-of-Experts (MoE) architecture and supports text-to-video (T2V), image-to-video (I2V) and speech-to-video(S2V). It delivers smooth 720p@24fps clips with cinematic quality, stable motion, and consistent visual style for diverse creative and commercial use cases.",
+            "image": {
+              "src": "/imgs/models/video/wan-v2-2-a14b.mp4",
+              "alt": "Wan V2.2 A14B"
+            }
+          },
+          {
+            "title": "Seedance 1.0 Pro Fast",
+            "text": "ByteDance",
+            "description": "ByteDance's AI video-generation model that inherits Seedance 1.0 Pro's core quality while delivering 3× faster rendering, producing coherent 1080p clips with stable motion and efficient compute performance.",
+            "image": {
+              "src": "/imgs/models/video/seedance-1-0-pro-fast.mp4",
+              "alt": "Seedance 1.0 Pro Fast"
+            }
+          },
+          {
+            "title": "Wan 2.2 Animate",
+            "text": "Wan",
+            "description": "Wan 2.2 Animate API by Alibaba's Tongyi Lab generates realistic character videos with motion, expressions, and lighting. It supports animation mode for driving static images and replacement mode for swapping characters into existing clips seamlessly.",
+            "image": {
+              "src": "/imgs/models/video/wan-2-2-animate.mp4",
+              "alt": "Wan 2.2 Animate"
+            }
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Image To Video?",
+        "highlight_text": "Image To Video",
+        "description": "Experience the most powerful and versatile AI video generation platform with unmatched quality and speed.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access 19+ leading models including Seedance, Kling, Wan, Sora, and Veo in one platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Generate stunning videos in seconds with our optimized infrastructure.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "1080p Quality",
+            "description": "Create high-resolution videos up to 1080p with exceptional detail and clarity.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos. Use them anywhere without restrictions.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Native Audio",
+            "description": "Generate videos with synchronized speech, ambient sound, and background music.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Seamless API integration for developers to build AI-powered applications.",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "What Creators Say About Marble AI Image To Video",
+        "highlight_text": "What Creators Say",
+        "description": "Join thousands of artists, designers, and creators who trust Marble AI for their video generation needs.",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "Digital Artist",
+            "quote": "Marble AI has revolutionized my creative workflow. Having Seedance, Kling, and Sora in one place saves me hours of switching between tools. The quality is outstanding!",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "Marketing Director",
+            "quote": "We generate all our campaign videos with Marble AI. The commercial license and variety of models give us everything we need for professional marketing materials.",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "Game Developer",
+            "quote": "The Wan model on Marble AI produces incredible concept videos for our games. The detail and consistency are exactly what we need for rapid prototyping.",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "Content Creator",
+            "quote": "I've tried every AI video generator out there. Marble AI stands out with its speed, quality, and the ability to compare results across different models instantly.",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "E-commerce Entrepreneur",
+            "quote": "Marble AI helps us create stunning product videos without expensive shoots. Our conversion rates have increased by 40% since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "Graphic Designer",
+            "quote": "The style diversity is unmatched. Whether I need photorealistic renders or artistic animations, Marble AI delivers perfect results every time.",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "Social Media Manager",
+            "quote": "Sora on Marble AI creates the most realistic product videos I've ever seen. Our Instagram engagement has doubled since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "Architect",
+            "quote": "The batch generation feature is a game-changer. I can explore dozens of video concepts in minutes instead of hours. Absolutely essential for my workflow.",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "Startup Founder",
+            "quote": "The API integration was seamless. We built our entire product video pipeline with Marble AI in just one week. The documentation is excellent!",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "Freelance Illustrator",
+            "quote": "As a freelancer, Marble AI's commercial license gives me peace of mind. I can create for clients without worrying about usage rights. Worth every penny!",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "Education Content Creator",
+            "quote": "The 24/7 support team is incredible. They helped me optimize my prompts and now I'm creating educational videos that my students absolutely love!",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "FAQ - Image To Video Generator",
+        "highlight_text": "FAQ",
+        "description": "Everything you need to know about Marble AI's Image To Video generator.",
+        "items": [
+          {
+            "title": "What is Image To Video?",
+            "description": "Image To Video is an AI-powered technology that transforms images into video content. Simply upload your image, and Marble AI's advanced models will generate stunning videos for you."
+          },
+          {
+            "question": "Which AI models does Marble AI support?",
+            "answer": "Marble AI integrates the leading image-to-video models including Seedance 2.0 (ByteDance), Kling 3.0 (Kling), Wan 2.6 (Wan), Sora 2 Pro (OpenAI), Veo 3.1 (Google), Hailuo 2.3 (Hailuo), Grok Imagine (Grok), Runway Video Generation (Runway), and more. Each model has unique strengths, and you can choose the best one for your specific needs."
+          },
+          {
+            "question": "How do I use Marble AI's Image To Video generator?",
+            "answer": "Simply upload an image, select your preferred AI model and style settings, and click generate. Our intuitive interface makes it easy for anyone to create professional-quality videos in seconds."
+          },
+          {
+            "question": "What video quality can I expect?",
+            "answer": "Marble AI generates high-resolution videos up to 1080p quality. The exact output depends on the model you choose, but all our models are optimized for exceptional detail, color accuracy, and visual appeal."
+          },
+          {
+            "question": "Can I use generated videos commercially?",
+            "answer": "Yes! All videos generated through Marble AI come with full commercial rights. You can use them for marketing, products, websites, social media, and any other business purposes without restrictions."
+          },
+          {
+            "question": "How fast is the video generation?",
+            "answer": "Most videos are generated within seconds to minutes depending on the model and complexity. Our optimized infrastructure ensures you get your results quickly without compromising quality."
+          },
+          {
+            "question": "Can I customize the style of generated videos?",
+            "answer": "Absolutely! Marble AI offers extensive customization options including style presets, aspect ratios, and advanced parameters. You have full control over the artistic direction of your videos."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Create Amazing Videos?",
+        "highlight_text": "Amazing Videos",
+        "description": "Start generating stunning videos with Marble AI's powerful Image To Video technology. Choose from the world's best AI models.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}
