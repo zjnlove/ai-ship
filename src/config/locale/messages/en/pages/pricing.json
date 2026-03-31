@@ -18,8 +18,7 @@
           {
             "name": "monthly",
             "title": "Monthly",
-            "is_featured": true,
-            "label": "save 20%"
+            "is_featured": true
           },
           {
             "name": "yearly",
