@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Veo 3 - AI Video Generator | Marble AI",
+    "description": "Veo 3 by Google DeepMind. Next-generation AI video generation model supporting text-to-video and image-to-video with high-fidelity, cinematic visuals and advanced scene understanding."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Veo 3",
+        "highlight_text": "Veo 3",
+        "description": "Google DeepMind's next-generation AI video generation model. High-fidelity, cinematic visuals with advanced scene understanding and natural motion simulation.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Veo 3",
+        "highlight_text": "Veo 3",
+        "label": "Model Overview",
+        "description": "Google Veo 3 is a next-generation AI video generation model developed by Google DeepMind. It supports both text-to-video and image-to-video creation, producing high-fidelity, cinematic visuals with advanced scene understanding and natural motion simulation.",
+        "image": {
+          "src": "/imgs/models/video/veo-3.mp4",
+          "alt": "Veo 3"
+        },
+        "items": [
+          {
+            "title": "High-Fidelity Visuals",
+            "description": "Generate videos with exceptional visual quality and detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Scene Understanding",
+            "description": "Advanced understanding of scene composition and context.",
+            "icon": "RiLayoutLine"
+          },
+          {
+            "title": "Natural Motion",
+            "description": "Realistic and natural motion simulation in generated videos.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Cinematic Quality",
+            "description": "Professional-grade cinematic video output.",
+            "icon": "RiMovieLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Veo 3 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with cinematic quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Fast & Quality Modes",
+            "description": "Choose between fast generation or premium quality output.",
+            "icon": "RiSpeedLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Veo 3.",
+        "items": [
+          {
+            "title": "Film Production",
+            "description": "Create cinematic content with professional quality.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with high-fidelity visuals.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Creative Storytelling",
+            "description": "Bring stories to life with cinematic quality.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Veo 3.",
+        "items": [
+          {
+            "title": "What is Veo 3?",
+            "description": "Veo 3 is Google DeepMind's next-generation AI video generation model with high-fidelity visuals and advanced scene understanding."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Veo 3 supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes."
+          },
+          {
+            "title": "Who created Veo 3?",
+            "description": "Veo 3 is created by Google DeepMind, a leading AI research laboratory."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Veo 3 excels at high-fidelity visuals, advanced scene understanding, and natural motion simulation."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Veo 3 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What modes are available?",
+            "description": "Veo 3 offers Fast mode for rapid generation and Quality mode for premium output."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Veo 3?",
+        "highlight_text": "Veo 3",
+        "description": "Experience Google DeepMind's next-generation AI video generation. Create cinematic videos with high fidelity.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

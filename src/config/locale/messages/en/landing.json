@@ -14,14 +14,16 @@
     "nav": {
       "items": [
         {
-          "title": "Seedance2.0",
-          "url": "/#features",
+          "title": "Seedance 2.0",
+          "url": "/video-models/seedance-2-0",
+          "target": "_blank",
           "tip": "New",
           "tip_color": "bg-emerald-500"
         },
         {
           "title": "Nana Banana Pro",
           "url": "/image-models/nano-banana-pro",
+          "target": "_blank",
           "tip": "Hot",
           "tip_color": "bg-rose-500"
         },
@@ -180,13 +182,87 @@
           "title": "Video Models",
           "children": [
             {
-              "title": "Showcases",
-              "url": "/showcases",
+              "title": "Seedance 2.0",
+              "url": "/video-models/seedance-2-0",
+              "target": "_blank",
+              "tip": "New",
+              "tip_color": "bg-emerald-500"
+            },
+            {
+              "title": "Seedance 1.5 Pro",
+              "url": "/video-models/seedance-1-5-pro",
+              "target": "_blank",
+              "tip": "Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance 1.0 Pro Fast",
+              "url": "/video-models/seedance-1-0-pro-fast",
               "target": "_blank"
             },
             {
-              "title": "Documentation",
-              "url": "/docs",
+              "title": "Kling 3.0",
+              "url": "/video-models/kling-3-0",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6",
+              "url": "/video-models/kling-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 3.0 Motion Control",
+              "url": "/video-models/kling-3-0-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6 Motion Control",
+              "url": "/video-models/kling-2-6-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.6",
+              "url": "/video-models/wan-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.5",
+              "url": "/video-models/wan-2-5",
+              "target": "_blank"
+            },
+            {
+              "title": "Veo 3.1",
+              "url": "/video-models/veo-3-1",
+              "target": "_blank"
+            },
+            {
+              "title": "Veo 3",
+              "url": "/video-models/veo-3",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/video-models/grok-imagine",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 2.3",
+              "url": "/video-models/hailuo-2-3",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 02",
+              "url": "/video-models/hailuo-02",
+              "target": "_blank"
+            },
+            {
+              "title": "Runway Video Generation",
+              "url": "/video-models/runway-video-generation",
+              "target": "_blank"
+            },
+            {
+              "title": "Topaz Video Upscaler",
+              "url": "/video-models/topaz-video-upscaler",
               "target": "_blank"
             }
           ]

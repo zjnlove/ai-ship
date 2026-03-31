@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Wan 2.6 - AI Video Generator | Marble AI",
+    "description": "Wan 2.6 by Alibaba. Latest AI video model offering affordable multi-shot 1080p generation with stable characters and synchronized native audio. Supports T2V, I2V, and reference-guided modes."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Wan 2.6",
+        "highlight_text": "Wan 2.6",
+        "description": "Alibaba's latest AI video model. Affordable multi-shot 1080p generation with stable characters and synchronized native audio.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Wan 2.6",
+        "highlight_text": "Wan 2.6",
+        "label": "Model Overview",
+        "description": "Wan 2.6 is Alibaba's latest AI video model, offering affordable multi-shot 1080p generation with stable characters and synchronized native audio. Through the Wan 2.6 API—including T2V, I2V, and reference-guided modes—you can create up to 15-second cinematic videos.",
+        "image": {
+          "src": "/imgs/models/video/wan-2-6.mp4",
+          "alt": "Wan 2.6"
+        },
+        "items": [
+          {
+            "title": "Affordable Generation",
+            "description": "Cost-effective video generation without compromising quality.",
+            "icon": "RiCoinLine"
+          },
+          {
+            "title": "Multi-Shot Support",
+            "description": "Create cohesive multi-shot videos with stable characters.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Native Audio",
+            "description": "Synchronized native audio including speech and ambient sounds.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "15-Second Output",
+            "description": "Generate cinematic videos up to 15 seconds in length.",
+            "icon": "RiTimeLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Wan 2.6 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with cinematic quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Reference Guided",
+            "description": "Use reference images or videos to guide generation style.",
+            "icon": "RiLinksLine"
+          },
+          {
+            "title": "Audio Generation",
+            "description": "Generate synchronized audio including speech and ambient sounds.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Wan 2.6.",
+        "items": [
+          {
+            "title": "Marketing Videos",
+            "description": "Create engaging marketing content with affordable generation.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Storytelling",
+            "description": "Create multi-shot narratives with stable characters.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Wan 2.6.",
+        "items": [
+          {
+            "title": "What is Wan 2.6?",
+            "description": "Wan 2.6 is Alibaba's latest AI video model offering affordable multi-shot 1080p generation with native audio."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Wan 2.6 supports Text To Video (T2V), Image To Video (I2V), and reference-guided generation modes."
+          },
+          {
+            "title": "Who created Wan 2.6?",
+            "description": "Wan 2.6 is created by Alibaba, a leading technology company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Wan 2.6 excels at affordable generation, multi-shot support, and synchronized native audio."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Wan 2.6 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How long can the videos be?",
+            "description": "Wan 2.6 can generate videos up to 15 seconds with professional quality and native audio."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Wan 2.6?",
+        "highlight_text": "Wan 2.6",
+        "description": "Experience Alibaba's latest AI video generation. Create affordable cinematic videos with native audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

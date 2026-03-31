@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { V } from 'node_modules/framer-motion/dist/types.d-Cjd591yU';
 
 import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
@@ -186,6 +187,7 @@ export default async function DynamicPage({
       return <Page locale={locale} page={page} />;
     }
 
+    // check if it's ai-video-generator subpage
     if (staticPageSlug.includes('ai-video-generator')) {
       const { hero, ...restSections } = aiMessages.page.sections || {};
 
@@ -208,6 +210,7 @@ export default async function DynamicPage({
       return <Page locale={locale} page={page} />;
     }
 
+    // check if it's image-models subpage
     if (staticPageSlug.includes('image-models')) {
       const { hero, ...restSections } = aiMessages.page.sections || {};
 
@@ -217,6 +220,29 @@ export default async function DynamicPage({
           generator: {
             component: (
               <ImageGenerator
+                srOnlyTitle={aiMessages.generator?.title}
+                className=""
+              />
+            ),
+          },
+          ...restSections,
+        },
+      };
+
+      const Page = await getThemePage('dynamic-page');
+      return <Page locale={locale} page={page} />;
+    }
+
+    // check if it's video-models subpage
+    if (staticPageSlug.includes('video-models')) {
+      const { hero, ...restSections } = aiMessages.page.sections || {};
+
+      const page = {
+        sections: {
+          ...(hero && { hero }),
+          generator: {
+            component: (
+              <VideoGenerator
                 srOnlyTitle={aiMessages.generator?.title}
                 className=""
               />
