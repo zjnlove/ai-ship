@@ -421,34 +421,73 @@ export function Pricing({
                         ''
                       )}
                     </div>
-
-                    {currencies.length > 1 && (
-                      <Select
-                        value={selectedCurrency}
-                        onValueChange={(currency) =>
-                          handleCurrencyChange(item.product_id, currency)
-                        }
-                      >
-                        <SelectTrigger
-                          size="sm"
-                          className="border-muted-foreground/30 bg-background/50 h-6 min-w-[60px] px-2 text-xs"
-                        >
-                          <SelectValue placeholder="Currency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {currencies.map((currency) => (
-                            <SelectItem
-                              key={currency.currency}
-                              value={currency.currency}
-                              className="text-xs"
-                            >
-                              {currency.currency.toUpperCase()}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
                   </div>
+
+                  {displayedItem.interval === 'year' && (
+                    <div className="bg-muted/50 mb-3 rounded-md px-3 py-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">
+                          Annual total:
+                        </span>
+                        <div className="flex items-center gap-2">
+                          {displayedItem.original_price && (
+                            <span className="text-muted-foreground line-through">
+                              $
+                              {(
+                                parseFloat(
+                                  displayedItem.original_price.replace(
+                                    /[^0-9.]/g,
+                                    ''
+                                  )
+                                ) * 12
+                              ).toFixed(2)}
+                            </span>
+                          )}
+                          <span className="text-primary font-semibold">
+                            ${((displayedItem.amount * 12) / 100).toFixed(2)} /
+                            year
+                          </span>
+                        </div>
+                      </div>
+                      {displayedItem.credits && (
+                        <div className="mt-1 flex items-center justify-between">
+                          <span className="text-muted-foreground">
+                            Total credits:
+                          </span>
+                          <span className="text-primary font-semibold">
+                            {displayedItem.credits.toLocaleString()} credits
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {currencies.length > 1 && (
+                    <Select
+                      value={selectedCurrency}
+                      onValueChange={(currency) =>
+                        handleCurrencyChange(item.product_id, currency)
+                      }
+                    >
+                      <SelectTrigger
+                        size="sm"
+                        className="border-muted-foreground/30 bg-background/50 h-6 min-w-[60px] px-2 text-xs"
+                      >
+                        <SelectValue placeholder="Currency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {currencies.map((currency) => (
+                          <SelectItem
+                            key={currency.currency}
+                            value={currency.currency}
+                            className="text-xs"
+                          >
+                            {currency.currency.toUpperCase()}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
 
                   <CardDescription className="text-sm">
                     {item.description}
