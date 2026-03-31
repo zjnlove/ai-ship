@@ -19,14 +19,12 @@
             "name": "monthly",
             "title": "Monthly",
             "is_featured": true,
-            "label": "save 20%",
-            "className": "featured-monthly"
+            "label": "save 20%"
           },
           {
             "name": "yearly",
             "title": "Annually",
-            "label": "save 50%",
-            "className": "featured-yearly"
+            "label": "save 50%"
           }
         ],
         "items": [
@@ -100,7 +98,7 @@
           },
           {
             "title": "Premium",
-            "description": "For teams and businesses with high-volume needs.",
+            "description": "For teams and business with high-volume needs.",
             "features_title": "Everything in Pro, plus",
             "features": [
               "6,500 credits",
@@ -204,7 +202,7 @@
           },
           {
             "title": "Premium",
-            "description": "For teams and businesses with high-volume needs.",
+            "description": "For teams and business with high-volume needs.",
             "features_title": "Everything in Pro, plus",
             "features": [
               "6,500 credits/month",
@@ -309,7 +307,7 @@
           },
           {
             "title": "Premium",
-            "description": "For teams and businesses with high-volume needs.",
+            "description": "For teams and business with high-volume needs.",
             "features_title": "Everything in Pro, plus",
             "features": [
               "6,500 credits/month",

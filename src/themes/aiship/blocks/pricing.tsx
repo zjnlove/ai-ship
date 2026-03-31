@@ -351,7 +351,9 @@ export function Pricing({
                     <TabsTrigger key={i} value={item.name || ''}>
                       {item.title}
                       {item.label && (
-                        <Badge className="ml-2">{item.label}</Badge>
+                        <Badge className="to-pink-300ring-1 to-amber300 ml-2 bg-linear-to-br/increasing from-purple-400 to-amber-300 ring-white/20 ring-offset-1 ring-offset-gray-950/5 ring-inset">
+                          {item.label}
+                        </Badge>
                       )}
                     </TabsTrigger>
                   );
