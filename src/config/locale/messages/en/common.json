@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "ShipAny Template Two",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
-    "keywords": "shipany, shipany-boilerplate, shipany-template-two-demo"
+    "title": "Marble AI - AI Image, Video & Music Generator",
+    "description": "Marble AI is an all-in-one AI platform for generating stunning images, videos, and music. Create professional content with cutting-edge AI technology.",
+    "keywords": "marble ai, ai image generator, ai video generator, ai music generator, ai content creation, image generation, video generation, music generation"
   },
   "sign": {
     "sign_in_title": "Login",

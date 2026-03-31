@@ -15,9 +15,9 @@
     "sections": {
       "hero": {
         "id": "hero",
-        "title": "Marble AI: Create Stunning Images & Videos",
+        "title": "Marble AI: Create Stunning Images, Videos & Music",
         "highlight_text": "Marble AI",
-        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
+        "description": "Your all-in-one AI platform for generating stunning images, videos, and music.<br/>Create professional content with cutting-edge AI technology.",
         "buttons": [
           {
             "title": "Start creating now",
@@ -202,45 +202,45 @@
       "introduce": {
         "block": "features-list",
         "id": "introduce",
-        "title": "What is ShipAny",
-        "highlight_text": "ShipAny",
+        "title": "What is Marble AI",
+        "highlight_text": "Marble AI",
         "label": "Introduce",
-        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups, including templates, components, and documentation.",
+        "description": "Marble AI is an all-in-one AI platform for generating stunning images, videos, and music with cutting-edge technology.",
         "image": {
           "src": "/imgs/features/landing-page.png",
           "alt": "introduce"
         },
         "items": [
           {
-            "title": "Ready-to-use Templates",
-            "description": "Choose from dozens of production-ready AI SaaS templates to quickly start your project.",
-            "icon": "RiNextjsFill",
+            "title": "AI Image Generation",
+            "description": "Create stunning images with advanced AI models including Qwen, Flux, Ideogram, and more.",
+            "icon": "RiImage2Line",
             "image": {
               "src": "/imgs/features/1.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "Infrastructure Setup",
-            "description": "Get instant access to scalable infrastructure with best practices built-in.",
-            "icon": "RiDatabase2Line",
+            "title": "AI Video Generation",
+            "description": "Generate professional videos with AI-powered tools like Seedance, Kling, and Veo.",
+            "icon": "RiVideoLine",
             "image": {
               "src": "/imgs/features/2.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "Quick Deployment",
-            "description": "Deploy your AI SaaS application to production in hours, not days.",
-            "icon": "RiCloudyFill",
+            "title": "AI Music Generation",
+            "description": "Create beautiful music with AI technology for your creative projects.",
+            "icon": "RiMusic2Line",
             "image": {
               "src": "/imgs/features/3.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "AI Integration",
-            "description": "Integrate AI into your project with ease using our built-in AI SDK.",
+            "title": "Easy Integration",
+            "description": "Simple API integration for seamless workflow and creative automation.",
             "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/4.png",
@@ -253,23 +253,23 @@
       "benefits": {
         "block": "features-accordion",
         "id": "benefits",
-        "title": "Why Choose ShipAny",
-        "highlight_text": "ShipAny",
+        "title": "Why Choose Marble AI",
+        "highlight_text": "Marble AI",
         "label": "Benefits",
-        "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
+        "description": "Get everything you need to create stunning AI content - from images to videos and music.",
         "items": [
           {
-            "title": "Complete Framework",
-            "description": "Built on Next.js with authentication, payments, and AI integration - everything works out of the box.",
-            "icon": "RiNextjsFill",
+            "title": "All-in-One Platform",
+            "description": "Access multiple AI generation tools in one place - images, videos, and music with a single subscription.",
+            "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/user-billing.png",
               "alt": "benefits"
             }
           },
           {
-            "title": "Rich Templates Library",
-            "description": "Choose from various AI SaaS templates to kickstart your project - chatbots, image generation, and more.",
+            "title": "Professional Quality",
+            "description": "Generate high-quality content with state-of-the-art AI models used by professionals worldwide.",
             "icon": "RiClapperboardAiLine",
             "image": {
               "src": "/imgs/features/admin-settings.png",
@@ -277,8 +277,8 @@
             }
           },
           {
-            "title": "Technical Guidance",
-            "description": "Get dedicated support and join our developer community to ensure your successful launch.",
+            "title": "Easy to Use",
+            "description": "Simple interface and API integration make it easy to create professional content without technical expertise.",
             "icon": "RiCodeFill",
             "image": {
               "src": "/imgs/features/landing-page.png",
@@ -337,39 +337,39 @@
       },
       "features": {
         "id": "features",
-        "title": "Key Features of ShipAny",
-        "highlight_text": "ShipAny",
-        "description": "Everything you need to launch your AI SaaS startup quickly and efficiently.",
+        "title": "Key Features of Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "Everything you need to create stunning AI content quickly and efficiently.",
         "items": [
           {
-            "title": "Next.js Boilerplate",
-            "description": "Production-ready Next.js templates with SEO-friendly structure and i18n support.",
-            "icon": "RiNextjsFill"
+            "title": "AI Image Generation",
+            "description": "Create stunning images with advanced AI models including Qwen, Flux, Ideogram, and more.",
+            "icon": "RiImage2Line"
           },
           {
-            "title": "Authentication & Payments",
-            "description": "Integrated Google OAuth, one-tap login, and Stripe payment processing.",
-            "icon": "RiKey2Fill"
+            "title": "AI Video Generation",
+            "description": "Generate professional videos with AI-powered tools like Seedance, Kling, and Veo.",
+            "icon": "RiVideoLine"
           },
           {
-            "title": "Data Infrastructure",
-            "description": "Built-in Supabase integration for reliable and scalable data storage.",
-            "icon": "RiDatabase2Line"
+            "title": "AI Music Generation",
+            "description": "Create beautiful music with AI technology for your creative projects.",
+            "icon": "RiMusic2Line"
           },
           {
-            "title": "One-Click Deployment",
-            "description": "Seamless deployment to Vercel or Cloudflare with automated setup.",
-            "icon": "RiCloudy2Fill"
-          },
-          {
-            "title": "Business Analytics",
-            "description": "Integrated Google Analytics and Search Console for tracking growth.",
-            "icon": "RiBarChart2Line"
-          },
-          {
-            "title": "AI-Ready Infrastructure",
-            "description": "Pre-configured AI integration with built-in credits system and API sales.",
+            "title": "Easy Integration",
+            "description": "Simple API integration for seamless workflow and creative automation.",
             "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Professional Quality",
+            "description": "Generate high-quality content with state-of-the-art AI models used by professionals worldwide.",
+            "icon": "RiClapperboardAiLine"
+          },
+          {
+            "title": "Affordable Pricing",
+            "description": "Flexible pricing plans to suit your needs, from individual creators to enterprise teams.",
+            "icon": "RiMoneyDollarCircleLine"
           }
         ]
       },
@@ -460,45 +460,45 @@
         "id": "faq",
         "title": "Frequently Asked Questions",
         "highlight_text": "Questions",
-        "description": "Have another question? Contact us on Discord or by email.",
+        "description": "Have another question? Contact us by email.",
         "items": [
           {
-            "question": "What exactly is ShipAny and how does it work?",
-            "answer": "ShipAny is a comprehensive NextJS boilerplate designed specifically for building AI SaaS startups. It provides ready-to-use templates, infrastructure setup, and deployment tools that help you launch your AI business in hours instead of days."
+            "question": "What is Marble AI and how does it work?",
+            "answer": "Marble AI is an all-in-one AI platform for generating stunning images, videos, and music. Simply choose your desired content type, provide a description, and our AI models will create professional content for you in minutes."
           },
           {
-            "question": "Do I need advanced technical skills to use ShipAny?",
-            "answer": "While basic programming knowledge is helpful, ShipAny is designed to be developer-friendly. Our templates and documentation make it easy to get started, even if you're not an expert in AI or cloud infrastructure."
+            "question": "What types of content can I create with Marble AI?",
+            "answer": "Marble AI supports image generation, video generation, and music generation. You can create anything from photorealistic images to professional videos and original music compositions."
           },
           {
-            "question": "What types of AI SaaS can I build with ShipAny?",
-            "answer": "ShipAny supports a wide range of AI applications, from content generation to data analysis tools. Our templates cover popular use cases like AI chatbots, content generators, image processing apps, and more."
+            "question": "Do I need technical skills to use Marble AI?",
+            "answer": "No technical skills are required! Marble AI is designed to be user-friendly. Simply describe what you want to create, and our AI will generate it for you. Advanced users can also use our API for integration."
           },
           {
-            "question": "How long does it typically take to launch with ShipAny?",
-            "answer": "With ShipAny, you can have a working prototype in hours and a production-ready application in hours. Our one-click deployment and pre-configured infrastructure significantly reduce the traditional months-long development cycle."
+            "question": "How long does it take to generate content?",
+            "answer": "Generation time depends on the content type and complexity. Images typically take seconds to minutes, videos take a few minutes, and music generation is usually quick. You'll see real-time progress updates."
           },
           {
-            "question": "What's included in the ShipAny infrastructure?",
-            "answer": "ShipAny provides a complete infrastructure stack including authentication, database setup, API integration, payment processing, and scalable cloud deployment. Everything is pre-configured following industry best practices."
+            "question": "Can I use the generated content commercially?",
+            "answer": "Yes! All content generated with Marble AI can be used for commercial purposes. You own the rights to your generated content and can use it however you like."
           },
           {
-            "question": "Can I customize the templates to match my brand?",
-            "answer": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
+            "question": "What AI models does Marble AI use?",
+            "answer": "Marble AI uses state-of-the-art AI models including Qwen, Flux, Ideogram for images, Seedance, Kling, Veo for videos, and advanced music generation models. We continuously update our models to provide the best quality."
           }
         ],
         "className": "bg-muted/80"
       },
       "cta": {
         "id": "cta",
-        "title": "Ship your first AI SaaS Startup",
-        "highlight_text": "first AI SaaS",
-        "description": "Start from here, ship with ShipAny.",
+        "title": "Create Stunning AI Content Today",
+        "highlight_text": "AI Content",
+        "description": "Start generating professional images, videos, and music with Marble AI.",
         "buttons": [
           {
             "title": "Start creating now",
-            "url": "https://shipany.ai",
-            "target": "_blank",
+            "url": "/pricing",
+            "target": "_self",
             "icon": "Zap"
           }
         ]
