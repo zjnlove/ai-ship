@@ -4,12 +4,12 @@
     "description": "Start with a plan"
   },
   "page": {
-    "title": "ShipAny Pricing",
+    "title": "Marble AI Pricing",
     "sections": {
       "pricing": {
         "id": "pricing",
         "title": "Pricing",
-        "description": "Get all features of ShipAny, Ship your AI SaaS startups fast.",
+        "description": "Get all features of Marble AI, Ship your AI SaaS startups fast.",
         "groups": [
           {
             "name": "one-time",
@@ -49,12 +49,12 @@
             "is_featured": false,
             "tip": "Pay once. Build unlimited projects!",
             "button": {
-              "title": "Get ShipAny",
+              "title": "Get Marble AI",
               "url": "/#pricing",
               "icon": "RiFlashlightFill"
             },
             "product_id": "starter",
-            "product_name": "ShipAny Boilerplate Starter",
+            "product_name": "Marble AI Boilerplate Starter",
             "credits": 100,
             "valid_days": 30,
             "group": "one-time"
@@ -88,14 +88,14 @@
               "icon": "RiFlashlightFill"
             },
             "product_id": "standard",
-            "product_name": "ShipAny Boilerplate Standard",
+            "product_name": "Marble AI Boilerplate Standard",
             "credits": 200,
             "valid_days": 90,
             "group": "one-time"
           },
           {
             "title": "Premium",
-            "description": "Ship Any AI SaaS Startups.",
+            "description": "Ship your AI SaaS startups fast with Marble AI.",
             "features_title": "Everything in Standard, plus",
             "features": [
               "300 credits, valid for 1 year",
@@ -120,7 +120,7 @@
               "icon": "RiFlashlightFill"
             },
             "product_id": "premium",
-            "product_name": "ShipAny Boilerplate Premium",
+            "product_name": "Marble AI Boilerplate Premium",
             "credits": 300,
             "valid_days": 365,
             "group": "one-time"

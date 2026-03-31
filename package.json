@@ -1,21 +1,15 @@
 {
-  "name": "shipany-template-two",
+  "name": "marble-ai",
   "version": "1.8.2",
   "private": true,
-  "author": "ShipAny.ai",
-  "homepage": "https://shipany.ai",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shipanyai/shipany-template-two"
-  },
+  "author": "Marble AI Team <support@marbleai.app>",
+  "homepage": "https://marbleai.app",
   "keywords": [
-    "shipany",
-    "shipany-two",
-    "shipany-template-two",
-    "ai-saas-boilerplate",
-    "ai-saas-template",
-    "ai-saas-framework",
-    "ai-saas-development"
+    "marbleai",
+    "ai",
+    "image-generation",
+    "video-generation",
+    "music-generation"
   ],
   "scripts": {
     "dev": "next dev --turbopack",
