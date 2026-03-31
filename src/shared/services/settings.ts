@@ -280,7 +280,7 @@ export async function getSettings() {
     {
       name: 'app_name',
       title: 'App Name',
-      placeholder: 'ShipAny',
+      placeholder: 'MarableAI',
       type: 'text',
       group: 'appinfo',
       tab: 'general',
@@ -289,7 +289,7 @@ export async function getSettings() {
       name: 'app_description',
       title: 'App Description',
       placeholder:
-        'ShipAny is a NextJS boilerplate for building AI SaaS startups. ',
+        'MarbleAI is a all-in-one AI platform for generating stunning images, videos, and music. ',
       type: 'textarea',
       group: 'appinfo',
       tab: 'general',
@@ -704,7 +704,7 @@ export async function getSettings() {
       name: 'resend_sender_email',
       title: 'Resend Sender Email',
       type: 'text',
-      placeholder: 'ShipAny Two <no-reply@mail.shipany.site>',
+      placeholder: 'MarbleAI <no-reply@mail.marbleai.app>',
       group: 'resend',
       tab: 'email',
     },
