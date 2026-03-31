@@ -75,77 +75,195 @@ const MAX_PROMPT_LENGTH = 2000;
 
 const MODEL_OPTIONS = [
   {
-    value: 'google/nano-banana-pro',
-    label: 'Nano Banana Pro',
-    provider: 'replicate',
-    scenes: ['text-to-image', 'image-to-image'],
+    label: 'Qwen Image 2.0',
+    provider: 'kie',
+    brand: 'qwen',
+    sceneValues: {
+      'text-to-image': 'qwen-image-2.0',
+      'image-to-image': 'qwen-image-2.0',
+    },
   },
   {
-    value: 'bytedance/seedream-4',
-    label: 'Seedream 4',
-    provider: 'replicate',
-    scenes: ['text-to-image', 'image-to-image'],
+    label: 'Qwen Image',
+    provider: 'kie',
+    brand: 'qwen',
+    sceneValues: {
+      'text-to-image': 'qwen-image',
+      'image-to-image': 'qwen-image',
+    },
   },
   {
-    value: 'fal-ai/nano-banana-pro',
-    label: 'Nano Banana Pro',
-    provider: 'fal',
-    scenes: ['text-to-image'],
+    label: 'Qwen Image Edit',
+    provider: 'kie',
+    brand: 'qwen',
+    sceneValues: {
+      'image-to-image': 'qwen-image-edit',
+    },
   },
   {
-    value: 'fal-ai/nano-banana-pro/edit',
-    label: 'Nano Banana Pro',
-    provider: 'fal',
-    scenes: ['image-to-image'],
+    label: 'Nano Banana 2',
+    provider: 'kie',
+    brand: 'google',
+    sceneValues: {
+      'text-to-image': 'nano-banana-2',
+      'image-to-image': 'nano-banana-2',
+    },
   },
   {
-    value: 'fal-ai/bytedance/seedream/v4/edit',
-    label: 'Seedream 4',
-    provider: 'fal',
-    scenes: ['image-to-image'],
-  },
-  {
-    value: 'fal-ai/z-image/turbo',
-    label: 'Z-Image Turbo',
-    provider: 'fal',
-    scenes: ['text-to-image'],
-  },
-  {
-    value: 'fal-ai/flux-2-flex',
-    label: 'Flux 2 Flex',
-    provider: 'fal',
-    scenes: ['text-to-image'],
-  },
-  {
-    value: 'gemini-3-pro-image-preview',
-    label: 'Gemini 3 Pro Image Preview',
-    provider: 'gemini',
-    scenes: ['text-to-image', 'image-to-image'],
-  },
-  {
-    value: 'nano-banana-pro',
     label: 'Nano Banana Pro',
     provider: 'kie',
-    scenes: ['text-to-image', 'image-to-image'],
+    brand: 'google',
+    sceneValues: {
+      'text-to-image': 'nano-banana-pro',
+      'image-to-image': 'nano-banana-pro',
+    },
+  },
+  {
+    label: 'NanoBanana-Gemini 2.5 Flash',
+    provider: 'kie',
+    brand: 'google',
+    sceneValues: {
+      'text-to-image': 'nanobanana-gemini-2.5-flash',
+      'image-to-image': 'nanobanana-gemini-2.5-flash',
+    },
+  },
+  {
+    label: 'Imagen 4',
+    provider: 'kie',
+    brand: 'google',
+    sceneValues: {
+      'text-to-image': 'imagen-4',
+      'image-to-image': 'imagen-4',
+    },
+  },
+  {
+    label: 'gpt-image-1.5',
+    provider: 'kie',
+    brand: 'openai',
+    sceneValues: {
+      'text-to-image': 'gpt-image-1.5',
+      'image-to-image': 'gpt-image-1.5',
+    },
+  },
+  {
+    label: '4o Image',
+    provider: 'kie',
+    brand: 'openai',
+    sceneValues: {
+      'text-to-image': '4o-image',
+      'image-to-image': '4o-image',
+    },
+  },
+  {
+    label: 'FLUX.2',
+    provider: 'kie',
+    brand: 'black-forest-labs',
+    sceneValues: {
+      'text-to-image': 'flux-2',
+      'image-to-image': 'flux-2',
+    },
+  },
+  {
+    label: 'Flux Kontext',
+    provider: 'kie',
+    brand: 'black-forest-labs',
+    sceneValues: {
+      'text-to-image': 'flux-kontext',
+      'image-to-image': 'flux-kontext',
+    },
+  },
+  {
+    label: 'Grok Imagine',
+    provider: 'kie',
+    brand: 'grok',
+    sceneValues: {
+      'text-to-image': 'grok-imagine',
+      'image-to-image': 'grok-imagine',
+    },
+  },
+  {
+    label: 'Ideogram V3',
+    provider: 'kie',
+    brand: 'ideogram',
+    sceneValues: {
+      'text-to-image': 'ideogram-v3',
+      'image-to-image': 'ideogram-v3',
+    },
+  },
+  {
+    label: 'Ideogram V3 Reframe Image',
+    provider: 'kie',
+    brand: 'ideogram',
+    sceneValues: {
+      'image-to-image': 'ideogram-v3-reframe',
+    },
+  },
+  {
+    label: 'Ideogram Character',
+    provider: 'kie',
+    brand: 'ideogram',
+    sceneValues: {
+      'image-to-image': 'ideogram-character',
+    },
+  },
+  {
+    label: 'Topaz Image Upscale',
+    provider: 'kie',
+    brand: 'topaz',
+    sceneValues: {
+      'image-to-image': 'topaz-image-upscale',
+    },
+  },
+  {
+    label: 'Recraft Remove Background',
+    provider: 'kie',
+    brand: 'recraft',
+    sceneValues: {
+      'image-to-image': 'recraft-remove-background',
+    },
+  },
+  {
+    label: 'Recraft Crisp Upscale',
+    provider: 'kie',
+    brand: 'recraft',
+    sceneValues: {
+      'image-to-image': 'recraft-crisp-upscale',
+    },
   },
 ];
 
 const PROVIDER_OPTIONS = [
   {
-    value: 'replicate',
-    label: 'Replicate',
+    value: 'qwen',
+    label: 'Qwen',
   },
   {
-    value: 'fal',
-    label: 'Fal',
+    value: 'google',
+    label: 'Google',
   },
   {
-    value: 'gemini',
-    label: 'Gemini',
+    value: 'openai',
+    label: 'OpenAI',
   },
   {
-    value: 'kie',
-    label: 'Kie',
+    value: 'black-forest-labs',
+    label: 'Black Forest Labs',
+  },
+  {
+    value: 'grok',
+    label: 'Grok',
+  },
+  {
+    value: 'ideogram',
+    label: 'Ideogram',
+  },
+  {
+    value: 'topaz',
+    label: 'Topaz',
+  },
+  {
+    value: 'recraft',
+    label: 'Recraft',
   },
 ];
 
@@ -217,7 +335,9 @@ export function ImageGenerator({
 
   const [costCredits, setCostCredits] = useState<number>(2);
   const [provider, setProvider] = useState(PROVIDER_OPTIONS[0]?.value ?? '');
-  const [model, setModel] = useState(MODEL_OPTIONS[0]?.value ?? '');
+  const [model, setModel] = useState(
+    MODEL_OPTIONS[0]?.sceneValues?.['text-to-image'] ?? ''
+  );
   const [prompt, setPrompt] = useState('');
   const [referenceImageItems, setReferenceImageItems] = useState<
     ImageUploaderValue[]
@@ -262,11 +382,12 @@ export function ImageGenerator({
     setActiveTab(tab);
 
     const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(tab) && option.provider === provider
+      (option) =>
+        option.sceneValues[tab] !== undefined && option.brand === provider
     );
 
     if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+      setModel(availableModels[0].sceneValues[tab] ?? '');
     } else {
       setModel('');
     }
@@ -282,11 +403,12 @@ export function ImageGenerator({
     setProvider(value);
 
     const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(activeTab) && option.provider === value
+      (option) =>
+        option.sceneValues[activeTab] !== undefined && option.brand === value
     );
 
     if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+      setModel(availableModels[0].sceneValues[activeTab] ?? '');
     } else {
       setModel('');
     }
@@ -522,6 +644,7 @@ export function ImageGenerator({
         options.image_input = referenceImageUrls;
       }
 
+      // zjnlove 2024-10-16: currently we only use kie provider for image generation, so we directly call our backend api. In the future, if we support more providers for image generation, we may need to call different endpoints or add provider field in the request body.
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
         headers: {
@@ -530,7 +653,7 @@ export function ImageGenerator({
         body: JSON.stringify({
           mediaType: AIMediaType.IMAGE,
           scene: isTextToImageMode ? 'text-to-image' : 'image-to-image',
-          provider,
+          provider, // provider: 'kie',
           model,
           prompt: trimmedPrompt,
           options,
@@ -812,10 +935,13 @@ export function ImageGenerator({
                         <SelectContent>
                           {MODEL_OPTIONS.filter(
                             (option) =>
-                              option.scenes.includes(activeTab) &&
-                              option.provider === provider
+                              option.sceneValues[activeTab] !== undefined &&
+                              option.brand === provider
                           ).map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
+                            <SelectItem
+                              key={option.label}
+                              value={option.sceneValues[activeTab] ?? ''}
+                            >
                               {option.label}
                             </SelectItem>
                           ))}
