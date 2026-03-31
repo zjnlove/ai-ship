@@ -78,6 +78,7 @@ const MODEL_OPTIONS = [
     label: 'Qwen Image 2.0',
     provider: 'kie',
     brand: 'qwen',
+    modelPath: 'qwen-image-2',
     sceneValues: {
       'text-to-image': 'qwen-image-2.0',
       'image-to-image': 'qwen-image-2.0',
@@ -87,6 +88,7 @@ const MODEL_OPTIONS = [
     label: 'Qwen Image',
     provider: 'kie',
     brand: 'qwen',
+    modelPath: 'qwen-image',
     sceneValues: {
       'text-to-image': 'qwen-image',
       'image-to-image': 'qwen-image',
@@ -96,6 +98,7 @@ const MODEL_OPTIONS = [
     label: 'Qwen Image Edit',
     provider: 'kie',
     brand: 'qwen',
+    modelPath: 'qwen-image-edit',
     sceneValues: {
       'image-to-image': 'qwen-image-edit',
     },
@@ -104,6 +107,7 @@ const MODEL_OPTIONS = [
     label: 'Nano Banana 2',
     provider: 'kie',
     brand: 'google',
+    modelPath: 'nano-banana-2',
     sceneValues: {
       'text-to-image': 'nano-banana-2',
       'image-to-image': 'nano-banana-2',
@@ -113,6 +117,7 @@ const MODEL_OPTIONS = [
     label: 'Nano Banana Pro',
     provider: 'kie',
     brand: 'google',
+    modelPath: 'nano-banana-pro',
     sceneValues: {
       'text-to-image': 'nano-banana-pro',
       'image-to-image': 'nano-banana-pro',
@@ -122,6 +127,7 @@ const MODEL_OPTIONS = [
     label: 'NanoBanana-Gemini 2.5 Flash',
     provider: 'kie',
     brand: 'google',
+    modelPath: 'nanobanana-gemini-2.5-flash',
     sceneValues: {
       'text-to-image': 'nanobanana-gemini-2.5-flash',
       'image-to-image': 'nanobanana-gemini-2.5-flash',
@@ -131,6 +137,7 @@ const MODEL_OPTIONS = [
     label: 'Imagen 4',
     provider: 'kie',
     brand: 'google',
+    modelPath: 'imagen-4',
     sceneValues: {
       'text-to-image': 'imagen-4',
       'image-to-image': 'imagen-4',
@@ -140,6 +147,7 @@ const MODEL_OPTIONS = [
     label: 'gpt-image-1.5',
     provider: 'kie',
     brand: 'openai',
+    modelPath: 'gpt-image-1-5',
     sceneValues: {
       'text-to-image': 'gpt-image-1.5',
       'image-to-image': 'gpt-image-1.5',
@@ -149,6 +157,7 @@ const MODEL_OPTIONS = [
     label: '4o Image',
     provider: 'kie',
     brand: 'openai',
+    modelPath: '4o-image',
     sceneValues: {
       'text-to-image': '4o-image',
       'image-to-image': '4o-image',
@@ -157,7 +166,8 @@ const MODEL_OPTIONS = [
   {
     label: 'FLUX.2',
     provider: 'kie',
-    brand: 'black-forest-labs',
+    brand: 'flux',
+    modelPath: 'flux-2',
     sceneValues: {
       'text-to-image': 'flux-2',
       'image-to-image': 'flux-2',
@@ -166,7 +176,8 @@ const MODEL_OPTIONS = [
   {
     label: 'Flux Kontext',
     provider: 'kie',
-    brand: 'black-forest-labs',
+    brand: 'flux',
+    modelPath: 'flux-kontext',
     sceneValues: {
       'text-to-image': 'flux-kontext',
       'image-to-image': 'flux-kontext',
@@ -176,6 +187,7 @@ const MODEL_OPTIONS = [
     label: 'Grok Imagine',
     provider: 'kie',
     brand: 'grok',
+    modelPath: 'grok-imagine',
     sceneValues: {
       'text-to-image': 'grok-imagine',
       'image-to-image': 'grok-imagine',
@@ -185,6 +197,7 @@ const MODEL_OPTIONS = [
     label: 'Ideogram V3',
     provider: 'kie',
     brand: 'ideogram',
+    modelPath: 'ideogram-v3',
     sceneValues: {
       'text-to-image': 'ideogram-v3',
       'image-to-image': 'ideogram-v3',
@@ -194,6 +207,7 @@ const MODEL_OPTIONS = [
     label: 'Ideogram V3 Reframe Image',
     provider: 'kie',
     brand: 'ideogram',
+    modelPath: 'ideogram-v3-reframe',
     sceneValues: {
       'image-to-image': 'ideogram-v3-reframe',
     },
@@ -202,6 +216,7 @@ const MODEL_OPTIONS = [
     label: 'Ideogram Character',
     provider: 'kie',
     brand: 'ideogram',
+    modelPath: 'ideogram-character',
     sceneValues: {
       'image-to-image': 'ideogram-character',
     },
@@ -210,6 +225,7 @@ const MODEL_OPTIONS = [
     label: 'Topaz Image Upscale',
     provider: 'kie',
     brand: 'topaz',
+    modelPath: 'topaz-image-upscale',
     sceneValues: {
       'image-to-image': 'topaz-image-upscale',
     },
@@ -218,6 +234,7 @@ const MODEL_OPTIONS = [
     label: 'Recraft Remove Background',
     provider: 'kie',
     brand: 'recraft',
+    modelPath: 'recraft-remove-background',
     sceneValues: {
       'image-to-image': 'recraft-remove-background',
     },
@@ -226,6 +243,7 @@ const MODEL_OPTIONS = [
     label: 'Recraft Crisp Upscale',
     provider: 'kie',
     brand: 'recraft',
+    modelPath: 'recraft-crisp-upscale',
     sceneValues: {
       'image-to-image': 'recraft-crisp-upscale',
     },
@@ -246,8 +264,8 @@ const PROVIDER_OPTIONS = [
     label: 'OpenAI',
   },
   {
-    value: 'black-forest-labs',
-    label: 'Black Forest Labs',
+    value: 'flux',
+    label: 'Flux',
   },
   {
     value: 'grok',
@@ -370,7 +388,24 @@ export function ImageGenerator({
       setActiveTab('image-to-image');
       setCostCredits(4);
     }
-  }, [pathname]);
+
+    // 检查是否是 image-models 路径，自动选择对应的模型
+    const imageModelMatch = pathname.match(/\/image-models\/([^/]+)/);
+    if (imageModelMatch) {
+      const modelPath = imageModelMatch[1];
+      const matchedModel = MODEL_OPTIONS.find(
+        (option) => option.modelPath === modelPath
+      );
+      if (matchedModel) {
+        setProvider(matchedModel.brand);
+        // 根据当前活动标签页选择对应的模型值
+        const modelValue = matchedModel.sceneValues[activeTab];
+        if (modelValue) {
+          setModel(modelValue);
+        }
+      }
+    }
+  }, [pathname, activeTab]);
 
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
