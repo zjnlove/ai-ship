@@ -294,7 +294,8 @@
         },
         {
           "title": "Pricing",
-          "url": "/pricing"
+          "url": "/pricing",
+          "target": "_blank"
         }
       ]
     },

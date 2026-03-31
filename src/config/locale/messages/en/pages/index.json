@@ -28,7 +28,7 @@
           }
         ],
         "show_avatars": true,
-        "avatars_tip": "999+ users are using ShipAny",
+        "avatars_tip": "999+ users are using Marble AI",
         "show_award": false,
         "background_image": {
           "src": "/imgs/bg/tree.jpg",
@@ -290,9 +290,9 @@
       "usage": {
         "block": "features-step",
         "id": "usage",
-        "title": "How to Launch with ShipAny",
-        "highlight_text": "ShipAny",
-        "description": "Get your AI SaaS startup running in three simple steps:",
+        "title": "How to Use Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "Create stunning AI content in three simple steps:",
         "image": {
           "src": "/imgs/features/1.png",
           "alt": "usage"
@@ -301,32 +301,32 @@
         "text_align": "center",
         "items": [
           {
-            "title": "Get ShipAny",
-            "description": "Buy ShipAny with a one-time payment. Check your email for the code and documentation.",
+            "title": "Sign Up",
+            "description": "Create your Marble AI account and choose a plan that fits your needs.",
             "image": {
               "src": "/imgs/features/5.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Start Your Project",
-            "description": "Read the documentation and clone the code of ShipAny. Start building your AI SaaS startup.",
+            "title": "Choose Your Tool",
+            "description": "Select from image, video, or music generation tools based on your creative needs.",
             "image": {
               "src": "/imgs/features/6.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Customize Your Project",
-            "description": "Modify the template with your data and contents. Specific AI functionality needs.",
+            "title": "Generate Content",
+            "description": "Describe what you want to create and let Marble AI generate professional content for you.",
             "image": {
               "src": "/imgs/features/7.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Deploy to Production",
-            "description": "Deploy your project to production with a few steps and start serving customers immediately.",
+            "title": "Download & Share",
+            "description": "Download your generated content and use it for your projects or share with others.",
             "image": {
               "src": "/imgs/features/8.png",
               "alt": "usage"
@@ -375,35 +375,35 @@
       },
       "stats": {
         "id": "stats",
-        "title": "People Love ShipAny",
-        "highlight_text": "Love ShipAny",
-        "description": "for it's easy to use and fast to ship.",
+        "title": "People Love Marble AI",
+        "highlight_text": "Love Marble AI",
+        "description": "for its powerful AI generation capabilities.",
         "items": [
           {
             "title": "999+",
-            "description": "Customers"
+            "description": "Active Users"
           },
           {
-            "title": "200+",
-            "description": "Blocks"
+            "title": "1M+",
+            "description": "Content Generated"
           },
           {
             "title": "50+",
-            "description": "Templates"
+            "description": "AI Models"
           }
         ],
         "className": "bg-muted/80"
       },
       "testimonials": {
         "id": "testimonials",
-        "title": "What Users Say About ShipAny",
+        "title": "What Users Say About Marble AI",
         "highlight_text": "Users Say",
-        "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
+        "description": "Hear from creators and professionals who use Marble AI for their creative projects.",
         "items": [
           {
             "name": "David Chen",
-            "role": "Founder of AIWallpaper.shop",
-            "quote": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
+            "role": "Digital Artist",
+            "quote": "Marble AI has transformed my creative workflow. The image generation quality is incredible, and I can create stunning visuals in minutes!",
             "image": {
               "src": "/imgs/avatars/1.png",
               "alt": "david"
@@ -411,8 +411,8 @@
           },
           {
             "name": "Rachel Kim",
-            "role": "CTO at HeyBeauty.ai",
-            "quote": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
+            "role": "Content Creator",
+            "quote": "The video generation feature is a game-changer. I can produce professional-quality content for my social media without any video editing skills.",
             "image": {
               "src": "/imgs/avatars/2.png",
               "alt": "rachel"
@@ -420,8 +420,8 @@
           },
           {
             "name": "Marcus Thompson",
-            "role": "Solo Developer",
-            "quote": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
+            "role": "Marketing Manager",
+            "quote": "Marble AI saves us thousands on stock photos and videos. The AI-generated content looks professional and perfectly matches our brand.",
             "image": {
               "src": "/imgs/avatars/3.png",
               "alt": "marcus"
@@ -429,8 +429,8 @@
           },
           {
             "name": "Sofia Garcia",
-            "role": "CEO of Melodisco",
-            "quote": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
+            "role": "Music Producer",
+            "quote": "The AI music generation is phenomenal. I use Marble AI to create background tracks and inspiration for my productions.",
             "image": {
               "src": "/imgs/avatars/4.png",
               "alt": "sofia"
@@ -438,8 +438,8 @@
           },
           {
             "name": "James Wilson",
-            "role": "Tech Lead at GPTs.works",
-            "quote": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
+            "role": "E-commerce Owner",
+            "quote": "Product images have never been easier. Marble AI generates beautiful product photos that boost our conversion rates significantly.",
             "image": {
               "src": "/imgs/avatars/5.png",
               "alt": "james"
@@ -447,8 +447,8 @@
           },
           {
             "name": "Anna Zhang",
-            "role": "Startup Founder",
-            "quote": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
+            "role": "Freelance Designer",
+            "quote": "Marble AI is my secret weapon. I can deliver more projects in less time while maintaining exceptional quality. My clients love it!",
             "image": {
               "src": "/imgs/avatars/6.png",
               "alt": "anna"
@@ -506,7 +506,7 @@
       "subscribe": {
         "id": "subscribe",
         "title": "Subscribe to our newsletter",
-        "description": "Get the latest news and updates from ShipAny.",
+        "description": "Get the latest news and updates from Marble AI.",
         "submit": {
           "input": {
             "placeholder": "Enter your email"
