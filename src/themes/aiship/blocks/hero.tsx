@@ -346,7 +346,7 @@ function FadeInDown({
   );
 }
 
-// 无限循环滚动卡片画廊组件
+// 高级美感轮询卡片画廊组件
 function InfiniteScrollGallery({
   items,
 }: {
@@ -361,16 +361,22 @@ function InfiniteScrollGallery({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="relative w-full overflow-hidden py-8">
-      {/* 渐变遮罩 */}
-      <div className="from-background pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-32 bg-gradient-to-r to-transparent" />
-      <div className="from-background pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-32 bg-gradient-to-l to-transparent" />
+    <div className="relative w-full overflow-hidden py-12">
+      {/* 高级渐变遮罩 - 更宽更自然 */}
+      <div className="from-background via-background/80 pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-48 bg-gradient-to-r to-transparent" />
+      <div className="from-background via-background/80 pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-48 bg-gradient-to-l to-transparent" />
+
+      {/* 装饰性背景光效 */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="bg-primary/5 absolute top-1/2 left-1/4 h-96 w-96 -translate-y-1/2 rounded-full blur-3xl" />
+        <div className="bg-secondary/5 absolute top-1/2 right-1/4 h-96 w-96 -translate-y-1/2 rounded-full blur-3xl" />
+      </div>
 
       {/* 滚动容器 */}
       <div
-        className="animate-scroll-thumbnails flex gap-4"
+        className="animate-scroll-thumbnails flex gap-6 px-4"
         style={{
-          width: `${items.length * 2 * 280}px`, // 264px + 16px gap
+          width: `${items.length * 2 * 320}px`, // 296px + 24px gap
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.animationPlayState = 'paused';
@@ -381,90 +387,112 @@ function InfiniteScrollGallery({
       >
         {/* 第一份卡片 */}
         {items.map((item, idx) => (
-          <div
-            key={`first-${idx}`}
-            className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
-            style={{ width: '280px', height: '450px' }}
-          >
-            {item.type === 'video' ? (
-              <video
-                src={item.src}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <Image
-                src={item.src}
-                alt={item.alt || `Gallery item ${idx + 1}`}
-                fill
-                className="object-cover"
-                sizes="264px"
-                loading="lazy"
-              />
-            )}
-            {/* 左下角文字覆盖层 */}
-            <div className="absolute right-0 bottom-0 left-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
-              {item.text && (
-                <div className="mb-1 text-xs font-medium tracking-wider text-white/80 uppercase">
-                  {item.text}
-                </div>
-              )}
-              {item.title && (
-                <div className="text-lg leading-tight font-bold text-white">
-                  {item.title}
-                </div>
-              )}
-            </div>
-            {/* 悬停时的光晕效果 */}
-            <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </div>
+          <GalleryCard key={`first-${idx}`} item={item} index={idx} />
         ))}
         {/* 第二份卡片（实现无缝循环） */}
         {items.map((item, idx) => (
-          <div
-            key={`second-${idx}`}
-            className="group border-border/30 bg-background/80 relative flex-shrink-0 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl"
-            style={{ width: '280px', height: '450px' }}
-          >
-            {item.type === 'video' ? (
-              <video
-                src={item.src}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <Image
-                src={item.src}
-                alt={item.alt || `Gallery item ${idx + 1}`}
-                fill
-                className="object-cover"
-                sizes="264px"
-                loading="lazy"
-              />
-            )}
-            {/* 左下角文字覆盖层 */}
-            <div className="absolute right-0 bottom-0 left-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
-              {item.text && (
-                <div className="mb-1 text-xs font-medium tracking-wider text-white/80 uppercase">
-                  {item.text}
-                </div>
-              )}
-              {item.title && (
-                <div className="text-lg leading-tight font-bold text-white">
-                  {item.title}
-                </div>
-              )}
-            </div>
-            {/* 悬停时的光晕效果 */}
-            <div className="from-primary/20 absolute inset-0 bg-gradient-to-tr to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </div>
+          <GalleryCard key={`second-${idx}`} item={item} index={idx} />
         ))}
+      </div>
+    </div>
+  );
+}
+
+// 高级卡片组件
+function GalleryCard({
+  item,
+  index,
+}: {
+  item: {
+    type: 'image' | 'video';
+    src: string;
+    alt?: string;
+    title?: string;
+    text?: string;
+  };
+  index: number;
+}) {
+  return (
+    <div
+      className="group relative flex-shrink-0 cursor-pointer"
+      style={{ width: '296px', height: '480px' }}
+    >
+      {/* 外层光晕效果 */}
+      <div className="bg-primary/20 absolute -inset-1 rounded-3xl opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100" />
+
+      {/* 卡片主体 */}
+      <div className="border-border/20 bg-background/60 group-hover:shadow-primary/20 relative h-full overflow-hidden rounded-2xl border shadow-2xl backdrop-blur-xl transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl">
+        {/* 内边框装饰 */}
+        <div className="pointer-events-none absolute inset-[1px] rounded-2xl border border-white/10" />
+
+        {/* 媒体内容 */}
+        <div className="relative h-full w-full overflow-hidden">
+          {item.type === 'video' ? (
+            <video
+              src={item.src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <Image
+              src={item.src}
+              alt={item.alt || `Gallery item ${index + 1}`}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              sizes="296px"
+              loading="lazy"
+            />
+          )}
+
+          {/* 渐变叠加层 - 更精致 */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+          <div className="from-primary/10 to-secondary/10 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+          {/* 光泽扫过效果 */}
+          <div className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+        </div>
+
+        {/* 底部信息区域 */}
+        <div className="absolute right-0 bottom-0 left-0 z-20 p-5">
+          {/* 分类标签 */}
+          {item.text && (
+            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 backdrop-blur-md">
+              <div className="bg-primary h-1.5 w-1.5 rounded-full" />
+              <span className="text-[10px] font-semibold tracking-widest text-white/90 uppercase">
+                {item.text}
+              </span>
+            </div>
+          )}
+
+          {/* 标题 */}
+          {item.title && (
+            <h3 className="text-xl leading-tight font-bold text-white drop-shadow-lg">
+              {item.title}
+            </h3>
+          )}
+        </div>
+
+        {/* 顶部装饰角标 */}
+        <div className="absolute top-4 right-4 z-20">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
+            <svg
+              className="h-4 w-4 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -805,7 +833,7 @@ export function Hero({
 
       {/* 底部循环滚动卡片画廊 */}
       {mediaItems.length > 0 && (
-        <div className="relative z-20 mt-24 md:mt-34">
+        <div className="relative z-20 mt-24 md:mt-24">
           <FadeInUp delay={1000}>
             <InfiniteScrollGallery items={mediaItems} />
           </FadeInUp>
