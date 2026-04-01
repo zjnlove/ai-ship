@@ -633,13 +633,13 @@ export function Hero({
     <section
       id={section.id}
       className={cn(
-        `relative overflow-hidden pt-24 pb-10`,
+        `relative overflow-hidden pt-38 pb-10`,
         section.className,
         className
       )}
     >
       {/* 粒子背景 */}
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       {/* 弧线布局媒体画廊 */}
       {/* <ArcMediaGallery media={mediaItems} /> */}
@@ -683,7 +683,7 @@ export function Hero({
             <h1 className="text-3xl font-bold sm:mt-12 sm:text-5xl lg:text-6xl">
               <>
                 <span className="text-black dark:text-white">{texts[0]}</span>
-                <span className="animate-gradient-text from-primary bg-gradient-to-r via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                <span className="from-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">
                   {highlightText}
                 </span>
                 <span className="text-black dark:text-white">{texts[1]}</span>
@@ -691,7 +691,7 @@ export function Hero({
             </h1>
           ) : (
             <h1 className="text-3xl font-bold text-balance sm:mt-12 sm:text-5xl lg:text-6xl">
-              <span className="text-primary">{section.title}</span>
+              <span>{section.title}</span>
             </h1>
           )}
         </FadeInDirection>

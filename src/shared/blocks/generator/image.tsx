@@ -75,13 +75,17 @@ const MAX_PROMPT_LENGTH = 2000;
 
 const MODEL_OPTIONS = [
   {
-    label: 'Qwen Image 2.0',
+    label: 'Qwen Image 2',
     provider: 'kie',
     brand: 'qwen',
     modelPath: 'qwen-image-2',
+    credits: {
+      'text-to-image': '6',
+      'image-to-image': '8',
+    },
     sceneValues: {
-      'text-to-image': 'qwen-image-2.0',
-      'image-to-image': 'qwen-image-2.0',
+      'text-to-image': 'qwen2/text-to-image',
+      'image-to-image': 'qwen2/image-edit',
     },
   },
   {
@@ -89,9 +93,13 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'qwen',
     modelPath: 'qwen-image',
+    credits: {
+      'text-to-image': '4',
+      'image-to-image': '6',
+    },
     sceneValues: {
-      'text-to-image': 'qwen-image',
-      'image-to-image': 'qwen-image',
+      'text-to-image': 'qwen/text-to-image',
+      'image-to-image': 'qwen/image-to-image',
     },
   },
   {
@@ -99,8 +107,11 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'qwen',
     modelPath: 'qwen-image-edit',
+    credits: {
+      'image-to-image': '6',
+    },
     sceneValues: {
-      'image-to-image': 'qwen-image-edit',
+      'image-to-image': 'qwen/image-edit',
     },
   },
   {
@@ -108,6 +119,10 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'google',
     modelPath: 'nano-banana-2',
+    credits: {
+      'text-to-image': '10',
+      'image-to-image': '12',
+    },
     sceneValues: {
       'text-to-image': 'nano-banana-2',
       'image-to-image': 'nano-banana-2',
@@ -118,19 +133,27 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'google',
     modelPath: 'nano-banana-pro',
+    credits: {
+      'text-to-image': '12',
+      'image-to-image': '14',
+    },
     sceneValues: {
       'text-to-image': 'nano-banana-pro',
       'image-to-image': 'nano-banana-pro',
     },
   },
   {
-    label: 'NanoBanana-Gemini 2.5 Flash',
+    label: 'Nano Banana',
     provider: 'kie',
     brand: 'google',
-    modelPath: 'nanobanana-gemini-2.5-flash',
+    modelPath: 'nano-banana',
+    credits: {
+      'text-to-image': '4',
+      'image-to-image': '6',
+    },
     sceneValues: {
-      'text-to-image': 'nanobanana-gemini-2.5-flash',
-      'image-to-image': 'nanobanana-gemini-2.5-flash',
+      'text-to-image': 'google/nano-banana',
+      'image-to-image': 'google/nano-banana-edit',
     },
   },
   {
@@ -138,9 +161,11 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'google',
     modelPath: 'imagen-4',
+    credits: {
+      'text-to-image': '8',
+    },
     sceneValues: {
-      'text-to-image': 'imagen-4',
-      'image-to-image': 'imagen-4',
+      'text-to-image': 'google/imagen4',
     },
   },
   {
@@ -148,39 +173,41 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'openai',
     modelPath: 'gpt-image-1-5',
+    credits: {
+      'text-to-image': '4',
+      'image-to-image': '6',
+    },
     sceneValues: {
-      'text-to-image': 'gpt-image-1.5',
-      'image-to-image': 'gpt-image-1.5',
+      'text-to-image': 'gpt-image/1.5-text-to-image',
+      'image-to-image': 'gpt-image/1.5-image-to-image',
     },
   },
   {
-    label: '4o Image',
-    provider: 'kie',
-    brand: 'openai',
-    modelPath: '4o-image',
-    sceneValues: {
-      'text-to-image': '4o-image',
-      'image-to-image': '4o-image',
-    },
-  },
-  {
-    label: 'FLUX.2',
+    label: 'FLUX.2 Flex',
     provider: 'kie',
     brand: 'flux',
-    modelPath: 'flux-2',
+    modelPath: 'flux-2-flex',
+    credits: {
+      'text-to-image': '14',
+      'image-to-image': '16',
+    },
     sceneValues: {
-      'text-to-image': 'flux-2',
-      'image-to-image': 'flux-2',
+      'text-to-image': 'flux-2/flex-text-to-image',
+      'image-to-image': 'flux-2/flex-image-to-image',
     },
   },
   {
-    label: 'Flux Kontext',
+    label: 'FLUX.2 Pro',
     provider: 'kie',
     brand: 'flux',
-    modelPath: 'flux-kontext',
+    modelPath: 'flux-2-pro',
+    credits: {
+      'text-to-image': '6',
+      'image-to-image': '8',
+    },
     sceneValues: {
-      'text-to-image': 'flux-kontext',
-      'image-to-image': 'flux-kontext',
+      'text-to-image': 'flux-2/pro-text-to-image',
+      'image-to-image': 'flux-2/pro-image-to-image',
     },
   },
   {
@@ -188,9 +215,13 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'grok',
     modelPath: 'grok-imagine',
+    credits: {
+      'text-to-image': '4',
+      'image-to-image': '6',
+    },
     sceneValues: {
-      'text-to-image': 'grok-imagine',
-      'image-to-image': 'grok-imagine',
+      'text-to-image': 'grok-imagine/text-to-image',
+      'image-to-image': 'grok-imagine/image-to-image',
     },
   },
   {
@@ -198,6 +229,10 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'ideogram',
     modelPath: 'ideogram-v3',
+    credits: {
+      'text-to-image': '10',
+      'image-to-image': '20',
+    },
     sceneValues: {
       'text-to-image': 'ideogram-v3',
       'image-to-image': 'ideogram-v3',
@@ -208,6 +243,9 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'ideogram',
     modelPath: 'ideogram-v3-reframe',
+    credits: {
+      'image-to-image': '20',
+    },
     sceneValues: {
       'image-to-image': 'ideogram-v3-reframe',
     },
@@ -217,6 +255,9 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'ideogram',
     modelPath: 'ideogram-character',
+    credits: {
+      'image-to-image': '20',
+    },
     sceneValues: {
       'image-to-image': 'ideogram-character',
     },
@@ -226,6 +267,9 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'topaz',
     modelPath: 'topaz-image-upscale',
+    credits: {
+      'image-to-image': '20',
+    },
     sceneValues: {
       'image-to-image': 'topaz-image-upscale',
     },
@@ -235,6 +279,9 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'recraft',
     modelPath: 'recraft-remove-background',
+    credits: {
+      'image-to-image': '20',
+    },
     sceneValues: {
       'image-to-image': 'recraft-remove-background',
     },
@@ -244,6 +291,9 @@ const MODEL_OPTIONS = [
     provider: 'kie',
     brand: 'recraft',
     modelPath: 'recraft-crisp-upscale',
+    credits: {
+      'image-to-image': '20',
+    },
     sceneValues: {
       'image-to-image': 'recraft-crisp-upscale',
     },
@@ -977,7 +1027,14 @@ export function ImageGenerator({
                               key={option.label}
                               value={option.sceneValues[activeTab] ?? ''}
                             >
-                              {option.label}
+                              <span className="flex items-center gap-1">
+                                <span>{option.label}</span>
+                                {option.credits?.[activeTab] && (
+                                  <span className="text-primary">
+                                    ({option.credits[activeTab]} credits)
+                                  </span>
+                                )}
+                              </span>
                             </SelectItem>
                           ))}
                         </SelectContent>

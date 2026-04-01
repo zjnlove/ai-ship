@@ -14,23 +14,7 @@
     "nav": {
       "items": [
         {
-          "title": "Seedance 2.0",
-          "url": "/video-models/seedance-2-0",
-          "target": "_blank",
-          "tip": "New",
-          "tip_color": "bg-emerald-500"
-        },
-        {
-          "title": "Nana Banana Pro",
-          "url": "/image-models/nano-banana-pro",
-          "target": "_blank",
-          "tip": "Hot",
-          "tip_color": "bg-rose-500"
-        },
-        {
           "title": "AI Tools",
-          "tip": "Video Hot",
-          "tip_color": "bg-rose-500",
           "children": [
             {
               "title": "AI Video Generator",
@@ -85,11 +69,6 @@
           "title": "Image Models",
           "children": [
             {
-              "title": "Qwen Image 2.0",
-              "url": "/image-models/qwen-image-2",
-              "target": "_blank"
-            },
-            {
               "title": "Qwen Image",
               "url": "/image-models/qwen-image",
               "target": "_blank"
@@ -97,6 +76,16 @@
             {
               "title": "Qwen Image Edit",
               "url": "/image-models/qwen-image-edit",
+              "target": "_blank"
+            },
+            {
+              "title": "Qwen Image 2",
+              "url": "/image-models/qwen-image-2",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana",
+              "url": "/image-models/nano-banana",
               "target": "_blank"
             },
             {
@@ -112,11 +101,6 @@
               "tip_color": "bg-rose-500"
             },
             {
-              "title": "NanoBanana-Gemini 2.5 Flash",
-              "url": "/image-models/nano-banana-gemini",
-              "target": "_blank"
-            },
-            {
               "title": "Imagen 4",
               "url": "/image-models/imagen-4",
               "target": "_blank"
@@ -127,18 +111,13 @@
               "target": "_blank"
             },
             {
-              "title": "4o Image",
-              "url": "/image-models/4o-image",
+              "title": "FLUX.2 Flex",
+              "url": "/image-models/flux-2-flex",
               "target": "_blank"
             },
             {
-              "title": "FLUX.2",
-              "url": "/image-models/flux-2",
-              "target": "_blank"
-            },
-            {
-              "title": "Flux Kontext",
-              "url": "/image-models/flux-kontext",
+              "title": "FLUX.2 Pro",
+              "url": "/image-models/flux-2-pro",
               "target": "_blank"
             },
             {
