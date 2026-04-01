@@ -185,6 +185,9 @@ export function ImageGenerator({
   const [quality, setQuality] = useState<string>('');
   const [resolution, setResolution] = useState<string>('');
 
+  // 记录上一次的模型配置，用于检测模型是否实际变化
+  const prevModelConfigRef = useRef<ModelOption | undefined>(undefined);
+
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
     useAppContext();
 
@@ -213,8 +216,11 @@ export function ImageGenerator({
       }
     }
 
-    // 重置高级选项为模型默认值
-    if (currentModelConfig?.defaultOptions) {
+    // 只在模型实际变化时才重置高级选项
+    const prevModelConfig = prevModelConfigRef.current;
+    const modelChanged = prevModelConfig?.label !== currentModelConfig?.label;
+
+    if (modelChanged && currentModelConfig?.defaultOptions) {
       const defaults = currentModelConfig.defaultOptions;
       if (defaults.image_size) setImageSize(defaults.image_size);
       if (defaults.aspect_ratio) setImageSize(defaults.aspect_ratio);
@@ -222,6 +228,9 @@ export function ImageGenerator({
       if (defaults.quality) setQuality(defaults.quality);
       if (defaults.resolution) setResolution(defaults.resolution);
     }
+
+    // 更新 ref 记录当前模型配置
+    prevModelConfigRef.current = currentModelConfig;
   }, [currentModelConfig, activeTab]);
 
   useEffect(() => {
@@ -337,6 +346,18 @@ export function ImageGenerator({
     setTaskStatus(null);
   }, []);
 
+  // 重置高级选项为当前模型默认值
+  const resetAdvancedOptions = useCallback(() => {
+    if (currentModelConfig?.defaultOptions) {
+      const defaults = currentModelConfig.defaultOptions;
+      if (defaults.image_size) setImageSize(defaults.image_size);
+      if (defaults.aspect_ratio) setImageSize(defaults.aspect_ratio);
+      if (defaults.output_format) setOutputFormat(defaults.output_format);
+      if (defaults.quality) setQuality(defaults.quality);
+      if (defaults.resolution) setResolution(defaults.resolution);
+    }
+  }, [currentModelConfig]);
+
   const pollTaskStatus = useCallback(
     async (id: string) => {
       try {
@@ -414,6 +435,7 @@ export function ImageGenerator({
 
           setProgress(100);
           resetTaskState();
+          resetAdvancedOptions();
           return true;
         }
 
@@ -599,6 +621,7 @@ export function ImageGenerator({
           toast.success('Image generated successfully');
           setProgress(100);
           resetTaskState();
+          resetAdvancedOptions();
           await fetchUserCredits();
           return;
         }
