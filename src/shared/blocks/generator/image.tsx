@@ -391,10 +391,27 @@ export function ImageGenerator({
     setIsMounted(true);
   }, []);
 
+  // 监听模型变化，自动更新积分
+  useEffect(() => {
+    const selectedModel = MODEL_OPTIONS.find(
+      (option) => option.sceneValues?.[activeTab] === model
+    );
+
+    if (selectedModel?.credits?.[activeTab]) {
+      setCostCredits(parseInt(selectedModel.credits[activeTab]));
+    } else {
+      // 如果模型没有配置积分，使用默认值
+      if (activeTab === 'text-to-image') {
+        setCostCredits(2);
+      } else {
+        setCostCredits(4);
+      }
+    }
+  }, [model, activeTab]);
+
   useEffect(() => {
     if (pathname.includes('image-to-image')) {
       setActiveTab('image-to-image');
-      setCostCredits(4);
     }
 
     // 检查是否是 image-models 路径，自动选择对应的模型
@@ -407,7 +424,7 @@ export function ImageGenerator({
       if (matchedModel) {
         setProvider(matchedModel.brand);
         // 根据当前活动标签页选择对应的模型值
-        const modelValue = matchedModel.sceneValues[activeTab];
+        const modelValue = matchedModel.sceneValues?.[activeTab];
         if (modelValue) {
           setModel(modelValue);
         }
