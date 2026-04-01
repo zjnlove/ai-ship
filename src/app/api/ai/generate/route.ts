@@ -13,6 +13,8 @@ export async function POST(request: Request) {
   try {
     let { provider, mediaType, model, prompt, options, scene, credits } =
       await request.json();
+    console.log('===========================================================');
+    console.log(provider, mediaType, model, prompt, options, scene, credits);
 
     if (!provider || !mediaType || !model) {
       throw new Error('invalid params');

@@ -74,63 +74,103 @@ const videoToVideoCredits = 10;
 const MODEL_OPTIONS = [
   // Replicate models
   {
-    value: 'google/veo-3.1',
     label: 'Veo 3.1',
     provider: 'replicate',
-    scenes: ['text-to-video', 'image-to-video'],
+    brand: 'google',
+    modelPath: 'veo-3.1',
+    credits: {
+      'text-to-video': '8',
+      'image-to-video': '10',
+    },
+    sceneValues: {
+      'text-to-video': 'google/veo-3.1',
+      'image-to-video': 'google/veo-3.1',
+    },
   },
   {
-    value: 'openai/sora-2',
     label: 'Sora 2',
     provider: 'replicate',
-    scenes: ['text-to-video', 'image-to-video'],
+    brand: 'openai',
+    modelPath: 'sora-2',
+    credits: {
+      'text-to-video': '10',
+      'image-to-video': '12',
+    },
+    sceneValues: {
+      'text-to-video': 'openai/sora-2',
+      'image-to-video': 'openai/sora-2',
+    },
   },
   // Fal models
   {
-    value: 'fal-ai/veo3',
     label: 'Veo 3',
     provider: 'fal',
-    scenes: ['text-to-video'],
+    brand: 'google',
+    modelPath: 'veo-3',
+    credits: {
+      'text-to-video': '6',
+    },
+    sceneValues: {
+      'text-to-video': 'fal-ai/veo3',
+    },
   },
   {
-    value: 'fal-ai/wan-pro/image-to-video',
     label: 'Wan Pro',
     provider: 'fal',
-    scenes: ['image-to-video'],
+    brand: 'wan',
+    modelPath: 'wan-pro',
+    credits: {
+      'image-to-video': '8',
+    },
+    sceneValues: {
+      'image-to-video': 'fal-ai/wan-pro/image-to-video',
+    },
   },
   {
-    value: 'fal-ai/kling-video/o1/video-to-video/edit',
     label: 'Kling Video O1',
     provider: 'fal',
-    scenes: ['video-to-video'],
+    brand: 'kling',
+    modelPath: 'kling-video-o1',
+    credits: {
+      'video-to-video': '10',
+    },
+    sceneValues: {
+      'video-to-video': 'fal-ai/kling-video/o1/video-to-video/edit',
+    },
   },
   // Kie models
   {
-    value: 'sora-2-pro-image-to-video',
     label: 'Sora 2 Pro',
     provider: 'kie',
-    scenes: ['image-to-video'],
-  },
-  {
-    value: 'sora-2-pro-text-to-video',
-    label: 'Sora 2 Pro',
-    provider: 'kie',
-    scenes: ['text-to-video'],
+    brand: 'openai',
+    modelPath: 'sora-2-pro',
+    credits: {
+      'text-to-video': '12',
+      'image-to-video': '14',
+    },
+    sceneValues: {
+      'text-to-video': 'sora-2-pro-text-to-video',
+      'image-to-video': 'sora-2-pro-image-to-video',
+    },
   },
 ];
 
 const PROVIDER_OPTIONS = [
   {
-    value: 'replicate',
-    label: 'Replicate',
+    value: 'google',
+    label: 'Google',
   },
   {
-    value: 'fal',
-    label: 'Fal',
+    value: 'openai',
+    label: 'OpenAI',
   },
   {
-    value: 'kie',
-    label: 'Kie',
+    value: 'wan',
+    label: 'Wan',
+  },
+  {
+    value: 'kling',
+    label: 'Kling',
   },
 ];
 
@@ -218,7 +258,9 @@ export function VideoGenerator({
 
   const [costCredits, setCostCredits] = useState<number>(textToVideoCredits);
   const [provider, setProvider] = useState(PROVIDER_OPTIONS[0]?.value ?? '');
-  const [model, setModel] = useState(MODEL_OPTIONS[0]?.value ?? '');
+  const [model, setModel] = useState(
+    MODEL_OPTIONS[0]?.sceneValues?.['text-to-video'] ?? ''
+  );
   const [prompt, setPrompt] = useState('');
   const [referenceImageItems, setReferenceImageItems] = useState<
     ImageUploaderValue[]
@@ -247,13 +289,31 @@ export function VideoGenerator({
     setIsMounted(true);
   }, []);
 
+  // 监听模型变化，自动更新积分
+  useEffect(() => {
+    const selectedModel = MODEL_OPTIONS.find(
+      (option) => option.sceneValues?.[activeTab] === model
+    );
+
+    if (selectedModel?.credits?.[activeTab]) {
+      setCostCredits(parseInt(selectedModel.credits[activeTab]));
+    } else {
+      // 如果模型没有配置积分，使用默认值
+      if (activeTab === 'text-to-video') {
+        setCostCredits(textToVideoCredits);
+      } else if (activeTab === 'image-to-video') {
+        setCostCredits(imageToVideoCredits);
+      } else {
+        setCostCredits(videoToVideoCredits);
+      }
+    }
+  }, [model, activeTab]);
+
   useEffect(() => {
     if (pathname.includes('video-to-video')) {
       setActiveTab('video-to-video');
-      setCostCredits(4);
     } else if (pathname.includes('image-to-video')) {
       setActiveTab('image-to-video');
-      setCostCredits(4);
     }
   }, [pathname]);
 
@@ -269,11 +329,12 @@ export function VideoGenerator({
     setActiveTab(tab);
 
     const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(tab) && option.provider === provider
+      (option) =>
+        option.sceneValues?.[tab] !== undefined && option.provider === provider
     );
 
     if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+      setModel(availableModels[0].sceneValues?.[tab] ?? '');
     } else {
       setModel('');
     }
@@ -291,11 +352,13 @@ export function VideoGenerator({
     setProvider(value);
 
     const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(activeTab) && option.provider === value
+      (option) =>
+        option.sceneValues?.[activeTab] !== undefined &&
+        option.provider === value
     );
 
     if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+      setModel(availableModels[0].sceneValues?.[activeTab] ?? '');
     } else {
       setModel('');
     }
@@ -540,6 +603,14 @@ export function VideoGenerator({
         options.video_input = [referenceVideoUrl];
       }
 
+      // 根据当前选中的模型获取对应的积分消耗
+      const selectedModel = MODEL_OPTIONS.find(
+        (option) => option.sceneValues?.[activeTab] === model
+      );
+      const modelCredits = selectedModel?.credits?.[activeTab]
+        ? parseInt(selectedModel.credits[activeTab])
+        : costCredits;
+
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
         headers: {
@@ -552,6 +623,7 @@ export function VideoGenerator({
           model,
           prompt: trimmedPrompt,
           options,
+          credits: modelCredits,
         }),
       });
 
@@ -834,11 +906,21 @@ export function VideoGenerator({
                         <SelectContent>
                           {MODEL_OPTIONS.filter(
                             (option) =>
-                              option.scenes.includes(activeTab) &&
+                              option.sceneValues?.[activeTab] !== undefined &&
                               option.provider === provider
                           ).map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
+                            <SelectItem
+                              key={option.label}
+                              value={option.sceneValues?.[activeTab] ?? ''}
+                            >
+                              <span className="flex items-center gap-1">
+                                <span>{option.label}</span>
+                                {option.credits?.[activeTab] && (
+                                  <span className="text-primary">
+                                    ({option.credits[activeTab]} credits)
+                                  </span>
+                                )}
+                              </span>
                             </SelectItem>
                           ))}
                         </SelectContent>

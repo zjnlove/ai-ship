@@ -284,10 +284,6 @@ const PROVIDER_OPTIONS = [
     label: 'Grok',
   },
   {
-    value: 'topaz',
-    label: 'Topaz',
-  },
-  {
     value: 'recraft',
     label: 'Recraft',
   },
@@ -721,7 +717,7 @@ export function ImageGenerator({
         body: JSON.stringify({
           mediaType: AIMediaType.IMAGE,
           scene: isTextToImageMode ? 'text-to-image' : 'image-to-image',
-          provider, // provider: 'kie',
+          provider: selectedModel?.provider ?? provider, // 使用模型的 provider
           model,
           prompt: trimmedPrompt,
           options,

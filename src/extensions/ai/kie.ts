@@ -155,8 +155,21 @@ export class KieProvider implements AIProvider {
 
     if (params.options) {
       const options = params.options;
+      // image_input : []
       if (options.image_input && Array.isArray(options.image_input)) {
         payload.input.image_input = options.image_input;
+      }
+      // image: string
+      if (options.image && typeof options.image === 'string') {
+        payload.input.image = options.image;
+      }
+      // input_urls: []
+      if (options.input_urls && Array.isArray(options.input_urls)) {
+        payload.input.input_urls = options.input_urls;
+      }
+      // image_url: string
+      if (options.image_url && typeof options.image_url === 'string') {
+        payload.input.image_url = options.image_url;
       }
       if (options.aspect_ratio) {
         payload.input.aspect_ratio = options.aspect_ratio;
@@ -168,7 +181,7 @@ export class KieProvider implements AIProvider {
         payload.input.output_format = options.output_format;
       }
     }
-
+    console.log('kie input', apiUrl, headers, payload);
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
@@ -179,6 +192,7 @@ export class KieProvider implements AIProvider {
     }
 
     const { code, msg, data } = await resp.json();
+    console.log('kie generate image response', { code, msg, data });
 
     if (code !== 200) {
       throw new Error(`generate image failed: ${msg}`);
