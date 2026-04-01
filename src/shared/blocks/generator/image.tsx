@@ -6,12 +6,12 @@ import {
   Download,
   ImageIcon,
   Loader2,
+  Settings,
   Sparkles,
   User,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import { tr } from 'zod/v4/locales';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
@@ -27,6 +27,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/components/ui/dialog';
 import { Label } from '@/shared/components/ui/label';
 import { Progress } from '@/shared/components/ui/progress';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
@@ -41,6 +48,15 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
 import { cn } from '@/shared/lib/utils';
+
+import {
+  getOptionLabel,
+  getOptionsForType,
+  MODEL_OPTIONS,
+  PROVIDER_OPTIONS,
+  type ModelOption,
+  type OptionType,
+} from './image-config';
 
 interface ImageGeneratorProps {
   allowMultipleImages?: boolean;
@@ -73,257 +89,6 @@ type ImageGeneratorTab = 'text-to-image' | 'image-to-image';
 const POLL_INTERVAL = 5000;
 const GENERATION_TIMEOUT = 180000;
 const MAX_PROMPT_LENGTH = 2000;
-
-const MODEL_OPTIONS = [
-  {
-    label: 'Qwen Image 2',
-    provider: 'kie',
-    brand: 'qwen',
-    modelPath: 'qwen-image-2',
-    credits: {
-      'text-to-image': '6',
-      'image-to-image': '8',
-    },
-    sceneValues: {
-      'text-to-image': 'qwen2/text-to-image',
-      'image-to-image': 'qwen2/image-edit',
-    },
-    imageField: 'image_url',
-    defaultOptions: {
-      image_size: '16:9',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'Qwen Image',
-    provider: 'kie',
-    brand: 'qwen',
-    modelPath: 'qwen-image',
-    credits: {
-      'text-to-image': '4',
-      'image-to-image': '6',
-    },
-    sceneValues: {
-      'text-to-image': 'qwen/text-to-image',
-      'image-to-image': 'qwen/image-to-image',
-    },
-    imageField: 'image_url',
-    defaultOptions: {
-      image_size: '16:9',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'Nano Banana 2',
-    provider: 'kie',
-    brand: 'google',
-    modelPath: 'nano-banana-2',
-    credits: {
-      'text-to-image': '10',
-      'image-to-image': '12',
-    },
-    sceneValues: {
-      'text-to-image': 'nano-banana-2',
-      'image-to-image': 'nano-banana-2',
-    },
-    imageField: 'image_input',
-    defaultOptions: {
-      aspect_ratio: 'auto',
-      resolution: '1K',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'Nano Banana Pro',
-    provider: 'kie',
-    brand: 'google',
-    modelPath: 'nano-banana-pro',
-    credits: {
-      'text-to-image': '12',
-      'image-to-image': '14',
-    },
-    sceneValues: {
-      'text-to-image': 'nano-banana-pro',
-      'image-to-image': 'nano-banana-pro',
-    },
-    imageField: 'image_input',
-    defaultOptions: {
-      aspect_ratio: 'auto',
-      resolution: '1K',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'Nano Banana',
-    provider: 'kie',
-    brand: 'google',
-    modelPath: 'nano-banana',
-    credits: {
-      'text-to-image': '4',
-      'image-to-image': '6',
-    },
-    sceneValues: {
-      'text-to-image': 'google/nano-banana',
-      'image-to-image': 'google/nano-banana-edit',
-    },
-    imageField: 'image_urls',
-    defaultOptions: {
-      image_size: '1:1',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'Imagen 4',
-    provider: 'kie',
-    brand: 'google',
-    modelPath: 'imagen-4',
-    credits: {
-      'text-to-image': '8',
-    },
-    sceneValues: {
-      'text-to-image': 'google/imagen4',
-    },
-    imageField: 'image_input',
-    defaultOptions: {
-      aspect_ratio: '1:1',
-      output_format: 'png',
-    },
-  },
-  {
-    label: 'gpt-image-1.5',
-    provider: 'kie',
-    brand: 'openai',
-    modelPath: 'gpt-image-1-5',
-    credits: {
-      'text-to-image': '4',
-      'image-to-image': '6',
-    },
-    sceneValues: {
-      'text-to-image': 'gpt-image/1.5-text-to-image',
-      'image-to-image': 'gpt-image/1.5-image-to-image',
-    },
-    imageField: 'input_urls',
-    defaultOptions: {
-      aspect_ratio: '1:1',
-      quality: 'medium',
-    },
-  },
-  {
-    label: 'FLUX.2 Flex',
-    provider: 'kie',
-    brand: 'flux',
-    modelPath: 'flux-2-flex',
-    credits: {
-      'text-to-image': '14',
-      'image-to-image': '16',
-    },
-    sceneValues: {
-      'text-to-image': 'flux-2/flex-text-to-image',
-      'image-to-image': 'flux-2/flex-image-to-image',
-    },
-    imageField: 'input_urls',
-    defaultOptions: {
-      aspect_ratio: '1:1',
-      resolution: '1K',
-      nsfw_checker: true,
-    },
-  },
-  {
-    label: 'FLUX.2 Pro',
-    provider: 'kie',
-    brand: 'flux',
-    modelPath: 'flux-2-pro',
-    credits: {
-      'text-to-image': '6',
-      'image-to-image': '8',
-    },
-    sceneValues: {
-      'text-to-image': 'flux-2/pro-text-to-image',
-      'image-to-image': 'flux-2/pro-image-to-image',
-    },
-    imageField: 'input_urls',
-    defaultOptions: {
-      aspect_ratio: '1:1',
-      resolution: '1K',
-      nsfw_checker: true,
-    },
-  },
-  {
-    label: 'Grok Imagine',
-    provider: 'kie',
-    brand: 'grok',
-    modelPath: 'grok-imagine',
-    credits: {
-      'text-to-image': '4',
-      'image-to-image': '6',
-    },
-    sceneValues: {
-      'text-to-image': 'grok-imagine/text-to-image',
-      'image-to-image': 'grok-imagine/image-to-image',
-    },
-    imageField: 'image_input',
-    defaultOptions: {},
-  },
-  {
-    label: 'Recraft Remove Background',
-    provider: 'kie',
-    brand: 'recraft',
-    modelPath: 'recraft-remove-background',
-    credits: {
-      'image-to-image': '2',
-    },
-    sceneValues: {
-      'image-to-image': 'recraft/remove-background',
-    },
-    imageField: 'image',
-    defaultOptions: {
-      aspect_ratio: 'auto',
-    },
-  },
-  {
-    label: 'Recraft Crisp Upscale',
-    provider: 'kie',
-    brand: 'recraft',
-    modelPath: 'recraft-crisp-upscale',
-    credits: {
-      'image-to-image': '2',
-    },
-    sceneValues: {
-      'image-to-image': 'recraft/crisp-upscale',
-    },
-    imageField: 'image',
-    defaultOptions: {
-      aspect_ratio: 'auto',
-    },
-  },
-];
-
-const PROVIDER_OPTIONS = [
-  {
-    value: 'qwen',
-    label: 'Qwen',
-  },
-  {
-    value: 'google',
-    label: 'Google',
-  },
-  {
-    value: 'openai',
-    label: 'OpenAI',
-  },
-  {
-    value: 'flux',
-    label: 'Flux',
-  },
-  {
-    value: 'grok',
-    label: 'Grok',
-  },
-  {
-    value: 'recraft',
-    label: 'Recraft',
-  },
-];
 
 function parseTaskResult(taskResult: string | null): any {
   if (!taskResult) {
@@ -414,6 +179,12 @@ export function ImageGenerator({
   );
   const [isMounted, setIsMounted] = useState(false);
 
+  // 高级设置状态
+  const [imageSize, setImageSize] = useState<string>('');
+  const [outputFormat, setOutputFormat] = useState<string>('');
+  const [quality, setQuality] = useState<string>('');
+  const [resolution, setResolution] = useState<string>('');
+
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
     useAppContext();
 
@@ -423,23 +194,35 @@ export function ImageGenerator({
     setIsMounted(true);
   }, []);
 
-  // 监听模型变化，自动更新积分
-  useEffect(() => {
-    const selectedModel = MODEL_OPTIONS.find(
+  // 获取当前模型配置
+  const currentModelConfig = useMemo(() => {
+    return MODEL_OPTIONS.find(
       (option) => option.sceneValues?.[activeTab] === model
     );
+  }, [model, activeTab]);
 
-    if (selectedModel?.credits?.[activeTab]) {
-      setCostCredits(parseInt(selectedModel.credits[activeTab]));
+  // 监听模型变化，自动更新积分和高级选项默认值
+  useEffect(() => {
+    if (currentModelConfig?.credits?.[activeTab]) {
+      setCostCredits(parseInt(currentModelConfig.credits[activeTab]));
     } else {
-      // 如果模型没有配置积分，使用默认值
       if (activeTab === 'text-to-image') {
         setCostCredits(2);
       } else {
         setCostCredits(4);
       }
     }
-  }, [model, activeTab]);
+
+    // 重置高级选项为模型默认值
+    if (currentModelConfig?.defaultOptions) {
+      const defaults = currentModelConfig.defaultOptions;
+      if (defaults.image_size) setImageSize(defaults.image_size);
+      if (defaults.aspect_ratio) setImageSize(defaults.aspect_ratio);
+      if (defaults.output_format) setOutputFormat(defaults.output_format);
+      if (defaults.quality) setQuality(defaults.quality);
+      if (defaults.resolution) setResolution(defaults.resolution);
+    }
+  }, [currentModelConfig, activeTab]);
 
   useEffect(() => {
     if (pathname.includes('image-to-image')) {
@@ -740,6 +523,23 @@ export function ImageGenerator({
         ...selectedModel?.defaultOptions,
       };
 
+      // 合并用户选择的高级选项
+      if (selectedModel?.advancedOptions?.imageSizeField) {
+        const imageSizeField = selectedModel.advancedOptions.imageSizeField;
+        if (imageSize) {
+          options[imageSizeField] = imageSize;
+        }
+      }
+      if (outputFormat) {
+        options.output_format = outputFormat;
+      }
+      if (quality) {
+        options.quality = quality;
+      }
+      if (resolution) {
+        options.resolution = resolution;
+      }
+
       // 动态设置图片字段（根据模型配置的 imageField）
       if (!isTextToImageMode && referenceImageUrls.length > 0) {
         const imageField = selectedModel?.imageField || 'image_input';
@@ -1012,7 +812,7 @@ export function ImageGenerator({
                     </TabsList>
                   </Tabs>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-[1fr_2fr] gap-4">
                     <div className="space-y-2">
                       <Label>{t('form.provider')}</Label>
                       <Select
@@ -1036,32 +836,107 @@ export function ImageGenerator({
 
                     <div className="space-y-2">
                       <Label>{t('form.model')}</Label>
-                      <Select value={model} onValueChange={setModel}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder={t('form.select_model')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {MODEL_OPTIONS.filter(
-                            (option) =>
-                              option.sceneValues[activeTab] !== undefined &&
-                              option.brand === provider
-                          ).map((option) => (
-                            <SelectItem
-                              key={option.label}
-                              value={option.sceneValues[activeTab] ?? ''}
-                            >
-                              <span className="flex items-center gap-1">
-                                <span>{option.label}</span>
-                                {option.credits?.[activeTab] && (
-                                  <span className="text-primary">
-                                    ({option.credits[activeTab]} credits)
-                                  </span>
+                      <div className="flex gap-2">
+                        <Select value={model} onValueChange={setModel}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t('form.select_model')} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {MODEL_OPTIONS.filter(
+                              (option) =>
+                                option.sceneValues[activeTab] !== undefined &&
+                                option.brand === provider
+                            ).map((option) => (
+                              <SelectItem
+                                key={option.label}
+                                value={option.sceneValues[activeTab] ?? ''}
+                              >
+                                <span className="flex items-center gap-1">
+                                  <span>{option.label}</span>
+                                  {option.credits?.[activeTab] && (
+                                    <span className="text-primary">
+                                      ({option.credits[activeTab]} credits)
+                                    </span>
+                                  )}
+                                </span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        {(currentModelConfig?.advancedOptions?.supportedTypes
+                          ?.length ?? 0) > 0 && (
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" size="icon">
+                                <Settings className="h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Advanced Settings</DialogTitle>
+                              </DialogHeader>
+                              <div className="mt-6 grid grid-cols-2 gap-4">
+                                {currentModelConfig?.advancedOptions?.supportedTypes?.map(
+                                  (optionType) => (
+                                    <div key={optionType} className="space-y-2">
+                                      <Label>
+                                        {getOptionLabel(optionType)}
+                                      </Label>
+                                      <Select
+                                        value={
+                                          optionType === 'imageSize' ||
+                                          optionType === 'aspectRatio'
+                                            ? imageSize
+                                            : optionType === 'outputFormat'
+                                              ? outputFormat
+                                              : optionType === 'quality'
+                                                ? quality
+                                                : resolution
+                                        }
+                                        onValueChange={(value) => {
+                                          if (
+                                            optionType === 'imageSize' ||
+                                            optionType === 'aspectRatio'
+                                          ) {
+                                            setImageSize(value);
+                                          } else if (
+                                            optionType === 'outputFormat'
+                                          ) {
+                                            setOutputFormat(value);
+                                          } else if (optionType === 'quality') {
+                                            setQuality(value);
+                                          } else if (
+                                            optionType === 'resolution'
+                                          ) {
+                                            setResolution(value);
+                                          }
+                                        }}
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {getOptionsForType(optionType).map(
+                                            (opt) => (
+                                              <SelectItem
+                                                key={opt.value}
+                                                value={opt.value}
+                                              >
+                                                {opt.label}
+                                              </SelectItem>
+                                            )
+                                          )}
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                  )
                                 )}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        )}
+                      </div>
                     </div>
                   </div>
 

@@ -191,6 +191,7 @@ export class KieProvider implements AIProvider {
       }
     }
     console.log('kie input', apiUrl, headers, payload);
+    throw new Error('kie generate image is disabled for testing');
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
