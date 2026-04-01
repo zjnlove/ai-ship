@@ -899,7 +899,7 @@ export function ImageGenerator({
                               <DialogHeader>
                                 <DialogTitle>Advanced Settings</DialogTitle>
                               </DialogHeader>
-                              <div className="mt-6 grid grid-cols-2 gap-4">
+                              <div className="mt-6 grid grid-cols-3 gap-4">
                                 {currentModelConfig?.advancedOptions?.supportedTypes?.map(
                                   (optionType) => (
                                     <div key={optionType} className="space-y-2">
