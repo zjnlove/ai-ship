@@ -1,3 +1,5 @@
+import { c } from 'node_modules/fumadocs-mdx/dist/define-BH4bnHQl';
+
 import { envConfigs } from '@/config';
 import { AIMediaType } from '@/extensions/ai';
 import { getUuid } from '@/shared/lib/hash';
@@ -9,11 +11,15 @@ import { getAIService } from '@/shared/services/ai';
 
 export async function POST(request: Request) {
   try {
-    let { provider, mediaType, model, prompt, options, scene } =
+    let { provider, mediaType, model, prompt, options, scene, credits } =
       await request.json();
 
     if (!provider || !mediaType || !model) {
       throw new Error('invalid params');
+    }
+
+    if (!credits) {
+      throw new Error('cost credits is required');
     }
 
     if (!prompt && !options) {
@@ -39,35 +45,37 @@ export async function POST(request: Request) {
       throw new Error('no auth, please sign in');
     }
 
-    // todo: get cost credits from settings
-    let costCredits = 2;
-
-    if (mediaType === AIMediaType.IMAGE) {
-      // generate image
-      if (scene === 'image-to-image') {
-        costCredits = 4;
-      } else if (scene === 'text-to-image') {
-        costCredits = 2;
-      } else {
-        throw new Error('invalid scene');
-      }
-    } else if (mediaType === AIMediaType.VIDEO) {
-      // generate video
-      if (scene === 'text-to-video') {
-        costCredits = 6;
-      } else if (scene === 'image-to-video') {
-        costCredits = 8;
-      } else if (scene === 'video-to-video') {
+    // 使用前端传来的积分值，如果没有则使用默认值
+    let costCredits = credits || 2;
+    // 如果前端没有传积分，使用默认逻辑
+    if (!credits) {
+      if (mediaType === AIMediaType.IMAGE) {
+        // generate imag
+        if (scene === 'image-to-image') {
+          costCredits = 4;
+        } else if (scene === 'text-to-image') {
+          costCredits = 2;
+        } else {
+          throw new Error('invalid scene');
+        }
+      } else if (mediaType === AIMediaType.VIDEO) {
+        // generate video
+        if (scene === 'text-to-video') {
+          costCredits = 6;
+        } else if (scene === 'image-to-video') {
+          costCredits = 8;
+        } else if (scene === 'video-to-video') {
+          costCredits = 10;
+        } else {
+          throw new Error('invalid scene');
+        }
+      } else if (mediaType === AIMediaType.MUSIC) {
+        // generate music
         costCredits = 10;
+        scene = 'text-to-music';
       } else {
-        throw new Error('invalid scene');
+        throw new Error('invalid mediaType');
       }
-    } else if (mediaType === AIMediaType.MUSIC) {
-      // generate music
-      costCredits = 10;
-      scene = 'text-to-music';
-    } else {
-      throw new Error('invalid mediaType');
     }
 
     // check credits

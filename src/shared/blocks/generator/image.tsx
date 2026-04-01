@@ -687,6 +687,14 @@ export function ImageGenerator({
         options.image_input = referenceImageUrls;
       }
 
+      // 根据当前选中的模型获取对应的积分消耗
+      const selectedModel = MODEL_OPTIONS.find(
+        (option) => option.sceneValues[activeTab] === model
+      );
+      const modelCredits = selectedModel?.credits?.[activeTab]
+        ? parseInt(selectedModel.credits[activeTab])
+        : costCredits;
+
       // zjnlove 2024-10-16: currently we only use kie provider for image generation, so we directly call our backend api. In the future, if we support more providers for image generation, we may need to call different endpoints or add provider field in the request body.
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
@@ -700,6 +708,7 @@ export function ImageGenerator({
           model,
           prompt: trimmedPrompt,
           options,
+          credits: modelCredits,
         }),
       });
 
