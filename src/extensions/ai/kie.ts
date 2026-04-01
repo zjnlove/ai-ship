@@ -174,11 +174,20 @@ export class KieProvider implements AIProvider {
       if (options.aspect_ratio) {
         payload.input.aspect_ratio = options.aspect_ratio;
       }
+      if (options.image_size) {
+        payload.input.image_size = options.image_size;
+      }
       if (options.resolution) {
         payload.input.resolution = options.resolution;
       }
       if (options.output_format) {
         payload.input.output_format = options.output_format;
+      }
+      if (options.quality) {
+        payload.input.quality = options.quality;
+      }
+      if (options.nsfw_checker !== undefined) {
+        payload.input.nsfw_checker = options.nsfw_checker;
       }
     }
     console.log('kie input', apiUrl, headers, payload);

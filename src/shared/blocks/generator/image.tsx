@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+import { tr } from 'zod/v4/locales';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
@@ -87,6 +88,11 @@ const MODEL_OPTIONS = [
       'text-to-image': 'qwen2/text-to-image',
       'image-to-image': 'qwen2/image-edit',
     },
+    imageField: 'image_url',
+    defaultOptions: {
+      image_size: '16:9',
+      output_format: 'png',
+    },
   },
   {
     label: 'Qwen Image',
@@ -101,17 +107,10 @@ const MODEL_OPTIONS = [
       'text-to-image': 'qwen/text-to-image',
       'image-to-image': 'qwen/image-to-image',
     },
-  },
-  {
-    label: 'Qwen Image Edit',
-    provider: 'kie',
-    brand: 'qwen',
-    modelPath: 'qwen-image-edit',
-    credits: {
-      'image-to-image': '6',
-    },
-    sceneValues: {
-      'image-to-image': 'qwen/image-edit',
+    imageField: 'image_url',
+    defaultOptions: {
+      image_size: '16:9',
+      output_format: 'png',
     },
   },
   {
@@ -127,6 +126,12 @@ const MODEL_OPTIONS = [
       'text-to-image': 'nano-banana-2',
       'image-to-image': 'nano-banana-2',
     },
+    imageField: 'image_input',
+    defaultOptions: {
+      aspect_ratio: 'auto',
+      resolution: '1K',
+      output_format: 'png',
+    },
   },
   {
     label: 'Nano Banana Pro',
@@ -140,6 +145,12 @@ const MODEL_OPTIONS = [
     sceneValues: {
       'text-to-image': 'nano-banana-pro',
       'image-to-image': 'nano-banana-pro',
+    },
+    imageField: 'image_input',
+    defaultOptions: {
+      aspect_ratio: 'auto',
+      resolution: '1K',
+      output_format: 'png',
     },
   },
   {
@@ -155,6 +166,11 @@ const MODEL_OPTIONS = [
       'text-to-image': 'google/nano-banana',
       'image-to-image': 'google/nano-banana-edit',
     },
+    imageField: 'image_urls',
+    defaultOptions: {
+      image_size: '1:1',
+      output_format: 'png',
+    },
   },
   {
     label: 'Imagen 4',
@@ -166,6 +182,11 @@ const MODEL_OPTIONS = [
     },
     sceneValues: {
       'text-to-image': 'google/imagen4',
+    },
+    imageField: 'image_input',
+    defaultOptions: {
+      aspect_ratio: '1:1',
+      output_format: 'png',
     },
   },
   {
@@ -181,6 +202,11 @@ const MODEL_OPTIONS = [
       'text-to-image': 'gpt-image/1.5-text-to-image',
       'image-to-image': 'gpt-image/1.5-image-to-image',
     },
+    imageField: 'input_urls',
+    defaultOptions: {
+      aspect_ratio: '1:1',
+      quality: 'medium',
+    },
   },
   {
     label: 'FLUX.2 Flex',
@@ -194,6 +220,12 @@ const MODEL_OPTIONS = [
     sceneValues: {
       'text-to-image': 'flux-2/flex-text-to-image',
       'image-to-image': 'flux-2/flex-image-to-image',
+    },
+    imageField: 'input_urls',
+    defaultOptions: {
+      aspect_ratio: '1:1',
+      resolution: '1K',
+      nsfw_checker: true,
     },
   },
   {
@@ -209,6 +241,12 @@ const MODEL_OPTIONS = [
       'text-to-image': 'flux-2/pro-text-to-image',
       'image-to-image': 'flux-2/pro-image-to-image',
     },
+    imageField: 'input_urls',
+    defaultOptions: {
+      aspect_ratio: '1:1',
+      resolution: '1K',
+      nsfw_checker: true,
+    },
   },
   {
     label: 'Grok Imagine',
@@ -223,18 +261,8 @@ const MODEL_OPTIONS = [
       'text-to-image': 'grok-imagine/text-to-image',
       'image-to-image': 'grok-imagine/image-to-image',
     },
-  },
-  {
-    label: 'Topaz Image Upscale',
-    provider: 'kie',
-    brand: 'topaz',
-    modelPath: 'topaz-image-upscale',
-    credits: {
-      'image-to-image': '20',
-    },
-    sceneValues: {
-      'image-to-image': 'topaz-image-upscale',
-    },
+    imageField: 'image_input',
+    defaultOptions: {},
   },
   {
     label: 'Recraft Remove Background',
@@ -247,6 +275,10 @@ const MODEL_OPTIONS = [
     sceneValues: {
       'image-to-image': 'recraft/remove-background',
     },
+    imageField: 'image',
+    defaultOptions: {
+      aspect_ratio: 'auto',
+    },
   },
   {
     label: 'Recraft Crisp Upscale',
@@ -258,6 +290,10 @@ const MODEL_OPTIONS = [
     },
     sceneValues: {
       'image-to-image': 'recraft/crisp-upscale',
+    },
+    imageField: 'image',
+    defaultOptions: {
+      aspect_ratio: 'auto',
     },
   },
 ];
@@ -694,16 +730,23 @@ export function ImageGenerator({
     setGenerationStartTime(Date.now());
 
     try {
-      const options: any = {};
-
-      if (!isTextToImageMode) {
-        options.image_input = referenceImageUrls;
-      }
-
-      // 根据当前选中的模型获取对应的积分消耗
+      // 根据当前选中的模型获取对应的配置
       const selectedModel = MODEL_OPTIONS.find(
         (option) => option.sceneValues[activeTab] === model
       );
+
+      // 构建 options：先合并模型的默认参数
+      const options: any = {
+        ...selectedModel?.defaultOptions,
+      };
+
+      // 动态设置图片字段（根据模型配置的 imageField）
+      if (!isTextToImageMode && referenceImageUrls.length > 0) {
+        const imageField = selectedModel?.imageField || 'image_input';
+        options[imageField] = referenceImageUrls;
+      }
+
+      // 获取积分消耗
       const modelCredits = selectedModel?.credits?.[activeTab]
         ? parseInt(selectedModel.credits[activeTab])
         : costCredits;
