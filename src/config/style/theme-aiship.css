@@ -294,7 +294,7 @@
 }
 
 .animate-scroll-thumbnails {
-  animation: scroll-thumbnails 80s linear infinite;
+  animation: scroll-thumbnails 60s linear infinite;
 }
 
 .animate-gradient-text {

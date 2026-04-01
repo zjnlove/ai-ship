@@ -15,7 +15,8 @@
     "sections": {
       "hero": {
         "id": "hero",
-        "title": "What do you want to create?",
+        "title": "What do you want to create? Marble AI",
+        "highlight_text": "Marble AI",
         "description": "Your all-in-one AI platform for generating stunning images, videos, and music.<br/>Create professional content with cutting-edge AI technology.",
         "buttons": [
           {
