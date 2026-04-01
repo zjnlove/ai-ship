@@ -633,23 +633,11 @@ export function Hero({
     <section
       id={section.id}
       className={cn(
-        `relative overflow-hidden pt-38 pb-10`,
+        `relative overflow-hidden pt-38 pb-24 md:pt-42 md:pb-32`,
         section.className,
         className
       )}
     >
-      {/* 粒子背景 */}
-      {/* <ParticleBackground /> */}
-
-      {/* 弧线布局媒体画廊 */}
-      {/* <ArcMediaGallery media={mediaItems} /> */}
-
-      {/* 渐变背景光晕 */}
-      {/* <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-green-500/20 blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/2 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
-      </div> */}
       {section.announcement && (
         <FadeInDown delay={0}>
           <Link
@@ -817,7 +805,7 @@ export function Hero({
 
       {/* 底部循环滚动卡片画廊 */}
       {mediaItems.length > 0 && (
-        <div className="relative z-20 mt-8 md:mt-8">
+        <div className="relative z-20 mt-24 md:mt-34">
           <FadeInUp delay={1000}>
             <InfiniteScrollGallery items={mediaItems} />
           </FadeInUp>

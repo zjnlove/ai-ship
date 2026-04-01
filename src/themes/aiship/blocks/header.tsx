@@ -92,7 +92,7 @@ export function Header({ header }: { header: HeaderType }) {
                       target={item.target || '_self'}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        'relative',
+                        'relative text-black dark:text-white',
                         (item.is_active ||
                           pathname.endsWith(item.url as string)) &&
                           'bg-muted/40 text-muted-foreground'
@@ -116,7 +116,7 @@ export function Header({ header }: { header: HeaderType }) {
             // Link with children - use NavigationMenu
             return (
               <NavigationMenuItem key={idx}>
-                <NavigationMenuTrigger className="group relative [&_svg]:!transition-transform [&_svg]:!duration-200 [&>svg:last-child]:group-data-[state=open]:rotate-180">
+                <NavigationMenuTrigger className="group relative text-black dark:text-white [&_svg]:!transition-transform [&_svg]:!duration-200 [&>svg:last-child]:group-data-[state=open]:rotate-180">
                   {item.icon && (
                     <SmartIcon name={item.icon as string} className="h-4 w-4" />
                   )}
@@ -444,13 +444,12 @@ export function Header({ header }: { header: HeaderType }) {
       >
         <div
           className={cn(
-            'border-foreground/10 absolute inset-x-0 top-0 z-50 h-18 ring-1 ring-transparent transition-all duration-300',
-            'in-data-scrolled:border-foreground/5 in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur',
-            'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-14 max-lg:in-data-[state=active]:backdrop-blur'
+            'bg-background absolute inset-x-4 top-4 z-50 h-16 rounded-full shadow-md ring-1 ring-transparent transition-all duration-300 max-lg:inset-x-0 max-lg:top-0 max-lg:rounded-none max-lg:shadow-none',
+            'max-lg:in-data-[state=active]:bg-background/75 max-lg:min-h-16 max-lg:in-data-[state=active]:backdrop-blur'
           )}
         >
-          <div className="container">
-            <div className="relative flex items-center justify-between pt-5">
+          <div className="container max-lg:px-0">
+            <div className="relative flex items-center justify-between pt-4 max-lg:pt-5">
               {/* Brand Logo */}
               <div
                 className={cn(
