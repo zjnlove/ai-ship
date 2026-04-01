@@ -126,26 +126,6 @@
               "target": "_blank"
             },
             {
-              "title": "Ideogram V3",
-              "url": "/image-models/ideogram-v3",
-              "target": "_blank"
-            },
-            {
-              "title": "Ideogram V3 Reframe",
-              "url": "/image-models/ideogram-v3-reframe",
-              "target": "_blank"
-            },
-            {
-              "title": "Ideogram Character",
-              "url": "/image-models/ideogram-character",
-              "target": "_blank"
-            },
-            {
-              "title": "Topaz Image Upscale",
-              "url": "/image-models/topaz-image-upscale",
-              "target": "_blank"
-            },
-            {
               "title": "Recraft Remove Background",
               "url": "/image-models/recraft-remove-background",
               "target": "_blank"

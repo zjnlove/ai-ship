@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "Flux Kontext - AI Image Editor | Marble AI",
-    "description": "Flux Kontext by Black Forest Labs. Advanced image editing API that transforms photos with simple text commands, delivering professional results. Supports both text-to-image and image-to-image."
+    "title": "FLUX.2 Flet - AI Image Editor | Marble AI",
+    "description": "FLUX.2 Flet by Black Forest Labs. Advanced image editing API that transforms photos with simple text commands, delivering professional results. Supports both text-to-image and image-to-image."
   },
   "page": {
     "sections": {
       "hero": {
-        "title": "Flux Kontext",
-        "highlight_text": "Flux Kontext",
+        "title": "FLUX.2 Flet",
+        "highlight_text": "FLUX.2 Flet",
         "description": "Black Forest Labs' cutting-edge image editing API. Transform photos with simple text commands, delivering professional results that save time and boost creativity.",
         "show_bg": false,
         "className": "hero-custom"
@@ -15,13 +15,13 @@
       "introduce": {
         "block": "features-list",
         "id": "introduce",
-        "title": "About Flux Kontext",
-        "highlight_text": "Flux Kontext",
+        "title": "About FLUX.2 Flet",
+        "highlight_text": "FLUX.2 Flet",
         "label": "Model Overview",
-        "description": "FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands for professional results.",
+        "description": "FLUX.2 Flet empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands for professional results.",
         "image": {
           "src": "/imgs/models/image/flux-kontext.png",
-          "alt": "Flux Kontext"
+          "alt": "FLUX.2 Flet"
         },
         "items": [
           {
@@ -51,7 +51,7 @@
         "id": "features",
         "title": "Key Features",
         "highlight_text": "Features",
-        "description": "Discover what makes Flux Kontext ideal for efficient image innovation.",
+        "description": "Discover what makes FLUX.2 Flet ideal for efficient image innovation.",
         "items": [
           {
             "title": "Dual Generation Modes",
@@ -89,7 +89,7 @@
         "id": "features",
         "title": "Use Cases",
         "highlight_text": "Use Cases",
-        "description": "Explore the diverse applications of Flux Kontext.",
+        "description": "Explore the diverse applications of FLUX.2 Flet.",
         "items": [
           {
             "title": "E-commerce Optimization",
@@ -127,38 +127,38 @@
       "faq": {
         "title": "Frequently Asked Questions",
         "highlight_text": "FAQ",
-        "description": "Common questions about Flux Kontext.",
+        "description": "Common questions about FLUX.2 Flet.",
         "items": [
           {
-            "title": "What is Flux Kontext?",
-            "description": "Flux Kontext is Black Forest Labs' advanced image editing API that transforms photos with simple text commands for professional results."
+            "title": "What is FLUX.2 Flet?",
+            "description": "FLUX.2 Flet is Black Forest Labs' advanced image editing API that transforms photos with simple text commands for professional results."
           },
           {
             "title": "What generation modes does it support?",
-            "description": "Flux Kontext supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+            "description": "FLUX.2 Flet supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
           },
           {
             "title": "How does text-command editing work?",
-            "description": "Simply describe the changes you want in text, and Flux Kontext applies professional-quality transformations to your images."
+            "description": "Simply describe the changes you want in text, and FLUX.2 Flet applies professional-quality transformations to your images."
           },
           {
             "title": "Is it good for e-commerce?",
-            "description": "Yes! Flux Kontext is optimized for e-commerce, helping optimize product listings with quick, professional edits."
+            "description": "Yes! FLUX.2 Flet is optimized for e-commerce, helping optimize product listings with quick, professional edits."
           },
           {
             "title": "Can I use it commercially?",
-            "description": "Yes! All images generated or edited with Flux Kontext through Marble AI come with full commercial rights."
+            "description": "Yes! All images generated or edited with FLUX.2 Flet through Marble AI come with full commercial rights."
           },
           {
             "title": "How fast is the editing?",
-            "description": "Flux Kontext delivers quick turnaround times, making it ideal for efficient workflow integration."
+            "description": "FLUX.2 Flet delivers quick turnaround times, making it ideal for efficient workflow integration."
           }
         ],
         "className": "bg-muted/80"
       },
       "cta": {
-        "title": "Ready to Try Flux Kontext?",
-        "highlight_text": "Flux Kontext",
+        "title": "Ready to Try FLUX.2 Flet?",
+        "highlight_text": "FLUX.2 Flet",
         "description": "Experience Black Forest Labs' cutting-edge image editing. Transform photos with simple text commands.",
         "buttons": [
           {

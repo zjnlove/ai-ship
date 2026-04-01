@@ -225,44 +225,6 @@ const MODEL_OPTIONS = [
     },
   },
   {
-    label: 'Ideogram V3',
-    provider: 'kie',
-    brand: 'ideogram',
-    modelPath: 'ideogram-v3',
-    credits: {
-      'text-to-image': '10',
-      'image-to-image': '20',
-    },
-    sceneValues: {
-      'text-to-image': 'ideogram-v3',
-      'image-to-image': 'ideogram-v3',
-    },
-  },
-  {
-    label: 'Ideogram V3 Reframe Image',
-    provider: 'kie',
-    brand: 'ideogram',
-    modelPath: 'ideogram-v3-reframe',
-    credits: {
-      'image-to-image': '20',
-    },
-    sceneValues: {
-      'image-to-image': 'ideogram-v3-reframe',
-    },
-  },
-  {
-    label: 'Ideogram Character',
-    provider: 'kie',
-    brand: 'ideogram',
-    modelPath: 'ideogram-character',
-    credits: {
-      'image-to-image': '20',
-    },
-    sceneValues: {
-      'image-to-image': 'ideogram-character',
-    },
-  },
-  {
     label: 'Topaz Image Upscale',
     provider: 'kie',
     brand: 'topaz',
@@ -280,10 +242,10 @@ const MODEL_OPTIONS = [
     brand: 'recraft',
     modelPath: 'recraft-remove-background',
     credits: {
-      'image-to-image': '20',
+      'image-to-image': '2',
     },
     sceneValues: {
-      'image-to-image': 'recraft-remove-background',
+      'image-to-image': 'recraft/remove-background',
     },
   },
   {
@@ -292,10 +254,10 @@ const MODEL_OPTIONS = [
     brand: 'recraft',
     modelPath: 'recraft-crisp-upscale',
     credits: {
-      'image-to-image': '20',
+      'image-to-image': '2',
     },
     sceneValues: {
-      'image-to-image': 'recraft-crisp-upscale',
+      'image-to-image': 'recraft/crisp-upscale',
     },
   },
 ];
@@ -320,10 +282,6 @@ const PROVIDER_OPTIONS = [
   {
     value: 'grok',
     label: 'Grok',
-  },
-  {
-    value: 'ideogram',
-    label: 'Ideogram',
   },
   {
     value: 'topaz',

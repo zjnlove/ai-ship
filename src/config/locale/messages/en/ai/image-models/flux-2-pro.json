@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "FLUX.2 - AI Image Generator & Editor | Marble AI",
-    "description": "FLUX.2 by Black Forest Labs. Advanced image generation model delivering photoreal detail, strong multi-reference consistency, and accurate text rendering. Supports both text-to-image and image-to-image."
+    "title": "FLUX.2 Pro - AI Image Generator & Editor | Marble AI",
+    "description": "FLUX.2 Pro by Black Forest Labs. Advanced image generation model delivering photoreal detail, strong multi-reference consistency, and accurate text rendering. Supports both text-to-image and image-to-image."
   },
   "page": {
     "sections": {
       "hero": {
-        "title": "FLUX.2",
-        "highlight_text": "FLUX.2",
+        "title": "FLUX.2 Pro",
+        "highlight_text": "FLUX.2 Pro",
         "description": "Black Forest Labs' advanced image generation model. Delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
         "show_bg": false,
         "className": "hero-custom"
@@ -15,13 +15,13 @@
       "introduce": {
         "block": "features-list",
         "id": "introduce",
-        "title": "About FLUX.2",
-        "highlight_text": "FLUX.2",
+        "title": "About FLUX.2 Pro",
+        "highlight_text": "FLUX.2 Pro",
         "label": "Model Overview",
         "description": "Flux 2 is Black Forest Labs' advanced image generation model that delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
         "image": {
           "src": "/imgs/models/image/flux-2.png",
-          "alt": "FLUX.2"
+          "alt": "FLUX.2 Pro"
         },
         "items": [
           {
@@ -51,7 +51,7 @@
         "id": "features",
         "title": "Key Features",
         "highlight_text": "Features",
-        "description": "Discover what makes FLUX.2 a leading image generation model.",
+        "description": "Discover what makes FLUX.2 Pro a leading image generation model.",
         "items": [
           {
             "title": "Dual Generation Modes",
@@ -89,7 +89,7 @@
         "id": "features",
         "title": "Use Cases",
         "highlight_text": "Use Cases",
-        "description": "Explore the diverse applications of FLUX.2.",
+        "description": "Explore the diverse applications of FLUX.2 Pro.",
         "items": [
           {
             "title": "Concept Art",
@@ -127,38 +127,38 @@
       "faq": {
         "title": "Frequently Asked Questions",
         "highlight_text": "FAQ",
-        "description": "Common questions about FLUX.2.",
+        "description": "Common questions about FLUX.2 Pro.",
         "items": [
           {
-            "title": "What is FLUX.2?",
-            "description": "FLUX.2 is Black Forest Labs' advanced image generation model known for photoreal detail, multi-reference consistency, and accurate text rendering."
+            "title": "What is FLUX.2 Pro?",
+            "description": "FLUX.2 Pro is Black Forest Labs' advanced image generation model known for photoreal detail, multi-reference consistency, and accurate text rendering."
           },
           {
             "title": "What generation modes does it support?",
-            "description": "FLUX.2 supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+            "description": "FLUX.2 Pro supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
           },
           {
-            "title": "Who created FLUX.2?",
-            "description": "FLUX.2 is created by Black Forest Labs, the original team behind Stable Diffusion."
+            "title": "Who created FLUX.2 Pro?",
+            "description": "FLUX.2 Pro is created by Black Forest Labs, the original team behind Stable Diffusion."
           },
           {
             "title": "What makes it unique?",
-            "description": "FLUX.2 excels at photoreal detail, multi-reference consistency, and accurate text rendering with flexible artistic control."
+            "description": "FLUX.2 Pro excels at photoreal detail, multi-reference consistency, and accurate text rendering with flexible artistic control."
           },
           {
             "title": "Can I use it commercially?",
-            "description": "Yes! All images generated or edited with FLUX.2 through Marble AI come with full commercial rights."
+            "description": "Yes! All images generated or edited with FLUX.2 Pro through Marble AI come with full commercial rights."
           },
           {
             "title": "Is it good for concept art?",
-            "description": "Yes! FLUX.2 is excellent for concept art with its photoreal detail and flexible style control."
+            "description": "Yes! FLUX.2 Pro is excellent for concept art with its photoreal detail and flexible style control."
           }
         ],
         "className": "bg-muted/80"
       },
       "cta": {
-        "title": "Ready to Try FLUX.2?",
-        "highlight_text": "FLUX.2",
+        "title": "Ready to Try FLUX.2 Pro?",
+        "highlight_text": "FLUX.2 Pro",
         "description": "Experience Black Forest Labs' advanced image generation. Create photorealistic visuals with flexible control.",
         "buttons": [
           {
