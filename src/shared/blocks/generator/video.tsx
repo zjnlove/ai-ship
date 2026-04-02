@@ -37,6 +37,14 @@ import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
 import { cn } from '@/shared/lib/utils';
 
+import {
+  getVideoOptionLabel,
+  getVideoOptionsForType,
+  MODEL_OPTIONS,
+  PROVIDER_OPTIONS,
+  VideoOptionType,
+} from './video-config';
+
 interface VideoGeneratorProps {
   maxSizeMB?: number;
   srOnlyTitle?: string;
@@ -70,109 +78,6 @@ const MAX_PROMPT_LENGTH = 2000;
 const textToVideoCredits = 6;
 const imageToVideoCredits = 8;
 const videoToVideoCredits = 10;
-
-const MODEL_OPTIONS = [
-  // Replicate models
-  {
-    label: 'Veo 3.1',
-    provider: 'replicate',
-    brand: 'google',
-    modelPath: 'veo-3.1',
-    credits: {
-      'text-to-video': '8',
-      'image-to-video': '10',
-    },
-    sceneValues: {
-      'text-to-video': 'google/veo-3.1',
-      'image-to-video': 'google/veo-3.1',
-    },
-  },
-  {
-    label: 'Sora 2',
-    provider: 'replicate',
-    brand: 'openai',
-    modelPath: 'sora-2',
-    credits: {
-      'text-to-video': '10',
-      'image-to-video': '12',
-    },
-    sceneValues: {
-      'text-to-video': 'openai/sora-2',
-      'image-to-video': 'openai/sora-2',
-    },
-  },
-  // Fal models
-  {
-    label: 'Veo 3',
-    provider: 'fal',
-    brand: 'google',
-    modelPath: 'veo-3',
-    credits: {
-      'text-to-video': '6',
-    },
-    sceneValues: {
-      'text-to-video': 'fal-ai/veo3',
-    },
-  },
-  {
-    label: 'Wan Pro',
-    provider: 'fal',
-    brand: 'wan',
-    modelPath: 'wan-pro',
-    credits: {
-      'image-to-video': '8',
-    },
-    sceneValues: {
-      'image-to-video': 'fal-ai/wan-pro/image-to-video',
-    },
-  },
-  {
-    label: 'Kling Video O1',
-    provider: 'fal',
-    brand: 'kling',
-    modelPath: 'kling-video-o1',
-    credits: {
-      'video-to-video': '10',
-    },
-    sceneValues: {
-      'video-to-video': 'fal-ai/kling-video/o1/video-to-video/edit',
-    },
-  },
-  // Kie models
-  {
-    label: 'Sora 2 Pro',
-    provider: 'kie',
-    brand: 'openai',
-    modelPath: 'sora-2-pro',
-    credits: {
-      'text-to-video': '12',
-      'image-to-video': '14',
-    },
-    sceneValues: {
-      'text-to-video': 'sora-2-pro-text-to-video',
-      'image-to-video': 'sora-2-pro-image-to-video',
-    },
-  },
-];
-
-const PROVIDER_OPTIONS = [
-  {
-    value: 'google',
-    label: 'Google',
-  },
-  {
-    value: 'openai',
-    label: 'OpenAI',
-  },
-  {
-    value: 'wan',
-    label: 'Wan',
-  },
-  {
-    value: 'kling',
-    label: 'Kling',
-  },
-];
 
 function parseTaskResult(taskResult: string | null): any {
   if (!taskResult) {
@@ -279,6 +184,11 @@ export function VideoGenerator({
     null
   );
   const [isMounted, setIsMounted] = useState(false);
+  const [advancedOptions, setAdvancedOptions] = useState<Record<string, any>>(
+    {}
+  );
+  const [imageToVideoMode, setImageToVideoMode] =
+    useState<string>('REFERENCE_2_VIDEO');
 
   const pathname = usePathname();
 
@@ -330,7 +240,7 @@ export function VideoGenerator({
 
     const availableModels = MODEL_OPTIONS.filter(
       (option) =>
-        option.sceneValues?.[tab] !== undefined && option.provider === provider
+        option.sceneValues?.[tab] !== undefined && option.brand === provider
     );
 
     if (availableModels.length > 0) {
@@ -353,8 +263,7 @@ export function VideoGenerator({
 
     const availableModels = MODEL_OPTIONS.filter(
       (option) =>
-        option.sceneValues?.[activeTab] !== undefined &&
-        option.provider === value
+        option.sceneValues?.[activeTab] !== undefined && option.brand === value
     );
 
     if (availableModels.length > 0) {
@@ -603,10 +512,44 @@ export function VideoGenerator({
         options.video_input = [referenceVideoUrl];
       }
 
-      // 根据当前选中的模型获取对应的积分消耗
+      // 添加高级参数到 options
       const selectedModel = MODEL_OPTIONS.find(
         (option) => option.sceneValues?.[activeTab] === model
       );
+
+      if (selectedModel?.advancedOptions?.supportedTypes) {
+        selectedModel.advancedOptions.supportedTypes.forEach((type) => {
+          const value =
+            advancedOptions[type] ??
+            selectedModel.defaultOptions?.[
+              type === 'aspectRatio'
+                ? 'aspect_ratio'
+                : type === 'motionStrength'
+                  ? 'motion_strength'
+                  : type
+            ];
+
+          if (value) {
+            // 映射字段名到 API 参数名
+            const fieldMap: Record<string, string> = {
+              aspectRatio: 'aspect_ratio',
+              resolution: 'resolution',
+              duration: 'duration',
+              fps: 'fps',
+              motionStrength: 'motion_strength',
+              imageToVideoMode: 'generationType',
+            };
+            options[fieldMap[type] || type] = value;
+          }
+        });
+      }
+
+      // 对于 Veo 3.1 图生视频模式，直接使用 imageToVideoMode 状态
+      if (isImageToVideoMode && selectedModel?.modelPath === 'veo-3-1') {
+        options.generationType = imageToVideoMode;
+      }
+
+      // 根据当前选中的模型获取对应的积分消耗
       const modelCredits = selectedModel?.credits?.[activeTab]
         ? parseInt(selectedModel.credits[activeTab])
         : costCredits;
@@ -907,7 +850,7 @@ export function VideoGenerator({
                           {MODEL_OPTIONS.filter(
                             (option) =>
                               option.sceneValues?.[activeTab] !== undefined &&
-                              option.provider === provider
+                              option.brand === provider
                           ).map((option) => (
                             <SelectItem
                               key={option.label}
@@ -930,14 +873,71 @@ export function VideoGenerator({
 
                   {isImageToVideoMode && (
                     <div className="space-y-4">
+                      {/* Veo 3.1 图生视频模式选择 */}
+                      {(() => {
+                        const selectedModel = MODEL_OPTIONS.find(
+                          (option) => option.sceneValues?.[activeTab] === model
+                        );
+                        // 检查是否是 Veo 3.1 模型（通过 modelPath 判断）
+                        const isVeo31 = selectedModel?.modelPath === 'veo-3-1';
+
+                        if (!isVeo31) {
+                          return null;
+                        }
+
+                        return (
+                          <div className="space-y-2">
+                            <Label className="text-xs">
+                              Image to Video Mode
+                            </Label>
+                            <Select
+                              value={imageToVideoMode}
+                              onValueChange={setImageToVideoMode}
+                            >
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select mode" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="REFERENCE_2_VIDEO">
+                                  参考图模式 (1-3张图)
+                                </SelectItem>
+                                <SelectItem value="FIRST_AND_LAST_FRAMES_2_VIDEO">
+                                  首尾帧模式 (2张图)
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        );
+                      })()}
+
                       <ImageUploader
                         title={t('form.reference_image')}
                         allowMultiple={true}
-                        maxImages={3}
+                        maxImages={
+                          imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                            ? 2
+                            : 3
+                        }
                         maxSizeMB={maxSizeMB}
                         onChange={handleReferenceImagesChange}
-                        emptyHint={t('form.reference_image_placeholder')}
+                        emptyHint={
+                          imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                            ? '请上传首帧和尾帧图片（共2张）'
+                            : t('form.reference_image_placeholder')
+                        }
                       />
+
+                      {/* 图片数量提示 */}
+                      {imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO' && (
+                        <p className="text-muted-foreground text-xs">
+                          首尾帧模式：请上传2张图片，第一张为首帧，第二张为尾帧
+                        </p>
+                      )}
+                      {imageToVideoMode === 'REFERENCE_2_VIDEO' && (
+                        <p className="text-muted-foreground text-xs">
+                          参考图模式：请上传1-3张参考图片
+                        </p>
+                      )}
 
                       {hasReferenceUploadError && (
                         <p className="text-destructive text-xs">
@@ -982,6 +982,76 @@ export function VideoGenerator({
                       )}
                     </div>
                   </div>
+
+                  {/* 高级参数设置 */}
+                  {(() => {
+                    const selectedModel = MODEL_OPTIONS.find(
+                      (option) => option.sceneValues?.[activeTab] === model
+                    );
+                    const advancedTypes =
+                      selectedModel?.advancedOptions?.supportedTypes ?? [];
+
+                    if (advancedTypes.length === 0) {
+                      return null;
+                    }
+
+                    return (
+                      <div className="space-y-4 rounded-lg border p-4">
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium">
+                            Advanced Settings
+                          </Label>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          {advancedTypes.map((type: VideoOptionType) => {
+                            const options = getVideoOptionsForType(type);
+                            const label = getVideoOptionLabel(type);
+                            const currentValue =
+                              advancedOptions[type] ??
+                              selectedModel?.defaultOptions?.[
+                                type === 'aspectRatio'
+                                  ? 'aspect_ratio'
+                                  : type === 'motionStrength'
+                                    ? 'motion_strength'
+                                    : type
+                              ] ??
+                              options[0]?.value;
+
+                            return (
+                              <div key={type} className="space-y-2">
+                                <Label className="text-xs">{label}</Label>
+                                <Select
+                                  value={currentValue}
+                                  onValueChange={(value) =>
+                                    setAdvancedOptions((prev) => ({
+                                      ...prev,
+                                      [type]: value,
+                                    }))
+                                  }
+                                >
+                                  <SelectTrigger className="w-full">
+                                    <SelectValue
+                                      placeholder={`Select ${label.toLowerCase()}`}
+                                    />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {options.map((option) => (
+                                      <SelectItem
+                                        key={option.value}
+                                        value={option.value}
+                                      >
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {!isMounted ? (
                     <Button className="w-full" disabled size="lg">
