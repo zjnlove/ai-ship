@@ -818,17 +818,7 @@ export function VideoGenerator({
                         className="bg-background/50 border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
                       />
                     </div>
-                  ) : (
-                    <div className="w-full md:w-64">
-                      <ImageUploader
-                        title=""
-                        allowMultiple={true}
-                        maxImages={3}
-                        maxSizeMB={maxSizeMB}
-                        onChange={handleReferenceImagesChange}
-                      />
-                    </div>
-                  )}
+                  ) : null}
                 </div>
 
                 {/* 提示词输入区 */}
