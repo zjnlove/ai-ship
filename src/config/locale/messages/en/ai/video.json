@@ -553,7 +553,7 @@
       "select_model": "Select Model",
       "prompt": "Prompt",
       "prompt_placeholder": "Describe the video content, such as scene, action, style, etc.",
-      "reference_image": "Reference Image",
+      "reference_image": "Images",
       "reference_image_placeholder": "Upload a reference image for video generation",
       "reference_video": "Reference Video URL",
       "reference_video_placeholder": "Enter the URL of the reference video",

@@ -815,7 +815,7 @@ export function VideoGenerator({
                         value={referenceVideoUrl}
                         onChange={(e) => setReferenceVideoUrl(e.target.value)}
                         placeholder={t('form.reference_video_placeholder')}
-                        className="bg-background/50 border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
+                        className="bg-background border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
                       />
                     </div>
                   ) : null}
@@ -828,7 +828,8 @@ export function VideoGenerator({
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={t('form.prompt_placeholder')}
-                    className="bg-background/50 placeholder:text-muted-foreground/60 min-h-32 border-0 backdrop-blur-sm transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="placeholder:text-muted-foreground/60 min-h-32 border-0 transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    style={{ backgroundColor: 'transparent' }}
                   />
                   {isPromptTooLong && (
                     <div className="text-destructive text-xs">
