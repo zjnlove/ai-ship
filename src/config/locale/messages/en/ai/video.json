@@ -594,7 +594,7 @@
         "10s": "10s",
         "15s": "15s"
       },
-      "frame_rate": "Frame Rate",
+      "fps": "Frame Rate",
       "fps_options": {
         "24fps": "24fps",
         "30fps": "30fps",

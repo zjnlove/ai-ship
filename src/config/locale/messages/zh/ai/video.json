@@ -63,7 +63,7 @@
         "10s": "10秒",
         "15s": "15秒"
       },
-      "frame_rate": "帧率",
+      "fps": "帧率",
       "fps_options": {
         "24fps": "24fps",
         "30fps": "30fps",

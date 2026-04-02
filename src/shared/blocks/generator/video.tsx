@@ -1032,7 +1032,7 @@ export function VideoGenerator({
                             return (
                               <div key={type} className="space-y-2">
                                 <Label className="text-muted-foreground text-xs font-medium">
-                                  {label}
+                                  {t(label)}
                                 </Label>
                                 <div className="grid grid-cols-3 gap-2">
                                   {options.map((option) => (
