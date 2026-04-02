@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Grok Imagine - AI Video Generator | Marble AI",
+    "description": "Grok Imagine by xAI. Multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Grok Imagine",
+        "highlight_text": "Grok Imagine",
+        "description": "xAI's multimodal video generation model. Convert text or images into short visual outputs with coherent motion and synchronized audio.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Grok Imagine",
+        "highlight_text": "Grok Imagine",
+        "label": "Model Overview",
+        "description": "Grok Imagine is xAI's multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio capabilities.",
+        "image": {
+          "src": "/imgs/models/video/grok-imagine.mp4",
+          "alt": "Grok Imagine"
+        },
+        "items": [
+          {
+            "title": "Multimodal Input",
+            "description": "Supports both text and image inputs for versatile generation.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Coherent Motion",
+            "description": "Generate videos with smooth and coherent motion dynamics.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Synchronized Audio",
+            "description": "Native audio output synchronized with video content.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Fast Generation",
+            "description": "Quick video generation for rapid content creation.",
+            "icon": "RiFlashlightLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Grok Imagine a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with coherent motion.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Audio Generation",
+            "description": "Generate synchronized audio including speech and ambient sounds.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "HD Output",
+            "description": "High-resolution video output with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Grok Imagine.",
+        "items": [
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with synchronized audio.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Content Creation",
+            "description": "Create high-volume content with efficient processing.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Creative Exploration",
+            "description": "Explore creative ideas with fast video generation.",
+            "icon": "RiLightbulbLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Grok Imagine.",
+        "items": [
+          {
+            "title": "What is Grok Imagine?",
+            "description": "Grok Imagine is xAI's multimodal image and video generation model with coherent motion and synchronized audio."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Grok Imagine supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes."
+          },
+          {
+            "title": "Who created Grok Imagine?",
+            "description": "Grok Imagine is created by xAI, Elon Musk's artificial intelligence company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Grok Imagine excels at multimodal input, coherent motion generation, and synchronized audio output."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Grok Imagine through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How fast is it?",
+            "description": "Grok Imagine offers quick video generation for rapid content creation workflows."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Grok Imagine?",
+        "highlight_text": "Grok Imagine",
+        "description": "Experience xAI's multimodal video generation. Create videos with coherent motion and audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

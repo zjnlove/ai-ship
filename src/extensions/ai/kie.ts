@@ -268,7 +268,12 @@ export class KieProvider implements AIProvider {
         payload.input.n_frames = '10';
       }
     }
-
+    return {
+      taskStatus: AITaskStatus.PENDING,
+      taskId: 'data.taskId',
+      taskInfo: {},
+      taskResult: 'data',
+    };
     console.log('kie input', apiUrl, payload);
 
     const resp = await fetch(apiUrl, {

@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Seedance 1.5 Pro - AI Video Generator | Marble AI",
+    "description": "Seedance 1.5 Pro by ByteDance. Audio-video generation model that creates cinema-quality video, synchronized audio, and multilingual dialogue with cinematic camera control."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Seedance 1.5 Pro",
+        "highlight_text": "Seedance 1.5 Pro",
+        "description": "ByteDance's audio-video generation model. Create cinema-quality video with synchronized audio and multilingual dialogue with cinematic camera control.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Seedance 1.5 Pro",
+        "highlight_text": "Seedance 1.5 Pro",
+        "label": "Model Overview",
+        "description": "Seedance 1.5 Pro is ByteDance's advanced audio-video generation model that creates cinema-quality videos with synchronized audio and multilingual dialogue, featuring precise cinematic camera control.",
+        "image": {
+          "src": "/imgs/models/video/seedance-1-5-pro.mp4",
+          "alt": "Seedance 1.5 Pro"
+        },
+        "items": [
+          {
+            "title": "Audio-Video Sync",
+            "description": "Generate videos with perfectly synchronized audio, including speech and ambient sounds.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Multilingual Dialogue",
+            "description": "Support for multiple languages in generated dialogue and narration.",
+            "icon": "RiTranslate2"
+          },
+          {
+            "title": "Cinematic Camera",
+            "description": "Advanced camera control for professional cinematic shots and movements.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Cinema Quality",
+            "description": "Professional-grade video output with exceptional visual fidelity.",
+            "icon": "RiHdLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Seedance 1.5 Pro a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with synchronized audio.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Dialogue Generation",
+            "description": "Generate natural-sounding dialogue in multiple languages.",
+            "icon": "RiChatVoiceLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with cinema quality.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Seedance 1.5 Pro.",
+        "items": [
+          {
+            "title": "Film Production",
+            "description": "Create cinematic content with professional camera control and audio.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Multilingual Content",
+            "description": "Generate videos with dialogue in multiple languages for global audiences.",
+            "icon": "RiGlobalLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with synchronized narration.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Educational Videos",
+            "description": "Create educational content with clear narration and visuals.",
+            "icon": "RiGraduationCapLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content with professional audio.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with cinematic quality and clear narration.",
+            "icon": "RiShoppingBagLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Seedance 1.5 Pro.",
+        "items": [
+          {
+            "title": "What is Seedance 1.5 Pro?",
+            "description": "Seedance 1.5 Pro is ByteDance's audio-video generation model that creates cinema-quality videos with synchronized audio and multilingual dialogue."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Seedance 1.5 Pro supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes with audio synchronization."
+          },
+          {
+            "title": "Who created Seedance 1.5 Pro?",
+            "description": "Seedance 1.5 Pro is created by ByteDance, the company behind TikTok and other popular video platforms."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Seedance 1.5 Pro excels at audio-video synchronization, multilingual dialogue generation, and cinematic camera control."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Seedance 1.5 Pro through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What languages does it support?",
+            "description": "Seedance 1.5 Pro supports multiple languages for dialogue generation, making it ideal for global content creation."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Seedance 1.5 Pro?",
+        "highlight_text": "Seedance 1.5 Pro",
+        "description": "Experience ByteDance's audio-video generation. Create cinema-quality videos with synchronized dialogue.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

@@ -2,10 +2,10 @@
   "header": {
     "id": "header",
     "brand": {
-      "title": "ShipAny Two",
+      "title": "Marble AI",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny Two",
+        "alt": "Marble AI",
         "width": 100,
         "height": 100
       },
@@ -14,78 +14,236 @@
     "nav": {
       "items": [
         {
-          "title": "功能亮点",
-          "url": "/#features",
-          "icon": "Sparkles",
-          "tip": "新功能",
-          "tip_color": "bg-emerald-500"
-        },
-        {
-          "title": "案例展示",
-          "url": "/showcases",
-          "icon": "Box",
-          "tip": "热门",
-          "tip_color": "bg-rose-500"
-        },
-        {
-          "title": "价格",
-          "url": "/pricing",
-          "icon": "DollarSign"
-        },
-        {
-          "title": "AI",
-          "icon": "RiRobot2Line",
+          "title": "AI 工具",
           "children": [
             {
-              "title": "AI 图片生成器",
-              "description": "使用 AI 生成图片",
+              "title": "AI 视频生成器",
+              "url": "/ai-video-generator",
+              "target": "_blank",
+              "tip": "新功能",
+              "tip_color": "bg-emerald-500",
+              "children": [
+                {
+                  "title": "文本转视频",
+                  "url": "/ai-video-generator/text-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "图片转视频",
+                  "url": "/ai-video-generator/image-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "视频转视频",
+                  "url": "/ai-video-generator/video-to-video",
+                  "target": "_blank"
+                }
+              ]
+            },
+            {
+              "title": "AI 图像生成器",
               "url": "/ai-image-generator",
-              "icon": "RiImage2Line"
+              "target": "_blank",
+              "children": [
+                {
+                  "title": "文本转图像",
+                  "url": "/ai-image-generator/text-to-image",
+                  "target": "_blank"
+                },
+                {
+                  "title": "图像转图像",
+                  "url": "/ai-image-generator/image-to-image",
+                  "target": "_blank"
+                }
+              ]
             },
             {
               "title": "AI 音乐生成器",
-              "description": "使用 AI 生成美妙的音乐",
               "url": "/ai-music-generator",
-              "icon": "RiMusic2Line"
-            },
-            {
-              "title": "AI 视频生成器",
-              "description": "使用 AI 生成视频",
-              "url": "/ai-video-generator",
-              "icon": "RiVideoLine"
-            },
-            {
-              "title": "AI 聊天机器人",
-              "description": "与 AI 聊天机器人对话",
-              "url": "/chat",
-              "icon": "RiMessage2Line"
+              "target": "_blank"
             }
           ]
         },
         {
-          "title": "内容",
-          "icon": "FileText",
+          "title": "图像模型",
+          "children": [
+            {
+              "title": "Qwen Image",
+              "url": "/image-models/qwen-image",
+              "target": "_blank"
+            },
+            {
+              "title": "Qwen Image 2",
+              "url": "/image-models/qwen-image-2",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana",
+              "url": "/image-models/nano-banana",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana 2",
+              "url": "/image-models/nano-banana-2",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana Pro",
+              "url": "/image-models/nano-banana-pro",
+              "target": "_blank",
+              "tip": "热门",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Imagen 4",
+              "url": "/image-models/imagen-4",
+              "target": "_blank"
+            },
+            {
+              "title": "GPT Image 1.5",
+              "url": "/image-models/gpt-image-1-5",
+              "target": "_blank"
+            },
+            {
+              "title": "FLUX.2 Flex",
+              "url": "/image-models/flux-2-flex",
+              "target": "_blank"
+            },
+            {
+              "title": "FLUX.2 Pro",
+              "url": "/image-models/flux-2-pro",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/image-models/grok-imagine",
+              "target": "_blank"
+            },
+            {
+              "title": "Recraft 移除背景",
+              "url": "/image-models/recraft-remove-background",
+              "target": "_blank"
+            },
+            {
+              "title": "Recraft 清晰放大",
+              "url": "/image-models/recraft-crisp-upscale",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "title": "视频模型",
+          "children": [
+            {
+              "title": "Seedance 2.0",
+              "url": "/video-models/seedance-2-0",
+              "target": "_blank",
+              "tip": "新功能",
+              "tip_color": "bg-emerald-500"
+            },
+            {
+              "title": "Seedance 1.5 Pro",
+              "url": "/video-models/seedance-1-5-pro",
+              "target": "_blank",
+              "tip": "热门",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance 1.0 Pro Fast",
+              "url": "/video-models/seedance-1-0-pro-fast",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 3.0",
+              "url": "/video-models/kling-3-0",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6",
+              "url": "/video-models/kling-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 3.0 运动控制",
+              "url": "/video-models/kling-3-0-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6 运动控制",
+              "url": "/video-models/kling-2-6-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.6",
+              "url": "/video-models/wan-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.5",
+              "url": "/video-models/wan-2-5",
+              "target": "_blank"
+            },
+            {
+              "title": "Veo 3.1",
+              "url": "/video-models/veo-3-1",
+              "target": "_blank"
+            },
+            {
+              "title": "Veo 3",
+              "url": "/video-models/veo-3",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/video-models/grok-imagine",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 2.3",
+              "url": "/video-models/hailuo-2-3",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 02",
+              "url": "/video-models/hailuo-02",
+              "target": "_blank"
+            },
+            {
+              "title": "Runway 视频生成",
+              "url": "/video-models/runway-video-generation",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "title": "资源",
           "children": [
             {
               "title": "博客",
-              "description": "阅读博客文章",
               "url": "/blog",
-              "icon": "Newspaper"
+              "icon": "RiArticleFill"
             },
             {
-              "title": "更新日志",
-              "description": "阅读更新日志",
-              "url": "/updates",
-              "icon": "Clock"
+              "title": "帮助中心",
+              "url": "/help-center",
+              "icon": "RiQuestionLine"
             },
             {
-              "title": "文档",
-              "description": "阅读文档",
-              "url": "/docs",
-              "target": "_blank",
-              "icon": "BookOpenText"
+              "title": "关于我们",
+              "url": "/about-us",
+              "icon": "RiInformationLine"
+            },
+            {
+              "title": "联系我们",
+              "url": "/contact",
+              "icon": "RiContactsLine"
             }
           ]
+        },
+        {
+          "title": "定价",
+          "url": "/pricing",
+          "target": "_blank"
         }
       ]
     },
@@ -111,29 +269,29 @@
     "show_theme": true,
     "show_locale": true,
     "topbanner": {
-      "text": "此网站是 ShipAny 模板的演示站点，购买 ShipAny 模板，请访问 <a href='https://shipany.ai/zh/pricing' class='text-orange-300' target='_blank'>ShipAny 官网</a>"
+      "text": "🚀 Marble AI - 想象力与创新的完美结合"
     }
   },
   "footer": {
     "id": "footer",
     "brand": {
       "title": "Marble AI",
-      "description": "您的一站式 AI 内容生成平台，支持图片、视频和音乐生成，使用前沿技术创作专业内容。",
+      "description": "您的一站式 AI 平台，使用尖端技术生成惊艳的图像、视频和音乐。",
       "logo": {
         "src": "/logo.png",
         "alt": "Marble AI",
-        "width": 100,
-        "height": 100
+        "width": 1024,
+        "height": 1024
       },
       "url": "/"
     },
     "nav": {
       "items": [
         {
-          "title": "关于我们",
+          "title": "关于",
           "children": [
             {
-              "title": "功能亮点",
+              "title": "功能特色",
               "url": "/#features",
               "target": "_self"
             },
@@ -143,7 +301,7 @@
               "target": "_self"
             },
             {
-              "title": "价格",
+              "title": "定价",
               "url": "/pricing",
               "target": "_self"
             }
@@ -165,7 +323,7 @@
             {
               "title": "对话",
               "url": "/chat",
-              "target": "_blank"
+              "target": "_self"
             }
           ]
         },
@@ -173,18 +331,18 @@
           "title": "合作伙伴",
           "children": [
             {
-              "title": "ShipAny",
-              "url": "https://shipany.ai",
+              "title": "AI 图像生成器",
+              "url": "/ai-image-generator",
               "target": "_blank"
             },
             {
-              "title": "ThinkAny",
-              "url": "https://thinkany.ai",
+              "title": "AI 视频生成器",
+              "url": "/ai-video-generator",
               "target": "_blank"
             },
             {
-              "title": "MCP.so",
-              "url": "https://mcp.so",
+              "title": "AI 音乐生成器",
+              "url": "/ai-music-generator",
               "target": "_blank"
             }
           ]

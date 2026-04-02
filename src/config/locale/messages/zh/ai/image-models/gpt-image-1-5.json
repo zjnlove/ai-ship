@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "GPT Image 1.5 - AI Image Generator & Editor | Marble AI",
+    "description": "GPT Image 1.5 by OpenAI. Flagship image generation model for high-quality image creation and precise editing with strong instruction following and improved text rendering. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "GPT Image 1.5",
+        "highlight_text": "GPT Image 1.5",
+        "description": "OpenAI's flagship image generation model. Create high-quality images and perform precise editing with strong instruction following and improved text rendering.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About GPT Image 1.5",
+        "highlight_text": "GPT Image 1.5",
+        "label": "Model Overview",
+        "description": "GPT Image 1.5 is OpenAI's flagship image generation model for high-quality image creation and precise image editing, with strong instruction following and improved text rendering.",
+        "image": {
+          "src": "/imgs/models/image/gpt-image-1.5.webp",
+          "alt": "GPT Image 1.5"
+        },
+        "items": [
+          {
+            "title": "Strong Instruction Following",
+            "description": "Precisely follows complex instructions for accurate image generation and editing.",
+            "icon": "RiChatCheckLine"
+          },
+          {
+            "title": "Improved Text Rendering",
+            "description": "Enhanced text rendering capabilities for images containing typography and written content.",
+            "icon": "RiText"
+          },
+          {
+            "title": "High-Quality Output",
+            "description": "Generate professional-grade images with exceptional detail and visual appeal.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Precise Editing",
+            "description": "Make targeted edits to images with accurate and coherent results.",
+            "icon": "RiImageEditLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes GPT Image 1.5 a leading image model.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for versatile workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "GPT-Powered Intelligence",
+            "description": "Leverages GPT's advanced language understanding for superior prompt comprehension.",
+            "icon": "RiBrainLine"
+          },
+          {
+            "title": "Style Consistency",
+            "description": "Maintain consistent styles across multiple generations and edits.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Fast Processing",
+            "description": "Optimized inference for quick generation without compromising quality.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Seamless API access for developers to integrate into applications.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of GPT Image 1.5.",
+        "items": [
+          {
+            "title": "Marketing Content",
+            "description": "Create compelling marketing visuals with precise text and brand consistency.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Design Projects",
+            "description": "Generate design concepts and iterate quickly with instruction-following capabilities.",
+            "icon": "RiPenNibLine"
+          },
+          {
+            "title": "Content Creation",
+            "description": "Produce engaging visual content for social media and digital platforms.",
+            "icon": "RiArticleLine"
+          },
+          {
+            "title": "E-commerce",
+            "description": "Generate product images and marketing materials with accurate text.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Creative Automation",
+            "description": "Automate creative workflows with reliable instruction following.",
+            "icon": "RiRobotLine"
+          },
+          {
+            "title": "Brand Assets",
+            "description": "Create consistent brand imagery and visual assets.",
+            "icon": "RiBuildingLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about GPT Image 1.5.",
+        "items": [
+          {
+            "title": "What is GPT Image 1.5?",
+            "description": "GPT Image 1.5 is OpenAI's flagship image generation model known for strong instruction following, improved text rendering, and high-quality output."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "GPT Image 1.5 supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "What makes it different from other models?",
+            "description": "GPT Image 1.5 excels at instruction following and text rendering, making it ideal for precise, text-heavy image generation and editing."
+          },
+          {
+            "title": "How accurate is the text rendering?",
+            "description": "GPT Image 1.5 features improved text rendering with better accuracy, font reproduction, and natural placement compared to previous models."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited with GPT Image 1.5 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "Is it good for complex instructions?",
+            "description": "Yes! GPT Image 1.5 is specifically designed for strong instruction following, handling complex and detailed prompts accurately."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try GPT Image 1.5?",
+        "highlight_text": "GPT Image 1.5",
+        "description": "Experience OpenAI's flagship image generation model. Create precise visuals with strong instruction following.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

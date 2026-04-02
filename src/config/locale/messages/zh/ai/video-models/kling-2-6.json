@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Kling 2.6 - AI Video Generator | Marble AI",
+    "description": "Kling 2.6 by Kling AI. Audio-visual generation model that produces synchronized video, speech, ambient sound, and sound effects from text or image inputs."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Kling 2.6",
+        "highlight_text": "Kling 2.6",
+        "description": "Kling AI's audio-visual generation model. Produce synchronized video, speech, ambient sound, and sound effects from text or image inputs.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Kling 2.6",
+        "highlight_text": "Kling 2.6",
+        "label": "Model Overview",
+        "description": "Kling 2.6 is Kling AI's audio-visual generation model that produces synchronized video, speech, ambient sound, and sound effects from text or image inputs, creating immersive video experiences.",
+        "image": {
+          "src": "/imgs/models/video/kling-2-6.mp4",
+          "alt": "Kling 2.6"
+        },
+        "items": [
+          {
+            "title": "Audio-Visual Sync",
+            "description": "Perfectly synchronized video and audio generation for immersive experiences.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Sound Effects",
+            "description": "Generate realistic sound effects that match video content.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Speech Generation",
+            "description": "Create natural-sounding speech synchronized with video.",
+            "icon": "RiChatVoiceLine"
+          },
+          {
+            "title": "Ambient Sound",
+            "description": "Generate atmospheric ambient sounds for realistic scenes.",
+            "icon": "RiSoundModuleLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Kling 2.6 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with synchronized audio.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Full Audio Suite",
+            "description": "Complete audio generation including speech, music, and sound effects.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Kling 2.6.",
+        "items": [
+          {
+            "title": "Film Production",
+            "description": "Create cinematic content with professional audio-visual synchronization.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with complete audio.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content with immersive audio.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Game Trailers",
+            "description": "Create game trailers with synchronized sound effects.",
+            "icon": "RiGamepadLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear narration.",
+            "icon": "RiGraduationCapLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Kling 2.6.",
+        "items": [
+          {
+            "title": "What is Kling 2.6?",
+            "description": "Kling 2.6 is Kling AI's audio-visual generation model that produces synchronized video, speech, ambient sound, and sound effects."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Kling 2.6 supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes with full audio."
+          },
+          {
+            "title": "Who created Kling 2.6?",
+            "description": "Kling 2.6 is created by Kling AI, a leading AI video generation company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Kling 2.6 excels at audio-visual synchronization, generating speech, ambient sound, and sound effects along with video."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Kling 2.6 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What audio does it generate?",
+            "description": "Kling 2.6 generates synchronized speech, ambient sounds, background music, and realistic sound effects."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Kling 2.6?",
+        "highlight_text": "Kling 2.6",
+        "description": "Experience Kling AI's audio-visual generation. Create videos with complete synchronized audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}
