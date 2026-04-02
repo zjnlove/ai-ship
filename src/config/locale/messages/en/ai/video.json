@@ -560,7 +560,7 @@
       "some_images_failed_to_upload": "Image failed to upload, please delete and re-upload",
       "prompt_too_long": "Prompt is too long, please delete some content"
     },
-    "generate": "Generate Video",
+    "generate": "Generate",
     "checking_account": "Checking Account...",
     "loading": "Loading...",
     "generating": "Generating...",

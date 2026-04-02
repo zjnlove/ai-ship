@@ -958,55 +958,57 @@ export function VideoGenerator({
                                 type === 'resolution' ||
                                 type === 'imageToVideoMode'
                             );
-                            return visibleTypes.map((type, index) => (
-                              <span
-                                key={type}
-                                className="flex items-center gap-1"
-                              >
-                                {index > 0 && (
-                                  <span className="text-muted-foreground">
-                                    |
-                                  </span>
-                                )}
-                                {type === 'duration' && (
-                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                    {advancedOptions.duration ??
-                                      selectedModelConfig?.defaultOptions
-                                        ?.duration ??
-                                      '10'}
-                                    s
-                                  </span>
-                                )}
-                                {type === 'aspectRatio' && (
-                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                    {advancedOptions.aspectRatio ??
-                                      selectedModelConfig?.defaultOptions
-                                        ?.aspect_ratio ??
-                                      '16:9'}
-                                  </span>
-                                )}
-                                {type === 'resolution' && (
-                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                    {advancedOptions.resolution ??
-                                      selectedModelConfig?.defaultOptions
-                                        ?.resolution ??
-                                      '720p'}
-                                  </span>
-                                )}
-                                {type === 'imageToVideoMode' && (
-                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                    {advancedOptions.imageToVideoMode ===
-                                    'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                                      ? t(
-                                          'advanced_options.image_to_video_mode_options.first_and_last'
-                                        )
-                                      : t(
-                                          'advanced_options.image_to_video_mode_options.reference'
-                                        )}
-                                  </span>
-                                )}
-                              </span>
-                            ));
+                            return visibleTypes
+                              .slice(0, 3)
+                              .map((type, index) => (
+                                <span
+                                  key={type}
+                                  className="flex items-center gap-1"
+                                >
+                                  {index > 0 && (
+                                    <span className="text-muted-foreground">
+                                      |
+                                    </span>
+                                  )}
+                                  {type === 'duration' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.duration ??
+                                        selectedModelConfig?.defaultOptions
+                                          ?.duration ??
+                                        '10'}
+                                      s
+                                    </span>
+                                  )}
+                                  {type === 'aspectRatio' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.aspectRatio ??
+                                        selectedModelConfig?.defaultOptions
+                                          ?.aspect_ratio ??
+                                        '16:9'}
+                                    </span>
+                                  )}
+                                  {type === 'resolution' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.resolution ??
+                                        selectedModelConfig?.defaultOptions
+                                          ?.resolution ??
+                                        '720p'}
+                                    </span>
+                                  )}
+                                  {type === 'imageToVideoMode' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.imageToVideoMode ===
+                                      'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                                        ? t(
+                                            'advanced_options.image_to_video_mode_options.first_and_last'
+                                          )
+                                        : t(
+                                            'advanced_options.image_to_video_mode_options.reference'
+                                          )}
+                                    </span>
+                                  )}
+                                </span>
+                              ));
                           })()}
                           <Settings className="ml-1 h-4 w-4" />
                         </Button>
