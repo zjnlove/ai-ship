@@ -998,8 +998,8 @@ export function VideoGenerator({
                           <Settings className="ml-1 h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-72" side="top" align="start">
-                        <div className="space-y-4">
+                      <PopoverContent className="w-80" side="top" align="start">
+                        <div className="space-y-5">
                           {advancedTypes.map((type: VideoOptionType) => {
                             const options = getVideoOptionsForType(type);
                             const label = getVideoOptionLabel(type);
@@ -1016,32 +1016,60 @@ export function VideoGenerator({
 
                             return (
                               <div key={type} className="space-y-2">
-                                <Label className="text-xs">{label}</Label>
-                                <Select
-                                  value={currentValue}
-                                  onValueChange={(value) =>
-                                    setAdvancedOptions((prev) => ({
-                                      ...prev,
-                                      [type]: value,
-                                    }))
-                                  }
-                                >
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue
-                                      placeholder={`Select ${label.toLowerCase()}`}
-                                    />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {options.map((option) => (
-                                      <SelectItem
-                                        key={option.value}
-                                        value={option.value}
-                                      >
-                                        {option.label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
+                                <Label className="text-muted-foreground text-xs font-medium">
+                                  {label}
+                                </Label>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {options.map((option) => (
+                                    <motion.button
+                                      key={option.value}
+                                      whileHover={{ scale: 1.02 }}
+                                      whileTap={{ scale: 0.98 }}
+                                      onClick={() =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: option.value,
+                                        }))
+                                      }
+                                      className={cn(
+                                        'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
+                                        currentValue === option.value
+                                          ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
+                                          : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
+                                      )}
+                                    >
+                                      {type === 'aspectRatio' && (
+                                        <div
+                                          className={cn(
+                                            'rounded-sm border border-current',
+                                            option.value === '16:9' &&
+                                              'h-3 w-5',
+                                            option.value === '9:16' &&
+                                              'h-5 w-3',
+                                            option.value === '1:1' && 'h-4 w-4',
+                                            option.value === '4:3' && 'h-3 w-4',
+                                            option.value === '3:4' && 'h-4 w-3'
+                                          )}
+                                        />
+                                      )}
+                                      {type === 'duration' && (
+                                        <div className="flex h-3 w-5 items-center justify-center rounded-sm border border-current">
+                                          <span className="text-[9px]">
+                                            {option.value}s
+                                          </span>
+                                        </div>
+                                      )}
+                                      {type === 'resolution' && (
+                                        <div className="flex h-3 w-5 items-center justify-center rounded-sm border border-current">
+                                          <span className="text-[9px]">
+                                            {option.value.replace('p', '')}
+                                          </span>
+                                        </div>
+                                      )}
+                                      <span>{option.label}</span>
+                                    </motion.button>
+                                  ))}
+                                </div>
                               </div>
                             );
                           })}
