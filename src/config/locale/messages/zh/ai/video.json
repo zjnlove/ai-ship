@@ -41,7 +41,51 @@
     "generated_videos": "视频预览",
     "ready_to_generate": "准备生成",
     "ready_for_generating": "准备生成",
-    "no_videos_generated": "没有生成视频"
+    "no_videos_generated": "没有生成视频",
+    "advanced_options": {
+      "aspect_ratio": "宽高比",
+      "aspect_ratio_options": {
+        "auto": "自动",
+        "16_9": "16:9",
+        "9_16": "9:16",
+        "1_1": "1:1",
+        "4_3": "4:3"
+      },
+      "resolution": "分辨率",
+      "resolution_options": {
+        "720p": "720p",
+        "1080p": "1080p",
+        "4k": "4K"
+      },
+      "duration": "时长",
+      "duration_options": {
+        "5s": "5秒",
+        "10s": "10秒",
+        "15s": "15秒"
+      },
+      "frame_rate": "帧率",
+      "fps_options": {
+        "24fps": "24fps",
+        "30fps": "30fps",
+        "60fps": "60fps"
+      },
+      "motion_strength": "运动强度",
+      "motion_strength_options": {
+        "low": "低",
+        "medium": "中",
+        "high": "高"
+      },
+      "image_to_video_mode": "图生视频模式",
+      "image_to_video_mode_options": {
+        "first_and_last": "首尾帧",
+        "reference": "参考图"
+      }
+    },
+    "select_generation_mode": "生成方式",
+    "credits": "积分",
+    "share": "分享",
+    "download": "下载",
+    "regenerate": "重新生成",
+    "first_and_last_frames_hint": "请上传首帧和尾帧图片（共2张）"
   }
 }
-

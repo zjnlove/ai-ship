@@ -572,6 +572,51 @@
     "generated_videos": "Video Preview",
     "ready_to_generate": "Ready to Generate",
     "ready_for_generating": "Ready for Generating",
-    "no_videos_generated": "No Videos Generated"
+    "no_videos_generated": "No Videos Generated",
+    "advanced_options": {
+      "aspect_ratio": "Aspect Ratio",
+      "aspect_ratio_options": {
+        "auto": "Auto",
+        "16_9": "16:9",
+        "9_16": "9:16",
+        "1_1": "1:1",
+        "4_3": "4:3"
+      },
+      "resolution": "Resolution",
+      "resolution_options": {
+        "720p": "720p",
+        "1080p": "1080p",
+        "4k": "4K"
+      },
+      "duration": "Duration",
+      "duration_options": {
+        "5s": "5s",
+        "10s": "10s",
+        "15s": "15s"
+      },
+      "frame_rate": "Frame Rate",
+      "fps_options": {
+        "24fps": "24fps",
+        "30fps": "30fps",
+        "60fps": "60fps"
+      },
+      "motion_strength": "Motion Strength",
+      "motion_strength_options": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "image_to_video_mode": "Image to Video Mode",
+      "image_to_video_mode_options": {
+        "first_and_last": "First & Last",
+        "reference": "Reference"
+      }
+    },
+    "select_generation_mode": "Generation Mode",
+    "credits": "credits",
+    "share": "Share",
+    "download": "Download",
+    "regenerate": "Regenerate",
+    "first_and_last_frames_hint": "Please upload first and last frame images (2 images total)"
   }
 }

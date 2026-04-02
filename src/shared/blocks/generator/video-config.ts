@@ -1,44 +1,50 @@
 // 视频宽高比选项
 export const VIDEO_ASPECT_RATIO_OPTIONS = [
-  { value: 'auto', label: 'Auto' },
-  { value: '16:9', label: '16:9' },
-  { value: '9:16', label: '9:16' },
-  { value: '1:1', label: '1:1' },
-  { value: '4:3', label: '4:3' },
+  { value: 'auto', label: 'advanced_options.aspect_ratio_options.auto' },
+  { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+  { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+  { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+  { value: '4:3', label: 'advanced_options.aspect_ratio_options.4_3' },
 ];
 
 // 视频分辨率选项
 export const VIDEO_RESOLUTION_OPTIONS = [
-  { value: '720p', label: '720p' },
-  { value: '1080p', label: '1080p' },
-  { value: '4k', label: '4K' },
+  { value: '720', label: 'advanced_options.resolution_options.720p' },
+  { value: '1080', label: 'advanced_options.resolution_options.1080p' },
+  { value: '4k', label: 'advanced_options.resolution_options.4k' },
 ];
 
 // 视频时长选项
 export const VIDEO_DURATION_OPTIONS = [
-  { value: '5', label: '5秒' },
-  { value: '10', label: '10秒' },
-  { value: '15', label: '15秒' },
+  { value: '5', label: 'advanced_options.duration_options.5s' },
+  { value: '10', label: 'advanced_options.duration_options.10s' },
+  { value: '15', label: 'advanced_options.duration_options.15s' },
 ];
 
 // 视频帧率选项
 export const VIDEO_FPS_OPTIONS = [
-  { value: '24', label: '24fps' },
-  { value: '30', label: '30fps' },
-  { value: '60', label: '60fps' },
+  { value: '24', label: 'advanced_options.fps_options.24fps' },
+  { value: '30', label: 'advanced_options.fps_options.30fps' },
+  { value: '60', label: 'advanced_options.fps_options.60fps' },
 ];
 
 // 运动强度选项
 export const MOTION_STRENGTH_OPTIONS = [
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
+  { value: 'low', label: 'advanced_options.motion_strength_options.low' },
+  { value: 'medium', label: 'advanced_options.motion_strength_options.medium' },
+  { value: 'high', label: 'advanced_options.motion_strength_options.high' },
 ];
 
 // 图生视频模式选项
 export const IMAGE_TO_VIDEO_MODE_OPTIONS = [
-  { value: 'FIRST_AND_LAST_FRAMES_2_VIDEO', label: '首尾帧模式' },
-  { value: 'REFERENCE_2_VIDEO', label: '参考图模式' },
+  {
+    value: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
+    label: 'advanced_options.image_to_video_mode_options.first_and_last',
+  },
+  {
+    value: 'REFERENCE_2_VIDEO',
+    label: 'advanced_options.image_to_video_mode_options.reference',
+  },
 ];
 
 export type VideoOptionType =
@@ -112,7 +118,14 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
       generationType: 'REFERENCE_2_VIDEO',
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio'],
+      supportedTypes: [
+        'aspectRatio',
+        'imageToVideoMode',
+        'duration',
+        'resolution',
+        'fps',
+        'motionStrength',
+      ],
     },
   },
   // Kling AI models

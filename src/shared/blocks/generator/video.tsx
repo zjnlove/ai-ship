@@ -801,7 +801,7 @@ export function VideoGenerator({
                           onChange={handleReferenceImagesChange}
                           emptyHint={
                             imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                              ? '请上传首帧和尾帧图片（共2张）'
+                              ? t('first_and_last_frames_hint')
                               : t('form.reference_image_placeholder')
                           }
                           imageWidth="w-25"
@@ -850,7 +850,7 @@ export function VideoGenerator({
                   {/* 生成方式下拉 */}
                   <Select value={activeTab} onValueChange={handleTabChange}>
                     <SelectTrigger className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 w-auto min-w-[140px] border backdrop-blur-sm transition-all duration-200 hover:shadow-md">
-                      <SelectValue placeholder="生成方式" />
+                      <SelectValue placeholder={t('select_generation_mode')} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="text-to-video">
@@ -929,7 +929,7 @@ export function VideoGenerator({
                               <span>{m.label}</span>
                               {m.credits?.[activeTab] && (
                                 <span className="text-muted-foreground text-xs">
-                                  {m.credits[activeTab]} 积分
+                                  {m.credits[activeTab]} {t('credits')}
                                 </span>
                               )}
                             </button>
@@ -955,7 +955,8 @@ export function VideoGenerator({
                               (type) =>
                                 type === 'duration' ||
                                 type === 'aspectRatio' ||
-                                type === 'resolution'
+                                type === 'resolution' ||
+                                type === 'imageToVideoMode'
                             );
                             return visibleTypes.map((type, index) => (
                               <span
@@ -990,6 +991,18 @@ export function VideoGenerator({
                                       selectedModelConfig?.defaultOptions
                                         ?.resolution ??
                                       '720p'}
+                                  </span>
+                                )}
+                                {type === 'imageToVideoMode' && (
+                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                    {advancedOptions.imageToVideoMode ===
+                                    'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                                      ? t(
+                                          'advanced_options.image_to_video_mode_options.first_and_last'
+                                        )
+                                      : t(
+                                          'advanced_options.image_to_video_mode_options.reference'
+                                        )}
                                   </span>
                                 )}
                               </span>
@@ -1038,35 +1051,7 @@ export function VideoGenerator({
                                           : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
                                       )}
                                     >
-                                      {type === 'aspectRatio' && (
-                                        <div
-                                          className={cn(
-                                            'rounded-sm border border-current',
-                                            option.value === '16:9' &&
-                                              'h-3 w-5',
-                                            option.value === '9:16' &&
-                                              'h-5 w-3',
-                                            option.value === '1:1' && 'h-4 w-4',
-                                            option.value === '4:3' && 'h-3 w-4',
-                                            option.value === '3:4' && 'h-4 w-3'
-                                          )}
-                                        />
-                                      )}
-                                      {type === 'duration' && (
-                                        <div className="flex h-3 w-5 items-center justify-center rounded-sm border border-current">
-                                          <span className="text-[9px]">
-                                            {option.value}s
-                                          </span>
-                                        </div>
-                                      )}
-                                      {type === 'resolution' && (
-                                        <div className="flex h-3 w-5 items-center justify-center rounded-sm border border-current">
-                                          <span className="text-[9px]">
-                                            {option.value.replace('p', '')}
-                                          </span>
-                                        </div>
-                                      )}
-                                      <span>{option.label}</span>
+                                      <span>{t(option.label)}</span>
                                     </motion.button>
                                   ))}
                                 </div>
@@ -1146,9 +1131,9 @@ export function VideoGenerator({
                       ) : (
                         <>
                           <Sparkles className="mr-2 h-4 w-4" />
-                          Generate
+                          {t('generate')}
                           <span className="ml-2 text-xs opacity-80">
-                            {costCredits}积分
+                            {costCredits} {t('credits')}
                           </span>
                         </>
                       )}
@@ -1190,7 +1175,7 @@ export function VideoGenerator({
                             >
                               <div className="text-center">
                                 <p className="mb-2 text-lg font-medium">
-                                  ⏳ 生成中...
+                                  ⏳ {t('generating')}
                                 </p>
                                 <ProgressBar progress={progress} />
                                 <p className="text-muted-foreground mt-3 text-sm">
@@ -1227,7 +1212,7 @@ export function VideoGenerator({
                                       className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
                                     >
                                       <Share2 className="mr-2 h-4 w-4" />
-                                      分享
+                                      {t('share')}
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -1241,7 +1226,7 @@ export function VideoGenerator({
                                       ) : (
                                         <Download className="mr-2 h-4 w-4" />
                                       )}
-                                      下载
+                                      {t('download')}
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -1252,7 +1237,7 @@ export function VideoGenerator({
                                       }}
                                       className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
                                     >
-                                      🔄 重新生成
+                                      🔄 {t('regenerate')}
                                     </Button>
                                   </div>
                                 </div>
