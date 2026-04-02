@@ -70,12 +70,12 @@ export function getVideoOptionsForType(type: VideoOptionType) {
 
 export function getVideoOptionLabel(type: VideoOptionType): string {
   const labelMap: Record<VideoOptionType, string> = {
-    aspectRatio: 'Aspect Ratio',
-    resolution: 'Resolution',
-    duration: 'Duration',
-    fps: 'Frame Rate',
-    motionStrength: 'Motion Strength',
-    imageToVideoMode: 'Image to Video Mode',
+    aspectRatio: 'advanced_options.aspect_ratio',
+    resolution: 'advanced_options.resolution',
+    duration: 'advanced_options.duration',
+    fps: 'advanced_options.fps',
+    motionStrength: 'advanced_options.motion_strength',
+    imageToVideoMode: 'advanced_options.image_to_video_mode',
   };
   return labelMap[type] || '';
 }
