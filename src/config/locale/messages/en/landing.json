@@ -213,11 +213,6 @@
               "title": "Runway Video Generation",
               "url": "/video-models/runway-video-generation",
               "target": "_blank"
-            },
-            {
-              "title": "Topaz Video Upscaler",
-              "url": "/video-models/topaz-video-upscaler",
-              "target": "_blank"
             }
           ]
         },
