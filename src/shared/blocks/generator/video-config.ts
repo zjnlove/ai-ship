@@ -349,7 +349,7 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
   },
   // Runway AI models
   {
-    label: 'Runway Video Generation',
+    label: 'Runway',
     provider: 'kie',
     brand: 'runway',
     modelPath: 'runway-video-generation',
