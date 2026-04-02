@@ -27,6 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/shared/components/ui/popover';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import {
   Select,
   SelectContent,
@@ -770,453 +771,461 @@ export function VideoGenerator({
 
   return (
     <section className={cn('relative pb-10', className)}>
-      <ParticleBackground />
+      <ScrollAnimation>
+        <ParticleBackground />
 
-      <div className="relative z-10 container">
-        <div className="mx-auto max-w-5xl">
-          {/* 主容器 - 渐变背景 + 磨砂玻璃 */}
-          <motion.div
-            layout
-            className="from-primary/5 via-background to-primary/10 border-primary/10 shadow-primary/5 relative overflow-hidden rounded-3xl border bg-gradient-to-br shadow-xl backdrop-blur-xl"
-          >
-            <div className="p-6 md:p-8">
-              {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-              {/* 输入区域 */}
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
-                {/* 上传区域 - 固定高度 */}
-                <div className="flex min-h-[160px] items-start justify-center">
-                  {isImageToVideoMode ? (
-                    <div>
-                      <ImageUploader
-                        title={t('form.reference_image')}
-                        allowMultiple={true}
-                        maxImages={
-                          imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                            ? 2
-                            : 3
-                        }
-                        maxSizeMB={maxSizeMB}
-                        onChange={handleReferenceImagesChange}
-                        emptyHint={
-                          imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                            ? '请上传首帧和尾帧图片（共2张）'
-                            : t('form.reference_image_placeholder')
-                        }
-                        imageWidth="w-25"
-                        imageHeight="h-32"
-                      />
-                    </div>
-                  ) : isVideoToVideoMode ? (
-                    <div className="w-full md:w-64">
-                      <Label htmlFor="video-url" className="mb-2 block text-sm">
-                        {t('form.reference_video')}
-                      </Label>
-                      <Textarea
-                        id="video-url"
-                        value={referenceVideoUrl}
-                        onChange={(e) => setReferenceVideoUrl(e.target.value)}
-                        placeholder={t('form.reference_video_placeholder')}
-                        className="bg-background border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
-                      />
-                    </div>
-                  ) : null}
+        <div className="relative z-10 container">
+          <div className="mx-auto max-w-5xl">
+            {/* 主容器 - 渐变背景 + 磨砂玻璃 */}
+            <motion.div
+              layout
+              className="from-primary/5 via-background to-primary/10 border-primary/10 shadow-primary/5 relative overflow-hidden rounded-3xl border bg-gradient-to-br shadow-xl backdrop-blur-xl"
+            >
+              <div className="p-6 md:p-8">
+                {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
+                {/* 输入区域 */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
+                  {/* 上传区域 - 固定高度 */}
+                  <div className="flex min-h-[160px] items-start justify-center">
+                    {isImageToVideoMode ? (
+                      <div>
+                        <ImageUploader
+                          title={t('form.reference_image')}
+                          allowMultiple={true}
+                          maxImages={
+                            imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                              ? 2
+                              : 3
+                          }
+                          maxSizeMB={maxSizeMB}
+                          onChange={handleReferenceImagesChange}
+                          emptyHint={
+                            imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                              ? '请上传首帧和尾帧图片（共2张）'
+                              : t('form.reference_image_placeholder')
+                          }
+                          imageWidth="w-25"
+                          imageHeight="h-32"
+                        />
+                      </div>
+                    ) : isVideoToVideoMode ? (
+                      <div className="w-full md:w-64">
+                        <Label
+                          htmlFor="video-url"
+                          className="mb-2 block text-sm"
+                        >
+                          {t('form.reference_video')}
+                        </Label>
+                        <Textarea
+                          id="video-url"
+                          value={referenceVideoUrl}
+                          onChange={(e) => setReferenceVideoUrl(e.target.value)}
+                          placeholder={t('form.reference_video_placeholder')}
+                          className="bg-background border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {/* 提示词输入区 */}
+                  <div className="space-y-2">
+                    <Textarea
+                      id="video-prompt"
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder={t('form.prompt_placeholder')}
+                      className="placeholder:text-muted-foreground/60 min-h-32 border-0 transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      style={{ backgroundColor: 'transparent' }}
+                    />
+                    {isPromptTooLong && (
+                      <div className="text-destructive text-xs">
+                        {t('form.prompt_too_long')}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* 提示词输入区 */}
-                <div className="space-y-2">
-                  <Textarea
-                    id="video-prompt"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder={t('form.prompt_placeholder')}
-                    className="placeholder:text-muted-foreground/60 min-h-32 border-0 transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                    style={{ backgroundColor: 'transparent' }}
-                  />
-                  {isPromptTooLong && (
-                    <div className="text-destructive text-xs">
-                      {t('form.prompt_too_long')}
-                    </div>
-                  )}
-                </div>
-              </div>
+                {/* 底部功能栏 */}
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  {/* 生成方式下拉 */}
+                  <Select value={activeTab} onValueChange={handleTabChange}>
+                    <SelectTrigger className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 w-auto min-w-[140px] border backdrop-blur-sm transition-all duration-200 hover:shadow-md">
+                      <SelectValue placeholder="生成方式" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="text-to-video">
+                        📝 Text to Video
+                      </SelectItem>
+                      <SelectItem value="image-to-video">
+                        🖼️ Image to Video
+                      </SelectItem>
+                      <SelectItem value="video-to-video">
+                        🎬 Video to Video
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
 
-              {/* 底部功能栏 */}
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                {/* 生成方式下拉 */}
-                <Select value={activeTab} onValueChange={handleTabChange}>
-                  <SelectTrigger className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 w-auto min-w-[140px] border backdrop-blur-sm transition-all duration-200 hover:shadow-md">
-                    <SelectValue placeholder="生成方式" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="text-to-video">
-                      📝 Text to Video
-                    </SelectItem>
-                    <SelectItem value="image-to-video">
-                      🖼️ Image to Video
-                    </SelectItem>
-                    <SelectItem value="video-to-video">
-                      🎬 Video to Video
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* 模型选择弹出框 */}
-                <Popover
-                  open={modelPopoverOpen}
-                  onOpenChange={setModelPopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
-                    >
-                      <span className="flex items-center gap-2">
-                        {selectedModelConfig?.label || 'Select Model'}
-                      </span>
-                      <ChevronUp className="ml-2 h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-96" side="top" align="start">
-                    <div className="grid grid-cols-[120px_1fr] gap-2">
-                      {/* 左侧：提供商列表 */}
-                      <div className="border-border space-y-1 border-r pr-2">
-                        <p className="text-muted-foreground mb-2 px-2 text-xs">
-                          Providers
-                        </p>
-                        {PROVIDER_OPTIONS.map((p) => (
-                          <button
-                            key={p.value}
-                            onClick={() => handleProviderChange(p.value)}
-                            className={cn(
-                              'flex w-full items-center gap-2 rounded-lg p-2 text-sm',
-                              'hover:bg-accent hover:text-accent-foreground transition-colors',
-                              provider === p.value &&
-                                'bg-primary/20 text-primary font-medium'
-                            )}
-                          >
-                            {p.label}
-                          </button>
-                        ))}
-                      </div>
-                      {/* 右侧：模型列表 */}
-                      <div className="max-h-60 space-y-1 overflow-y-auto">
-                        <p className="text-muted-foreground mb-2 px-2 text-xs">
-                          Models
-                        </p>
-                        {MODEL_OPTIONS.filter(
-                          (m) =>
-                            m.sceneValues?.[activeTab] !== undefined &&
-                            m.brand === provider
-                        ).map((m) => (
-                          <button
-                            key={m.label}
-                            onClick={() => {
-                              setModel(m.sceneValues?.[activeTab] ?? '');
-                              setModelPopoverOpen(false);
-                            }}
-                            className={cn(
-                              'flex w-full items-center justify-between rounded-lg p-2 text-sm',
-                              'hover:bg-accent hover:text-accent-foreground transition-colors',
-                              model === m.sceneValues?.[activeTab] &&
-                                'bg-primary/20 text-primary font-medium'
-                            )}
-                          >
-                            <span>{m.label}</span>
-                            {m.credits?.[activeTab] && (
-                              <span className="text-muted-foreground text-xs">
-                                {m.credits[activeTab]} 积分
-                              </span>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                {/* 高级参数弹出框 */}
-                {advancedTypes.length > 0 && (
+                  {/* 模型选择弹出框 */}
                   <Popover
-                    open={advancedPopoverOpen}
-                    onOpenChange={setAdvancedPopoverOpen}
+                    open={modelPopoverOpen}
+                    onOpenChange={setModelPopoverOpen}
                   >
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-1 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
                       >
-                        {advancedTypes.includes('duration') && (
-                          <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                            {advancedOptions.duration ??
-                              selectedModelConfig?.defaultOptions?.duration ??
-                              '10'}
-                            s
-                          </span>
-                        )}
-                        {advancedTypes.includes('aspectRatio') && (
-                          <>
-                            <span className="text-muted-foreground">|</span>
-                            <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                              {advancedOptions.aspectRatio ??
-                                selectedModelConfig?.defaultOptions
-                                  ?.aspect_ratio ??
-                                '16:9'}
-                            </span>
-                          </>
-                        )}
-                        {advancedTypes.includes('resolution') && (
-                          <>
-                            <span className="text-muted-foreground">|</span>
-                            <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                              {advancedOptions.resolution ??
-                                selectedModelConfig?.defaultOptions
-                                  ?.resolution ??
-                                '720p'}
-                            </span>
-                          </>
-                        )}
-                        <Settings className="ml-1 h-4 w-4" />
+                        <span className="flex items-center gap-2">
+                          {selectedModelConfig?.label || 'Select Model'}
+                        </span>
+                        <ChevronUp className="ml-2 h-4 w-4" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-72" side="top" align="start">
-                      <div className="space-y-4">
-                        {advancedTypes.map((type: VideoOptionType) => {
-                          const options = getVideoOptionsForType(type);
-                          const label = getVideoOptionLabel(type);
-                          const currentValue =
-                            advancedOptions[type] ??
-                            selectedModelConfig?.defaultOptions?.[
-                              type === 'aspectRatio'
-                                ? 'aspect_ratio'
-                                : type === 'motionStrength'
-                                  ? 'motion_strength'
-                                  : type
-                            ] ??
-                            options[0]?.value;
-
-                          return (
-                            <div key={type} className="space-y-2">
-                              <Label className="text-xs">{label}</Label>
-                              <Select
-                                value={currentValue}
-                                onValueChange={(value) =>
-                                  setAdvancedOptions((prev) => ({
-                                    ...prev,
-                                    [type]: value,
-                                  }))
-                                }
-                              >
-                                <SelectTrigger className="w-full">
-                                  <SelectValue
-                                    placeholder={`Select ${label.toLowerCase()}`}
-                                  />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {options.map((option) => (
-                                    <SelectItem
-                                      key={option.value}
-                                      value={option.value}
-                                    >
-                                      {option.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          );
-                        })}
+                    <PopoverContent className="w-96" side="top" align="start">
+                      <div className="grid grid-cols-[120px_1fr] gap-2">
+                        {/* 左侧：提供商列表 */}
+                        <div className="border-border space-y-1 border-r pr-2">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Providers
+                          </p>
+                          {PROVIDER_OPTIONS.map((p) => (
+                            <button
+                              key={p.value}
+                              onClick={() => handleProviderChange(p.value)}
+                              className={cn(
+                                'flex w-full items-center gap-2 rounded-lg p-2 text-sm',
+                                'hover:bg-accent hover:text-accent-foreground transition-colors',
+                                provider === p.value &&
+                                  'bg-primary/20 text-primary font-medium'
+                              )}
+                            >
+                              {p.label}
+                            </button>
+                          ))}
+                        </div>
+                        {/* 右侧：模型列表 */}
+                        <div className="max-h-60 space-y-1 overflow-y-auto">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Models
+                          </p>
+                          {MODEL_OPTIONS.filter(
+                            (m) =>
+                              m.sceneValues?.[activeTab] !== undefined &&
+                              m.brand === provider
+                          ).map((m) => (
+                            <button
+                              key={m.label}
+                              onClick={() => {
+                                setModel(m.sceneValues?.[activeTab] ?? '');
+                                setModelPopoverOpen(false);
+                              }}
+                              className={cn(
+                                'flex w-full items-center justify-between rounded-lg p-2 text-sm',
+                                'hover:bg-accent hover:text-accent-foreground transition-colors',
+                                model === m.sceneValues?.[activeTab] &&
+                                  'bg-primary/20 text-primary font-medium'
+                              )}
+                            >
+                              <span>{m.label}</span>
+                              {m.credits?.[activeTab] && (
+                                <span className="text-muted-foreground text-xs">
+                                  {m.credits[activeTab]} 积分
+                                </span>
+                              )}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </PopoverContent>
                   </Popover>
-                )}
 
-                {/* 积分信息 */}
-                <div className="ml-auto flex items-center gap-2 text-sm">
-                  {!isMounted ? (
-                    <span>{t('credits_remaining', { credits: 0 })}</span>
-                  ) : user && remainingCredits > 0 ? (
-                    <span>
-                      {t('credits_remaining', { credits: remainingCredits })}
-                    </span>
-                  ) : (
-                    <>
+                  {/* 高级参数弹出框 */}
+                  {advancedTypes.length > 0 && (
+                    <Popover
+                      open={advancedPopoverOpen}
+                      onOpenChange={setAdvancedPopoverOpen}
+                    >
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-1 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                        >
+                          {advancedTypes.includes('duration') && (
+                            <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                              {advancedOptions.duration ??
+                                selectedModelConfig?.defaultOptions?.duration ??
+                                '10'}
+                              s
+                            </span>
+                          )}
+                          {advancedTypes.includes('aspectRatio') && (
+                            <>
+                              <span className="text-muted-foreground">|</span>
+                              <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                {advancedOptions.aspectRatio ??
+                                  selectedModelConfig?.defaultOptions
+                                    ?.aspect_ratio ??
+                                  '16:9'}
+                              </span>
+                            </>
+                          )}
+                          {advancedTypes.includes('resolution') && (
+                            <>
+                              <span className="text-muted-foreground">|</span>
+                              <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                {advancedOptions.resolution ??
+                                  selectedModelConfig?.defaultOptions
+                                    ?.resolution ??
+                                  '720p'}
+                              </span>
+                            </>
+                          )}
+                          <Settings className="ml-1 h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-72" side="top" align="start">
+                        <div className="space-y-4">
+                          {advancedTypes.map((type: VideoOptionType) => {
+                            const options = getVideoOptionsForType(type);
+                            const label = getVideoOptionLabel(type);
+                            const currentValue =
+                              advancedOptions[type] ??
+                              selectedModelConfig?.defaultOptions?.[
+                                type === 'aspectRatio'
+                                  ? 'aspect_ratio'
+                                  : type === 'motionStrength'
+                                    ? 'motion_strength'
+                                    : type
+                              ] ??
+                              options[0]?.value;
+
+                            return (
+                              <div key={type} className="space-y-2">
+                                <Label className="text-xs">{label}</Label>
+                                <Select
+                                  value={currentValue}
+                                  onValueChange={(value) =>
+                                    setAdvancedOptions((prev) => ({
+                                      ...prev,
+                                      [type]: value,
+                                    }))
+                                  }
+                                >
+                                  <SelectTrigger className="w-full">
+                                    <SelectValue
+                                      placeholder={`Select ${label.toLowerCase()}`}
+                                    />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {options.map((option) => (
+                                      <SelectItem
+                                        key={option.value}
+                                        value={option.value}
+                                      >
+                                        {option.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+
+                  {/* 积分信息 */}
+                  <div className="ml-auto flex items-center gap-2 text-sm">
+                    {!isMounted ? (
+                      <span>{t('credits_remaining', { credits: 0 })}</span>
+                    ) : user && remainingCredits > 0 ? (
                       <span>
                         {t('credits_remaining', { credits: remainingCredits })}
                       </span>
-                      <Link href="/pricing">
-                        <Button
-                          variant="link"
-                          size="sm"
-                          className="text-primary h-auto p-0"
-                        >
-                          {t('buy_credits')}
-                        </Button>
-                      </Link>
-                    </>
+                    ) : (
+                      <>
+                        <span>
+                          {t('credits_remaining', {
+                            credits: remainingCredits,
+                          })}
+                        </span>
+                        <Link href="/pricing">
+                          <Button
+                            variant="link"
+                            size="sm"
+                            className="text-primary h-auto p-0"
+                          >
+                            {t('buy_credits')}
+                          </Button>
+                        </Link>
+                      </>
+                    )}
+                  </div>
+
+                  {/* 生成按钮 */}
+                  {!isMounted ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('loading')}
+                    </Button>
+                  ) : isCheckSign ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('checking_account')}
+                    </Button>
+                  ) : user ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                      onClick={handleGenerate}
+                      disabled={
+                        isGenerating ||
+                        (isTextToVideoMode && !prompt.trim()) ||
+                        isPromptTooLong ||
+                        isReferenceUploading ||
+                        hasReferenceUploadError ||
+                        (isImageToVideoMode &&
+                          referenceImageUrls.length === 0) ||
+                        (isVideoToVideoMode && !referenceVideoUrl)
+                      }
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          {t('generating')}
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-4 w-4" />
+                          Generate
+                          <span className="ml-2 text-xs opacity-80">
+                            {costCredits}积分
+                          </span>
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                      onClick={() => setIsShowSignModal(true)}
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      {t('sign_in_to_generate')}
+                    </Button>
                   )}
                 </div>
 
-                {/* 生成按钮 */}
-                {!isMounted ? (
-                  <Button
-                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
-                    disabled
-                  >
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('loading')}
-                  </Button>
-                ) : isCheckSign ? (
-                  <Button
-                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
-                    disabled
-                  >
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('checking_account')}
-                  </Button>
-                ) : user ? (
-                  <Button
-                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
-                    onClick={handleGenerate}
-                    disabled={
-                      isGenerating ||
-                      (isTextToVideoMode && !prompt.trim()) ||
-                      isPromptTooLong ||
-                      isReferenceUploading ||
-                      hasReferenceUploadError ||
-                      (isImageToVideoMode && referenceImageUrls.length === 0) ||
-                      (isVideoToVideoMode && !referenceVideoUrl)
-                    }
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {t('generating')}
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        Generate
-                        <span className="ml-2 text-xs opacity-80">
-                          {costCredits}积分
-                        </span>
-                      </>
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
-                    onClick={() => setIsShowSignModal(true)}
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    {t('sign_in_to_generate')}
-                  </Button>
-                )}
-              </div>
-
-              {/* 视频预览区域 - 渐进式显示 */}
-              <AnimatePresence>
-                {showPreview && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0, y: 20 }}
-                    animate={{ opacity: 1, height: 'auto', y: 0 }}
-                    exit={{ opacity: 0, height: 0, y: 20 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.4, 0, 0.2, 1],
-                    }}
-                    className="overflow-hidden"
-                  >
-                    <div className="border-primary/10 mt-6 border-t pt-6">
-                      <AnimatePresence mode="wait">
-                        {isGenerating ? (
-                          <motion.div
-                            key="progress"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                            className="space-y-4"
-                          >
-                            <div className="text-center">
-                              <p className="mb-2 text-lg font-medium">
-                                ⏳ 生成中...
-                              </p>
-                              <ProgressBar progress={progress} />
-                              <p className="text-muted-foreground mt-3 text-sm">
-                                {taskStatusLabel}
-                              </p>
-                              <p className="text-primary mt-2 text-2xl font-bold">
-                                {progress}%
-                              </p>
-                            </div>
-                          </motion.div>
-                        ) : generatedVideos.length > 0 ? (
-                          <motion.div
-                            key="result"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="space-y-4"
-                          >
-                            {generatedVideos.map((video) => (
-                              <div key={video.id} className="space-y-3">
-                                <div className="border-primary/20 relative overflow-hidden rounded-2xl border bg-black/5">
-                                  <video
-                                    src={video.url}
-                                    controls
-                                    className="h-auto w-full"
-                                    preload="metadata"
-                                  />
-                                </div>
-                                <div className="flex items-center justify-center gap-3">
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleShareVideo(video)}
-                                    className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
-                                  >
-                                    <Share2 className="mr-2 h-4 w-4" />
-                                    分享
-                                  </Button>
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleDownloadVideo(video)}
-                                    disabled={downloadingVideoId === video.id}
-                                    className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
-                                  >
-                                    {downloadingVideoId === video.id ? (
-                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    ) : (
-                                      <Download className="mr-2 h-4 w-4" />
-                                    )}
-                                    下载
-                                  </Button>
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => {
-                                      setShowPreview(false);
-                                      setGeneratedVideos([]);
-                                    }}
-                                    className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
-                                  >
-                                    🔄 重新生成
-                                  </Button>
-                                </div>
+                {/* 视频预览区域 - 渐进式显示 */}
+                <AnimatePresence>
+                  {showPreview && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, y: 20 }}
+                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      exit={{ opacity: 0, height: 0, y: 20 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-primary/10 mt-6 border-t pt-6">
+                        <AnimatePresence mode="wait">
+                          {isGenerating ? (
+                            <motion.div
+                              key="progress"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                              className="space-y-4"
+                            >
+                              <div className="text-center">
+                                <p className="mb-2 text-lg font-medium">
+                                  ⏳ 生成中...
+                                </p>
+                                <ProgressBar progress={progress} />
+                                <p className="text-muted-foreground mt-3 text-sm">
+                                  {taskStatusLabel}
+                                </p>
+                                <p className="text-primary mt-2 text-2xl font-bold">
+                                  {progress}%
+                                </p>
                               </div>
-                            ))}
-                          </motion.div>
-                        ) : null}
-                      </AnimatePresence>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
+                            </motion.div>
+                          ) : generatedVideos.length > 0 ? (
+                            <motion.div
+                              key="result"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="space-y-4"
+                            >
+                              {generatedVideos.map((video) => (
+                                <div key={video.id} className="space-y-3">
+                                  <div className="border-primary/20 relative overflow-hidden rounded-2xl border bg-black/5">
+                                    <video
+                                      src={video.url}
+                                      controls
+                                      className="h-auto w-full"
+                                      preload="metadata"
+                                    />
+                                  </div>
+                                  <div className="flex items-center justify-center gap-3">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleShareVideo(video)}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      <Share2 className="mr-2 h-4 w-4" />
+                                      分享
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleDownloadVideo(video)}
+                                      disabled={downloadingVideoId === video.id}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      {downloadingVideoId === video.id ? (
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                      ) : (
+                                        <Download className="mr-2 h-4 w-4" />
+                                      )}
+                                      下载
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        setShowPreview(false);
+                                        setGeneratedVideos([]);
+                                      }}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      🔄 重新生成
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                            </motion.div>
+                          ) : null}
+                        </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }
