@@ -781,11 +781,10 @@ export function VideoGenerator({
           >
             <div className="p-6 md:p-8">
               {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-
               {/* 输入区域 */}
               <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
-                {/* 上传区域 */}
-                <div className="flex items-start justify-center">
+                {/* 上传区域 - 固定高度 */}
+                <div className="flex min-h-[160px] items-start justify-center">
                   {isImageToVideoMode ? (
                     <div>
                       <ImageUploader
@@ -803,6 +802,8 @@ export function VideoGenerator({
                             ? '请上传首帧和尾帧图片（共2张）'
                             : t('form.reference_image_placeholder')
                         }
+                        imageWidth="w-25"
+                        imageHeight="h-32"
                       />
                     </div>
                   ) : isVideoToVideoMode ? (
@@ -979,7 +980,6 @@ export function VideoGenerator({
                     </PopoverTrigger>
                     <PopoverContent className="w-72" side="top" align="start">
                       <div className="space-y-4">
-                        <p className="text-sm font-medium">Advanced Settings</p>
                         {advancedTypes.map((type: VideoOptionType) => {
                           const options = getVideoOptionsForType(type);
                           const label = getVideoOptionLabel(type);

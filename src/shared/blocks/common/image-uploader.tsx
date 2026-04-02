@@ -28,6 +28,8 @@ interface ImageUploaderProps {
   defaultPreviews?: string[];
   onChange?: (items: ImageUploaderValue[]) => void;
   onBeforeUpload?: () => boolean;
+  imageWidth?: string;
+  imageHeight?: string;
 }
 
 interface UploadItem extends ImageUploaderValue {
@@ -76,6 +78,8 @@ export function ImageUploader({
   defaultPreviews,
   onChange,
   onBeforeUpload,
+  imageWidth = 'w-32',
+  imageHeight = 'h-32',
 }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isInitializedRef = useRef(false);
@@ -510,7 +514,11 @@ export function ImageUploader({
               <img
                 src={item.preview}
                 alt="Reference"
-                className="h-32 w-32 rounded-lg object-cover"
+                className={cn(
+                  imageHeight,
+                  imageWidth,
+                  'rounded-lg object-cover'
+                )}
               />
               {item.size && (
                 <span className="bg-background text-muted-foreground absolute bottom-2 left-2 rounded-md px-2 py-1 text-[10px] font-medium">
@@ -559,13 +567,17 @@ export function ImageUploader({
             <div className="relative overflow-hidden rounded-lg">
               <button
                 type="button"
-                className="flex h-32 w-32 flex-col items-center justify-center gap-2"
+                className={cn(
+                  'flex flex-col items-center justify-center gap-2',
+                  imageHeight,
+                  imageWidth
+                )}
                 onClick={openFilePicker}
               >
                 <div className="border-border flex h-10 w-10 items-center justify-center rounded-full border border-dashed">
                   <IconUpload className="h-5 w-5" />
                 </div>
-                <span className="text-xs font-medium">Upload</span>
+                {/* <span className="text-xs font-medium">Upload</span> */}
                 <span className="text-primary text-xs">Max {maxSizeMB}MB</span>
               </button>
             </div>
