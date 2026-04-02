@@ -773,7 +773,7 @@ export function VideoGenerator({
       <ParticleBackground />
 
       <div className="relative z-10 container">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           {/* 主容器 - 渐变背景 + 磨砂玻璃 */}
           <motion.div
             layout
@@ -784,12 +784,12 @@ export function VideoGenerator({
 
               {/* 输入区域 */}
               <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
-                {/* 上传区域 - 左倾30度 */}
+                {/* 上传区域 */}
                 <div className="flex items-start justify-center">
                   {isImageToVideoMode ? (
-                    <div className="-skew-x-[30deg] transform">
+                    <div>
                       <ImageUploader
-                        title=""
+                        title={t('form.reference_image')}
                         allowMultiple={true}
                         maxImages={
                           imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
@@ -798,7 +798,11 @@ export function VideoGenerator({
                         }
                         maxSizeMB={maxSizeMB}
                         onChange={handleReferenceImagesChange}
-                        emptyHint=""
+                        emptyHint={
+                          imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                            ? '请上传首帧和尾帧图片（共2张）'
+                            : t('form.reference_image_placeholder')
+                        }
                       />
                     </div>
                   ) : isVideoToVideoMode ? (
@@ -815,41 +819,32 @@ export function VideoGenerator({
                       />
                     </div>
                   ) : (
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-muted/50 border-primary/30 hover:bg-muted hover:border-primary/50 group flex h-24 w-24 -skew-x-[30deg] transform cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed transition-all duration-300"
-                      onClick={() => {
-                        /* 可以添加上传逻辑 */
-                      }}
-                    >
-                      <Plus className="text-primary/60 group-hover:text-primary h-8 w-8 skew-x-[30deg] transition-all duration-300 group-hover:scale-110" />
-                    </motion.button>
+                    <div className="w-full md:w-64">
+                      <ImageUploader
+                        title=""
+                        allowMultiple={true}
+                        maxImages={3}
+                        maxSizeMB={maxSizeMB}
+                        onChange={handleReferenceImagesChange}
+                      />
+                    </div>
                   )}
                 </div>
 
                 {/* 提示词输入区 */}
                 <div className="space-y-2">
-                  <Label htmlFor="video-prompt" className="text-sm font-medium">
-                    {t('form.prompt')}
-                  </Label>
                   <Textarea
                     id="video-prompt"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={t('form.prompt_placeholder')}
-                    className="bg-background/50 border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-32 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
+                    className="bg-background/50 placeholder:text-muted-foreground/60 min-h-32 border-0 backdrop-blur-sm transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
-                  <div className="text-muted-foreground flex items-center justify-between text-xs">
-                    <span>
-                      {promptLength} / {MAX_PROMPT_LENGTH}
-                    </span>
-                    {isPromptTooLong && (
-                      <span className="text-destructive">
-                        {t('form.prompt_too_long')}
-                      </span>
-                    )}
-                  </div>
+                  {isPromptTooLong && (
+                    <div className="text-destructive text-xs">
+                      {t('form.prompt_too_long')}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -889,7 +884,7 @@ export function VideoGenerator({
                       <ChevronUp className="ml-2 h-4 w-4" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-80" side="top" align="start">
+                  <PopoverContent className="w-96" side="top" align="start">
                     <div className="grid grid-cols-[120px_1fr] gap-2">
                       {/* 左侧：提供商列表 */}
                       <div className="border-border space-y-1 border-r pr-2">
@@ -902,9 +897,9 @@ export function VideoGenerator({
                             onClick={() => handleProviderChange(p.value)}
                             className={cn(
                               'flex w-full items-center gap-2 rounded-lg p-2 text-sm',
-                              'hover:bg-muted transition-colors',
+                              'hover:bg-accent hover:text-accent-foreground transition-colors',
                               provider === p.value &&
-                                'bg-primary/10 text-primary'
+                                'bg-primary/20 text-primary font-medium'
                             )}
                           >
                             {p.label}
@@ -929,15 +924,15 @@ export function VideoGenerator({
                             }}
                             className={cn(
                               'flex w-full items-center justify-between rounded-lg p-2 text-sm',
-                              'hover:bg-muted transition-colors',
+                              'hover:bg-accent hover:text-accent-foreground transition-colors',
                               model === m.sceneValues?.[activeTab] &&
-                                'bg-primary/10 text-primary'
+                                'bg-primary/20 text-primary font-medium'
                             )}
                           >
                             <span>{m.label}</span>
                             {m.credits?.[activeTab] && (
-                              <span className="text-primary text-xs">
-                                {m.credits[activeTab]} credits
+                              <span className="text-muted-foreground text-xs">
+                                {m.credits[activeTab]} 积分
                               </span>
                             )}
                           </button>
@@ -1044,43 +1039,52 @@ export function VideoGenerator({
                   </Popover>
                 )}
 
-                {/* 剩余积分 */}
+                {/* 积分信息 */}
                 <div className="ml-auto flex items-center gap-2 text-sm">
-                  <span className="text-muted-foreground">剩余:</span>
-                  <span className="text-primary font-semibold">
-                    {remainingCredits}
-                  </span>
-                  <Link href="/pricing">
-                    <Button
-                      variant="link"
-                      size="sm"
-                      className="text-primary h-auto p-0"
-                    >
-                      充值
-                    </Button>
-                  </Link>
+                  {!isMounted ? (
+                    <span>{t('credits_remaining', { credits: 0 })}</span>
+                  ) : user && remainingCredits > 0 ? (
+                    <span>
+                      {t('credits_remaining', { credits: remainingCredits })}
+                    </span>
+                  ) : (
+                    <>
+                      <span>
+                        {t('credits_remaining', { credits: remainingCredits })}
+                      </span>
+                      <Link href="/pricing">
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="text-primary h-auto p-0"
+                        >
+                          {t('buy_credits')}
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </div>
 
                 {/* 生成按钮 */}
                 {!isMounted ? (
                   <Button
-                    className="from-primary to-primary/80 rounded-l-lg rounded-r-full bg-gradient-to-r px-8 text-lg font-bold transition-all duration-300"
+                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
                     disabled
                   >
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     {t('loading')}
                   </Button>
                 ) : isCheckSign ? (
                   <Button
-                    className="from-primary to-primary/80 rounded-l-lg rounded-r-full bg-gradient-to-r px-8 text-lg font-bold transition-all duration-300"
+                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
                     disabled
                   >
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     {t('checking_account')}
                   </Button>
                 ) : user ? (
                   <Button
-                    className="from-primary to-primary/80 rounded-l-lg rounded-r-full bg-gradient-to-r px-8 text-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_oklch(0.55_0.2_270_/_0.5)]"
+                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
                     onClick={handleGenerate}
                     disabled={
                       isGenerating ||
@@ -1094,25 +1098,25 @@ export function VideoGenerator({
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         {t('generating')}
                       </>
                     ) : (
                       <>
-                        <Sparkles className="mr-2 h-5 w-5" />
+                        <Sparkles className="mr-2 h-4 w-4" />
                         Generate
-                        <span className="ml-2 text-sm opacity-80">
-                          -{costCredits}积分
+                        <span className="ml-2 text-xs opacity-80">
+                          {costCredits}积分
                         </span>
                       </>
                     )}
                   </Button>
                 ) : (
                   <Button
-                    className="from-primary to-primary/80 rounded-l-lg rounded-r-full bg-gradient-to-r px-8 text-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_oklch(0.55_0.2_270_/_0.5)]"
+                    className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
                     onClick={() => setIsShowSignModal(true)}
                   >
-                    <User className="mr-2 h-5 w-5" />
+                    <User className="mr-2 h-4 w-4" />
                     {t('sign_in_to_generate')}
                   </Button>
                 )}
