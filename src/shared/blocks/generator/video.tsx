@@ -950,36 +950,51 @@ export function VideoGenerator({
                           variant="outline"
                           className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-1 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
                         >
-                          {advancedTypes.includes('duration') && (
-                            <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                              {advancedOptions.duration ??
-                                selectedModelConfig?.defaultOptions?.duration ??
-                                '10'}
-                              s
-                            </span>
-                          )}
-                          {advancedTypes.includes('aspectRatio') && (
-                            <>
-                              <span className="text-muted-foreground">|</span>
-                              <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                {advancedOptions.aspectRatio ??
-                                  selectedModelConfig?.defaultOptions
-                                    ?.aspect_ratio ??
-                                  '16:9'}
+                          {(() => {
+                            const visibleTypes = advancedTypes.filter(
+                              (type) =>
+                                type === 'duration' ||
+                                type === 'aspectRatio' ||
+                                type === 'resolution'
+                            );
+                            return visibleTypes.map((type, index) => (
+                              <span
+                                key={type}
+                                className="flex items-center gap-1"
+                              >
+                                {index > 0 && (
+                                  <span className="text-muted-foreground">
+                                    |
+                                  </span>
+                                )}
+                                {type === 'duration' && (
+                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                    {advancedOptions.duration ??
+                                      selectedModelConfig?.defaultOptions
+                                        ?.duration ??
+                                      '10'}
+                                    s
+                                  </span>
+                                )}
+                                {type === 'aspectRatio' && (
+                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                    {advancedOptions.aspectRatio ??
+                                      selectedModelConfig?.defaultOptions
+                                        ?.aspect_ratio ??
+                                      '16:9'}
+                                  </span>
+                                )}
+                                {type === 'resolution' && (
+                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                    {advancedOptions.resolution ??
+                                      selectedModelConfig?.defaultOptions
+                                        ?.resolution ??
+                                      '720p'}
+                                  </span>
+                                )}
                               </span>
-                            </>
-                          )}
-                          {advancedTypes.includes('resolution') && (
-                            <>
-                              <span className="text-muted-foreground">|</span>
-                              <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                {advancedOptions.resolution ??
-                                  selectedModelConfig?.defaultOptions
-                                    ?.resolution ??
-                                  '720p'}
-                              </span>
-                            </>
-                          )}
+                            ));
+                          })()}
                           <Settings className="ml-1 h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
