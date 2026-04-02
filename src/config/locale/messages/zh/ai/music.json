@@ -1,11 +1,264 @@
 {
   "metadata": {
     "title": "AI 音乐生成器",
-    "description": "使用 AI 音乐模型生成音乐，支持音乐到音乐和文本到音乐。"
+    "description": "使用 AI 生成美妙的音乐"
   },
   "page": {
-    "title": "AI 音乐生成器",
-    "description": "使用 AI 音乐模型生成音乐，支持音乐到音乐和文本到音乐。"
+    "sections": {
+      "hero": {
+        "title": "AI 音乐生成器",
+        "highlight_text": "AI 音乐生成器",
+        "description": "使用 Marble AI 释放您的创造力。使用世界上最先进的 AI 模型，从文本描述生成惊艳的专业品质音乐。",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "由领先的 AI 模型驱动",
+        "highlight_text": "领先的 AI 模型",
+        "label": "AI 模型",
+        "description": "Marble AI 集成了最强大的音乐生成 AI 模型，让您在一个平台上就能使用尖端的文本转音乐技术。",
+        "image": {
+          "src": "/imgs/models/music/suno.png",
+          "alt": "Marble AI 音乐生成器"
+        },
+        "items": [
+          {
+            "title": "Suno",
+            "description": "Suno 的 AI 音乐模型提供专业品质的音乐生成，支持人声、乐器和多种风格。",
+            "icon": "RiMusicLine",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "Suno"
+            }
+          },
+          {
+            "title": "Udio",
+            "description": "Udio 的音乐生成模型擅长创建富有表现力、高保真的音乐，具有自然的人声和丰富的乐器编排。",
+            "icon": "RiSoundModuleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Udio"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "为什么选择 Marble AI 音乐生成器？",
+        "highlight_text": "音乐生成器",
+        "description": "体验最强大、最通用的 AI 音乐生成平台，具有无与伦比的质量和创造力。",
+        "items": [
+          {
+            "title": "多种 AI 模型",
+            "description": "在一个平台上访问领先的音乐生成模型，包括 Suno 和 Udio。",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "文本转音乐",
+            "description": "使用世界上最先进的 AI 模型，从文本描述生成惊艳音乐。",
+            "icon": "RiText"
+          },
+          {
+            "title": "自定义歌词",
+            "description": "编写自己的歌词或让 AI 通过智能内容创作为您生成。",
+            "icon": "RiQuillPenLine"
+          },
+          {
+            "title": "多种风格",
+            "description": "创建任何风格的音乐，从流行、摇滚到古典和电子。",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "闪电般快速",
+            "description": "使用我们的优化基础设施，在几分钟内生成专业品质的音乐。",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "录音室品质",
+            "description": "创建具有专业级音频品质和制作的高保真音乐。",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "商业许可",
+            "description": "所有生成音乐的完整商业权利。无限制地在任何地方使用。",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "人声和乐器",
+            "description": "生成具有自然人声和丰富乐器编排的完整歌曲。",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "API 访问",
+            "description": "为开发者提供无缝的 API 集成，构建 AI 驱动的音乐应用程序。",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "创作者对 Marble AI 音乐生成器的评价",
+        "highlight_text": "创作者评价",
+        "description": "加入数千名信任 Marble AI 满足其音乐生成需求的音乐家、制作人和创作者。",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "音乐制作人",
+            "quote": "Marble AI 彻底改变了我的音乐制作工作流程。在一个地方拥有 Suno 和 Udio 为我节省了在工具之间切换的 hours。质量非常出色！",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "营销总监",
+            "quote": "我们使用 Marble AI 生成所有活动音乐。商业许可和各种模型为我们提供了专业营销材料所需的一切。",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "游戏开发者",
+            "quote": "Marble AI 上的 Suno 模型为我们的游戏制作了令人难以置信的配乐。细节和一致性正是我们快速原型制作所需要的。",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "内容创作者",
+            "quote": "我尝试过市面上所有的 AI 音乐生成器。Marble AI 以其速度、质量和即时比较不同模型结果的能力脱颖而出。",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "电商企业家",
+            "quote": "Marble AI 帮助我们创建令人惊叹的产品音乐，无需昂贵的录音室录制。自从我们开始使用它以来，转化率提高了 40%！",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "音乐作曲家",
+            "quote": "风格多样性无与伦比。无论我需要流行民谣还是电子节拍，Marble AI 每次都能提供完美的结果。",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "社交媒体经理",
+            "quote": "Marble AI 上的 Suno 创造了我听过最逼真的产品广告曲。自从我们开始使用它以来，Instagram 互动率翻了一番！",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "电影导演",
+            "quote": "批量生成功能改变了游戏规则。我可以在几分钟内探索数十个音乐概念，而不是 hours。对我的工作流程绝对必不可少。",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "初创公司创始人",
+            "quote": "API 集成非常顺畅。我们仅用一周就用 Marble AI 构建了整个产品音乐管道。文档非常出色！",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "自由音乐家",
+            "quote": "作为自由职业者，Marble AI 的商业许可让我安心。我可以为客户创作，无需担心使用权。物有所值！",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "教育内容创作者",
+            "quote": "24/7 支持团队令人难以置信。他们帮助我优化了提示词，现在我正在创建学生们非常喜欢的教育音乐！",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "常见问题 - AI 音乐生成器",
+        "highlight_text": "常见问题",
+        "description": "关于 Marble AI 音乐生成器您需要了解的一切。",
+        "items": [
+          {
+            "title": "什么是 AI 音乐生成？",
+            "description": "AI 音乐生成是一种 AI 驱动的技术，可从文本提示创建音乐。只需提供您的描述，Marble AI 的先进模型就会为您生成惊艳的音乐。"
+          },
+          {
+            "question": "Marble AI 支持哪些 AI 模型？",
+            "answer": "Marble AI 集成了领先的音乐生成模型，包括 Suno 和 Udio。每个模型都有独特的优势，您可以根据特定需求选择最佳模型。"
+          },
+          {
+            "question": "如何使用 Marble AI 的音乐生成器？",
+            "answer": "只需输入您想要的音乐的文本描述，自定义风格和歌词（如果需要），选择您喜欢的 AI 模型，然后点击生成。我们直观的界面让任何人都能在几分钟内创建专业品质的音乐。"
+          },
+          {
+            "question": "我可以期待什么样的音乐品质？",
+            "answer": "Marble AI 生成具有专业级音频的录音室品质音乐。具体输出取决于您选择的模型，但我们所有的模型都针对卓越的音质、自然的人声和丰富的乐器编排进行了优化。"
+          },
+          {
+            "question": "我可以将生成的音乐用于商业用途吗？",
+            "answer": "可以！通过 Marble AI 生成的所有音乐都具有完整的商业权利。您可以将它们用于营销、产品、网站、社交媒体和任何其他商业目的，没有限制。"
+          },
+          {
+            "question": "音乐生成速度有多快？",
+            "answer": "大多数音乐在 2-3 分钟内生成，具体取决于模型和复杂性。我们优化的基础设施确保您快速获得结果，同时不牺牲质量。"
+          },
+          {
+            "question": "我可以自定义生成音乐的歌词吗？",
+            "answer": "当然可以！Marble AI 提供广泛的自定义选项，包括自定义歌词、样式预设和风格选择。您可以完全控制音乐的创意方向。"
+          },
+          {
+            "question": "我可以创建什么风格的音乐？",
+            "answer": "Marble AI 支持多种风格，包括流行、摇滚、古典、电子、爵士、乡村、民谣等。您可以在提示中指定风格，或让 AI 为您的描述选择最佳风格。"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "准备好创建惊艳音乐了吗？",
+        "highlight_text": "惊艳音乐",
+        "description": "开始使用 Marble AI 强大的音乐生成器生成令人惊叹的音乐。从文本描述创建专业品质的歌曲。",
+        "buttons": [
+          {
+            "title": "开始创作",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
   },
   "generator": {
     "title": "音乐生成器",

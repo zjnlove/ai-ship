@@ -1069,11 +1069,11 @@ export function VideoGenerator({
                   <div className="ml-auto flex items-center gap-2 text-sm">
                     {!isMounted ? (
                       <span>{t('credits_remaining', { credits: 0 })}</span>
-                    ) : user && remainingCredits > 0 ? (
+                    ) : user && remainingCredits > 10 ? (
                       <span>
                         {t('credits_remaining', { credits: remainingCredits })}
                       </span>
-                    ) : (
+                    ) : user && remainingCredits <= 10 ? (
                       <>
                         <span>
                           {t('credits_remaining', {
@@ -1090,7 +1090,7 @@ export function VideoGenerator({
                           </Button>
                         </Link>
                       </>
-                    )}
+                    ) : null}
                   </div>
 
                   {/* 生成按钮 */}
