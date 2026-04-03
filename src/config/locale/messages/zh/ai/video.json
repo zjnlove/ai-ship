@@ -616,8 +616,8 @@
         "medium": "中",
         "high": "高"
       },
-      "image_to_video_mode": "图像转视频模式",
-      "image_to_video_mode_options": {
+      "ref_frame_mode": "参考帧模式",
+      "ref_frame_mode_options": {
         "first_and_last": "首尾帧",
         "reference": "参考"
       },

@@ -46,15 +46,15 @@ export const MOTION_STRENGTH_OPTIONS: VideoOptionValue[] = [
   { value: 'high', label: 'advanced_options.motion_strength_options.high' },
 ];
 
-// 图生视频模式选项
-export const IMAGE_TO_VIDEO_MODE_OPTIONS: VideoOptionValue[] = [
+// 参考帧模式选项
+export const REF_FRAME_MODE_OPTIONS: VideoOptionValue[] = [
   {
     value: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
-    label: 'advanced_options.image_to_video_mode_options.first_and_last',
+    label: 'advanced_options.ref_frame_mode_options.first_and_last',
   },
   {
     value: 'REFERENCE_2_VIDEO',
-    label: 'advanced_options.image_to_video_mode_options.reference',
+    label: 'advanced_options.ref_frame_mode_options.reference',
   },
 ];
 

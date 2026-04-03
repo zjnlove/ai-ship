@@ -26,10 +26,10 @@ export const googleModels: VideoModelOption[] = [
       aspect_ratio: '16:9',
       seeds: 62845,
       enableTranslation: true,
-      generationType: 'REFERENCE_2_VIDEO',
+      generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'imageToVideoMode'],
+      supportedTypes: ['aspectRatio', 'refFrameMode'],
     },
   },
 ];

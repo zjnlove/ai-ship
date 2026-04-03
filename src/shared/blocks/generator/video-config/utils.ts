@@ -1,6 +1,6 @@
 import {
-  IMAGE_TO_VIDEO_MODE_OPTIONS,
   MOTION_STRENGTH_OPTIONS,
+  REF_FRAME_MODE_OPTIONS,
   VIDEO_ASPECT_RATIO_OPTIONS,
   VIDEO_DURATION_OPTIONS,
   VIDEO_FPS_OPTIONS,
@@ -27,7 +27,7 @@ export function getVideoOptionsForType(
     duration: VIDEO_DURATION_OPTIONS,
     fps: VIDEO_FPS_OPTIONS,
     motionStrength: MOTION_STRENGTH_OPTIONS,
-    imageToVideoMode: IMAGE_TO_VIDEO_MODE_OPTIONS,
+    refFrameMode: REF_FRAME_MODE_OPTIONS,
     audio: [], // audio 是布尔类型，不需要选项列表
   };
   return optionsMap[type] || [];
@@ -42,7 +42,7 @@ export function getVideoOptionLabel(type: VideoOptionType): string {
     duration: 'advanced_options.duration',
     fps: 'advanced_options.fps',
     motionStrength: 'advanced_options.motion_strength',
-    imageToVideoMode: 'advanced_options.image_to_video_mode',
+    refFrameMode: 'advanced_options.ref_frame_mode',
     audio: 'advanced_options.audio',
   };
   return labelMap[type] || '';

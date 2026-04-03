@@ -616,8 +616,8 @@
         "medium": "Medium",
         "high": "High"
       },
-      "image_to_video_mode": "Image to Video Mode",
-      "image_to_video_mode_options": {
+      "ref_frame_mode": "Reference Frame Mode",
+      "ref_frame_mode_options": {
         "first_and_last": "First & Last",
         "reference": "Reference"
       },

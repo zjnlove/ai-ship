@@ -178,8 +178,6 @@ export function VideoGenerator({
   const [advancedOptions, setAdvancedOptions] = useState<Record<string, any>>(
     {}
   );
-  const [imageToVideoMode, setImageToVideoMode] =
-    useState<string>('REFERENCE_2_VIDEO');
   const [showPreview, setShowPreview] = useState(false);
   const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
   const [advancedPopoverOpen, setAdvancedPopoverOpen] = useState(false);
@@ -231,6 +229,14 @@ export function VideoGenerator({
   const selectedModelConfig = MODEL_OPTIONS.find(
     (option) => option.sceneValues?.[activeTab] === model
   );
+
+  // 计算 maxImages 值（基于 refFrameMode 和模型配置）
+  const maxImages = useMemo(() => {
+    if (advancedOptions.refFrameMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO')
+      return 2;
+    if (advancedOptions.refFrameMode === 'REFERENCE_2_VIDEO') return 3;
+    return selectedModelConfig?.maxImages ?? 1;
+  }, [advancedOptions.refFrameMode, selectedModelConfig]);
 
   // 计算当前积分（合并默认选项和用户选择）
   const calculateCurrentCredits = useCallback(() => {
@@ -373,7 +379,7 @@ export function VideoGenerator({
           duration: 'duration',
           fps: 'fps',
           motionStrength: 'motion_strength',
-          imageToVideoMode: 'generationType',
+          refFrameMode: 'generationType',
         };
         const fieldName = fieldMap[type] || type;
         if (defaults[fieldName] !== undefined) {
@@ -568,7 +574,9 @@ export function VideoGenerator({
                 ? 'aspect_ratio'
                 : type === 'motionStrength'
                   ? 'motion_strength'
-                  : type
+                  : type == 'refFrameMode'
+                    ? 'generationType'
+                    : type
             ];
 
           if (value) {
@@ -579,7 +587,7 @@ export function VideoGenerator({
               duration: 'duration',
               fps: 'fps',
               motionStrength: 'motion_strength',
-              imageToVideoMode: 'generationType',
+              refFrameMode: 'generationType',
             };
             options[fieldMap[type] || type] = value;
           }
@@ -593,10 +601,6 @@ export function VideoGenerator({
 
       if (isVideoToVideoMode && referenceVideoUrl) {
         options.video_input = [referenceVideoUrl];
-      }
-
-      if (isImageToVideoMode && selectedModelConfig?.modelPath === 'veo-3-1') {
-        options.generationType = imageToVideoMode;
       }
 
       const baseCredits = selectedModelConfig?.baseCredits as
@@ -876,18 +880,9 @@ export function VideoGenerator({
                         <ImageUploader
                           title={t('form.reference_image')}
                           allowMultiple={true}
-                          maxImages={
-                            imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                              ? 2
-                              : 3
-                          }
+                          maxImages={maxImages}
                           maxSizeMB={maxSizeMB}
                           onChange={handleReferenceImagesChange}
-                          emptyHint={
-                            imageToVideoMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO'
-                              ? t('first_and_last_frames_hint')
-                              : t('form.reference_image_placeholder')
-                          }
                           imageWidth="w-25"
                           imageHeight="h-32"
                         />
@@ -1010,6 +1005,8 @@ export function VideoGenerator({
                                 onClick={() => {
                                   setModel(m.sceneValues?.[activeTab] ?? '');
                                   setModelPopoverOpen(false);
+                                  // 重置高级选项为新模型的默认值
+                                  resetAdvancedOptions();
                                 }}
                                 className={cn(
                                   'flex w-full items-center justify-between rounded-lg p-2 text-sm',
@@ -1064,7 +1061,7 @@ export function VideoGenerator({
                                 type === 'aspectRatio' ||
                                 type === 'resolution' ||
                                 type === 'mode' ||
-                                type === 'imageToVideoMode' ||
+                                type === 'refFrameMode' ||
                                 type === 'audio'
                             );
                             return visibleTypes
@@ -1112,15 +1109,15 @@ export function VideoGenerator({
                                         'std'}
                                     </span>
                                   )}
-                                  {type === 'imageToVideoMode' && (
+                                  {type === 'refFrameMode' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                      {advancedOptions.imageToVideoMode ===
+                                      {advancedOptions.refFrameMode ===
                                       'FIRST_AND_LAST_FRAMES_2_VIDEO'
                                         ? t(
-                                            'advanced_options.image_to_video_mode_options.first_and_last'
+                                            'advanced_options.ref_frame_mode_options.first_and_last'
                                           )
                                         : t(
-                                            'advanced_options.image_to_video_mode_options.reference'
+                                            'advanced_options.ref_frame_mode_options.reference'
                                           )}
                                     </span>
                                   )}
@@ -1180,7 +1177,9 @@ export function VideoGenerator({
                                   ? 'aspect_ratio'
                                   : type === 'motionStrength'
                                     ? 'motion_strength'
-                                    : type
+                                    : type == 'refFrameMode'
+                                      ? 'generationType'
+                                      : type
                               ] ??
                               options[0]?.value;
 

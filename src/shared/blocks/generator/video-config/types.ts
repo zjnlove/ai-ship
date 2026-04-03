@@ -6,7 +6,7 @@ export type VideoOptionType =
   | 'duration'
   | 'fps'
   | 'motionStrength'
-  | 'imageToVideoMode'
+  | 'refFrameMode'
   | 'audio';
 
 // 单个选项值及其积分
@@ -59,6 +59,7 @@ export interface VideoModelOption {
     'text-to-video'?: number;
     'image-to-video'?: number;
   };
+  maxImages?: number; // 模型支持的最大图片数量（如果适用）
   // 自定义选项（每个模型可配置不同的选项值）
   customOptions: CustomVideoOptions;
   // 折扣配置（可选）

@@ -10,6 +10,7 @@ export const klingModels: VideoModelOption[] = [
       'text-to-video': 42,
       'image-to-video': 42,
     },
+    maxImages: 2,
     sceneValues: {
       'text-to-video': 'kling-3-0-text-to-video',
       'image-to-video': 'kling-3-0-image-to-video',
