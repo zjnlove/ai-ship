@@ -625,6 +625,11 @@
       "audio_options": {
         "audio_on": "Open",
         "audio_off": "Close"
+      },
+      "mode": "Mode",
+      "mode_options": {
+        "standard": "Std",
+        "professional": "Pro"
       }
     },
     "select_generation_mode": "Generation Mode",

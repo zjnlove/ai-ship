@@ -351,6 +351,7 @@ export function VideoGenerator({
         const fieldMap: Record<string, string> = {
           aspectRatio: 'aspect_ratio',
           resolution: 'resolution',
+          mode: 'mode',
           duration: 'duration',
           fps: 'fps',
           motionStrength: 'motion_strength',
@@ -556,6 +557,7 @@ export function VideoGenerator({
             const fieldMap: Record<string, string> = {
               aspectRatio: 'aspect_ratio',
               resolution: 'resolution',
+              mode: 'mode',
               duration: 'duration',
               fps: 'fps',
               motionStrength: 'motion_strength',
@@ -1043,6 +1045,7 @@ export function VideoGenerator({
                                 type === 'duration' ||
                                 type === 'aspectRatio' ||
                                 type === 'resolution' ||
+                                type === 'mode' ||
                                 type === 'imageToVideoMode' ||
                                 type === 'audio'
                             );
@@ -1081,6 +1084,14 @@ export function VideoGenerator({
                                         selectedModelConfig?.defaultOptions
                                           ?.resolution ??
                                         '720p'}
+                                    </span>
+                                  )}
+                                  {type === 'mode' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.mode ??
+                                        selectedModelConfig?.defaultOptions
+                                          ?.mode ??
+                                        'std'}
                                     </span>
                                   )}
                                   {type === 'imageToVideoMode' && (
@@ -1160,7 +1171,7 @@ export function VideoGenerator({
                                 <Label className="text-muted-foreground text-xs font-medium">
                                   {t(label)}
                                 </Label>
-                                <div className="grid grid-cols-5 gap-2">
+                                <div className="grid grid-cols-3 gap-2">
                                   {options.map((option) => (
                                     <motion.button
                                       key={option.value}

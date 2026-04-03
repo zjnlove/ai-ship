@@ -625,6 +625,11 @@
       "audio_options": {
         "audio_on": "开",
         "audio_off": "关"
+      },
+      "mode": "模式",
+      "mode_options": {
+        "standard": "标准",
+        "professional": "专业"
       }
     },
     "select_generation_mode": "生成模式",

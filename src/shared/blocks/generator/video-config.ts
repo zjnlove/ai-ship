@@ -56,9 +56,16 @@ export const IMAGE_TO_VIDEO_MODE_OPTIONS = [
   },
 ];
 
+// 视频模式选项
+export const VIDEO_MODE_OPTIONS = [
+  { value: 'std', label: 'advanced_options.mode_options.standard' },
+  { value: 'pro', label: 'advanced_options.mode_options.professional' },
+];
+
 export type VideoOptionType =
   | 'aspectRatio'
   | 'resolution'
+  | 'mode'
   | 'duration'
   | 'fps'
   | 'motionStrength'
@@ -97,6 +104,7 @@ export interface CustomVideoOptions {
   fps?: VideoOptionValue[];
   motionStrength?: VideoOptionValue[];
   imageToVideoMode?: VideoOptionValue[];
+  mode?: VideoOptionValue[];
 }
 
 // 工具函数：获取公共选项
@@ -106,6 +114,7 @@ export function getVideoOptionsForType(
   const optionsMap: Record<VideoOptionType, VideoOptionValue[]> = {
     aspectRatio: VIDEO_ASPECT_RATIO_OPTIONS,
     resolution: VIDEO_RESOLUTION_OPTIONS,
+    mode: VIDEO_MODE_OPTIONS,
     duration: VIDEO_DURATION_OPTIONS,
     fps: VIDEO_FPS_OPTIONS,
     motionStrength: MOTION_STRENGTH_OPTIONS,
@@ -119,6 +128,7 @@ export function getVideoOptionLabel(type: VideoOptionType): string {
   const labelMap: Record<VideoOptionType, string> = {
     aspectRatio: 'advanced_options.aspect_ratio',
     resolution: 'advanced_options.resolution',
+    mode: 'advanced_options.mode',
     duration: 'advanced_options.duration',
     fps: 'advanced_options.fps',
     motionStrength: 'advanced_options.motion_strength',
@@ -302,13 +312,12 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
     },
     defaultOptions: {
       aspect_ratio: '16:9',
-      resolution: '720',
       mode: 'std',
       duration: '5',
       audio: false,
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'resolution', 'duration', 'audio'],
+      supportedTypes: ['aspectRatio', 'duration', 'mode', 'audio'],
     },
     customOptions: {
       aspectRatio: [
@@ -316,9 +325,12 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
         { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
         { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
       ],
-      resolution: [
-        { value: '720', label: 'advanced_options.resolution_options.720p' },
-        { value: '1080', label: 'advanced_options.resolution_options.1080p' },
+      mode: [
+        { value: 'std', label: 'advanced_options.mode_options.standard' },
+        {
+          value: 'pro',
+          label: 'advanced_options.mode_options.professional',
+        },
       ],
     },
     discount: {
@@ -328,12 +340,12 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
     creditRules: [
       // 1080p 基础积分
       {
-        conditions: { resolution: '1080' },
+        conditions: { mode: 'pro' },
         credits: 12,
       },
       // 720p + 时长：每秒 14 积分
       {
-        conditions: { resolution: '720' },
+        conditions: { mode: 'std' },
         credits: 14,
         perUnit: true,
         unitField: 'duration',
@@ -341,7 +353,7 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
       },
       // 1080p + 时长：每秒 20 积分
       {
-        conditions: { resolution: '1080' },
+        conditions: { mode: 'pro' },
         credits: 18,
         perUnit: true,
         unitField: 'duration',
@@ -350,17 +362,17 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
 
       // 声音开启基础分
       {
-        conditions: { resolution: '720', audio: true },
+        conditions: { mode: 'std', audio: true },
         credits: 18,
       },
       {
-        conditions: { resolution: '1080', audio: true },
+        conditions: { mode: 'pro', audio: true },
         credits: 27,
       },
 
       // 720p + 有声音：5 积分
       {
-        conditions: { resolution: '720', audio: true },
+        conditions: { mode: 'std', audio: true },
         credits: 6,
         perUnit: true,
         unitField: 'duration',
@@ -368,7 +380,7 @@ export const MODEL_OPTIONS: VideoModelOption[] = [
       },
       // 1080p + 有声音：10 积分
       {
-        conditions: { resolution: '1080', audio: true },
+        conditions: { mode: 'pro', audio: true },
         credits: 9,
         perUnit: true,
         unitField: 'duration',
