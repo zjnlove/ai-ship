@@ -49,7 +49,7 @@ import {
   MODEL_OPTIONS,
   PROVIDER_OPTIONS,
   VideoOptionType,
-} from './video-config';
+} from './video-config/index';
 
 interface VideoGeneratorProps {
   maxSizeMB?: number;
@@ -232,28 +232,46 @@ export function VideoGenerator({
     (option) => option.sceneValues?.[activeTab] === model
   );
 
-  // 实时计算积分（基于高级选项）
-  useEffect(() => {
-    if (!selectedModelConfig) return;
+  // 计算当前积分（合并默认选项和用户选择）
+  const calculateCurrentCredits = useCallback(() => {
+    if (!selectedModelConfig)
+      return { original: 0, discounted: 0, discountRate: 1 };
 
     const selectedOptions: Record<string, string | boolean> = {};
 
-    // 收集用户选择的选项
+    // 先添加模型的默认选项
+    if (selectedModelConfig.defaultOptions) {
+      Object.entries(selectedModelConfig.defaultOptions).forEach(
+        ([key, value]) => {
+          if (value !== undefined && value !== null) {
+            selectedOptions[key] = value;
+          }
+        }
+      );
+    }
+
+    // 再用用户选择的选项覆盖
     Object.entries(advancedOptions).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         selectedOptions[key] = value;
       }
     });
 
-    // 使用新的积分计算函数
-    const { discounted } = calculateDiscountedCredits(
+    return calculateDiscountedCredits(
       selectedModelConfig,
       activeTab,
       selectedOptions
     );
+  }, [selectedModelConfig, activeTab, advancedOptions]);
+
+  // 实时计算积分（基于高级选项）
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    const { discounted } = calculateCurrentCredits();
     console.log('Calculated discounted credits:', discounted);
     setCostCredits(discounted);
-  }, [advancedOptions, selectedModelConfig, activeTab]);
+  }, [calculateCurrentCredits, selectedModelConfig]);
 
   const advancedTypes =
     selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
@@ -1277,11 +1295,7 @@ export function VideoGenerator({
                               );
                             }
                             const { original, discounted, discountRate } =
-                              calculateDiscountedCredits(
-                                selectedModelConfig,
-                                activeTab,
-                                advancedOptions
-                              );
+                              calculateCurrentCredits();
                             return (
                               <span className="ml-2 flex items-center gap-1 text-xs opacity-80">
                                 {discountRate < 1 && (
