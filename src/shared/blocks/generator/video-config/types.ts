@@ -67,6 +67,10 @@ export interface VideoModelOption {
   // 关联积分规则
   creditRules?: CreditRule[];
   sceneValues: Record<string, string>;
+  imageField?: {
+    fieldName: string; // 字段名称，如 'imageUrls', 'image', 'images'
+    isArray: boolean; // 是否为数组
+  };
   defaultOptions: Record<string, any>;
   advancedOptions?: VideoAdvancedOptions;
 }

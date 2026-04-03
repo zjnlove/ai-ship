@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { getUuid } from '@/shared/lib/hash';
 
 import { saveFiles } from '.';
@@ -225,7 +223,7 @@ export class KieProvider implements AIProvider {
   }: {
     params: AIGenerateParams;
   }): Promise<AITaskResult> {
-    const apiUrl = `${this.baseUrl}/jobs/createTask`;
+    let apiUrl = `${this.baseUrl}/jobs/createTask`;
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.configs.apiKey}`,
@@ -234,47 +232,57 @@ export class KieProvider implements AIProvider {
     if (!params.model) {
       throw new Error('model is required');
     }
+
+    if (params.model.includes('veo3')) {
+      apiUrl = `${this.baseUrl}/veo/generate`;
+    }
+
     console.log('kie generate video input', apiUrl, headers, params);
-    throw new Error('kie generate video is disabled for testing');
     // build request params
     let payload: any = {
       model: params.model,
       callBackUrl: params.callbackUrl,
-      input: {
-        aspect_ratio: 'landscape',
-        n_frames: '10',
-        size: 'standard',
-      },
+      input: {},
     };
 
     if (params.prompt) {
-      payload.input.prompt = params.prompt;
+      if (params.model.includes('veo3')) {
+        payload.prompt = params.prompt;
+      } else {
+        payload.input.prompt = params.prompt;
+      }
     }
 
     if (params.options) {
       const options = params.options;
-      // text-to-video: use prompt
-      // image-to-video: use image_input
-      // video-to-video: use video_input
-      if (options.image_input && Array.isArray(options.image_input)) {
-        payload.input.image_urls = options.image_input;
-      }
-      if (options.aspect_ratio) {
-        payload.input.aspect_ratio = options.aspect_ratio;
-      }
-      if (options.duration) {
-        payload.input.n_frames = options.duration;
-      }
-      if (!payload.input.n_frames) {
-        payload.input.n_frames = '10';
+      if (params.model.includes('veo3')) {
+        payload = { ...payload, ...options };
+      } else {
+        payload.input = { ...payload.input, ...options };
       }
     }
-    return {
-      taskStatus: AITaskStatus.PENDING,
-      taskId: 'data.taskId',
-      taskInfo: {},
-      taskResult: 'data',
-    };
+    console.log('kie generate video payload', payload, apiUrl);
+    // throw new Error('kie generate video is disabled for testing');
+
+    // if (params.options) {
+    //   const options = params.options;
+    //   // text-to-video: use prompt
+    //   // image-to-video: use image_input
+    //   // video-to-video: use video_input
+    //   if (options.image_input && Array.isArray(options.image_input)) {
+    //     payload.input.image_urls = options.image_input;
+    //   }
+    //   if (options.aspect_ratio) {
+    //     payload.input.aspect_ratio = options.aspect_ratio;
+    //   }
+    //   if (options.duration) {
+    //     payload.input.n_frames = options.duration;
+    //   }
+    //   if (!payload.input.n_frames) {
+    //     payload.input.n_frames = '10';
+    //   }
+    // }
+
     console.log('kie input', apiUrl, payload);
 
     const resp = await fetch(apiUrl, {
@@ -283,6 +291,11 @@ export class KieProvider implements AIProvider {
       body: JSON.stringify(payload),
     });
     if (!resp.ok) {
+      console.log(
+        'kie generate video response error',
+        resp.status,
+        await resp.text()
+      );
       throw new Error(`request failed with status: ${resp.status}`);
     }
 

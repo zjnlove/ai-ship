@@ -232,9 +232,13 @@ export function VideoGenerator({
 
   // 计算 maxImages 值（基于 refFrameMode 和模型配置）
   const maxImages = useMemo(() => {
-    if (advancedOptions.refFrameMode === 'FIRST_AND_LAST_FRAMES_2_VIDEO')
-      return 2;
-    if (advancedOptions.refFrameMode === 'REFERENCE_2_VIDEO') return 3;
+    // 优先使用 advancedOptions 中的值
+    const refFrameModeValue =
+      advancedOptions.refFrameMode ??
+      selectedModelConfig?.defaultOptions?.generationType;
+
+    if (refFrameModeValue === 'FIRST_AND_LAST_FRAMES_2_VIDEO') return 2;
+    if (refFrameModeValue === 'REFERENCE_2_VIDEO') return 3;
     return selectedModelConfig?.maxImages ?? 1;
   }, [advancedOptions.refFrameMode, selectedModelConfig]);
 
@@ -596,7 +600,17 @@ export function VideoGenerator({
 
       // 动态设置视频输入字段
       if (isImageToVideoMode && referenceImageUrls.length > 0) {
-        options.image_input = referenceImageUrls;
+        const imageField = selectedModelConfig?.imageField;
+        if (imageField) {
+          if (imageField.isArray) {
+            options[imageField.fieldName] = referenceImageUrls;
+          } else {
+            options[imageField.fieldName] = referenceImageUrls[0];
+          }
+        } else {
+          // 默认行为
+          options.image_input = referenceImageUrls;
+        }
       }
 
       if (isVideoToVideoMode && referenceVideoUrl) {
@@ -1111,7 +1125,9 @@ export function VideoGenerator({
                                   )}
                                   {type === 'refFrameMode' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                      {advancedOptions.refFrameMode ===
+                                      {(advancedOptions.refFrameMode ??
+                                        selectedModelConfig?.defaultOptions
+                                          ?.generationType) ===
                                       'FIRST_AND_LAST_FRAMES_2_VIDEO'
                                         ? t(
                                             'advanced_options.ref_frame_mode_options.first_and_last'
