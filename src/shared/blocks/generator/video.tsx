@@ -35,11 +35,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
+import { Switch } from '@/shared/components/ui/switch';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
 import { cn } from '@/shared/lib/utils';
 
 import {
+  calculateDiscountedCredits,
+  getDiscountLabel,
+  getOptionsForModel,
   getVideoOptionLabel,
   getVideoOptionsForType,
   MODEL_OPTIONS,
@@ -192,8 +196,11 @@ export function VideoGenerator({
     const selectedModel = MODEL_OPTIONS.find(
       (option) => option.sceneValues?.[activeTab] === model
     );
-    if (selectedModel?.credits?.[activeTab]) {
-      setCostCredits(parseInt(selectedModel.credits[activeTab]));
+    const baseCredits = selectedModel?.baseCredits as
+      | Record<string, number>
+      | undefined;
+    if (baseCredits?.[activeTab]) {
+      setCostCredits(baseCredits[activeTab]);
     } else {
       if (activeTab === 'text-to-video') {
         setCostCredits(textToVideoCredits);
@@ -223,6 +230,29 @@ export function VideoGenerator({
   const selectedModelConfig = MODEL_OPTIONS.find(
     (option) => option.sceneValues?.[activeTab] === model
   );
+
+  // 实时计算积分（基于高级选项）
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    const selectedOptions: Record<string, string | boolean> = {};
+
+    // 收集用户选择的选项
+    Object.entries(advancedOptions).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        selectedOptions[key] = value;
+      }
+    });
+
+    // 使用新的积分计算函数
+    const { discounted } = calculateDiscountedCredits(
+      selectedModelConfig,
+      activeTab,
+      selectedOptions
+    );
+    console.log('Calculated discounted credits:', discounted);
+    setCostCredits(discounted);
+  }, [advancedOptions, selectedModelConfig, activeTab]);
 
   const advancedTypes =
     selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
@@ -309,6 +339,32 @@ export function VideoGenerator({
     setTaskStatus(null);
   }, []);
 
+  // 重置高级选项为当前模型默认值
+  const resetAdvancedOptions = useCallback(() => {
+    if (selectedModelConfig?.defaultOptions) {
+      const defaults = selectedModelConfig.defaultOptions;
+      const newAdvancedOptions: Record<string, any> = {};
+
+      // 根据模型支持的高级选项类型，设置默认值
+      selectedModelConfig.advancedOptions?.supportedTypes?.forEach((type) => {
+        const fieldMap: Record<string, string> = {
+          aspectRatio: 'aspect_ratio',
+          resolution: 'resolution',
+          duration: 'duration',
+          fps: 'fps',
+          motionStrength: 'motion_strength',
+          imageToVideoMode: 'generationType',
+        };
+        const fieldName = fieldMap[type] || type;
+        if (defaults[fieldName] !== undefined) {
+          newAdvancedOptions[type] = defaults[fieldName];
+        }
+      });
+
+      setAdvancedOptions(newAdvancedOptions);
+    }
+  }, [selectedModelConfig]);
+
   const pollTaskStatus = useCallback(
     async (id: string) => {
       try {
@@ -383,6 +439,7 @@ export function VideoGenerator({
           }
           setProgress(100);
           resetTaskState();
+          resetAdvancedOptions();
           return true;
         }
 
@@ -476,16 +533,12 @@ export function VideoGenerator({
     setGenerationStartTime(Date.now());
 
     try {
-      const options: any = {};
+      // 构建 options：先合并模型的默认参数
+      const options: any = {
+        ...selectedModelConfig?.defaultOptions,
+      };
 
-      if (isImageToVideoMode) {
-        options.image_input = referenceImageUrls;
-      }
-
-      if (isVideoToVideoMode) {
-        options.video_input = [referenceVideoUrl];
-      }
-
+      // 合并用户选择的高级选项
       if (selectedModelConfig?.advancedOptions?.supportedTypes) {
         selectedModelConfig.advancedOptions.supportedTypes.forEach((type) => {
           const value =
@@ -512,13 +565,23 @@ export function VideoGenerator({
         });
       }
 
+      // 动态设置视频输入字段
+      if (isImageToVideoMode && referenceImageUrls.length > 0) {
+        options.image_input = referenceImageUrls;
+      }
+
+      if (isVideoToVideoMode && referenceVideoUrl) {
+        options.video_input = [referenceVideoUrl];
+      }
+
       if (isImageToVideoMode && selectedModelConfig?.modelPath === 'veo-3-1') {
         options.generationType = imageToVideoMode;
       }
 
-      const modelCredits = selectedModelConfig?.credits?.[activeTab]
-        ? parseInt(selectedModelConfig.credits[activeTab])
-        : costCredits;
+      const baseCredits = selectedModelConfig?.baseCredits as
+        | Record<string, number>
+        | undefined;
+      const modelCredits = baseCredits?.[activeTab] ?? costCredits;
 
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
@@ -526,7 +589,7 @@ export function VideoGenerator({
         body: JSON.stringify({
           mediaType: AIMediaType.VIDEO,
           scene: activeTab,
-          provider,
+          provider: selectedModelConfig?.provider ?? provider, // 使用模型的 provider
           model,
           prompt: trimmedPrompt,
           options,
@@ -912,28 +975,45 @@ export function VideoGenerator({
                             (m) =>
                               m.sceneValues?.[activeTab] !== undefined &&
                               m.brand === provider
-                          ).map((m) => (
-                            <button
-                              key={m.label}
-                              onClick={() => {
-                                setModel(m.sceneValues?.[activeTab] ?? '');
-                                setModelPopoverOpen(false);
-                              }}
-                              className={cn(
-                                'flex w-full items-center justify-between rounded-lg p-2 text-sm',
-                                'hover:bg-accent hover:text-accent-foreground transition-colors',
-                                model === m.sceneValues?.[activeTab] &&
-                                  'bg-primary/20 text-primary font-medium'
-                              )}
-                            >
-                              <span>{m.label}</span>
-                              {m.credits?.[activeTab] && (
-                                <span className="text-muted-foreground text-xs">
-                                  {m.credits[activeTab]} {t('credits')}
+                          ).map((m) => {
+                            const discountLabel = getDiscountLabel(m);
+                            return (
+                              <button
+                                key={m.label}
+                                onClick={() => {
+                                  setModel(m.sceneValues?.[activeTab] ?? '');
+                                  setModelPopoverOpen(false);
+                                }}
+                                className={cn(
+                                  'flex w-full items-center justify-between rounded-lg p-2 text-sm',
+                                  'hover:bg-accent hover:text-accent-foreground transition-colors',
+                                  model === m.sceneValues?.[activeTab] &&
+                                    'bg-primary/20 text-primary font-medium'
+                                )}
+                              >
+                                <span className="flex items-center gap-1">
+                                  {m.label}
+                                  {discountLabel && (
+                                    <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                      {discountLabel}
+                                    </span>
+                                  )}
                                 </span>
-                              )}
-                            </button>
-                          ))}
+                                {(m.baseCredits as Record<string, number>)?.[
+                                  activeTab
+                                ] && (
+                                  <span className="text-muted-foreground text-xs">
+                                    {
+                                      (m.baseCredits as Record<string, number>)[
+                                        activeTab
+                                      ]
+                                    }{' '}
+                                    {t('credits')}
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     </PopoverContent>
@@ -956,7 +1036,8 @@ export function VideoGenerator({
                                 type === 'duration' ||
                                 type === 'aspectRatio' ||
                                 type === 'resolution' ||
-                                type === 'imageToVideoMode'
+                                type === 'imageToVideoMode' ||
+                                type === 'audio'
                             );
                             return visibleTypes
                               .slice(0, 3)
@@ -1016,7 +1097,45 @@ export function VideoGenerator({
                       <PopoverContent className="w-80" side="top" align="start">
                         <div className="space-y-5">
                           {advancedTypes.map((type: VideoOptionType) => {
-                            const options = getVideoOptionsForType(type);
+                            // audio 类型使用 Switch 开关
+                            if (type === 'audio') {
+                              const currentValue =
+                                advancedOptions.audio ??
+                                selectedModelConfig?.defaultOptions?.audio ??
+                                false;
+
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t('advanced_options.audio')}
+                                  </Label>
+                                  <div className="flex items-center gap-2">
+                                    <Switch
+                                      checked={currentValue as boolean}
+                                      onCheckedChange={(checked) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          audio: checked,
+                                        }))
+                                      }
+                                    />
+                                    <span className="text-muted-foreground text-xs">
+                                      {currentValue
+                                        ? t(
+                                            'advanced_options.audio_options.audio_on'
+                                          )
+                                        : t(
+                                            'advanced_options.audio_options.audio_off'
+                                          )}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            const options = selectedModelConfig
+                              ? getOptionsForModel(selectedModelConfig, type)
+                              : getVideoOptionsForType(type);
                             const label = getVideoOptionLabel(type);
                             const currentValue =
                               advancedOptions[type] ??
@@ -1134,9 +1253,32 @@ export function VideoGenerator({
                         <>
                           <Sparkles className="mr-2 h-4 w-4" />
                           {t('generate')}
-                          <span className="ml-2 text-xs opacity-80">
-                            {costCredits} {t('credits')}
-                          </span>
+                          {(() => {
+                            if (!selectedModelConfig) {
+                              return (
+                                <span className="ml-2 text-xs opacity-80">
+                                  {costCredits} {t('credits')}
+                                </span>
+                              );
+                            }
+                            const { original, discounted, discountRate } =
+                              calculateDiscountedCredits(
+                                selectedModelConfig,
+                                activeTab,
+                                advancedOptions
+                              );
+                            return (
+                              <span className="ml-2 flex items-center gap-1 text-xs opacity-80">
+                                {discountRate < 1 && (
+                                  <span className="text-muted-foreground line-through">
+                                    {original}
+                                  </span>
+                                )}
+                                <span>{discounted}</span>
+                                {t('credits')}
+                              </span>
+                            );
+                          })()}
                         </>
                       )}
                     </Button>

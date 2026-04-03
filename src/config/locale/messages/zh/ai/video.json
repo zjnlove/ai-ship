@@ -590,8 +590,18 @@
       },
       "duration": "时长",
       "duration_options": {
+        "3s": "3秒",
+        "4s": "4秒",
         "5s": "5秒",
+        "6s": "6秒",
+        "7s": "7秒",
+        "8s": "8秒",
+        "9s": "9秒",
         "10s": "10秒",
+        "11s": "11秒",
+        "12s": "12秒",
+        "13s": "13秒",
+        "14s": "14秒",
         "15s": "15秒"
       },
       "fps": "帧率",
@@ -610,6 +620,11 @@
       "image_to_video_mode_options": {
         "first_and_last": "首尾帧",
         "reference": "参考"
+      },
+      "audio": "音频",
+      "audio_options": {
+        "audio_on": "开",
+        "audio_off": "关"
       }
     },
     "select_generation_mode": "生成模式",

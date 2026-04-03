@@ -234,7 +234,7 @@ export class KieProvider implements AIProvider {
     if (!params.model) {
       throw new Error('model is required');
     }
-
+    console.log('kie generate video input', apiUrl, headers, params);
     // build request params
     let payload: any = {
       model: params.model,
