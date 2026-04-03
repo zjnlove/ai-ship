@@ -222,6 +222,7 @@ export function VideoGenerator({
 
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
+  const isCreditsLoaded = user?.credits !== undefined;
   const isPromptTooLong = promptLength > MAX_PROMPT_LENGTH;
   const isTextToVideoMode = activeTab === 'text-to-video';
   const isImageToVideoMode = activeTab === 'image-to-video';
@@ -940,6 +941,12 @@ export function VideoGenerator({
                       >
                         <span className="flex items-center gap-2">
                           {selectedModelConfig?.label || 'Select Model'}
+                          {selectedModelConfig &&
+                            getDiscountLabel(selectedModelConfig) && (
+                              <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                {getDiscountLabel(selectedModelConfig)}
+                              </span>
+                            )}
                         </span>
                         <ChevronUp className="ml-2 h-4 w-4" />
                       </Button>
@@ -1184,15 +1191,12 @@ export function VideoGenerator({
                     </Popover>
                   )}
 
-                  {/* 积分信息 */}
+                  {/* 积分信息 制作积分小于100的实际显示余额和充值按钮*/}
                   <div className="ml-auto flex items-center gap-2 text-sm">
-                    {!isMounted ? (
-                      <span>{t('credits_remaining', { credits: 0 })}</span>
-                    ) : user && remainingCredits > 10 ? (
-                      <span>
-                        {t('credits_remaining', { credits: remainingCredits })}
-                      </span>
-                    ) : user && remainingCredits <= 10 ? (
+                    {isMounted &&
+                    isCreditsLoaded &&
+                    user &&
+                    remainingCredits <= 100 ? (
                       <>
                         <span>
                           {t('credits_remaining', {
