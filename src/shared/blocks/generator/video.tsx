@@ -951,7 +951,7 @@ export function VideoGenerator({
                         <ChevronUp className="ml-2 h-4 w-4" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-96" side="top" align="start">
+                    <PopoverContent className="w-105" side="top" align="start">
                       <div className="grid grid-cols-[120px_1fr] gap-2">
                         {/* 左侧：提供商列表 */}
                         <div className="border-border space-y-1 border-r pr-2">
@@ -1160,7 +1160,7 @@ export function VideoGenerator({
                                 <Label className="text-muted-foreground text-xs font-medium">
                                   {t(label)}
                                 </Label>
-                                <div className="grid grid-cols-3 gap-2">
+                                <div className="grid grid-cols-5 gap-2">
                                   {options.map((option) => (
                                     <motion.button
                                       key={option.value}
