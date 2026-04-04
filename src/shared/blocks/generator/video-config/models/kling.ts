@@ -98,7 +98,7 @@ export const klingModels: VideoModelOption[] = [
     brand: 'kling',
     modelPath: 'kling-3-0-motion-control',
     baseCredits: {
-      'image-to-video': 8,
+      'video-to-video': 100,
     },
     customOptions: {
       aspectRatio: [
@@ -174,7 +174,7 @@ export const klingModels: VideoModelOption[] = [
       },
     ],
     sceneValues: {
-      'image-to-video': 'kling-3-0-motion-control',
+      'video-to-video': 'kling-3-0-motion-control',
     },
     defaultOptions: {
       aspect_ratio: '16:9',

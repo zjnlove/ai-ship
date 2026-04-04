@@ -58,6 +58,7 @@ export interface VideoModelOption {
   baseCredits: {
     'text-to-video'?: number;
     'image-to-video'?: number;
+    'video-to-video'?: number;
   };
   maxImages?: number; // 模型支持的最大图片数量（如果适用）
   // 自定义选项（每个模型可配置不同的选项值）
