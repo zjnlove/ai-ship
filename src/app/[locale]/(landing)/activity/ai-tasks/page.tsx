@@ -79,14 +79,24 @@ export default async function AiTasksPage({
               }
             } else if (taskInfo.images && taskInfo.images.length > 0) {
               return (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
                   {taskInfo.images.map((image: any, index: number) => (
-                    <LazyImage
-                      key={index}
-                      src={image.imageUrl}
-                      alt="Generated image"
-                      className="h-20 w-auto rounded-lg"
-                    />
+                    <div key={index} className="group relative inline-block">
+                      <LazyImage
+                        src={image.imageUrl}
+                        alt="Generated image"
+                        className="h-14 w-24 rounded-md object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center gap-1 rounded-md bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                        <a
+                          href={image.imageUrl}
+                          download
+                          className="bg-primary hover:bg-primary/90 z-10 rounded px-2 py-1 text-xs font-medium text-white"
+                        >
+                          下载
+                        </a>
+                      </div>
+                    </div>
                   ))}
                 </div>
               );
