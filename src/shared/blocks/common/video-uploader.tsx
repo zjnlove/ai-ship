@@ -29,6 +29,7 @@ interface VideoUploaderProps {
   defaultPreviews?: string[];
   onChange?: (items: VideoUploaderValue[]) => void;
   onBeforeUpload?: () => boolean;
+  onValidateFile?: (file: File) => Promise<boolean> | boolean;
   videoWidth?: string;
   videoHeight?: string;
 }
@@ -79,6 +80,7 @@ export function VideoUploader({
   defaultPreviews,
   onChange,
   onBeforeUpload,
+  onValidateFile,
   videoWidth = 'w-32',
   videoHeight = 'h-32',
 }: VideoUploaderProps) {
@@ -245,7 +247,7 @@ export function VideoUploader({
     });
   };
 
-  const handleFiles = (selectedFiles: File[]) => {
+  const handleFiles = async (selectedFiles: File[]) => {
     const replaceTargetId = replaceTargetIdRef.current;
     if (replaceTargetId) {
       // reset immediately to avoid sticky replace mode
@@ -263,24 +265,43 @@ export function VideoUploader({
         if (inputRef.current) inputRef.current.value = '';
         return;
       }
+
+      // ✅ 自定义文件校验
+      if (onValidateFile) {
+        const valid = await onValidateFile(file);
+        if (!valid) {
+          if (inputRef.current) inputRef.current.value = '';
+          return;
+        }
+      }
+
       replaceItems([{ id: replaceTargetId, file }]);
       return;
     }
 
     const availableSlots = maxCount - items.length;
-    const filesToAdd = selectedFiles
-      .filter((file) => {
-        if (!file.type?.startsWith('video/')) {
-          toast.error(`"${file.name}" is not a video`);
-          return false;
-        }
-        if (file.size > maxBytes) {
-          toast.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit`);
-          return false;
-        }
-        return true;
-      })
-      .slice(0, Math.max(availableSlots, 0));
+    const validFiles: File[] = [];
+
+    for (const file of selectedFiles) {
+      if (!file.type?.startsWith('video/')) {
+        toast.error(`"${file.name}" is not a video`);
+        continue;
+      }
+      if (file.size > maxBytes) {
+        toast.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit`);
+        continue;
+      }
+
+      // ✅ 自定义文件校验
+      if (onValidateFile) {
+        const valid = await onValidateFile(file);
+        if (!valid) continue;
+      }
+
+      validFiles.push(file);
+    }
+
+    const filesToAdd = validFiles.slice(0, Math.max(availableSlots, 0));
 
     if (!filesToAdd.length) {
       // when full: replace from the end backwards

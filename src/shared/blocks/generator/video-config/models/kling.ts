@@ -130,8 +130,8 @@ export const klingModels: VideoModelOption[] = [
     inputValidation: {
       video: {
         minDuration: 3,
-        maxDuration: 10,
-        maxFileSize: 10,
+        maxDuration: 30,
+        maxFileSize: 100,
         supportedFormats: ['mp4', 'quicktime'],
       },
       image: {

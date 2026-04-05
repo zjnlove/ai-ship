@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+import { vi } from 'zod/v4/locales';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
@@ -217,6 +218,7 @@ export function VideoGenerator({
     size: number;
     format: string;
   } | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const pathname = usePathname();
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
@@ -247,10 +249,55 @@ export function VideoGenerator({
   }, [model, activeTab]);
 
   useEffect(() => {
+    let tab: VideoGeneratorTab = 'text-to-video';
+
     if (pathname.includes('video-to-video')) {
-      setActiveTab('video-to-video');
+      tab = 'video-to-video';
     } else if (pathname.includes('image-to-video')) {
-      setActiveTab('image-to-video');
+      tab = 'image-to-video';
+    }
+
+    if (tab !== activeTab) {
+      setActiveTab(tab);
+
+      // 过滤出当前模式下有可用模型的提供商
+      const availableProviders = PROVIDER_OPTIONS.filter((p) => {
+        return MODEL_OPTIONS.some(
+          (m) => m.sceneValues?.[tab] !== undefined && m.brand === p.value
+        );
+      });
+
+      if (availableProviders.length > 0) {
+        // 选中第一个可用提供商
+        const firstProvider = availableProviders[0].value;
+        setProvider(firstProvider);
+
+        // 选中该提供商下的第一个模型
+        const availableModels = MODEL_OPTIONS.filter(
+          (option) =>
+            option.sceneValues?.[tab] !== undefined &&
+            option.brand === firstProvider
+        );
+
+        if (availableModels.length > 0) {
+          setModel(availableModels[0].sceneValues?.[tab] ?? '');
+        } else {
+          setModel('');
+        }
+      } else {
+        // 没有可用提供商
+        setProvider('');
+        setModel('');
+      }
+
+      // 设置对应积分消耗
+      if (tab === 'text-to-video') {
+        setCostCredits(textToVideoCredits);
+      } else if (tab === 'image-to-video') {
+        setCostCredits(imageToVideoCredits);
+      } else {
+        setCostCredits(videoToVideoCredits);
+      }
     }
   }, [pathname]);
 
@@ -416,6 +463,80 @@ export function VideoGenerator({
     [referenceImageItems, referenceVideoItems]
   );
 
+  // ✅ 视频上传前置校验 - 在上传前执行，不通过不上传
+  const handleReferenceVideoValidateFile = useCallback(
+    (file: File): Promise<boolean> => {
+      return new Promise<boolean>((resolve) => {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = () => {
+          window.URL.revokeObjectURL(video.src);
+
+          const duration = Math.ceil(video.duration);
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          // 执行所有校验规则
+          if (selectedModelConfig?.inputValidation?.video) {
+            const { maxDuration, maxFileSize, supportedFormats } =
+              selectedModelConfig.inputValidation.video;
+
+            if (maxDuration && duration > maxDuration) {
+              const error = t('validation.video_too_long', {
+                max: maxDuration,
+                actual: duration,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (maxFileSize && size > maxFileSize) {
+              const error = t('validation.video_too_large', {
+                max: maxFileSize,
+                actual: size,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (
+              supportedFormats &&
+              supportedFormats.length > 0 &&
+              !supportedFormats.includes(format)
+            ) {
+              const error = t('validation.video_unsupported_format', {
+                supported: supportedFormats.join(', ').toUpperCase(),
+                actual: format.toUpperCase(),
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+          }
+
+          // 校验通过
+          setValidationError(null);
+          resolve(true);
+        };
+
+        video.onerror = () => {
+          window.URL.revokeObjectURL(video.src);
+          toast.error('Failed to read video metadata');
+          resolve(false);
+        };
+
+        video.src = URL.createObjectURL(file);
+      });
+    },
+    [selectedModelConfig]
+  );
+
   const handleReferenceVideoChange = useCallback(
     (items: VideoUploaderValue[]) => {
       setModeVideos((prev) => ({
@@ -423,7 +544,7 @@ export function VideoGenerator({
         [activeTab]: items,
       }));
 
-      // 读取上传视频的元数据
+      // 上传成功后读取视频元数据
       if (items.length > 0 && items[0].file) {
         const file = items[0].file;
         const video = document.createElement('video');
@@ -449,11 +570,7 @@ export function VideoGenerator({
             format,
           });
 
-          // 同时把时长写入到选项对象，确保积分计算时能正确识别
-          if (selectedModelConfig) {
-            if (!selectedModelConfig.defaultOptions) {
-              selectedModelConfig.defaultOptions = {};
-            }
+          if (selectedModelConfig?.defaultOptions) {
             selectedModelConfig.defaultOptions.duration = duration.toString();
           }
         };
@@ -464,8 +581,13 @@ export function VideoGenerator({
         };
 
         video.src = URL.createObjectURL(file);
-      } else {
+      } else if (items.length === 0) {
+        // ✅ 视频被删除时重置所有相关状态
         setVideoMetadata(null);
+        if (selectedModelConfig?.defaultOptions) {
+          selectedModelConfig.defaultOptions.duration =
+            videoMetadata?.duration.toString() || '0';
+        }
       }
     },
     [activeTab, selectedModelConfig]
@@ -1066,6 +1188,13 @@ export function VideoGenerator({
                           maxImages={maxImages}
                           maxSizeMB={maxSizeMB}
                           onChange={handleReferenceImagesChange}
+                          onBeforeUpload={() => {
+                            if (!user) {
+                              setIsShowSignModal(true);
+                              return false;
+                            }
+                            return true;
+                          }}
                           imageWidth="w-25"
                           imageHeight="h-32"
                         />
@@ -1081,6 +1210,13 @@ export function VideoGenerator({
                             maxImages={maxImages}
                             maxSizeMB={maxSizeMB}
                             onChange={handleReferenceImagesChange}
+                            onBeforeUpload={() => {
+                              if (!user) {
+                                setIsShowSignModal(true);
+                                return false;
+                              }
+                              return true;
+                            }}
                             imageWidth="w-25"
                             imageHeight="h-32"
                           />
@@ -1096,6 +1232,14 @@ export function VideoGenerator({
                             maxVideos={1}
                             maxSizeMB={100}
                             onChange={handleReferenceVideoChange}
+                            onBeforeUpload={() => {
+                              if (!user) {
+                                setIsShowSignModal(true);
+                                return false;
+                              }
+                              return true;
+                            }}
+                            onValidateFile={handleReferenceVideoValidateFile}
                             videoWidth="w-25"
                             videoHeight="h-32"
                           />
