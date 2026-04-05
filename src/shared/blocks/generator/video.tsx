@@ -300,14 +300,33 @@ export function VideoGenerator({
     const tab = value as VideoGeneratorTab;
     setActiveTab(tab);
 
-    const availableModels = MODEL_OPTIONS.filter(
-      (option) =>
-        option.sceneValues?.[tab] !== undefined && option.brand === provider
-    );
+    // 过滤出当前模式下有可用模型的提供商
+    const availableProviders = PROVIDER_OPTIONS.filter((p) => {
+      return MODEL_OPTIONS.some(
+        (m) => m.sceneValues?.[tab] !== undefined && m.brand === p.value
+      );
+    });
 
-    if (availableModels.length > 0) {
-      setModel(availableModels[0].sceneValues?.[tab] ?? '');
+    if (availableProviders.length > 0) {
+      // 选中第一个可用提供商
+      const firstProvider = availableProviders[0].value;
+      setProvider(firstProvider);
+
+      // 选中该提供商下的第一个模型
+      const availableModels = MODEL_OPTIONS.filter(
+        (option) =>
+          option.sceneValues?.[tab] !== undefined &&
+          option.brand === firstProvider
+      );
+
+      if (availableModels.length > 0) {
+        setModel(availableModels[0].sceneValues?.[tab] ?? '');
+      } else {
+        setModel('');
+      }
     } else {
+      // 没有可用提供商
+      setProvider('');
       setModel('');
     }
 
@@ -315,7 +334,7 @@ export function VideoGenerator({
       setCostCredits(textToVideoCredits);
     } else if (tab === 'image-to-video') {
       setCostCredits(imageToVideoCredits);
-    } else if (tab === 'video-to-video') {
+    } else {
       setCostCredits(videoToVideoCredits);
     }
   };
@@ -1070,7 +1089,14 @@ export function VideoGenerator({
                           <p className="text-muted-foreground mb-2 px-2 text-xs">
                             Providers
                           </p>
-                          {PROVIDER_OPTIONS.map((p) => (
+                          {PROVIDER_OPTIONS.filter((p) => {
+                            // 检查当前激活模式下该提供商是否有可用模型
+                            return MODEL_OPTIONS.some(
+                              (m) =>
+                                m.sceneValues?.[activeTab] !== undefined &&
+                                m.brand === p.value
+                            );
+                          }).map((p) => (
                             <button
                               key={p.value}
                               onClick={() => handleProviderChange(p.value)}
