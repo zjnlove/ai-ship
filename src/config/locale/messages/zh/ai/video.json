@@ -637,6 +637,11 @@
     "share": "分享",
     "download": "下载",
     "regenerate": "重新生成",
-    "first_and_last_frames_hint": "请上传首帧和尾帧图像（共2张）"
+    "first_and_last_frames_hint": "请上传首帧和尾帧图像（共2张）",
+    "validation": {
+      "video_too_long": "视频时长超出模型限制，最大允许 {max} 秒，您的视频为 {actual} 秒",
+      "video_too_large": "视频文件大小超出模型限制，最大允许 {max} MB，您的视频为 {actual} MB",
+      "video_unsupported_format": "不支持的视频格式。支持格式: {supported}, 您的视频: {actual}"
+    }
   }
 }

@@ -637,6 +637,11 @@
     "share": "Share",
     "download": "Download",
     "regenerate": "Regenerate",
-    "first_and_last_frames_hint": "Please upload first and last frame images (2 images total)"
+    "first_and_last_frames_hint": "Please upload first and last frame images (2 images total)",
+    "validation": {
+      "video_too_long": "Video duration exceeds model limit. Maximum allowed: {max}s, your video: {actual}s",
+      "video_too_large": "Video file size exceeds model limit. Maximum allowed: {max}MB, your video: {actual}MB",
+      "video_unsupported_format": "Unsupported video format. Supported formats: {supported}, your video: {actual}"
+    }
   }
 }
