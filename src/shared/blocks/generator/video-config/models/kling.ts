@@ -1,3 +1,4 @@
+import { duration } from 'moment';
 import { vi } from 'zod/v4/locales';
 
 import { VideoModelOption } from '../types';
@@ -129,8 +130,8 @@ export const klingModels: VideoModelOption[] = [
     inputValidation: {
       video: {
         minDuration: 3,
-        maxDuration: 30,
-        maxFileSize: 100,
+        maxDuration: 10,
+        maxFileSize: 10,
         supportedFormats: ['mp4', 'quicktime'],
       },
       image: {
@@ -176,6 +177,7 @@ export const klingModels: VideoModelOption[] = [
       video_urls: [],
       aspect_ratio: '16:9',
       mode: '720p',
+      duration: '0',
       character_orientation: 'image', // 角色参考默认参考图片，后续可以根据情况扩展为根据视频
     },
     advancedOptions: {
