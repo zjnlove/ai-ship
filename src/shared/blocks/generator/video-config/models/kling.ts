@@ -209,6 +209,18 @@ export const klingModels: VideoModelOption[] = [
       'text-to-video': 'kling-2.6/text-to-video ',
       'image-to-video': 'kling-2.6/image-to-video',
     },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_urls',
+        isArray: true,
+      },
+      {
+        type: 'audio',
+        fieldName: 'sound',
+        defaultValue: false,
+      },
+    ],
     defaultOptions: {
       aspect_ratio: '16:9',
       duration: '5',
