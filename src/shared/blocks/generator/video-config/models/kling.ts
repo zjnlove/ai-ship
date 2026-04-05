@@ -10,19 +10,42 @@ export const klingModels: VideoModelOption[] = [
       'text-to-video': 42,
       'image-to-video': 42,
     },
-    maxImages: 2,
+    maxImages: 1,
     sceneValues: {
       'text-to-video': 'kling-3-0-text-to-video',
       'image-to-video': 'kling-3-0-image-to-video',
     },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_urls',
+        isArray: true,
+      },
+      {
+        type: 'audio',
+        fieldName: 'sound',
+        defaultValue: false,
+      },
+    ],
     defaultOptions: {
+      image_urls: [],
       aspect_ratio: '16:9',
       mode: 'std',
       duration: '5',
-      audio: false,
+      sound: false,
+      multi_shots: false,
+      kling_elements: [],
+      multi_prompt: [],
+      generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'duration', 'mode', 'audio'],
+      supportedTypes: [
+        'aspectRatio',
+        'duration',
+        'mode',
+        'refFrameMode',
+        'audio',
+      ],
     },
     customOptions: {
       aspectRatio: [

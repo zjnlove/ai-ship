@@ -40,7 +40,7 @@ export interface CustomVideoOptions {
   duration?: VideoOptionValue[];
   fps?: VideoOptionValue[];
   motionStrength?: VideoOptionValue[];
-  imageToVideoMode?: VideoOptionValue[];
+  refFrameMode?: VideoOptionValue[];
   mode?: VideoOptionValue[];
 }
 
@@ -61,6 +61,8 @@ export interface VideoModelOption {
     'video-to-video'?: number;
   };
   maxImages?: number; // 模型支持的最大图片数量（如果适用）
+  // 自定义字段配置
+  customFields?: CustomFieldConfig[];
   // 自定义选项（每个模型可配置不同的选项值）
   customOptions: CustomVideoOptions;
   // 折扣配置（可选）
@@ -74,6 +76,15 @@ export interface VideoModelOption {
   };
   defaultOptions: Record<string, any>;
   advancedOptions?: VideoAdvancedOptions;
+}
+
+// 自定义字段配置
+export interface CustomFieldConfig {
+  type: 'image' | 'video' | 'audio' | 'boolean' | 'string' | 'number';
+  fieldName: string; // 实际发送到 API 的字段名
+  isArray?: boolean; // 是否为数组
+  defaultValue?: any; // 默认值
+  required?: boolean; // 是否必须
 }
 
 // 积分计算结果

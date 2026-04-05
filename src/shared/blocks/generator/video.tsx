@@ -238,7 +238,7 @@ export function VideoGenerator({
       selectedModelConfig?.defaultOptions?.generationType;
 
     if (refFrameModeValue === 'FIRST_AND_LAST_FRAMES_2_VIDEO') return 2;
-    if (refFrameModeValue === 'REFERENCE_2_VIDEO') return 3;
+    // if (refFrameModeValue === 'REFERENCE_2_VIDEO') return 3;
     return selectedModelConfig?.maxImages ?? 1;
   }, [advancedOptions.refFrameMode, selectedModelConfig]);
 
@@ -598,22 +598,62 @@ export function VideoGenerator({
         });
       }
 
-      // 动态设置视频输入字段
-      if (isImageToVideoMode && referenceImageUrls.length > 0) {
-        const imageField = selectedModelConfig?.imageField;
-        if (imageField) {
-          if (imageField.isArray) {
-            options[imageField.fieldName] = referenceImageUrls;
-          } else {
-            options[imageField.fieldName] = referenceImageUrls[0];
+      // 动态处理自定义字段
+      if (selectedModelConfig?.customFields) {
+        selectedModelConfig.customFields.forEach((field) => {
+          switch (field.type) {
+            case 'image':
+              if (referenceImageUrls.length > 0) {
+                options[field.fieldName] = field.isArray
+                  ? referenceImageUrls
+                  : referenceImageUrls[0];
+              }
+              break;
+
+            case 'video':
+              if (isVideoToVideoMode && referenceVideoUrl) {
+                options[field.fieldName] = field.isArray
+                  ? [referenceVideoUrl]
+                  : referenceVideoUrl;
+              }
+              break;
+
+            case 'audio':
+            case 'boolean':
+              options[field.fieldName] =
+                advancedOptions[field.fieldName] ?? field.defaultValue;
+              break;
+
+            case 'string':
+            case 'number':
+              if (advancedOptions[field.fieldName] !== undefined) {
+                options[field.fieldName] = advancedOptions[field.fieldName];
+              } else if (field.defaultValue !== undefined) {
+                options[field.fieldName] = field.defaultValue;
+              }
+              break;
           }
-        } else {
-          // 默认行为
-          options.image_input = referenceImageUrls;
-        }
+        });
       }
 
-      if (isVideoToVideoMode && referenceVideoUrl) {
+      // // 兼容旧版 imageField
+      // if (isImageToVideoMode && referenceImageUrls.length > 0) {
+      //   const imageField = selectedModelConfig?.imageField;
+      //   if (imageField && !selectedModelConfig.customFields) {
+      //     if (imageField.isArray) {
+      //       options[imageField.fieldName] = referenceImageUrls;
+      //     } else {
+      //       options[imageField.fieldName] = referenceImageUrls[0];
+      //     }
+      //   }
+      // }
+
+      // 兼容旧版默认视频字段
+      if (
+        isVideoToVideoMode &&
+        referenceVideoUrl &&
+        !selectedModelConfig?.customFields
+      ) {
         options.video_input = [referenceVideoUrl];
       }
 

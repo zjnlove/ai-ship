@@ -10,6 +10,7 @@ export const googleModels: VideoModelOption[] = [
       'text-to-video': 30,
       'image-to-video': 30,
     },
+    maxImages: 3,
     customOptions: {
       aspectRatio: [
         { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
@@ -21,10 +22,13 @@ export const googleModels: VideoModelOption[] = [
       'text-to-video': 'veo3_fast',
       'image-to-video': 'veo3_fast',
     },
-    imageField: {
-      fieldName: 'imageUrls',
-      isArray: true,
-    },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'imageUrls',
+        isArray: true,
+      },
+    ],
     defaultOptions: {
       imageUrls: [],
       aspect_ratio: '16:9',

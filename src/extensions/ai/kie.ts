@@ -262,7 +262,7 @@ export class KieProvider implements AIProvider {
       }
     }
     console.log('kie generate video payload', payload, apiUrl);
-    // throw new Error('kie generate video is disabled for testing');
+    throw new Error('kie generate video is disabled for testing');
 
     // if (params.options) {
     //   const options = params.options;
