@@ -165,14 +165,35 @@ export function VideoGenerator({
     MODEL_OPTIONS[0]?.sceneValues?.['text-to-video'] ?? ''
   );
   const [prompt, setPrompt] = useState('');
-  const [referenceImageItems, setReferenceImageItems] = useState<
-    ImageUploaderValue[]
-  >([]);
-  const [referenceImageUrls, setReferenceImageUrls] = useState<string[]>([]);
-  const [referenceVideoItems, setReferenceVideoItems] = useState<
-    VideoUploaderValue[]
-  >([]);
-  const [referenceVideoUrl, setReferenceVideoUrl] = useState<string>('');
+  // 按模式独立存储上传内容
+  const [modeImages, setModeImages] = useState<
+    Record<string, ImageUploaderValue[]>
+  >({
+    'text-to-video': [],
+    'image-to-video': [],
+    'video-to-video': [],
+  });
+
+  const [modeVideos, setModeVideos] = useState<
+    Record<string, VideoUploaderValue[]>
+  >({
+    'text-to-video': [],
+    'image-to-video': [],
+    'video-to-video': [],
+  });
+
+  // 当前模式的上传内容
+  const referenceImageItems = modeImages[activeTab] || [];
+  const referenceVideoItems = modeVideos[activeTab] || [];
+
+  // 计算当前模式的图片URL和视频URL
+  const referenceImageUrls = referenceImageItems
+    .filter((item) => item.status === 'uploaded' && item.url)
+    .map((item) => item.url as string);
+
+  const referenceVideoUrl =
+    referenceVideoItems.find((item) => item.status === 'uploaded' && item.url)
+      ?.url || '';
   const [generatedVideos, setGeneratedVideos] = useState<GeneratedVideo[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -370,13 +391,12 @@ export function VideoGenerator({
 
   const handleReferenceImagesChange = useCallback(
     (items: ImageUploaderValue[]) => {
-      setReferenceImageItems(items);
-      const uploadedUrls = items
-        .filter((item) => item.status === 'uploaded' && item.url)
-        .map((item) => item.url as string);
-      setReferenceImageUrls(uploadedUrls);
+      setModeImages((prev) => ({
+        ...prev,
+        [activeTab]: items,
+      }));
     },
-    []
+    [activeTab]
   );
 
   const isReferenceUploading = useMemo(
@@ -393,13 +413,12 @@ export function VideoGenerator({
 
   const handleReferenceVideoChange = useCallback(
     (items: VideoUploaderValue[]) => {
-      setReferenceVideoItems(items);
-      const uploadedUrl = items.find(
-        (item) => item.status === 'uploaded' && item.url
-      )?.url;
-      setReferenceVideoUrl(uploadedUrl || '');
+      setModeVideos((prev) => ({
+        ...prev,
+        [activeTab]: items,
+      }));
     },
-    []
+    [activeTab]
   );
 
   const resetTaskState = useCallback(() => {
@@ -985,6 +1004,8 @@ export function VideoGenerator({
                     {isImageToVideoMode ? (
                       <div>
                         <ImageUploader
+                          key={`image-${activeTab}`}
+                          defaultPreviews={referenceImageUrls}
                           title={t('form.reference_image')}
                           allowMultiple={true}
                           maxImages={maxImages}
@@ -998,6 +1019,8 @@ export function VideoGenerator({
                       <div className="flex flex-col gap-4 md:flex-row">
                         <div>
                           <ImageUploader
+                            key={`image-${activeTab}`}
+                            defaultPreviews={referenceImageUrls}
                             title={t('form.reference_image')}
                             allowMultiple={false}
                             maxImages={maxImages}
@@ -1009,6 +1032,10 @@ export function VideoGenerator({
                         </div>
                         <div>
                           <VideoUploader
+                            key={`video-${activeTab}`}
+                            defaultPreviews={
+                              referenceVideoUrl ? [referenceVideoUrl] : []
+                            }
                             title={t('form.reference_video')}
                             allowMultiple={false}
                             maxVideos={1}
