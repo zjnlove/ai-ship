@@ -1497,7 +1497,7 @@ export function VideoGenerator({
                                     <video
                                       src={video.url}
                                       controls
-                                      className="h-auto w-full"
+                                      className="h-auto max-h-[300px] w-full"
                                       preload="metadata"
                                     />
                                   </div>

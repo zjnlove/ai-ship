@@ -1,3 +1,5 @@
+import { task } from 'better-auth/react';
+
 import { getUuid } from '@/shared/lib/hash';
 
 import { saveFiles } from '.';
@@ -283,6 +285,12 @@ export class KieProvider implements AIProvider {
     // }
 
     // console.log('kie input', apiUrl, payload);
+    return {
+      taskStatus: AITaskStatus.PENDING,
+      taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9',
+      taskInfo: {},
+      taskResult: { taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9' },
+    };
 
     const resp = await fetch(apiUrl, {
       method: 'POST',
