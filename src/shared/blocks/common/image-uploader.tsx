@@ -575,7 +575,7 @@ export function ImageUploader({
                 onClick={openFilePicker}
               >
                 <div className="border-border flex h-10 w-10 items-center justify-center rounded-full border border-dashed">
-                  <IconUpload className="h-5 w-5" />
+                  <ImageIcon className="h-5 w-5" />
                 </div>
                 {/* <span className="text-xs font-medium">Upload</span> */}
                 <span className="text-primary text-xs">Max {maxSizeMB}MB</span>

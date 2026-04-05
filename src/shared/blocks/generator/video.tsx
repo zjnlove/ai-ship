@@ -19,7 +19,14 @@ import { toast } from 'sonner';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
-import { ImageUploader, ImageUploaderValue } from '@/shared/blocks/common';
+import {
+  ImageUploader,
+  ImageUploaderValue,
+} from '@/shared/blocks/common/image-uploader';
+import {
+  VideoUploader,
+  VideoUploaderValue,
+} from '@/shared/blocks/common/video-uploader';
 import { Button } from '@/shared/components/ui/button';
 import { Label } from '@/shared/components/ui/label';
 import {
@@ -162,6 +169,9 @@ export function VideoGenerator({
     ImageUploaderValue[]
   >([]);
   const [referenceImageUrls, setReferenceImageUrls] = useState<string[]>([]);
+  const [referenceVideoItems, setReferenceVideoItems] = useState<
+    VideoUploaderValue[]
+  >([]);
   const [referenceVideoUrl, setReferenceVideoUrl] = useState<string>('');
   const [generatedVideos, setGeneratedVideos] = useState<GeneratedVideo[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -356,8 +366,21 @@ export function VideoGenerator({
   );
 
   const hasReferenceUploadError = useMemo(
-    () => referenceImageItems.some((item) => item.status === 'error'),
-    [referenceImageItems]
+    () =>
+      referenceImageItems.some((item) => item.status === 'error') ||
+      referenceVideoItems.some((item) => item.status === 'error'),
+    [referenceImageItems, referenceVideoItems]
+  );
+
+  const handleReferenceVideoChange = useCallback(
+    (items: VideoUploaderValue[]) => {
+      setReferenceVideoItems(items);
+      const uploadedUrl = items.find(
+        (item) => item.status === 'uploaded' && item.url
+      )?.url;
+      setReferenceVideoUrl(uploadedUrl || '');
+    },
+    []
   );
 
   const resetTaskState = useCallback(() => {
@@ -953,20 +976,29 @@ export function VideoGenerator({
                         />
                       </div>
                     ) : isVideoToVideoMode ? (
-                      <div className="w-full md:w-64">
-                        <Label
-                          htmlFor="video-url"
-                          className="mb-2 block text-sm"
-                        >
-                          {t('form.reference_video')}
-                        </Label>
-                        <Textarea
-                          id="video-url"
-                          value={referenceVideoUrl}
-                          onChange={(e) => setReferenceVideoUrl(e.target.value)}
-                          placeholder={t('form.reference_video_placeholder')}
-                          className="bg-background border-primary/20 focus:border-primary/50 focus:ring-primary/20 placeholder:text-muted-foreground/60 min-h-20 border backdrop-blur-sm transition-all duration-300 focus:ring-2"
-                        />
+                      <div className="flex flex-col gap-4 md:flex-row">
+                        <div>
+                          <ImageUploader
+                            title={t('form.reference_image')}
+                            allowMultiple={false}
+                            maxImages={maxImages}
+                            maxSizeMB={maxSizeMB}
+                            onChange={handleReferenceImagesChange}
+                            imageWidth="w-25"
+                            imageHeight="h-32"
+                          />
+                        </div>
+                        <div>
+                          <VideoUploader
+                            title={t('form.reference_video')}
+                            allowMultiple={false}
+                            maxVideos={1}
+                            maxSizeMB={100}
+                            onChange={handleReferenceVideoChange}
+                            videoWidth="w-25"
+                            videoHeight="h-32"
+                          />
+                        </div>
                       </div>
                     ) : null}
                   </div>

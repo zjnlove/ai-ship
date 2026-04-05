@@ -555,8 +555,8 @@
       "prompt_placeholder": "Describe the video content, such as scene, action, style, etc.",
       "reference_image": "Images",
       "reference_image_placeholder": "Upload a reference image for video generation",
-      "reference_video": "Reference Video URL",
-      "reference_video_placeholder": "Enter the URL of the reference video",
+      "reference_video": "videos",
+      "reference_video_placeholder": "Upload a video for video generation",
       "some_images_failed_to_upload": "Image failed to upload, please delete and re-upload",
       "prompt_too_long": "Prompt is too long, please delete some content"
     },

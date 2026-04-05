@@ -555,8 +555,8 @@
       "prompt_placeholder": "描述视频内容，如场景、动作、风格等",
       "reference_image": "图像",
       "reference_image_placeholder": "上传参考图像用于视频生成",
-      "reference_video": "参考视频链接",
-      "reference_video_placeholder": "输入参考视频的链接",
+      "reference_video": "视频",
+      "reference_video_placeholder": "上传视频用于视频生成",
       "some_images_failed_to_upload": "图像上传失败，请删除并重新上传",
       "prompt_too_long": "提示词太长，请删除一些内容"
     },

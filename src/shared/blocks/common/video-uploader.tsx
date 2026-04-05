@@ -563,7 +563,7 @@ export function VideoUploader({
                 onClick={openFilePicker}
               >
                 <div className="border-border flex h-10 w-10 items-center justify-center rounded-full border border-dashed">
-                  <IconUpload className="h-5 w-5" />
+                  <Video className="h-5 w-5" />
                 </div>
                 <span className="text-primary text-xs">Max {maxSizeMB}MB</span>
               </button>

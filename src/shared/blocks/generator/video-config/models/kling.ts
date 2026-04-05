@@ -125,6 +125,7 @@ export const klingModels: VideoModelOption[] = [
     baseCredits: {
       'video-to-video': 40,
     },
+    maxImages: 1,
     customOptions: {
       aspectRatio: [
         { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
