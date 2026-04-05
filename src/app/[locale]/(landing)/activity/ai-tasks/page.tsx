@@ -15,7 +15,7 @@ export default async function AiTasksPage({
 }) {
   const { page: pageNum, pageSize, type } = await searchParams;
   const page = pageNum || 1;
-  const limit = pageSize || 20;
+  const limit = pageSize || 10;
 
   const user = await getUserInfo();
   if (!user) {
@@ -49,6 +49,7 @@ export default async function AiTasksPage({
       {
         name: 'result',
         title: t('fields.result'),
+        className: 'min-w-[320px]',
         callback: (item: AITask) => {
           if (item.taskInfo) {
             const taskInfo = JSON.parse(item.taskInfo);
@@ -84,7 +85,21 @@ export default async function AiTasksPage({
                       key={index}
                       src={image.imageUrl}
                       alt="Generated image"
-                      className="h-32 w-auto"
+                      className="h-20 w-auto rounded-lg"
+                    />
+                  ))}
+                </div>
+              );
+            } else if (taskInfo.videos && taskInfo.videos.length > 0) {
+              return (
+                <div className="flex flex-col gap-2">
+                  {taskInfo.videos.map((video: any, index: number) => (
+                    <video
+                      key={index}
+                      src={video.url ?? video.videoUrl ?? video}
+                      controls
+                      className="h-20 w-auto rounded-lg"
+                      preload="metadata"
                     />
                   ))}
                 </div>

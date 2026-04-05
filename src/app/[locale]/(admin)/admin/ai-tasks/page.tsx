@@ -28,7 +28,7 @@ export default async function AiTasksPage({
 
   const { page: pageNum, pageSize, type } = await searchParams;
   const page = pageNum || 1;
-  const limit = pageSize || 30;
+  const limit = pageSize || 10;
 
   const crumbs: Crumb[] = [
     { title: t('list.crumbs.admin'), url: '/admin' },
