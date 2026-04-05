@@ -86,7 +86,8 @@ export async function POST(request: Request) {
       throw new Error('insufficient credits');
     }
 
-    const callbackUrl = `${envConfigs.app_url}/api/ai/notify/${provider}`;
+    // const callbackUrl = `${envConfigs.app_url}/api/ai/notify/${provider}`;
+    const callbackUrl = `https://cd94-50-7-250-50.ngrok-free.app/api/ai/notify/${provider}`;
 
     const params: any = {
       mediaType,

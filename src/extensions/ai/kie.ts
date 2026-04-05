@@ -188,7 +188,7 @@ export class KieProvider implements AIProvider {
         payload.input.nsfw_checker = options.nsfw_checker;
       }
     }
-    console.log('kie input', apiUrl, headers, payload);
+    // console.log('kie input', apiUrl, headers, payload);
     // throw new Error('kie generate image is disabled for testing');
     const resp = await fetch(apiUrl, {
       method: 'POST',
@@ -237,7 +237,7 @@ export class KieProvider implements AIProvider {
       apiUrl = `${this.baseUrl}/veo/generate`;
     }
 
-    console.log('kie generate video input', apiUrl, headers, params);
+    // console.log('kie generate video input', apiUrl, headers, params);
     // build request params
     let payload: any = {
       model: params.model,
@@ -262,8 +262,7 @@ export class KieProvider implements AIProvider {
       }
     }
     console.log('kie generate video payload', payload, apiUrl);
-    throw new Error('kie generate video is disabled for testing');
-
+    // throw new Error('kie generate video is disabled for testing');
     // if (params.options) {
     //   const options = params.options;
     //   // text-to-video: use prompt
@@ -283,13 +282,14 @@ export class KieProvider implements AIProvider {
     //   }
     // }
 
-    console.log('kie input', apiUrl, payload);
+    // console.log('kie input', apiUrl, payload);
 
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
       body: JSON.stringify(payload),
     });
+
     if (!resp.ok) {
       console.log(
         'kie generate video response error',

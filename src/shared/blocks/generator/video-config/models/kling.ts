@@ -123,7 +123,7 @@ export const klingModels: VideoModelOption[] = [
     brand: 'kling',
     modelPath: 'kling-3-0-motion-control',
     baseCredits: {
-      'video-to-video': 40,
+      'video-to-video': 300,
     },
     maxImages: 1,
     customOptions: {
@@ -141,12 +141,24 @@ export const klingModels: VideoModelOption[] = [
       // 1080p 基础积分
       {
         conditions: { mode: '1080p' },
-        credits: 10,
+        credits: 300,
       },
     ],
     sceneValues: {
-      'video-to-video': 'kling-3-0-motion-control',
+      'video-to-video': 'kling-3.0/motion-control',
     },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'input_urls',
+        isArray: true,
+      },
+      {
+        type: 'video',
+        fieldName: 'video_urls',
+        isArray: true,
+      },
+    ],
     defaultOptions: {
       input_urls: [],
       video_urls: [],
