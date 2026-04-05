@@ -1,3 +1,5 @@
+import { vi } from 'zod/v4/locales';
+
 import { VideoModelOption } from '../types';
 
 export const klingModels: VideoModelOption[] = [
@@ -121,7 +123,7 @@ export const klingModels: VideoModelOption[] = [
     brand: 'kling',
     modelPath: 'kling-3-0-motion-control',
     baseCredits: {
-      'video-to-video': 100,
+      'video-to-video': 40,
     },
     customOptions: {
       aspectRatio: [
@@ -129,91 +131,30 @@ export const klingModels: VideoModelOption[] = [
         { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
         { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
       ],
-      resolution: [
-        { value: '720', label: 'advanced_options.resolution_options.720p' },
-        { value: '1080', label: 'advanced_options.resolution_options.1080p' },
-      ],
-      duration: [
-        { value: '5', label: 'advanced_options.duration_options.5s' },
-        { value: '10', label: 'advanced_options.duration_options.10s' },
-        { value: '15', label: 'advanced_options.duration_options.15s' },
-      ],
-      motionStrength: [
-        { value: 'low', label: 'advanced_options.motion_strength_options.low' },
-        {
-          value: 'medium',
-          label: 'advanced_options.motion_strength_options.medium',
-        },
-        {
-          value: 'high',
-          label: 'advanced_options.motion_strength_options.high',
-        },
+      mode: [
+        { value: '720p', label: 'advanced_options.resolution_options.720p' },
+        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
       ],
     },
     creditRules: [
       // 1080p 基础积分
       {
-        conditions: { resolution: '1080' },
+        conditions: { mode: '1080p' },
         credits: 10,
-      },
-      // 视频时长积分（从第4秒开始）
-      {
-        conditions: { resolution: '720' },
-        credits: 10,
-        perUnit: true,
-        unitField: 'duration',
-        startFrom: 4,
-      },
-      {
-        conditions: { resolution: '1080' },
-        credits: 20,
-        perUnit: true,
-        unitField: 'duration',
-        startFrom: 4,
-      },
-      // 声音开启基础分
-      {
-        conditions: { resolution: '720', audio: true },
-        credits: 5,
-      },
-      {
-        conditions: { resolution: '1080', audio: true },
-        credits: 10,
-      },
-      // 声音时长积分（从第4秒开始）
-      {
-        conditions: { resolution: '720', audio: true },
-        credits: 2,
-        perUnit: true,
-        unitField: 'duration',
-        startFrom: 4,
-      },
-      {
-        conditions: { resolution: '1080', audio: true },
-        credits: 3,
-        perUnit: true,
-        unitField: 'duration',
-        startFrom: 4,
       },
     ],
     sceneValues: {
       'video-to-video': 'kling-3-0-motion-control',
     },
     defaultOptions: {
+      input_urls: [],
+      video_urls: [],
       aspect_ratio: '16:9',
-      resolution: '720',
-      duration: '5',
-      motion_strength: 'medium',
-      audio: false,
+      mode: '720p',
+      character_orientation: 'image', // 角色参考默认参考图片，后续可以根据情况扩展为根据视频
     },
     advancedOptions: {
-      supportedTypes: [
-        'aspectRatio',
-        'resolution',
-        'duration',
-        'motionStrength',
-        'audio',
-      ],
+      supportedTypes: ['aspectRatio', 'mode'],
     },
   },
   {

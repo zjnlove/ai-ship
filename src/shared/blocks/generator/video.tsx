@@ -657,13 +657,13 @@ export function VideoGenerator({
       // }
 
       // 兼容旧版默认视频字段
-      if (
-        isVideoToVideoMode &&
-        referenceVideoUrl &&
-        !selectedModelConfig?.customFields
-      ) {
-        options.video_input = [referenceVideoUrl];
-      }
+      // if (
+      //   isVideoToVideoMode &&
+      //   referenceVideoUrl &&
+      //   !selectedModelConfig?.customFields
+      // ) {
+      //   options.video_input = [referenceVideoUrl];
+      // }
 
       // 剔除原 audio 字段，只保留自定义字段
       delete options.audio;
