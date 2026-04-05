@@ -76,6 +76,22 @@ export interface VideoModelOption {
   };
   defaultOptions: Record<string, any>;
   advancedOptions?: VideoAdvancedOptions;
+  // 输入验证规则
+  inputValidation?: InputValidationRules;
+}
+
+// 输入验证规则
+export interface InputValidationRules {
+  video?: {
+    minDuration?: number; // 最小时长 单位:秒
+    maxDuration?: number; // 最大时长 单位:秒
+    maxFileSize?: number; // 最大文件大小 单位:MB
+    supportedFormats?: string[]; // 支持的文件格式
+  };
+  image?: {
+    maxFileSize?: number; // 最大文件大小 单位:MB
+    supportedFormats?: string[]; // 支持的文件格式
+  };
 }
 
 // 自定义字段配置

@@ -7,12 +7,12 @@ const extFromMime = (mimeType: string) => {
     'image/jpeg': 'jpg',
     'image/jpg': 'jpg',
     'image/png': 'png',
-    // 'image/webp': 'webp',
-    // 'image/gif': 'gif',
-    // 'image/svg+xml': 'svg',
-    // 'image/avif': 'avif',
-    // 'image/heic': 'heic',
-    // 'image/heif': 'heif',
+    'image/webp': 'webp',
+    'image/gif': 'gif',
+    'image/svg+xml': 'svg',
+    'image/avif': 'avif',
+    'image/heic': 'heic',
+    'image/heif': 'heif',
   };
   return map[mimeType] || '';
 };

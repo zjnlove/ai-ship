@@ -212,6 +212,11 @@ export function VideoGenerator({
   const [showPreview, setShowPreview] = useState(false);
   const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
   const [advancedPopoverOpen, setAdvancedPopoverOpen] = useState(false);
+  const [videoMetadata, setVideoMetadata] = useState<{
+    duration: number;
+    size: number;
+    format: string;
+  } | null>(null);
 
   const pathname = usePathname();
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
@@ -312,7 +317,7 @@ export function VideoGenerator({
     const { discounted } = calculateCurrentCredits();
     console.log('Calculated discounted credits:', discounted);
     setCostCredits(discounted);
-  }, [calculateCurrentCredits, selectedModelConfig]);
+  }, [calculateCurrentCredits, selectedModelConfig, advancedOptions]);
 
   const advancedTypes =
     selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
@@ -417,8 +422,53 @@ export function VideoGenerator({
         ...prev,
         [activeTab]: items,
       }));
+
+      // 读取上传视频的元数据
+      if (items.length > 0 && items[0].file) {
+        const file = items[0].file;
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = () => {
+          window.URL.revokeObjectURL(video.src);
+
+          const duration = Math.ceil(video.duration);
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          console.log('✅ 视频元数据读取成功: ', {
+            duration,
+            size,
+            format,
+            selectedModel: selectedModelConfig?.label,
+          });
+
+          setVideoMetadata({
+            duration,
+            size,
+            format,
+          });
+
+          // 同时把时长写入到选项对象，确保积分计算时能正确识别
+          if (selectedModelConfig) {
+            if (!selectedModelConfig.defaultOptions) {
+              selectedModelConfig.defaultOptions = {};
+            }
+            selectedModelConfig.defaultOptions.duration = duration.toString();
+          }
+        };
+
+        video.onerror = () => {
+          window.URL.revokeObjectURL(video.src);
+          setVideoMetadata(null);
+        };
+
+        video.src = URL.createObjectURL(file);
+      } else {
+        setVideoMetadata(null);
+      }
     },
-    [activeTab]
+    [activeTab, selectedModelConfig]
   );
 
   const resetTaskState = useCallback(() => {
@@ -728,6 +778,11 @@ export function VideoGenerator({
 
       // 剔除原 audio 字段，只保留自定义字段
       delete options.audio;
+
+      // 强制加入自动检测的视频时长（不受supportedTypes过滤限制）
+      if (advancedOptions.duration) {
+        options.duration = advancedOptions.duration;
+      }
 
       const baseCredits = selectedModelConfig?.baseCredits as
         | Record<string, number>

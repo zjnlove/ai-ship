@@ -123,25 +123,37 @@ export const klingModels: VideoModelOption[] = [
     brand: 'kling',
     modelPath: 'kling-3-0-motion-control',
     baseCredits: {
-      'video-to-video': 300,
+      'video-to-video': 0,
     },
     maxImages: 1,
-    customOptions: {
-      aspectRatio: [
-        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
-        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
-        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
-      ],
-      mode: [
-        { value: '720p', label: 'advanced_options.resolution_options.720p' },
-        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
-      ],
+    inputValidation: {
+      video: {
+        minDuration: 3,
+        maxDuration: 30,
+        maxFileSize: 100,
+        supportedFormats: ['mp4', 'quicktime'],
+      },
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['jpg', 'jpeg', 'png'],
+      },
     },
     creditRules: [
-      // 1080p 基础积分
+      // std 模式 + 时长：每秒 14 积分
+      {
+        conditions: { mode: '720p' },
+        credits: 20,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
+      },
+      // pro 模式 + 时长：每秒 18 积分
       {
         conditions: { mode: '1080p' },
-        credits: 300,
+        credits: 27,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
       },
     ],
     sceneValues: {
@@ -168,6 +180,17 @@ export const klingModels: VideoModelOption[] = [
     },
     advancedOptions: {
       supportedTypes: ['aspectRatio', 'mode'],
+    },
+    customOptions: {
+      aspectRatio: [
+        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+      ],
+      mode: [
+        { value: '720p', label: 'advanced_options.resolution_options.720p' },
+        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
+      ],
     },
   },
   {
@@ -236,7 +259,7 @@ export const klingModels: VideoModelOption[] = [
     brand: 'kling',
     modelPath: 'kling-2-6-motion-control',
     baseCredits: {
-      'image-to-video': 7,
+      'video-to-video': 7,
     },
     customOptions: {
       aspectRatio: [

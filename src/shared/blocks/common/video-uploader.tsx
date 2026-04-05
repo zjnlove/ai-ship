@@ -16,6 +16,7 @@ export interface VideoUploaderValue {
   url?: string;
   status: UploadStatus;
   size?: number;
+  file?: File;
 }
 
 interface VideoUploaderProps {
@@ -172,12 +173,13 @@ export function VideoUploader({
     isInternalChangeRef.current = true;
 
     onChangeRef.current?.(
-      items.map(({ id, preview, url, status, size }) => ({
+      items.map(({ id, preview, url, status, size, file }) => ({
         id,
         preview,
         url,
         status,
         size,
+        file,
       }))
     );
   }, [items]);
