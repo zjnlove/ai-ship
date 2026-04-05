@@ -2,15 +2,12 @@
 
 import { createHmac, timingSafeEqual } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-import { r } from 'node_modules/fumadocs-core/dist/remark-structure-DkCXCzpD';
 
+import { envConfigs } from '@/config';
 import { respData, respErr } from '@/shared/lib/resp';
 
 // 环境变量密钥（从 .env.local 读取）
-const WEBHOOK_HMAC_KEY =
-  process.env.KIE_WEBHOOK_HMAC_KEY ||
-  'cb1d380cdd24bf1a46c441efe3f8aeb6948aa13b52b2aa99bdd66356e3da39d9';
-
+const WEBHOOK_HMAC_KEY = envConfigs.kie_webhook_secret;
 /**
  * KIE Webhook POST 接口
  * 完整实现官方签名校验规范

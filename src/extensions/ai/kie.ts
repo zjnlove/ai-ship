@@ -1,5 +1,7 @@
 import { task } from 'better-auth/react';
+import { th } from 'zod/v4/locales';
 
+import { envConfigs } from '@/config';
 import { getUuid } from '@/shared/lib/hash';
 
 import { saveFiles } from '.';
@@ -264,34 +266,17 @@ export class KieProvider implements AIProvider {
       }
     }
     console.log('kie generate video payload', payload, apiUrl);
-    // throw new Error('kie generate video is disabled for testing');
-    // if (params.options) {
-    //   const options = params.options;
-    //   // text-to-video: use prompt
-    //   // image-to-video: use image_input
-    //   // video-to-video: use video_input
-    //   if (options.image_input && Array.isArray(options.image_input)) {
-    //     payload.input.image_urls = options.image_input;
-    //   }
-    //   if (options.aspect_ratio) {
-    //     payload.input.aspect_ratio = options.aspect_ratio;
-    //   }
-    //   if (options.duration) {
-    //     payload.input.n_frames = options.duration;
-    //   }
-    //   if (!payload.input.n_frames) {
-    //     payload.input.n_frames = '10';
-    //   }
-    // }
 
-    // console.log('kie input', apiUrl, payload);
-    return {
-      taskStatus: AITaskStatus.PENDING,
-      taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9',
-      taskInfo: {},
-      taskResult: { taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9' },
-    };
-
+    // 接口测试模式，直接返回模拟结果
+    if (envConfigs.api_test_mode === 'true') {
+      return {
+        taskStatus: AITaskStatus.PENDING,
+        taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9',
+        taskInfo: {},
+        taskResult: { taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9' },
+      };
+    }
+    throw new Error('kie generate video is disabled for testing');
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
@@ -480,7 +465,7 @@ export class KieProvider implements AIProvider {
     }
 
     const taskStatus = this.mapImageStatus(data.state);
-
+    console.log('customStorage=========', this.configs.customStorage);
     // use custom storage to save videos
     if (
       taskStatus === AITaskStatus.SUCCESS &&

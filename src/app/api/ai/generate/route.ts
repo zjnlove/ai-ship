@@ -86,9 +86,11 @@ export async function POST(request: Request) {
       throw new Error('insufficient credits');
     }
 
-    // const callbackUrl = `${envConfigs.app_url}/api/ai/notify/${provider}`;
-    const callbackUrl = `https://cd94-50-7-250-50.ngrok-free.app/api/ai/notify/${provider}`;
-
+    let callbackUrl = `${envConfigs.app_url}/api/ai/notify/${provider}`;
+    if (envConfigs.api_test_mode === 'true') {
+      console.log('API test mode enabled, using mock callback URL');
+      callbackUrl = `https://cd94-50-7-250-50.ngrok-free.app/api/ai/notify/${provider}`;
+    }
     const params: any = {
       mediaType,
       model,
