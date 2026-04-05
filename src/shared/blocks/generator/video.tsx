@@ -619,6 +619,14 @@ export function VideoGenerator({
               break;
 
             case 'audio':
+              // 从组件选择的开关取值
+              const userSelectedAudio = advancedOptions.audio;
+              options[field.fieldName] =
+                userSelectedAudio !== undefined
+                  ? userSelectedAudio
+                  : field.defaultValue;
+              break;
+
             case 'boolean':
               options[field.fieldName] =
                 advancedOptions[field.fieldName] ?? field.defaultValue;
@@ -656,6 +664,9 @@ export function VideoGenerator({
       ) {
         options.video_input = [referenceVideoUrl];
       }
+
+      // 剔除原 audio 字段，只保留自定义字段
+      delete options.audio;
 
       const baseCredits = selectedModelConfig?.baseCredits as
         | Record<string, number>
