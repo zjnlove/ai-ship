@@ -13,6 +13,12 @@ export const grokModels: VideoModelOption[] = [
       'image-to-video': 20,
     },
     maxImages: 7,
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['webp', 'jpeg', 'png'],
+      },
+    },
     customOptions: {
       aspectRatio: [
         { value: '2:3', label: 'advanced_options.aspect_ratio_options.2_3' },

@@ -9,12 +9,14 @@ export const hailuoModels: VideoModelOption[] = [
     baseCredits: {
       'image-to-video': 25,
     },
+    maxImages: 1,
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['webp', 'jpeg', 'png'],
+      },
+    },
     customOptions: {
-      aspectRatio: [
-        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
-        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
-        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
-      ],
       resolution: [
         { value: '768p', label: 'advanced_options.resolution_options.768p' },
         { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
@@ -55,14 +57,19 @@ export const hailuoModels: VideoModelOption[] = [
     sceneValues: {
       'image-to-video': 'hailuo/2-3-image-to-video-standard',
     },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_url',
+        isArray: false,
+      },
+    ],
     defaultOptions: {
-      aspect_ratio: '16:9',
       resolution: '768p',
       duration: '6',
-      audio: false,
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'resolution', 'duration'],
+      supportedTypes: ['resolution', 'duration'],
     },
   },
   {
