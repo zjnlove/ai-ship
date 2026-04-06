@@ -375,6 +375,115 @@ export function VideoGenerator({
     setCostCredits(discounted);
   }, [calculateCurrentCredits, selectedModelConfig, advancedOptions]);
 
+  // ✅ 模型切换时重新校验已上传的图片和视频
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    const validateUploadedFiles = () => {
+      // 校验已上传的图片
+      if (referenceImageItems.length > 0) {
+        const validImages: ImageUploaderValue[] = [];
+        let hasInvalid = false;
+
+        for (const item of referenceImageItems) {
+          if (item.status === 'uploaded') {
+            // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
+            let isValid = true;
+
+            if (selectedModelConfig?.inputValidation?.image) {
+              const { maxFileSize, supportedFormats } =
+                selectedModelConfig.inputValidation.image;
+
+              // 校验文件大小
+              if (maxFileSize && item.size) {
+                const size = Math.round(item.size / 1024 / 1024);
+                if (size > maxFileSize) {
+                  isValid = false;
+                }
+              }
+
+              // 校验文件格式
+              if (supportedFormats && supportedFormats.length > 0 && item.url) {
+                const format = item.url.split('.').pop()?.toLowerCase() || '';
+                if (!supportedFormats.includes(format)) {
+                  isValid = false;
+                }
+              }
+            }
+
+            if (isValid) {
+              validImages.push(item);
+            } else {
+              hasInvalid = true;
+            }
+          } else {
+            validImages.push(item);
+          }
+        }
+
+        if (hasInvalid) {
+          setModeImages((prev) => ({
+            ...prev,
+            [activeTab]: validImages,
+          }));
+          toast.info(t('validation.some_files_removed'));
+        }
+      }
+
+      // 校验已上传的视频
+      if (referenceVideoItems.length > 0) {
+        const validVideos: VideoUploaderValue[] = [];
+        let hasInvalid = false;
+
+        for (const item of referenceVideoItems) {
+          if (item.status === 'uploaded') {
+            // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
+            let isValid = true;
+
+            if (selectedModelConfig?.inputValidation?.video) {
+              const { maxFileSize, supportedFormats } =
+                selectedModelConfig.inputValidation.video;
+
+              // 校验文件大小
+              if (maxFileSize && item.size) {
+                const size = Math.round(item.size / 1024 / 1024);
+                if (size > maxFileSize) {
+                  isValid = false;
+                }
+              }
+
+              // 校验文件格式
+              if (supportedFormats && supportedFormats.length > 0 && item.url) {
+                const format = item.url.split('.').pop()?.toLowerCase() || '';
+                if (!supportedFormats.includes(format)) {
+                  isValid = false;
+                }
+              }
+            }
+
+            if (isValid) {
+              validVideos.push(item);
+            } else {
+              hasInvalid = true;
+            }
+          } else {
+            validVideos.push(item);
+          }
+        }
+
+        if (hasInvalid) {
+          setModeVideos((prev) => ({
+            ...prev,
+            [activeTab]: validVideos,
+          }));
+          toast.info(t('validation.some_files_removed'));
+        }
+      }
+    };
+
+    validateUploadedFiles();
+  }, [selectedModelConfig, activeTab]);
+
   const advancedTypes =
     selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
 
