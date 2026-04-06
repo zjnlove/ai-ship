@@ -78,6 +78,8 @@ export interface VideoModelOption {
   discount?: DiscountConfig;
   // 关联积分规则
   creditRules?: CreditRule[];
+  // ✅ 选项依赖约束规则
+  dependencyRules?: DependencyRule[];
   sceneValues: Record<string, string>;
   imageField?: {
     fieldName: string; // 字段名称，如 'imageUrls', 'image', 'images'
@@ -110,6 +112,16 @@ export interface CustomFieldConfig {
   isArray?: boolean; // 是否为数组
   defaultValue?: any; // 默认值
   required?: boolean; // 是否必须
+}
+
+// ✅ 选项依赖约束规则
+export interface DependencyRule {
+  when: Record<string, string | boolean>; // 触发条件
+  then: {
+    disabled?: string[]; // 禁用的选项 "type:value"
+    autoSelect?: Record<string, string>; // 自动切换的选项
+    message?: string; // 提示消息
+  };
 }
 
 // 积分计算结果

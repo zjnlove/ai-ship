@@ -72,5 +72,5 @@ export const PROVIDER_OPTIONS = [
   { value: 'grok', label: 'xAI' },
   { value: 'seedance', label: 'ByteDance' },
   { value: 'runway', label: 'Runway' },
-  { value: 'hailuo', label: 'MiniMax' },
+  { value: 'hailuo', label: 'Hailuo' },
 ];

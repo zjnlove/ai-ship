@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { max } from 'drizzle-orm';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ChevronUp,
@@ -17,7 +16,6 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import { vi } from 'zod/v4/locales';
 
 import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
@@ -260,24 +258,37 @@ export function VideoGenerator({
       tab = 'image-to-video';
     }
 
-    // 检查是否是 image-models 路径，自动选择对应的模型
+    // 检查是否是 video-models 路径，自动选择对应的模型
     const imageModelMatch = pathname.match(/\/video-models\/([^/]+)/);
-    console.log(
-      'Checking for image model match in pathname:',
-      pathname,
-      imageModelMatch
-    );
     if (imageModelMatch) {
       const modelPath = imageModelMatch[1];
       const matchedModel = MODEL_OPTIONS.find(
         (option) => option.modelPath === modelPath
       );
-      if (matchedModel) {
+      console.log('Matched model based on URL:', matchedModel);
+      if (matchedModel && matchedModel.sceneValues) {
         setProvider(matchedModel.brand);
-        // 根据当前活动标签页选择对应的模型值
-        const modelValue = matchedModel.sceneValues?.[activeTab];
-        if (modelValue) {
-          setModel(modelValue);
+
+        // ✅ 取模型第一个支持的scene作为默认tab
+        const firstScene = Object.keys(
+          matchedModel.sceneValues
+        )[0] as VideoGeneratorTab;
+        if (firstScene) {
+          setActiveTab(firstScene);
+
+          // 设置对应模式的model值
+          const modelValue = matchedModel.sceneValues[firstScene];
+          if (modelValue) {
+            setModel(modelValue);
+          }
+
+          // 提前设置对应积分消耗，不需要等后面的逻辑
+          const baseCredits = matchedModel.baseCredits as
+            | Record<string, number>
+            | undefined;
+          if (baseCredits?.[firstScene]) {
+            setCostCredits(baseCredits[firstScene]);
+          }
         }
       }
     }
@@ -505,6 +516,84 @@ export function VideoGenerator({
 
     validateUploadedFiles();
   }, [selectedModelConfig, activeTab]);
+
+  // 字段映射表（蛇形 -> 驼峰）
+  const snakeToCamelMap: Record<string, string> = {
+    aspect_ratio: 'aspectRatio',
+    resolution: 'resolution',
+    mode: 'mode',
+    duration: 'duration',
+    fps: 'fps',
+    motion_strength: 'motionStrength',
+    generationType: 'refFrameMode',
+  };
+
+  // ✅ 计算当前禁用的选项
+  const disabledOptions = useMemo(() => {
+    const disabled: Set<string> = new Set();
+
+    if (!selectedModelConfig?.dependencyRules) {
+      return disabled;
+    }
+
+    selectedModelConfig.dependencyRules.forEach((rule) => {
+      // 检查when条件是否全部匹配
+      const match = Object.entries(rule.when).every(([key, value]) => {
+        // ✅ 映射到驼峰键名
+        const camelKey = snakeToCamelMap[key] || key;
+        return advancedOptions[camelKey] === value;
+      });
+
+      if (match && rule.then.disabled) {
+        rule.then.disabled.forEach((opt) => disabled.add(opt));
+      }
+    });
+
+    return disabled;
+  }, [selectedModelConfig, advancedOptions]);
+
+  // ✅ 自动执行依赖约束
+  useEffect(() => {
+    if (!selectedModelConfig?.dependencyRules) return;
+
+    let hasUpdates = false;
+    const newOptions: Record<string, any> = {};
+    let messageToShow: string | null = null;
+
+    selectedModelConfig.dependencyRules.forEach((rule) => {
+      const match = Object.entries(rule.when).every(([key, value]) => {
+        // ✅ 映射到驼峰键名
+        const camelKey = snakeToCamelMap[key] || key;
+        return advancedOptions[camelKey] === value;
+      });
+
+      if (match && rule.then.autoSelect) {
+        // 检查是否有值真正需要更新
+        Object.entries(rule.then.autoSelect).forEach(([key, value]) => {
+          if (advancedOptions[key] !== value) {
+            newOptions[key] = value;
+            hasUpdates = true;
+          }
+        });
+
+        if (rule.then.message && hasUpdates) {
+          messageToShow = rule.then.message;
+        }
+      }
+    });
+
+    // ✅ 只有真正有变化时才更新状态，防止无限循环
+    if (hasUpdates) {
+      setAdvancedOptions((prev) => ({
+        ...prev,
+        ...newOptions,
+      }));
+
+      if (messageToShow) {
+        toast.info(messageToShow);
+      }
+    }
+  }, [advancedOptions, selectedModelConfig]);
 
   const advancedTypes =
     selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
@@ -1818,27 +1907,42 @@ export function VideoGenerator({
                                   {t(label)}
                                 </Label>
                                 <div className="grid grid-cols-3 gap-2">
-                                  {options.map((option) => (
-                                    <motion.button
-                                      key={option.value}
-                                      whileHover={{ scale: 1.02 }}
-                                      whileTap={{ scale: 0.98 }}
-                                      onClick={() =>
-                                        setAdvancedOptions((prev) => ({
-                                          ...prev,
-                                          [type]: option.value,
-                                        }))
-                                      }
-                                      className={cn(
-                                        'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
-                                        currentValue === option.value
-                                          ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
-                                          : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
-                                      )}
-                                    >
-                                      <span>{t(option.label)}</span>
-                                    </motion.button>
-                                  ))}
+                                  {options.map((option) => {
+                                    const isDisabled = disabledOptions.has(
+                                      `${type}:${option.value}`
+                                    );
+
+                                    return (
+                                      <motion.button
+                                        key={option.value}
+                                        whileHover={
+                                          isDisabled ? {} : { scale: 1.02 }
+                                        }
+                                        whileTap={
+                                          isDisabled ? {} : { scale: 0.98 }
+                                        }
+                                        onClick={() => {
+                                          if (!isDisabled) {
+                                            setAdvancedOptions((prev) => ({
+                                              ...prev,
+                                              [type]: option.value,
+                                            }));
+                                          }
+                                        }}
+                                        className={cn(
+                                          'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
+                                          currentValue === option.value
+                                            ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
+                                            : isDisabled
+                                              ? 'bg-muted/50 border-muted-foreground/20 text-muted-foreground/40 cursor-not-allowed opacity-60'
+                                              : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
+                                        )}
+                                        disabled={isDisabled}
+                                      >
+                                        <span>{t(option.label)}</span>
+                                      </motion.button>
+                                    );
+                                  })}
                                 </div>
                               </div>
                             );

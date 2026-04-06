@@ -7,8 +7,7 @@ export const hailuoModels: VideoModelOption[] = [
     brand: 'hailuo',
     modelPath: 'hailuo-2-3',
     baseCredits: {
-      'text-to-video': 5,
-      'image-to-video': 7,
+      'image-to-video': 25,
     },
     customOptions: {
       aspectRatio: [
@@ -17,49 +16,53 @@ export const hailuoModels: VideoModelOption[] = [
         { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
       ],
       resolution: [
-        { value: '720', label: 'advanced_options.resolution_options.720p' },
-        { value: '1080', label: 'advanced_options.resolution_options.1080p' },
+        { value: '768p', label: 'advanced_options.resolution_options.768p' },
+        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
       ],
       duration: [
-        { value: '5', label: 'advanced_options.duration_options.5s' },
+        { value: '6', label: 'advanced_options.duration_options.6s' },
         { value: '10', label: 'advanced_options.duration_options.10s' },
-        { value: '15', label: 'advanced_options.duration_options.15s' },
       ],
     },
     creditRules: [
       {
-        conditions: { resolution: '720' },
-        credits: 10,
-        perUnit: true,
-        unitField: 'duration',
-      },
-      {
-        conditions: { resolution: '1080' },
+        conditions: { duration: '10' },
         credits: 20,
-        perUnit: true,
-        unitField: 'duration',
       },
       {
-        conditions: { resolution: '720', audio: true },
-        credits: 5,
+        conditions: { resolution: '1080p' },
+        credits: 20,
+      },
+    ],
+    // ✅ 参数依赖约束
+    dependencyRules: [
+      {
+        when: { resolution: '1080p' },
+        then: {
+          disabled: ['duration:10'],
+          autoSelect: { duration: '6' },
+          message: '1080p 仅支持 6 秒时长',
+        },
       },
       {
-        conditions: { resolution: '1080', audio: true },
-        credits: 10,
+        when: { duration: '10' },
+        then: {
+          disabled: ['resolution:1080p'],
+          message: '10 秒时长仅支持 768p',
+        },
       },
     ],
     sceneValues: {
-      'text-to-video': 'hailuo-2-3-text-to-video',
-      'image-to-video': 'hailuo-2-3-image-to-video',
+      'image-to-video': 'hailuo/2-3-image-to-video-standard',
     },
     defaultOptions: {
       aspect_ratio: '16:9',
-      resolution: '720',
-      duration: '5',
+      resolution: '768p',
+      duration: '6',
       audio: false,
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'resolution', 'duration', 'audio'],
+      supportedTypes: ['aspectRatio', 'resolution', 'duration'],
     },
   },
   {
