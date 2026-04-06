@@ -537,6 +537,69 @@ export function VideoGenerator({
     [selectedModelConfig]
   );
 
+  // ✅ 图片上传前置校验 - 在上传前执行，不通过不上传
+  const handleReferenceImageValidateFile = useCallback(
+    (file: File): Promise<boolean> => {
+      return new Promise<boolean>((resolve) => {
+        const img = new Image();
+
+        img.onload = () => {
+          window.URL.revokeObjectURL(img.src);
+
+          const width = img.naturalWidth;
+          const height = img.naturalHeight;
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          // 执行所有校验规则
+          if (selectedModelConfig?.inputValidation?.image) {
+            const { maxFileSize, supportedFormats } =
+              selectedModelConfig.inputValidation.image;
+
+            if (maxFileSize && size > maxFileSize) {
+              const error = t('validation.image_too_large', {
+                max: maxFileSize,
+                actual: size,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (
+              supportedFormats &&
+              supportedFormats.length > 0 &&
+              !supportedFormats.includes(format)
+            ) {
+              const error = t('validation.image_unsupported_format', {
+                supported: supportedFormats.join(', ').toUpperCase(),
+                actual: format.toUpperCase(),
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+          }
+
+          // 校验通过
+          setValidationError(null);
+          resolve(true);
+        };
+
+        img.onerror = () => {
+          window.URL.revokeObjectURL(img.src);
+          toast.error('Failed to read image metadata');
+          resolve(false);
+        };
+
+        img.src = URL.createObjectURL(file);
+      });
+    },
+    [selectedModelConfig]
+  );
+
   const handleReferenceVideoChange = useCallback(
     (items: VideoUploaderValue[]) => {
       setModeVideos((prev) => ({
@@ -1195,6 +1258,7 @@ export function VideoGenerator({
                             }
                             return true;
                           }}
+                          onValidateFile={handleReferenceImageValidateFile}
                           imageWidth="w-25"
                           imageHeight="h-32"
                         />
@@ -1217,6 +1281,7 @@ export function VideoGenerator({
                               }
                               return true;
                             }}
+                            onValidateFile={handleReferenceImageValidateFile}
                             imageWidth="w-25"
                             imageHeight="h-32"
                           />

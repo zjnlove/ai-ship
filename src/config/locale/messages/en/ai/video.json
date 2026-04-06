@@ -641,7 +641,9 @@
     "validation": {
       "video_too_long": "Video duration exceeds model limit. Maximum allowed: {max}s, your video: {actual}s",
       "video_too_large": "Video file size exceeds model limit. Maximum allowed: {max}MB, your video: {actual}MB",
-      "video_unsupported_format": "Unsupported video format. Supported formats: {supported}, your video: {actual}"
+      "video_unsupported_format": "Unsupported video format. Supported formats: {supported}, your video: {actual}",
+      "image_too_large": "Image file size exceeds model limit. Maximum allowed: {max}MB, your image: {actual}MB",
+      "image_unsupported_format": "Unsupported image format. Supported formats: {supported}, your image: {actual}"
     }
   }
 }

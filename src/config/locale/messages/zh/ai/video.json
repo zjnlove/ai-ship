@@ -641,7 +641,9 @@
     "validation": {
       "video_too_long": "视频时长超出模型限制，最大允许 {max} 秒，您的视频为 {actual} 秒",
       "video_too_large": "视频文件大小超出模型限制，最大允许 {max} MB，您的视频为 {actual} MB",
-      "video_unsupported_format": "不支持的视频格式。支持格式: {supported}, 您的视频: {actual}"
+      "video_unsupported_format": "不支持的视频格式。支持格式: {supported}, 您的视频: {actual}",
+      "image_too_large": "图片文件大小超出模型限制，最大允许 {max} MB，您的图片为 {actual} MB",
+      "image_unsupported_format": "不支持的图片格式。支持格式: {supported}, 您的图片: {actual}"
     }
   }
 }
