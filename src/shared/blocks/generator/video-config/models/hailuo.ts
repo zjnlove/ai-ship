@@ -1,3 +1,6 @@
+import { d } from 'node_modules/drizzle-kit/index-BAUrj6Ib.mjs';
+import { tr } from 'zod/v4/locales';
+
 import { VideoModelOption } from '../types';
 
 export const hailuoModels: VideoModelOption[] = [
@@ -78,47 +81,49 @@ export const hailuoModels: VideoModelOption[] = [
     brand: 'hailuo',
     modelPath: 'hailuo-02',
     baseCredits: {
-      'text-to-video': 4,
-      'image-to-video': 6,
+      'image-to-video': 12,
+    },
+    maxImages: 1,
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['webp', 'jpeg', 'png'],
+      },
     },
     customOptions: {
-      aspectRatio: [
-        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
-        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
-        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
-      ],
       resolution: [
-        { value: '720', label: 'advanced_options.resolution_options.720p' },
+        { value: '512p', label: 'advanced_options.resolution_options.512p' },
+        { value: '768p', label: 'advanced_options.resolution_options.768p' },
       ],
       duration: [
-        { value: '5', label: 'advanced_options.duration_options.5s' },
+        { value: '6', label: 'advanced_options.duration_options.6s' },
         { value: '10', label: 'advanced_options.duration_options.10s' },
       ],
     },
     creditRules: [
       {
-        conditions: { resolution: '720' },
-        credits: 8,
-        perUnit: true,
-        unitField: 'duration',
+        conditions: { resolution: '768p' },
+        credits: 18,
       },
       {
-        conditions: { resolution: '720', audio: true },
-        credits: 4,
+        conditions: { resolution: '512p', duration: '10' },
+        credits: 8,
+      },
+      {
+        conditions: { resolution: '768p', duration: '10' },
+        credits: 20,
       },
     ],
     sceneValues: {
-      'text-to-video': 'hailuo-02-text-to-video',
       'image-to-video': 'hailuo-02-image-to-video',
     },
     defaultOptions: {
-      aspect_ratio: '16:9',
-      resolution: '720',
-      duration: '5',
-      audio: false,
+      resolution: '512p',
+      duration: '6',
+      prompt_optimizer: true,
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'resolution', 'duration', 'audio'],
+      supportedTypes: ['resolution', 'duration'],
     },
   },
 ];
