@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { max } from 'drizzle-orm';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ChevronUp,
@@ -60,7 +61,8 @@ import {
 } from './video-config/index';
 
 interface VideoGeneratorProps {
-  maxSizeMB?: number;
+  video_maxSizeMB?: number;
+  image_maxSizeMB?: number;
   srOnlyTitle?: string;
   className?: string;
 }
@@ -152,7 +154,8 @@ function extractVideoUrls(result: any): string[] {
 }
 
 export function VideoGenerator({
-  maxSizeMB = 50,
+  video_maxSizeMB = 50,
+  image_maxSizeMB = 10,
   srOnlyTitle,
   className,
 }: VideoGeneratorProps) {
@@ -312,6 +315,12 @@ export function VideoGenerator({
   const selectedModelConfig = MODEL_OPTIONS.find(
     (option) => option.sceneValues?.[activeTab] === model
   );
+
+  // ✅ 动态获取模型配置的文件大小限制，没有配置则使用默认值
+  const imageMaxSize =
+    selectedModelConfig?.inputValidation?.image?.maxFileSize ?? image_maxSizeMB;
+  const videoMaxSize =
+    selectedModelConfig?.inputValidation?.video?.maxFileSize ?? video_maxSizeMB;
 
   // 计算 maxImages 值（基于 refFrameMode 和模型配置）
   const maxImages = useMemo(() => {
@@ -546,8 +555,6 @@ export function VideoGenerator({
         img.onload = () => {
           window.URL.revokeObjectURL(img.src);
 
-          const width = img.naturalWidth;
-          const height = img.naturalHeight;
           const size = Math.round(file.size / 1024 / 1024);
           const format = file.name.split('.').pop()?.toLowerCase() || '';
 
@@ -1249,7 +1256,7 @@ export function VideoGenerator({
                           title={t('form.reference_image')}
                           allowMultiple={true}
                           maxImages={maxImages}
-                          maxSizeMB={maxSizeMB}
+                          maxSizeMB={imageMaxSize}
                           onChange={handleReferenceImagesChange}
                           onBeforeUpload={() => {
                             if (!user) {
@@ -1272,7 +1279,7 @@ export function VideoGenerator({
                             title={t('form.reference_image')}
                             allowMultiple={false}
                             maxImages={maxImages}
-                            maxSizeMB={maxSizeMB}
+                            maxSizeMB={imageMaxSize}
                             onChange={handleReferenceImagesChange}
                             onBeforeUpload={() => {
                               if (!user) {
@@ -1295,7 +1302,7 @@ export function VideoGenerator({
                             title={t('form.reference_video')}
                             allowMultiple={false}
                             maxVideos={1}
-                            maxSizeMB={100}
+                            maxSizeMB={videoMaxSize}
                             onChange={handleReferenceVideoChange}
                             onBeforeUpload={() => {
                               if (!user) {
