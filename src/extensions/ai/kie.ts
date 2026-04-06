@@ -476,25 +476,25 @@ export class KieProvider implements AIProvider {
       this.configs.customStorage &&
       !savingTasks.has(taskId)
     ) {
-      // 加锁防止并发重复转存
-      savingTasks.add(taskId);
-      console.log('customStorage=========', this.configs.customStorage);
+      try {
+        // 加锁防止并发重复转存
+        savingTasks.add(taskId);
+        console.log('customStorage=========', this.configs.customStorage);
 
-      const filesToSave: AIFile[] = [];
-      videos.forEach((video, index) => {
-        if (video.videoUrl) {
-          filesToSave.push({
-            url: video.videoUrl,
-            contentType: 'video/mp4',
-            key: `kie/video/${getUuid()}.mp4`,
-            index: index,
-            type: 'video',
-          });
-        }
-      });
+        const filesToSave: AIFile[] = [];
+        videos.forEach((video, index) => {
+          if (video.videoUrl) {
+            filesToSave.push({
+              url: video.videoUrl,
+              contentType: 'video/mp4',
+              key: `kie/video/${getUuid()}.mp4`,
+              index: index,
+              type: 'video',
+            });
+          }
+        });
 
-      if (filesToSave.length > 0) {
-        try {
+        if (filesToSave.length > 0) {
           const uploadedFiles = await saveFiles(filesToSave);
           if (uploadedFiles) {
             uploadedFiles.forEach((file: AIFile) => {
@@ -506,12 +506,12 @@ export class KieProvider implements AIProvider {
               }
             });
           }
-        } catch (e) {
-          console.error('[Kie] R2转存失败，降级使用原始URL', e);
-        } finally {
-          // 无论成功失败都释放锁
-          savingTasks.delete(taskId);
         }
+      } catch (e) {
+        console.error('[Kie] R2转存失败，降级使用原始URL', e);
+      } finally {
+        // 无论成功失败都释放锁
+        savingTasks.delete(taskId);
       }
     }
 
