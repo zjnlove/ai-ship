@@ -577,6 +577,8 @@
       "aspect_ratio": "Aspect Ratio",
       "aspect_ratio_options": {
         "auto": "Auto",
+        "2_3": "2:3",
+        "3_2": "3:2",
         "16_9": "16:9",
         "9_16": "9:16",
         "1_1": "1:1",
@@ -584,6 +586,7 @@
       },
       "resolution": "Resolution",
       "resolution_options": {
+        "480p": "480p",
         "720p": "720p",
         "1080p": "1080p",
         "4k": "4K"
@@ -629,7 +632,10 @@
       "mode": "Mode",
       "mode_options": {
         "standard": "Std",
-        "professional": "Pro"
+        "professional": "Pro",
+        "fun": "Fun",
+        "normal": "Normal",
+        "spicy": "Spicy"
       }
     },
     "select_generation_mode": "Generation Mode",

@@ -110,7 +110,7 @@ export function calculateOriginalCredits(
     if (type === 'audio') return; // audio 通过规则计算
 
     const options = model.customOptions[type as keyof CustomVideoOptions];
-    if (options && typeof value === 'string') {
+    if (options && Array.isArray(options) && typeof value === 'string') {
       const option = options.find((opt) => opt.value === value);
       if (option?.credits) {
         totalCredits += option.credits;
@@ -142,7 +142,32 @@ export function getOptionsForModel(
   type: VideoOptionType
 ): VideoOptionValue[] {
   const customOptions = model.customOptions[type as keyof CustomVideoOptions];
-  if (customOptions && customOptions.length > 0) {
+
+  // 支持范围模式，自动生成选项数组
+  if (
+    customOptions &&
+    'type' in customOptions &&
+    customOptions.type === 'range'
+  ) {
+    const options: VideoOptionValue[] = [];
+    for (
+      let val = customOptions.min;
+      val <= customOptions.max;
+      val += customOptions.step
+    ) {
+      options.push({
+        value: String(val),
+        label: `advanced_options.duration_options.${val}s`,
+      });
+    }
+    return options;
+  }
+
+  if (
+    customOptions &&
+    Array.isArray(customOptions) &&
+    customOptions.length > 0
+  ) {
     return customOptions;
   }
   return getVideoOptionsForType(type);

@@ -260,6 +260,28 @@ export function VideoGenerator({
       tab = 'image-to-video';
     }
 
+    // 检查是否是 image-models 路径，自动选择对应的模型
+    const imageModelMatch = pathname.match(/\/video-models\/([^/]+)/);
+    console.log(
+      'Checking for image model match in pathname:',
+      pathname,
+      imageModelMatch
+    );
+    if (imageModelMatch) {
+      const modelPath = imageModelMatch[1];
+      const matchedModel = MODEL_OPTIONS.find(
+        (option) => option.modelPath === modelPath
+      );
+      if (matchedModel) {
+        setProvider(matchedModel.brand);
+        // 根据当前活动标签页选择对应的模型值
+        const modelValue = matchedModel.sceneValues?.[activeTab];
+        if (modelValue) {
+          setModel(modelValue);
+        }
+      }
+    }
+
     if (tab !== activeTab) {
       setActiveTab(tab);
 
@@ -806,6 +828,11 @@ export function VideoGenerator({
       setAdvancedOptions(newAdvancedOptions);
     }
   }, [selectedModelConfig]);
+
+  // 模型切换时自动重置高级选项为默认值
+  useEffect(() => {
+    resetAdvancedOptions();
+  }, [model, resetAdvancedOptions]);
 
   const pollTaskStatus = useCallback(
     async (id: string) => {
@@ -1386,7 +1413,7 @@ export function VideoGenerator({
                             key={`image-${activeTab}`}
                             defaultPreviews={referenceImageUrls}
                             title={t('form.reference_image')}
-                            allowMultiple={false}
+                            allowMultiple={true}
                             maxImages={maxImages}
                             maxSizeMB={imageMaxSize}
                             onChange={handleReferenceImagesChange}
@@ -1715,6 +1742,51 @@ export function VideoGenerator({
                               ] ??
                               options[0]?.value;
 
+                            // 检查是否是范围类型
+                            const isRangeType =
+                              selectedModelConfig?.customOptions?.[type] &&
+                              'type' in
+                                selectedModelConfig.customOptions[type] &&
+                              selectedModelConfig.customOptions[type].type ===
+                                'range';
+
+                            // 范围类型渲染滑块控件
+                            if (isRangeType) {
+                              const rangeConfig = selectedModelConfig
+                                .customOptions[type] as any;
+                              const currentNum =
+                                Number(currentValue) || rangeConfig.min;
+
+                              return (
+                                <div key={type} className="space-y-3">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t(label)}
+                                  </Label>
+                                  <div className="flex items-center gap-4">
+                                    <input
+                                      type="range"
+                                      min={rangeConfig.min}
+                                      max={rangeConfig.max}
+                                      step={rangeConfig.step}
+                                      value={currentNum}
+                                      onChange={(e) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: e.target.value,
+                                        }))
+                                      }
+                                      className="bg-muted accent-primary h-2 flex-1 cursor-pointer appearance-none rounded-lg"
+                                    />
+                                    <span className="bg-primary/10 min-w-[60px] rounded-full px-3 py-1 text-center text-sm font-medium">
+                                      {currentNum}
+                                      {rangeConfig.unit || 's'}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            // 普通类型渲染按钮网格
                             return (
                               <div key={type} className="space-y-2">
                                 <Label className="text-muted-foreground text-xs font-medium">

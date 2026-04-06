@@ -577,6 +577,8 @@
       "aspect_ratio": "宽高比",
       "aspect_ratio_options": {
         "auto": "自动",
+        "2_3": "2:3",
+        "3_2": "3:2",
         "16_9": "16:9",
         "9_16": "9:16",
         "1_1": "1:1",
@@ -584,6 +586,7 @@
       },
       "resolution": "分辨率",
       "resolution_options": {
+        "480p": "480p",
         "720p": "720p",
         "1080p": "1080p",
         "4k": "4K"
@@ -629,7 +632,10 @@
       "mode": "模式",
       "mode_options": {
         "standard": "标准",
-        "professional": "专业"
+        "professional": "专业",
+        "fun": "有趣",
+        "normal": "正常",
+        "spicy": "辣味"
       }
     },
     "select_generation_mode": "生成模式",

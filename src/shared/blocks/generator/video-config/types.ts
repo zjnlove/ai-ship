@@ -16,6 +16,15 @@ export interface VideoOptionValue {
   credits?: number; // 该选项值的额外积分消耗
 }
 
+// 范围选项配置
+export interface VideoOptionRange {
+  type: 'range';
+  min: number;
+  max: number;
+  step: number;
+  unit?: string;
+}
+
 // 关联积分规则
 export interface CreditRule {
   conditions: Record<string, string | boolean>; // 触发条件
@@ -37,9 +46,9 @@ export interface DiscountConfig {
 export interface CustomVideoOptions {
   aspectRatio?: VideoOptionValue[];
   resolution?: VideoOptionValue[];
-  duration?: VideoOptionValue[];
-  fps?: VideoOptionValue[];
-  motionStrength?: VideoOptionValue[];
+  duration?: VideoOptionValue[] | VideoOptionRange;
+  fps?: VideoOptionValue[] | VideoOptionRange;
+  motionStrength?: VideoOptionValue[] | VideoOptionRange;
   refFrameMode?: VideoOptionValue[];
   mode?: VideoOptionValue[];
 }
