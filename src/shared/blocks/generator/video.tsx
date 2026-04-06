@@ -953,9 +953,7 @@ export function VideoGenerator({
       } catch (error: any) {
         console.error('Error polling video task:', error);
         toast.error(`Query task failed: ${error.message}`);
-        resetTaskState();
-        fetchUserCredits();
-        return true;
+        return false;
       }
     },
     [generationStartTime, resetTaskState]
@@ -1429,8 +1427,8 @@ export function VideoGenerator({
                             return true;
                           }}
                           onValidateFile={handleReferenceImageValidateFile}
-                          imageWidth="w-25"
-                          imageHeight="h-32"
+                          imageWidth="w-16"
+                          imageHeight="h-20"
                         />
                       </div>
                     ) : isVideoToVideoMode ? (
@@ -1452,8 +1450,8 @@ export function VideoGenerator({
                               return true;
                             }}
                             onValidateFile={handleReferenceImageValidateFile}
-                            imageWidth="w-25"
-                            imageHeight="h-32"
+                            imageWidth="w-16"
+                            imageHeight="h-20"
                           />
                         </div>
                         <div>
@@ -1475,8 +1473,8 @@ export function VideoGenerator({
                               return true;
                             }}
                             onValidateFile={handleReferenceVideoValidateFile}
-                            videoWidth="w-25"
-                            videoHeight="h-32"
+                            videoWidth="w-16"
+                            videoHeight="h-20"
                           />
                         </div>
                       </div>

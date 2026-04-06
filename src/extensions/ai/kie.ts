@@ -27,6 +27,9 @@ export interface KieConfigs extends AIConfigs {
   customStorage?: boolean; // use custom storage to save files
 }
 
+// ✅ 模块级全局锁，所有请求和实例共享，防止并发重复转存
+const savingTasks = new Set<string>();
+
 /**
  * Kie provider
  * @docs https://kie.ai/
@@ -465,14 +468,18 @@ export class KieProvider implements AIProvider {
     }
 
     const taskStatus = this.mapImageStatus(data.state);
-    console.log('customStorage=========', this.configs.customStorage);
     // use custom storage to save videos
     if (
       taskStatus === AITaskStatus.SUCCESS &&
       videos &&
       videos.length > 0 &&
-      this.configs.customStorage
+      this.configs.customStorage &&
+      !savingTasks.has(taskId)
     ) {
+      // 加锁防止并发重复转存
+      savingTasks.add(taskId);
+      console.log('customStorage=========', this.configs.customStorage);
+
       const filesToSave: AIFile[] = [];
       videos.forEach((video, index) => {
         if (video.videoUrl) {
@@ -487,16 +494,23 @@ export class KieProvider implements AIProvider {
       });
 
       if (filesToSave.length > 0) {
-        const uploadedFiles = await saveFiles(filesToSave);
-        if (uploadedFiles) {
-          uploadedFiles.forEach((file: AIFile) => {
-            if (file && file.url && videos && file.index !== undefined) {
-              const video = videos[file.index];
-              if (video) {
-                video.videoUrl = file.url;
+        try {
+          const uploadedFiles = await saveFiles(filesToSave);
+          if (uploadedFiles) {
+            uploadedFiles.forEach((file: AIFile) => {
+              if (file && file.url && videos && file.index !== undefined) {
+                const video = videos[file.index];
+                if (video) {
+                  video.videoUrl = file.url;
+                }
               }
-            }
-          });
+            });
+          }
+        } catch (e) {
+          console.error('[Kie] R2转存失败，降级使用原始URL', e);
+        } finally {
+          // 无论成功失败都释放锁
+          savingTasks.delete(taskId);
         }
       }
     }
