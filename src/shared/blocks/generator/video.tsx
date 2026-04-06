@@ -513,6 +513,33 @@ export function VideoGenerator({
     const tab = value as VideoGeneratorTab;
     setActiveTab(tab);
 
+    // ✅ 先检查当前选中的模型是否支持新的模式，如果支持就不切换模型
+    const currentModel = MODEL_OPTIONS.find(
+      (option) => option.sceneValues?.[activeTab] === model
+    );
+
+    if (currentModel && currentModel.sceneValues?.[tab] !== undefined) {
+      // 当前模型支持新模式，保持当前provider不变，只更新model为新模式对应的值
+      setModel(currentModel.sceneValues[tab]);
+      // 直接更新对应积分消耗
+      const baseCredits = currentModel.baseCredits as
+        | Record<string, number>
+        | undefined;
+      if (baseCredits?.[tab]) {
+        setCostCredits(baseCredits[tab]);
+      } else {
+        if (tab === 'text-to-video') {
+          setCostCredits(textToVideoCredits);
+        } else if (tab === 'image-to-video') {
+          setCostCredits(imageToVideoCredits);
+        } else {
+          setCostCredits(videoToVideoCredits);
+        }
+      }
+      return;
+    }
+
+    // ❌ 当前模型不支持新模式，才走原来的逻辑重置为第一个可用模型
     // 过滤出当前模式下有可用模型的提供商
     const availableProviders = PROVIDER_OPTIONS.filter((p) => {
       return MODEL_OPTIONS.some(
