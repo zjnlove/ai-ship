@@ -115,7 +115,7 @@ export const hailuoModels: VideoModelOption[] = [
       },
     ],
     sceneValues: {
-      'image-to-video': 'hailuo-02-image-to-video',
+      'image-to-video': 'hailuo/02-image-to-video-standard',
     },
     defaultOptions: {
       resolution: '512p',
