@@ -12,6 +12,16 @@ export const wanModels: VideoModelOption[] = [
       'video-to-video': 70,
     },
     maxImages: 1,
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['webp', 'jpeg', 'png'],
+      },
+      video: {
+        maxFileSize: 10,
+        supportedFormats: ['mp4', 'quicktime'],
+      },
+    },
     customFields: [
       {
         type: 'image',
@@ -79,6 +89,22 @@ export const wanModels: VideoModelOption[] = [
         maxImages: 0,
         maxVideos: 1,
         showImageUploader: false,
+        customOptions: {
+          resolution: [
+            {
+              value: '720p',
+              label: 'advanced_options.resolution_options.720p',
+            },
+            {
+              value: '1080p',
+              label: 'advanced_options.resolution_options.1080p',
+            },
+          ],
+          duration: [
+            { value: '5', label: 'advanced_options.duration_options.5s' },
+            { value: '10', label: 'advanced_options.duration_options.10s' },
+          ],
+        },
       },
     },
     defaultOptions: {

@@ -358,7 +358,6 @@ export function VideoGenerator({
   // ✅ 场景配置兼容层 - 统一处理字符串和对象两种格式
   const sceneConfig = useMemo(() => {
     const sceneValue = selectedModelConfig?.sceneValues?.[activeTab];
-    console.log('Calculating sceneConfig for sceneValue:', sceneValue);
     if (typeof sceneValue === 'string') {
       // 旧格式字符串兼容
       return {
@@ -1326,7 +1325,7 @@ export function VideoGenerator({
         options.duration = advancedOptions.duration;
       }
 
-      const baseCredits = selectedModelConfig?.baseCredits as
+      const baseCredits = sceneConfig?.baseCredits as
         | Record<string, number>
         | undefined;
       const modelCredits = baseCredits?.[activeTab] ?? costCredits;
@@ -1922,7 +1921,7 @@ export function VideoGenerator({
                             if (type === 'audio') {
                               const currentValue =
                                 advancedOptions.audio ??
-                                selectedModelConfig?.defaultOptions?.audio ??
+                                sceneConfig?.defaultOptions?.audio ??
                                 false;
 
                               return (
@@ -1954,13 +1953,18 @@ export function VideoGenerator({
                               );
                             }
 
-                            const options = selectedModelConfig
-                              ? getOptionsForModel(selectedModelConfig, type)
-                              : getVideoOptionsForType(type);
+                            const options = sceneConfig.customOptions?.[type]
+                              ? sceneConfig.customOptions[type]
+                              : selectedModelConfig
+                                ? getOptionsForModel(selectedModelConfig, type)
+                                : getVideoOptionsForType(type);
                             const label = getVideoOptionLabel(type);
+                            // 类型判断：数组是选项列表，对象是范围滑块
+                            const isRange = !Array.isArray(options);
+
                             const currentValue =
                               advancedOptions[type] ??
-                              selectedModelConfig?.defaultOptions?.[
+                              sceneConfig?.defaultOptions?.[
                                 type === 'aspectRatio'
                                   ? 'aspect_ratio'
                                   : type === 'motionStrength'
@@ -1969,7 +1973,9 @@ export function VideoGenerator({
                                       ? 'generationType'
                                       : type
                               ] ??
-                              options[0]?.value;
+                              (!isRange && options.length > 0
+                                ? options[0]?.value
+                                : (options as any)?.min);
 
                             // 检查是否是范围类型
                             const isRangeType =
@@ -2022,42 +2028,43 @@ export function VideoGenerator({
                                   {t(label)}
                                 </Label>
                                 <div className="grid grid-cols-3 gap-2">
-                                  {options.map((option) => {
-                                    const isDisabled = disabledOptions.has(
-                                      `${type}:${option.value}`
-                                    );
+                                  {!isRange &&
+                                    options.map((option) => {
+                                      const isDisabled = disabledOptions.has(
+                                        `${type}:${option.value}`
+                                      );
 
-                                    return (
-                                      <motion.button
-                                        key={option.value}
-                                        whileHover={
-                                          isDisabled ? {} : { scale: 1.02 }
-                                        }
-                                        whileTap={
-                                          isDisabled ? {} : { scale: 0.98 }
-                                        }
-                                        onClick={() => {
-                                          if (!isDisabled) {
-                                            setAdvancedOptions((prev) => ({
-                                              ...prev,
-                                              [type]: option.value,
-                                            }));
+                                      return (
+                                        <motion.button
+                                          key={option.value}
+                                          whileHover={
+                                            isDisabled ? {} : { scale: 1.02 }
                                           }
-                                        }}
-                                        className={cn(
-                                          'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
-                                          currentValue === option.value
-                                            ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
-                                            : isDisabled
-                                              ? 'bg-muted/50 border-muted-foreground/20 text-muted-foreground/40 cursor-not-allowed opacity-60'
-                                              : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
-                                        )}
-                                        disabled={isDisabled}
-                                      >
-                                        <span>{t(option.label)}</span>
-                                      </motion.button>
-                                    );
-                                  })}
+                                          whileTap={
+                                            isDisabled ? {} : { scale: 0.98 }
+                                          }
+                                          onClick={() => {
+                                            if (!isDisabled) {
+                                              setAdvancedOptions((prev) => ({
+                                                ...prev,
+                                                [type]: option.value,
+                                              }));
+                                            }
+                                          }}
+                                          className={cn(
+                                            'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
+                                            currentValue === option.value
+                                              ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
+                                              : isDisabled
+                                                ? 'bg-muted/50 border-muted-foreground/20 text-muted-foreground/40 cursor-not-allowed opacity-60'
+                                                : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
+                                          )}
+                                          disabled={isDisabled}
+                                        >
+                                          <span>{t(option.label)}</span>
+                                        </motion.button>
+                                      );
+                                    })}
                                 </div>
                               </div>
                             );
