@@ -1140,8 +1140,8 @@ export function VideoGenerator({
         setProgress((prev) => Math.min(prev + 3, 95));
         return false;
       } catch (error: any) {
-        console.error('Error polling video task:', error);
-        toast.error(`Query task failed: ${error.message}`);
+        console.error('Error polling video task (will retry):', error);
+        // ✅ 不抛出异常，不弹错误提示，静默继续下一次轮询
         return false;
       }
     },
@@ -1332,7 +1332,7 @@ export function VideoGenerator({
       const modelCredits = baseCredits?.[activeTab] ?? costCredits;
 
       console.log('Sending generation request with options:', options);
-      throw new Error('Testing error handling'); // 测试错误处理逻辑，生成请求会失败
+      // throw new Error('Testing error handling'); // 测试错误处理逻辑，生成请求会失败
 
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',

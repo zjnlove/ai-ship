@@ -12,6 +12,18 @@ export const wanModels: VideoModelOption[] = [
       'video-to-video': 70,
     },
     maxImages: 1,
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_urls',
+        isArray: true,
+      },
+      {
+        type: 'video',
+        fieldName: 'video_urls',
+        isArray: true,
+      },
+    ],
     customOptions: {
       resolution: [
         { value: '720p', label: 'advanced_options.resolution_options.720p' },
@@ -72,6 +84,7 @@ export const wanModels: VideoModelOption[] = [
     defaultOptions: {
       resolution: '720p',
       duration: '5',
+      nsfw_checker: false,
     },
     advancedOptions: {
       supportedTypes: ['duration', 'resolution'],
