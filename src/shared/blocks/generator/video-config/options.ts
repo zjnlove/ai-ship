@@ -68,7 +68,7 @@ export const VIDEO_MODE_OPTIONS: VideoOptionValue[] = [
 export const PROVIDER_OPTIONS = [
   { value: 'google', label: 'Google' },
   { value: 'kling', label: 'Kling AI' },
-  { value: 'wan', label: 'Alibaba' },
+  { value: 'wan', label: 'Wan' },
   { value: 'grok', label: 'xAI' },
   { value: 'seedance', label: 'ByteDance' },
   // { value: 'runway', label: 'Runway' },

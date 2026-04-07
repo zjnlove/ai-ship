@@ -81,7 +81,24 @@ export interface VideoModelOption {
   creditRules?: CreditRule[];
   // ✅ 选项依赖约束规则
   dependencyRules?: DependencyRule[];
-  sceneValues: Record<string, string>;
+  // 场景配置，支持字符串ID 或 完整配置对象
+  sceneValues: Record<
+    string,
+    | string
+    | {
+        id: string;
+        maxImages?: number;
+        maxVideos?: number;
+        showImageUploader?: boolean;
+        baseCredits?: number;
+        creditRules?: CreditRule[];
+        defaultOptions?: Record<string, any>;
+        advancedOptions?: VideoAdvancedOptions;
+        customOptions?: CustomVideoOptions;
+        discount?: DiscountConfig;
+        [key: string]: any;
+      }
+  >;
   imageField?: {
     fieldName: string; // 字段名称，如 'imageUrls', 'image', 'images'
     isArray: boolean; // 是否为数组

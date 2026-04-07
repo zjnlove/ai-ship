@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { max } from 'drizzle-orm';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ChevronUp,
@@ -163,9 +164,10 @@ export function VideoGenerator({
     useState<VideoGeneratorTab>('text-to-video');
   const [costCredits, setCostCredits] = useState<number>(textToVideoCredits);
   const [provider, setProvider] = useState(PROVIDER_OPTIONS[0]?.value ?? '');
-  const [model, setModel] = useState(
-    MODEL_OPTIONS[0]?.sceneValues?.['text-to-video'] ?? ''
-  );
+  const [model, setModel] = useState(() => {
+    const value = MODEL_OPTIONS[0]?.sceneValues?.['text-to-video'];
+    return typeof value === 'string' ? value : (value?.id ?? '');
+  });
   const [prompt, setPrompt] = useState('');
   // 按模式独立存储上传内容
   const [modeImages, setModeImages] = useState<
@@ -230,14 +232,9 @@ export function VideoGenerator({
   }, []);
 
   useEffect(() => {
-    const selectedModel = MODEL_OPTIONS.find(
-      (option) => option.sceneValues?.[activeTab] === model
-    );
-    const baseCredits = selectedModel?.baseCredits as
-      | Record<string, number>
-      | undefined;
-    if (baseCredits?.[activeTab]) {
-      setCostCredits(baseCredits[activeTab]);
+    console.log('Selected model config changed:', sceneConfig.baseCredits);
+    if (sceneConfig.baseCredits) {
+      setCostCredits(sceneConfig.baseCredits);
     } else {
       if (activeTab === 'text-to-video') {
         setCostCredits(textToVideoCredits);
@@ -277,9 +274,11 @@ export function VideoGenerator({
           setActiveTab(firstScene);
 
           // 设置对应模式的model值
-          const modelValue = matchedModel.sceneValues[firstScene];
-          if (modelValue) {
-            setModel(modelValue);
+          const sceneValue = matchedModel.sceneValues[firstScene];
+          const modelId =
+            typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+          if (modelId) {
+            setModel(modelId);
           }
 
           // 提前设置对应积分消耗，不需要等后面的逻辑
@@ -316,7 +315,10 @@ export function VideoGenerator({
         );
 
         if (availableModels.length > 0) {
-          setModel(availableModels[0].sceneValues?.[tab] ?? '');
+          const sceneValue = availableModels[0].sceneValues?.[tab];
+          const modelId =
+            typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+          setModel(modelId ?? '');
         } else {
           setModel('');
         }
@@ -345,27 +347,79 @@ export function VideoGenerator({
   const isImageToVideoMode = activeTab === 'image-to-video';
   const isVideoToVideoMode = activeTab === 'video-to-video';
 
-  const selectedModelConfig = MODEL_OPTIONS.find(
-    (option) => option.sceneValues?.[activeTab] === model
-  );
+  const selectedModelConfig = MODEL_OPTIONS.find((option) => {
+    // 匹配所有场景，只要该模型的任意场景等于当前选中的model
+    return Object.values(option.sceneValues ?? {}).some((value) => {
+      const id = typeof value === 'string' ? value : value?.id;
+      return id === model;
+    });
+  });
+
+  // ✅ 场景配置兼容层 - 统一处理字符串和对象两种格式
+  const sceneConfig = useMemo(() => {
+    const sceneValue = selectedModelConfig?.sceneValues?.[activeTab];
+    console.log('Calculating sceneConfig for sceneValue:', sceneValue);
+    if (typeof sceneValue === 'string') {
+      // 旧格式字符串兼容
+      return {
+        id: sceneValue,
+        maxImages: selectedModelConfig?.maxImages ?? 1,
+        maxVideos: activeTab === 'video-to-video' ? 1 : 0,
+        showImageUploader: true,
+        baseCredits: selectedModelConfig?.baseCredits?.[activeTab],
+        creditRules: selectedModelConfig?.creditRules,
+        defaultOptions: selectedModelConfig?.defaultOptions,
+        advancedOptions: selectedModelConfig?.advancedOptions,
+        customOptions: selectedModelConfig?.customOptions,
+        discount: selectedModelConfig?.discount,
+        inputValidation: selectedModelConfig?.inputValidation,
+        customFields: selectedModelConfig?.customFields,
+        dependencyRules: selectedModelConfig?.dependencyRules,
+      };
+    }
+    // 新格式对象 - 自动优先级降级：场景 > 全局 > 默认
+    return {
+      id: sceneValue?.id,
+      maxImages: sceneValue?.maxImages ?? selectedModelConfig?.maxImages ?? 1,
+      maxVideos:
+        sceneValue?.maxVideos ?? (activeTab === 'video-to-video' ? 1 : 0),
+      showImageUploader: sceneValue?.showImageUploader ?? true,
+      baseCredits:
+        sceneValue?.baseCredits ??
+        selectedModelConfig?.baseCredits?.[activeTab],
+      creditRules: sceneValue?.creditRules ?? selectedModelConfig?.creditRules,
+      defaultOptions:
+        sceneValue?.defaultOptions ?? selectedModelConfig?.defaultOptions,
+      advancedOptions:
+        sceneValue?.advancedOptions ?? selectedModelConfig?.advancedOptions,
+      customOptions:
+        sceneValue?.customOptions ?? selectedModelConfig?.customOptions,
+      discount: sceneValue?.discount ?? selectedModelConfig?.discount,
+      inputValidation:
+        sceneValue?.inputValidation ?? selectedModelConfig?.inputValidation,
+      customFields:
+        sceneValue?.customFields ?? selectedModelConfig?.customFields,
+      dependencyRules:
+        sceneValue?.dependencyRules ?? selectedModelConfig?.dependencyRules,
+    };
+  }, [selectedModelConfig, activeTab]);
 
   // ✅ 动态获取模型配置的文件大小限制，没有配置则使用默认值
   const imageMaxSize =
-    selectedModelConfig?.inputValidation?.image?.maxFileSize ?? image_maxSizeMB;
+    sceneConfig.inputValidation?.image?.maxFileSize ?? image_maxSizeMB;
   const videoMaxSize =
-    selectedModelConfig?.inputValidation?.video?.maxFileSize ?? video_maxSizeMB;
+    sceneConfig.inputValidation?.video?.maxFileSize ?? video_maxSizeMB;
 
-  // 计算 maxImages 值（基于 refFrameMode 和模型配置）
+  // 计算 maxImages 值
   const maxImages = useMemo(() => {
     // 优先使用 advancedOptions 中的值
     const refFrameModeValue =
       advancedOptions.refFrameMode ??
-      selectedModelConfig?.defaultOptions?.generationType;
+      sceneConfig?.defaultOptions?.generationType;
 
     if (refFrameModeValue === 'FIRST_AND_LAST_FRAMES_2_VIDEO') return 2;
-    // if (refFrameModeValue === 'REFERENCE_2_VIDEO') return 3;
-    return selectedModelConfig?.maxImages ?? 1;
-  }, [advancedOptions.refFrameMode, selectedModelConfig]);
+    return sceneConfig?.maxImages ?? 1;
+  }, [advancedOptions.refFrameMode, sceneConfig]);
 
   // 计算当前积分（合并默认选项和用户选择）
   const calculateCurrentCredits = useCallback(() => {
@@ -374,15 +428,13 @@ export function VideoGenerator({
 
     const selectedOptions: Record<string, string | boolean> = {};
 
-    // 先添加模型的默认选项
-    if (selectedModelConfig.defaultOptions) {
-      Object.entries(selectedModelConfig.defaultOptions).forEach(
-        ([key, value]) => {
-          if (value !== undefined && value !== null) {
-            selectedOptions[key] = value;
-          }
+    // 使用场景配置中的默认选项
+    if (sceneConfig.defaultOptions) {
+      Object.entries(sceneConfig.defaultOptions).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          selectedOptions[key] = value;
         }
-      );
+      });
     }
 
     // 再用用户选择的选项覆盖
@@ -393,11 +445,18 @@ export function VideoGenerator({
     });
 
     return calculateDiscountedCredits(
-      selectedModelConfig,
+      {
+        ...selectedModelConfig,
+        baseCredits: {
+          [activeTab]: sceneConfig.baseCredits,
+        } as any,
+        creditRules: sceneConfig.creditRules,
+        discount: sceneConfig.discount,
+      },
       activeTab,
       selectedOptions
     );
-  }, [selectedModelConfig, activeTab, advancedOptions]);
+  }, [selectedModelConfig, sceneConfig, activeTab, advancedOptions]);
 
   // 实时计算积分（基于高级选项）
   useEffect(() => {
@@ -423,9 +482,9 @@ export function VideoGenerator({
             // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
             let isValid = true;
 
-            if (selectedModelConfig?.inputValidation?.image) {
+            if (sceneConfig.inputValidation?.image) {
               const { maxFileSize, supportedFormats } =
-                selectedModelConfig.inputValidation.image;
+                sceneConfig.inputValidation.image;
 
               // 校验文件大小
               if (maxFileSize && item.size) {
@@ -473,9 +532,9 @@ export function VideoGenerator({
             // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
             let isValid = true;
 
-            if (selectedModelConfig?.inputValidation?.video) {
+            if (sceneConfig.inputValidation?.video) {
               const { maxFileSize, supportedFormats } =
-                selectedModelConfig.inputValidation.video;
+                sceneConfig.inputValidation.video;
 
               // 校验文件大小
               if (maxFileSize && item.size) {
@@ -532,11 +591,11 @@ export function VideoGenerator({
   const disabledOptions = useMemo(() => {
     const disabled: Set<string> = new Set();
 
-    if (!selectedModelConfig?.dependencyRules) {
+    if (!sceneConfig.dependencyRules) {
       return disabled;
     }
 
-    selectedModelConfig.dependencyRules.forEach((rule) => {
+    sceneConfig.dependencyRules.forEach((rule: any) => {
       // 检查when条件是否全部匹配
       const match = Object.entries(rule.when).every(([key, value]) => {
         // ✅ 映射到驼峰键名
@@ -545,7 +604,7 @@ export function VideoGenerator({
       });
 
       if (match && rule.then.disabled) {
-        rule.then.disabled.forEach((opt) => disabled.add(opt));
+        rule.then.disabled.forEach((opt: any) => disabled.add(opt));
       }
     });
 
@@ -554,13 +613,13 @@ export function VideoGenerator({
 
   // ✅ 自动执行依赖约束
   useEffect(() => {
-    if (!selectedModelConfig?.dependencyRules) return;
+    if (!sceneConfig.dependencyRules) return;
 
     let hasUpdates = false;
     const newOptions: Record<string, any> = {};
     let messageToShow: string | null = null;
 
-    selectedModelConfig.dependencyRules.forEach((rule) => {
+    sceneConfig.dependencyRules.forEach((rule: any) => {
       const match = Object.entries(rule.when).every(([key, value]) => {
         // ✅ 映射到驼峰键名
         const camelKey = snakeToCamelMap[key] || key;
@@ -595,21 +654,26 @@ export function VideoGenerator({
     }
   }, [advancedOptions, selectedModelConfig]);
 
-  const advancedTypes =
-    selectedModelConfig?.advancedOptions?.supportedTypes ?? [];
+  const advancedTypes = sceneConfig.advancedOptions?.supportedTypes ?? [];
 
   const handleTabChange = (value: string) => {
     const tab = value as VideoGeneratorTab;
     setActiveTab(tab);
 
     // ✅ 先检查当前选中的模型是否支持新的模式，如果支持就不切换模型
-    const currentModel = MODEL_OPTIONS.find(
-      (option) => option.sceneValues?.[activeTab] === model
-    );
+    const currentModel = MODEL_OPTIONS.find((option) => {
+      return Object.values(option.sceneValues ?? {}).some((value) => {
+        const id = typeof value === 'string' ? value : value?.id;
+        return id === model;
+      });
+    });
 
     if (currentModel && currentModel.sceneValues?.[tab] !== undefined) {
       // 当前模型支持新模式，保持当前provider不变，只更新model为新模式对应的值
-      setModel(currentModel.sceneValues[tab]);
+      const sceneValue = currentModel.sceneValues[tab];
+      const modelId =
+        typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+      setModel(modelId ?? '');
       // 直接更新对应积分消耗
       const baseCredits = currentModel.baseCredits as
         | Record<string, number>
@@ -629,6 +693,13 @@ export function VideoGenerator({
     }
 
     // ❌ 当前模型不支持新模式，才走原来的逻辑重置为第一个可用模型
+    // toast.info(
+    //   t('validation.model_not_support_mode', {
+    //     model: currentModel?.label,
+    //     mode: tab,
+    //   })
+    // );
+
     // 过滤出当前模式下有可用模型的提供商
     const availableProviders = PROVIDER_OPTIONS.filter((p) => {
       return MODEL_OPTIONS.some(
@@ -649,7 +720,10 @@ export function VideoGenerator({
       );
 
       if (availableModels.length > 0) {
-        setModel(availableModels[0].sceneValues?.[tab] ?? '');
+        const sceneValue = availableModels[0].sceneValues?.[tab];
+        const modelId =
+          typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+        setModel(modelId ?? '');
       } else {
         setModel('');
       }
@@ -675,7 +749,10 @@ export function VideoGenerator({
         option.sceneValues?.[activeTab] !== undefined && option.brand === value
     );
     if (availableModels.length > 0) {
-      setModel(availableModels[0].sceneValues?.[activeTab] ?? '');
+      const sceneValue = availableModels[0].sceneValues?.[activeTab];
+      const modelId =
+        typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+      setModel(modelId ?? '');
     } else {
       setModel('');
     }
@@ -734,9 +811,9 @@ export function VideoGenerator({
           const format = file.name.split('.').pop()?.toLowerCase() || '';
 
           // 执行所有校验规则
-          if (selectedModelConfig?.inputValidation?.video) {
+          if (sceneConfig.inputValidation?.video) {
             const { maxDuration, maxFileSize, supportedFormats } =
-              selectedModelConfig.inputValidation.video;
+              sceneConfig.inputValidation.video;
 
             if (maxDuration && duration > maxDuration) {
               const error = t('validation.video_too_long', {
@@ -806,9 +883,9 @@ export function VideoGenerator({
           const format = file.name.split('.').pop()?.toLowerCase() || '';
 
           // 执行所有校验规则
-          if (selectedModelConfig?.inputValidation?.image) {
+          if (sceneConfig.inputValidation?.image) {
             const { maxFileSize, supportedFormats } =
-              selectedModelConfig.inputValidation.image;
+              sceneConfig.inputValidation.image;
 
             if (maxFileSize && size > maxFileSize) {
               const error = t('validation.image_too_large', {
@@ -887,9 +964,11 @@ export function VideoGenerator({
             format,
           });
 
-          if (selectedModelConfig?.defaultOptions) {
-            selectedModelConfig.defaultOptions.duration = duration.toString();
-          }
+          // ✅ 优化：不要修改全局defaultOptions，只更新本地状态advancedOptions
+          setAdvancedOptions((prev) => ({
+            ...prev,
+            duration: duration.toString(),
+          }));
         };
 
         video.onerror = () => {
@@ -901,10 +980,13 @@ export function VideoGenerator({
       } else if (items.length === 0) {
         // ✅ 视频被删除时重置所有相关状态
         setVideoMetadata(null);
-        if (selectedModelConfig?.defaultOptions) {
-          selectedModelConfig.defaultOptions.duration =
-            videoMetadata?.duration.toString() || '0';
-        }
+
+        // 只清除本地状态，不要修改全局配置
+        setAdvancedOptions((prev) => {
+          const newOptions = { ...prev };
+          delete newOptions.duration;
+          return newOptions;
+        });
       }
     },
     [activeTab, selectedModelConfig]
@@ -920,12 +1002,12 @@ export function VideoGenerator({
 
   // 重置高级选项为当前模型默认值
   const resetAdvancedOptions = useCallback(() => {
-    if (selectedModelConfig?.defaultOptions) {
-      const defaults = selectedModelConfig.defaultOptions;
+    if (sceneConfig.defaultOptions) {
+      const defaults = sceneConfig.defaultOptions;
       const newAdvancedOptions: Record<string, any> = {};
 
       // 根据模型支持的高级选项类型，设置默认值
-      selectedModelConfig.advancedOptions?.supportedTypes?.forEach((type) => {
+      sceneConfig.advancedOptions?.supportedTypes?.forEach((type) => {
         const fieldMap: Record<string, string> = {
           aspectRatio: 'aspect_ratio',
           resolution: 'resolution',
@@ -948,7 +1030,25 @@ export function VideoGenerator({
   // 模型切换时自动重置高级选项为默认值
   useEffect(() => {
     resetAdvancedOptions();
-  }, [model, resetAdvancedOptions]);
+
+    // ✅ 模型切换后保留已上传视频的时长
+    if (videoMetadata && videoMetadata.duration > 0) {
+      // 👉 精确判断条件：
+      // 模型有默认duration配置，但是supportedTypes不包含duration
+      // 这种情况下自动注入视频实际时长，有手动选择器的模型不自动覆盖
+      const shouldAutoInjectDuration =
+        sceneConfig.defaultOptions &&
+        'duration' in sceneConfig.defaultOptions &&
+        !sceneConfig.advancedOptions?.supportedTypes?.includes('duration');
+
+      if (shouldAutoInjectDuration) {
+        setAdvancedOptions((prev) => ({
+          ...prev,
+          duration: videoMetadata.duration.toString(),
+        }));
+      }
+    }
+  }, [model, resetAdvancedOptions, videoMetadata, sceneConfig]);
 
   const pollTaskStatus = useCallback(
     async (id: string) => {
@@ -1118,15 +1218,15 @@ export function VideoGenerator({
     try {
       // 构建 options：先合并模型的默认参数
       const options: any = {
-        ...selectedModelConfig?.defaultOptions,
+        ...sceneConfig.defaultOptions,
       };
 
       // 合并用户选择的高级选项
-      if (selectedModelConfig?.advancedOptions?.supportedTypes) {
-        selectedModelConfig.advancedOptions.supportedTypes.forEach((type) => {
+      if (sceneConfig.advancedOptions?.supportedTypes) {
+        sceneConfig.advancedOptions.supportedTypes.forEach((type) => {
           const value =
             advancedOptions[type] ??
-            selectedModelConfig.defaultOptions?.[
+            sceneConfig.defaultOptions?.[
               type === 'aspectRatio'
                 ? 'aspect_ratio'
                 : type === 'motionStrength'
@@ -1152,8 +1252,8 @@ export function VideoGenerator({
       }
 
       // 动态处理自定义字段
-      if (selectedModelConfig?.customFields) {
-        selectedModelConfig.customFields.forEach((field) => {
+      if (sceneConfig.customFields) {
+        sceneConfig.customFields.forEach((field: any) => {
           switch (field.type) {
             case 'image':
               if (referenceImageUrls.length > 0) {
@@ -1231,6 +1331,9 @@ export function VideoGenerator({
         | undefined;
       const modelCredits = baseCredits?.[activeTab] ?? costCredits;
 
+      console.log('Sending generation request with options:', options);
+      throw new Error('Testing error handling'); // 测试错误处理逻辑，生成请求会失败
+
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1269,7 +1372,7 @@ export function VideoGenerator({
               id: `${newTaskId}-${index}`,
               url,
               provider,
-              model,
+              model: model,
               prompt: trimmedPrompt,
             }))
           );
@@ -1522,27 +1625,29 @@ export function VideoGenerator({
                       </div>
                     ) : isVideoToVideoMode ? (
                       <div className="flex flex-col gap-4 md:flex-row">
-                        <div>
-                          <ImageUploader
-                            key={`image-${activeTab}`}
-                            defaultPreviews={referenceImageUrls}
-                            title={t('form.reference_image')}
-                            allowMultiple={true}
-                            maxImages={maxImages}
-                            maxSizeMB={imageMaxSize}
-                            onChange={handleReferenceImagesChange}
-                            onBeforeUpload={() => {
-                              if (!user) {
-                                setIsShowSignModal(true);
-                                return false;
-                              }
-                              return true;
-                            }}
-                            onValidateFile={handleReferenceImageValidateFile}
-                            imageWidth="w-16"
-                            imageHeight="h-20"
-                          />
-                        </div>
+                        {sceneConfig.showImageUploader && (
+                          <div>
+                            <ImageUploader
+                              key={`image-${activeTab}`}
+                              defaultPreviews={referenceImageUrls}
+                              title={t('form.reference_image')}
+                              allowMultiple={true}
+                              maxImages={maxImages}
+                              maxSizeMB={imageMaxSize}
+                              onChange={handleReferenceImagesChange}
+                              onBeforeUpload={() => {
+                                if (!user) {
+                                  setIsShowSignModal(true);
+                                  return false;
+                                }
+                                return true;
+                              }}
+                              onValidateFile={handleReferenceImageValidateFile}
+                              imageWidth="w-16"
+                              imageHeight="h-20"
+                            />
+                          </div>
+                        )}
                         <div>
                           <VideoUploader
                             key={`video-${activeTab}`}
@@ -1674,7 +1779,19 @@ export function VideoGenerator({
                               <button
                                 key={m.label}
                                 onClick={() => {
-                                  setModel(m.sceneValues?.[activeTab] ?? '');
+                                  const sceneValue = m.sceneValues?.[activeTab];
+                                  const modelId =
+                                    typeof sceneValue === 'string'
+                                      ? sceneValue
+                                      : sceneValue?.id;
+
+                                  // ✅ 如果点击的已经是当前选中的模型，只关闭弹窗，不执行任何重置
+                                  if (model === modelId) {
+                                    setModelPopoverOpen(false);
+                                    return;
+                                  }
+
+                                  setModel(modelId ?? '');
                                   setModelPopoverOpen(false);
                                   // 重置高级选项为新模型的默认值
                                   resetAdvancedOptions();
@@ -1750,8 +1867,7 @@ export function VideoGenerator({
                                   {type === 'duration' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
                                       {advancedOptions.duration ??
-                                        selectedModelConfig?.defaultOptions
-                                          ?.duration ??
+                                        sceneConfig?.defaultOptions?.duration ??
                                         '10'}
                                       s
                                     </span>
@@ -1759,7 +1875,7 @@ export function VideoGenerator({
                                   {type === 'aspectRatio' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
                                       {advancedOptions.aspectRatio ??
-                                        selectedModelConfig?.defaultOptions
+                                        sceneConfig?.defaultOptions
                                           ?.aspect_ratio ??
                                         '16:9'}
                                     </span>
@@ -1767,7 +1883,7 @@ export function VideoGenerator({
                                   {type === 'resolution' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
                                       {advancedOptions.resolution ??
-                                        selectedModelConfig?.defaultOptions
+                                        sceneConfig?.defaultOptions
                                           ?.resolution ??
                                         '720p'}
                                     </span>
@@ -1775,15 +1891,14 @@ export function VideoGenerator({
                                   {type === 'mode' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
                                       {advancedOptions.mode ??
-                                        selectedModelConfig?.defaultOptions
-                                          ?.mode ??
+                                        sceneConfig?.defaultOptions?.mode ??
                                         'std'}
                                     </span>
                                   )}
                                   {type === 'refFrameMode' && (
                                     <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
                                       {(advancedOptions.refFrameMode ??
-                                        selectedModelConfig?.defaultOptions
+                                        sceneConfig?.defaultOptions
                                           ?.generationType) ===
                                       'FIRST_AND_LAST_FRAMES_2_VIDEO'
                                         ? t(
@@ -1858,16 +1973,16 @@ export function VideoGenerator({
 
                             // 检查是否是范围类型
                             const isRangeType =
-                              selectedModelConfig?.customOptions?.[type] &&
-                              'type' in
-                                selectedModelConfig.customOptions[type] &&
-                              selectedModelConfig.customOptions[type].type ===
+                              sceneConfig.customOptions?.[type] &&
+                              'type' in sceneConfig.customOptions?.[type]! &&
+                              sceneConfig.customOptions?.[type].type ===
                                 'range';
 
                             // 范围类型渲染滑块控件
                             if (isRangeType) {
-                              const rangeConfig = selectedModelConfig
-                                .customOptions[type] as any;
+                              const rangeConfig = sceneConfig.customOptions?.[
+                                type
+                              ] as any;
                               const currentNum =
                                 Number(currentValue) || rangeConfig.min;
 
@@ -2000,13 +2115,20 @@ export function VideoGenerator({
                       onClick={handleGenerate}
                       disabled={
                         isGenerating ||
-                        (isTextToVideoMode && !prompt.trim()) ||
                         isPromptTooLong ||
                         isReferenceUploading ||
                         hasReferenceUploadError ||
+                        // ✅ 各模式启用条件
+                        (isTextToVideoMode && !prompt.trim()) ||
                         (isImageToVideoMode &&
-                          referenceImageUrls.length === 0) ||
-                        (isVideoToVideoMode && !referenceVideoUrl)
+                          (!prompt.trim() ||
+                            referenceImageUrls.length === 0)) ||
+                        (isVideoToVideoMode &&
+                          (!prompt.trim() ||
+                            !referenceVideoUrl ||
+                            // ✅ 动态校验：如果模型要求最少上传N张图，就必须满足数量
+                            (maxImages > 0 &&
+                              referenceImageUrls.length < maxImages)))
                       }
                     >
                       {isGenerating ? (
