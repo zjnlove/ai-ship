@@ -1849,7 +1849,8 @@ export function VideoGenerator({
                                 type === 'resolution' ||
                                 type === 'mode' ||
                                 type === 'refFrameMode' ||
-                                type === 'audio'
+                                type === 'audio' ||
+                                type === 'fix_camera'
                             );
                             return visibleTypes
                               .slice(0, 3)
@@ -1942,10 +1943,46 @@ export function VideoGenerator({
                                     <span className="text-muted-foreground text-xs">
                                       {currentValue
                                         ? t(
-                                            'advanced_options.audio_options.audio_on'
+                                            'advanced_options.switch_options.on'
                                           )
                                         : t(
-                                            'advanced_options.audio_options.audio_off'
+                                            'advanced_options.switch_options.off'
+                                          )}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            // fix_camera 类型使用 Switch 开关
+                            if (type === 'fix_camera') {
+                              const currentValue =
+                                advancedOptions.fix_camera ??
+                                sceneConfig?.defaultOptions?.fix_camera ??
+                                false;
+
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t('advanced_options.fix_camera')}
+                                  </Label>
+                                  <div className="flex items-center gap-2">
+                                    <Switch
+                                      checked={currentValue as boolean}
+                                      onCheckedChange={(checked) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          fix_camera: checked,
+                                        }))
+                                      }
+                                    />
+                                    <span className="text-muted-foreground text-xs">
+                                      {currentValue
+                                        ? t(
+                                            'advanced_options.switch_options.on'
+                                          )
+                                        : t(
+                                            'advanced_options.switch_options.off'
                                           )}
                                     </span>
                                   </div>
@@ -2036,7 +2073,7 @@ export function VideoGenerator({
 
                                       return (
                                         <motion.button
-                                          key={option.value}
+                                          key={String(option.value)}
                                           whileHover={
                                             isDisabled ? {} : { scale: 1.02 }
                                           }

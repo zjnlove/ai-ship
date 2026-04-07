@@ -7,11 +7,12 @@ export type VideoOptionType =
   | 'fps'
   | 'motionStrength'
   | 'refFrameMode'
-  | 'audio';
+  | 'audio'
+  | 'fix_camera';
 
 // 单个选项值及其积分
 export interface VideoOptionValue {
-  value: string;
+  value: string | boolean;
   label: string;
   credits?: number; // 该选项值的额外积分消耗
 }
@@ -52,6 +53,8 @@ export interface CustomVideoOptions {
   motionStrength?: VideoOptionValue[] | VideoOptionRange;
   refFrameMode?: VideoOptionValue[];
   mode?: VideoOptionValue[];
+  audio?: VideoOptionValue[];
+  fix_camera?: VideoOptionValue[];
 }
 
 // 视频高级选项
@@ -125,7 +128,14 @@ export interface InputValidationRules {
 
 // 自定义字段配置
 export interface CustomFieldConfig {
-  type: 'image' | 'video' | 'audio' | 'boolean' | 'string' | 'number';
+  type:
+    | 'image'
+    | 'video'
+    | 'audio'
+    | 'fix_camera'
+    | 'boolean'
+    | 'string'
+    | 'number';
   fieldName: string; // 实际发送到 API 的字段名
   isArray?: boolean; // 是否为数组
   defaultValue?: any; // 默认值

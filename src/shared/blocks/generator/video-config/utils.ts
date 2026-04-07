@@ -29,6 +29,7 @@ export function getVideoOptionsForType(
     motionStrength: MOTION_STRENGTH_OPTIONS,
     refFrameMode: REF_FRAME_MODE_OPTIONS,
     audio: [], // audio 是布尔类型，不需要选项列表
+    fix_camera: [], // fix_camera 是布尔类型，不需要选项列表
   };
   return optionsMap[type] || [];
 }
@@ -44,6 +45,7 @@ export function getVideoOptionLabel(type: VideoOptionType): string {
     motionStrength: 'advanced_options.motion_strength',
     refFrameMode: 'advanced_options.ref_frame_mode',
     audio: 'advanced_options.audio',
+    fix_camera: 'advanced_options.fix_camera',
   };
   return labelMap[type] || '';
 }

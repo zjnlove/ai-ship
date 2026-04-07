@@ -1,6 +1,3 @@
-import { d } from 'node_modules/drizzle-kit/index-BAUrj6Ib.mjs';
-import { tr } from 'zod/v4/locales';
-
 import { VideoModelOption } from '../types';
 
 export const hailuoModels: VideoModelOption[] = [

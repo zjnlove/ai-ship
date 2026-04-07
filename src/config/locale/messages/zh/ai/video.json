@@ -582,7 +582,9 @@
         "16_9": "16:9",
         "9_16": "9:16",
         "1_1": "1:1",
-        "4_3": "4:3"
+        "4_3": "4:3",
+        "3_4": "3:4",
+        "21_9": "21:9"
       },
       "resolution": "分辨率",
       "resolution_options": {
@@ -627,9 +629,10 @@
         "reference": "参考"
       },
       "audio": "音频",
-      "audio_options": {
-        "audio_on": "开",
-        "audio_off": "关"
+      "fix_camera": "固定相机",
+      "switch_options": {
+        "on": "开",
+        "off": "关"
       },
       "mode": "模式",
       "mode_options": {
