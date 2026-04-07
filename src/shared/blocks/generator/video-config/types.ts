@@ -29,7 +29,8 @@ export interface VideoOptionRange {
 // 关联积分规则
 export interface CreditRule {
   conditions: Record<string, string | boolean>; // 触发条件
-  credits: number; // 积分消耗
+  credits?: number; // 积分消耗（可选，与multiplier二选一）
+  multiplier?: number; // ✅ 倍数系数（最后相乘）
   perUnit?: boolean; // 是否按单位计算
   unitField?: string; // 按哪个字段计算单位
   startFrom?: number; // 从第几个单位开始计算（默认 1）

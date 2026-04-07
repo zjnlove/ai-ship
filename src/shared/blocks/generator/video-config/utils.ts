@@ -87,12 +87,13 @@ export function calculateOriginalCredits(
 
   // 匹配关联规则（所有匹配的规则都生效）
   if (model.creditRules) {
+    // 第一阶段：计算所有基础规则
     for (const rule of model.creditRules) {
       const isMatch = Object.entries(rule.conditions).every(
         ([key, value]) => selectedOptions[key] === value
       );
 
-      if (isMatch) {
+      if (isMatch && rule.credits !== undefined) {
         if (rule.perUnit && rule.unitField) {
           const units = parseInt(
             String(selectedOptions[rule.unitField]) || '0'
@@ -111,6 +112,17 @@ export function calculateOriginalCredits(
         } else {
           totalCredits += rule.credits;
         }
+      }
+    }
+
+    // 第二阶段：计算所有乘数规则（最后执行，全部相乘）
+    for (const rule of model.creditRules) {
+      const isMatch = Object.entries(rule.conditions).every(
+        ([key, value]) => selectedOptions[key] === value
+      );
+
+      if (isMatch && rule.multiplier !== undefined) {
+        totalCredits = Math.ceil(totalCredits * rule.multiplier);
       }
     }
   }
