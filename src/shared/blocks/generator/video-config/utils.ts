@@ -96,7 +96,15 @@ export function calculateOriginalCredits(
             String(selectedOptions[rule.unitField]) || '0'
           );
           const startFrom = rule.startFrom || 1;
-          const effectiveUnits = Math.max(0, units - startFrom + 1);
+          const unitStep = rule.unitStep || 1;
+
+          let effectiveUnits = Math.max(0, units - startFrom + 1);
+
+          // ✅ 按间隔步长计算单位
+          if (unitStep > 1) {
+            effectiveUnits = Math.ceil(effectiveUnits / unitStep);
+          }
+
           totalCredits += rule.credits * effectiveUnits;
         } else {
           totalCredits += rule.credits;

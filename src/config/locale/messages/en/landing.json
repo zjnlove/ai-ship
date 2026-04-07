@@ -185,21 +185,6 @@
               "target": "_blank"
             },
             {
-              "title": "Veo 3.1",
-              "url": "/video-models/veo-3-1",
-              "target": "_blank"
-            },
-            {
-              "title": "Veo 3",
-              "url": "/video-models/veo-3",
-              "target": "_blank"
-            },
-            {
-              "title": "Grok Imagine",
-              "url": "/video-models/grok-imagine",
-              "target": "_blank"
-            },
-            {
               "title": "Hailuo 2.3",
               "url": "/video-models/hailuo-2-3",
               "target": "_blank"
@@ -210,8 +195,13 @@
               "target": "_blank"
             },
             {
-              "title": "Runway Video Generation",
-              "url": "/video-models/runway-video-generation",
+              "title": "Veo 3.1",
+              "url": "/video-models/veo-3-1",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/video-models/grok-imagine",
               "target": "_blank"
             }
           ]

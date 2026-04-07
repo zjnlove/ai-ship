@@ -32,6 +32,7 @@ export interface CreditRule {
   perUnit?: boolean; // 是否按单位计算
   unitField?: string; // 按哪个字段计算单位
   startFrom?: number; // 从第几个单位开始计算（默认 1）
+  unitStep?: number; // ✅ 单位间隔步长，每多少个值为一个计费单位
 }
 
 // 折扣配置
