@@ -2122,7 +2122,11 @@ export function VideoGenerator({
                         (isTextToVideoMode && !prompt.trim()) ||
                         (isImageToVideoMode &&
                           (!prompt.trim() ||
-                            referenceImageUrls.length === 0)) ||
+                            // ✅ 动态校验：首尾帧模式必须满2张图
+                            (advancedOptions.refFrameMode ===
+                            'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                              ? referenceImageUrls.length < 2
+                              : referenceImageUrls.length < 1))) ||
                         (isVideoToVideoMode &&
                           (!prompt.trim() ||
                             !referenceVideoUrl ||
