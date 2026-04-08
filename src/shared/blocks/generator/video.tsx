@@ -2259,6 +2259,32 @@ export function VideoGenerator({
                                 <p className="text-primary mt-2 text-2xl font-bold">
                                   {progress}%
                                 </p>
+
+                                {/* 友好等待提示 */}
+                                <div className="bg-primary/5 border-primary/20 mt-4 rounded-xl border p-4 text-left">
+                                  <div className="flex items-start gap-3">
+                                    <div className="text-primary mt-0.5">
+                                      💡
+                                    </div>
+                                    <div className="space-y-2">
+                                      <p className="text-sm font-medium">
+                                        {t('generator.waiting_hint.title')}
+                                      </p>
+                                      <p className="text-muted-foreground text-sm">
+                                        {t(
+                                          'generator.waiting_hint.description'
+                                        )}
+                                      </p>
+                                      <Link
+                                        href="/activity/ai-tasks"
+                                        target="_blank"
+                                        className="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+                                      >
+                                        {t('generator.waiting_hint.link')}
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </motion.div>
                           ) : generatedVideos.length > 0 ? (

@@ -649,6 +649,11 @@
     "download": "Download",
     "regenerate": "Regenerate",
     "first_and_last_frames_hint": "Please upload first and last frame images (2 images total)",
+    "waiting_hint": {
+      "title": "Video generation usually takes 1-5 minutes, please be patient",
+      "description": "You don't need to stay on this page, the generation will be saved automatically.",
+      "link": "→ Go to My Tasks to view all generation history"
+    },
     "validation": {
       "video_too_long": "Video duration exceeds model limit. Maximum allowed: {max}s, your video: {actual}s",
       "video_too_large": "Video file size exceeds model limit. Maximum allowed: {max}MB, your video: {actual}MB",

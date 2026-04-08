@@ -440,6 +440,7 @@ export class KieProvider implements AIProvider {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.configs.apiKey}`,
     };
+    console.log('query video parmas+', taskId, aiTaskId);
 
     const resp = await fetch(apiUrl, {
       method: 'GET',
