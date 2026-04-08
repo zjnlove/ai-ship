@@ -428,7 +428,13 @@ export class KieProvider implements AIProvider {
     };
   }
 
-  async queryVideo({ taskId }: { taskId: string }): Promise<AITaskResult> {
+  async queryVideo({
+    taskId,
+    aiTaskId,
+  }: {
+    taskId: string;
+    aiTaskId: string;
+  }): Promise<AITaskResult> {
     const apiUrl = `${this.baseUrl}/jobs/recordInfo?taskId=${taskId}`;
     const headers = {
       'Content-Type': 'application/json',
@@ -468,7 +474,7 @@ export class KieProvider implements AIProvider {
     }
 
     const taskStatus = this.mapImageStatus(data.state);
-    // use custom storage to save videos
+    // ✅ 异步后台转存，不阻塞当前请求响应
     if (
       taskStatus === AITaskStatus.SUCCESS &&
       videos &&
@@ -476,43 +482,10 @@ export class KieProvider implements AIProvider {
       this.configs.customStorage &&
       !savingTasks.has(taskId)
     ) {
-      try {
-        // 加锁防止并发重复转存
-        savingTasks.add(taskId);
-        console.log('customStorage=========', this.configs.customStorage);
-
-        const filesToSave: AIFile[] = [];
-        videos.forEach((video, index) => {
-          if (video.videoUrl) {
-            filesToSave.push({
-              url: video.videoUrl,
-              contentType: 'video/mp4',
-              key: `kie/video/${getUuid()}.mp4`,
-              index: index,
-              type: 'video',
-            });
-          }
-        });
-
-        if (filesToSave.length > 0) {
-          const uploadedFiles = await saveFiles(filesToSave);
-          if (uploadedFiles) {
-            uploadedFiles.forEach((file: AIFile) => {
-              if (file && file.url && videos && file.index !== undefined) {
-                const video = videos[file.index];
-                if (video) {
-                  video.videoUrl = file.url;
-                }
-              }
-            });
-          }
-        }
-      } catch (e) {
-        console.error('[Kie] R2转存失败，降级使用原始URL', e);
-      } finally {
-        // 无论成功失败都释放锁
-        savingTasks.delete(taskId);
-      }
+      // 启用自定义存储， 立即启动异步转存，不等待结果
+      setTimeout(async () => {
+        await this.saveVideoWithRetry(taskId, aiTaskId, [...videos], data, 3);
+      }, 0);
     }
 
     return {
@@ -532,9 +505,11 @@ export class KieProvider implements AIProvider {
   // query task
   async query({
     taskId,
+    aiTaskId,
     mediaType,
   }: {
     taskId: string;
+    aiTaskId: string;
     mediaType?: AIMediaType;
   }): Promise<AITaskResult> {
     if (mediaType === AIMediaType.IMAGE) {
@@ -542,7 +517,7 @@ export class KieProvider implements AIProvider {
     }
 
     if (mediaType === AIMediaType.VIDEO) {
-      return this.queryVideo({ taskId });
+      return this.queryVideo({ taskId, aiTaskId });
     }
 
     const apiUrl = `${this.baseUrl}/generate/record-info?taskId=${taskId}`;
@@ -654,6 +629,104 @@ export class KieProvider implements AIProvider {
       },
       taskResult: data,
     };
+  }
+
+  /**
+   * ✅ 带3次重试的异步视频转存方法
+   * 指数退避策略: 2s → 5s → 10s
+   */
+  private async saveVideoWithRetry(
+    taskId: string,
+    aiTaskId: string,
+    videos: AIVideo[],
+    data: any,
+    retries = 3
+  ): Promise<void> {
+    try {
+      savingTasks.add(taskId);
+      const filesToSave: AIFile[] = videos
+        .filter((v) => v.videoUrl)
+        .map((video, index) => ({
+          url: video.videoUrl!,
+          contentType: 'video/mp4',
+          key: `kie/video/${getUuid()}.mp4`,
+          index,
+          type: 'video',
+        }));
+      if (filesToSave.length === 0) return;
+      console.log(
+        `[转存开始] taskId: ${taskId}, 视频数量: ${filesToSave.length}, 剩余重试: ${retries}`
+      );
+      const uploadedFiles = await saveFiles(filesToSave);
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        // 更新video地址
+        uploadedFiles.forEach((file) => {
+          if (file?.url && file.index !== undefined && videos[file.index]) {
+            videos[file.index].videoUrl = file.url;
+          }
+        });
+
+        console.log(
+          `[转存成功] taskId: ${taskId}, 成功数量: ${uploadedFiles.length}`
+        );
+        console.log('--------------' + aiTaskId);
+        // ✅ 转存成功后更新数据库，保留所有原始字段
+        if (aiTaskId) {
+          try {
+            const { updateAITaskById } = await import(
+              '@/shared/models/ai_task'
+            );
+
+            // 构造完整的taskInfo，保留第三方所有原始字段
+            const updatedTaskInfo = {
+              videos,
+              status: data.state,
+              errorCode: data.failCode,
+              errorMessage: data.failMsg,
+              createTime: new Date(data.createTime),
+            };
+
+            await updateAITaskById(aiTaskId, {
+              taskInfo: JSON.stringify(updatedTaskInfo),
+            });
+
+            console.log(
+              `[数据库更新成功] aiTaskId: ${aiTaskId}, 转存地址已永久保存`
+            );
+          } catch (dbError: any) {
+            console.error(
+              `[数据库更新失败] aiTaskId: ${aiTaskId}`,
+              dbError.message
+            );
+          }
+        }
+      }
+    } catch (e: any) {
+      if (retries > 0) {
+        const delays = [2000, 5000, 10000];
+        const delay = delays[3 - retries];
+        console.log(
+          `[转存重试] taskId: ${taskId}, ${retries}次后重试, 延迟${delay}ms, 错误: ${e.message}`
+        );
+        // 释放锁，允许下次重试
+        savingTasks.delete(taskId);
+        // 延迟重试
+        setTimeout(() => {
+          this.saveVideoWithRetry(taskId, aiTaskId, videos, data, retries - 1);
+        }, delay);
+        return;
+      }
+      // 全部重试失败
+      console.error(
+        `[转存最终失败] taskId: ${taskId}, 已重试3次, 降级使用原始地址`,
+        e
+      );
+    } finally {
+      // 只有不再重试的时候才永久释放锁
+      if (retries <= 0) {
+        savingTasks.delete(taskId);
+      }
+    }
   }
 
   // map image task status

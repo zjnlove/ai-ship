@@ -86,7 +86,7 @@ interface BackendTask {
 
 type VideoGeneratorTab = 'text-to-video' | 'image-to-video' | 'video-to-video';
 
-const POLL_INTERVAL = 15000;
+const POLL_INTERVAL = 20000;
 const GENERATION_TIMEOUT = 600000;
 const MAX_PROMPT_LENGTH = 2000;
 
@@ -1123,7 +1123,7 @@ export function VideoGenerator({
           }
           setProgress(100);
           resetTaskState();
-          resetAdvancedOptions();
+          // resetAdvancedOptions();
           return true;
         }
 

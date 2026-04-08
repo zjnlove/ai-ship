@@ -1,5 +1,3 @@
-import { c } from 'node_modules/fumadocs-mdx/dist/define-BH4bnHQl';
-
 import { envConfigs } from '@/config';
 import { AIMediaType } from '@/extensions/ai';
 import { getUuid } from '@/shared/lib/hash';
