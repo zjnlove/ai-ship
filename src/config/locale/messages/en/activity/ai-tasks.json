@@ -26,6 +26,19 @@
       "view": "View Task",
       "refresh": "Refresh Task"
     },
-    "empty_message": "No tasks found"
+    "empty_message": "No tasks found",
+    "empty_prompt": "No prompt",
+    "task_id": "Task ID"
+  },
+  "pagination": {
+    "prev": "Previous",
+    "next": "Next",
+    "total": "{total} Records Total"
+  },
+  "status": {
+    "success": "Success",
+    "pending": "Pending",
+    "processing": "Processing",
+    "failed": "Failed"
   }
 }
