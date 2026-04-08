@@ -39,7 +39,17 @@ export default async function AiTasksPage({
   const table: Table = {
     title: t('list.title'),
     columns: [
-      { name: 'prompt', title: t('fields.prompt'), type: 'copy' },
+      {
+        name: 'prompt',
+        title: t('fields.prompt'),
+        type: 'copy',
+        className: 'max-w-xs',
+        callback: (item: AITask) => (
+          <div className="truncate" title={item.prompt}>
+            {item.prompt}
+          </div>
+        ),
+      },
       { name: 'mediaType', title: t('fields.media_type'), type: 'label' },
       { name: 'provider', title: t('fields.provider'), type: 'label' },
       { name: 'model', title: t('fields.model'), type: 'label' },
@@ -55,7 +65,10 @@ export default async function AiTasksPage({
             const taskInfo = JSON.parse(item.taskInfo);
             if (taskInfo.errorMessage) {
               return (
-                <div className="text-red-500">
+                <div
+                  className="max-w-xs cursor-help truncate text-red-500"
+                  title={taskInfo.errorMessage}
+                >
                   Failed: {taskInfo.errorMessage}
                 </div>
               );
