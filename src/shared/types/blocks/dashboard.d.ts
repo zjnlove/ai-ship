@@ -33,6 +33,7 @@ export interface Sidebar {
   library?: ReactNode;
   bottom_nav?: Nav;
   user?: SidebarUser;
+  user_nav?: UserNav;
   footer?: SidebarFooter;
   variant?: 'inset' | 'sidebar' | 'floating';
   collapsible?: 'offcanvas' | 'icon' | 'none';

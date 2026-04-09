@@ -1,31 +1,87 @@
 import { ReactNode } from 'react';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { ConsoleLayout } from '@/shared/blocks/console/layout';
+import { SignUser } from '@/shared/blocks/common';
+import { DashboardLayout } from '@/shared/blocks/dashboard/layout';
+import { getAllConfigs } from '@/shared/models/config';
+import { Sidebar as SidebarType } from '@/shared/types/blocks/dashboard';
+import { Footer } from '@/themes/aiship/blocks/footer';
 
 export default async function ActivityLayout({
   children,
+  params,
 }: {
   children: ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
-  const t = await getTranslations('activity.sidebar');
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-  // settings title
-  const title = t('title');
+  const t = await getTranslations('activity');
 
-  // settings nav
-  const nav = t.raw('nav');
+  const sidebar: SidebarType = t.raw('sidebar');
 
-  const topNav = t.raw('top_nav');
+  const configs = await getAllConfigs();
+  if (configs.app_name) {
+    sidebar.header!.brand!.title = configs.app_name;
+    sidebar.header!.brand!.logo!.alt = configs.app_name;
+  }
+  if (configs.app_logo) {
+    sidebar.header!.brand!.logo!.src = configs.app_logo;
+  }
+  if (configs.version) {
+    sidebar.header!.version = configs.version;
+  }
+
+  // Theme Footer component with starry sky effect
+  const footer = (
+    <Footer
+      footer={{
+        brand: {
+          title: configs.app_name,
+          logo: {
+            src: configs.app_logo,
+            alt: configs.app_name,
+          },
+          description: configs.app_description,
+        },
+        copyright: `© ${new Date().getFullYear()} ${configs.app_name}`,
+        agreement: {
+          items: [
+            { title: '使用条款', url: '/terms' },
+            { title: '隐私政策', url: '/privacy' },
+            { title: '帮助中心', url: '/help' },
+            { title: '联系我们', url: '/contact' },
+          ],
+        },
+        show_built_with: false,
+        show_theme: true,
+        show_locale: true,
+      }}
+    />
+  );
+
+  // Header bar with credits and user info
+  const header = (
+    <>
+      <div className="flex items-center gap-3">
+        <span className="font-medium">Dashboard</span>
+      </div>
+
+      <div className="ml-auto flex items-center gap-4">
+        <span className="text-sm font-medium text-green-600">
+          🪙 970 Credits
+        </span>
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-xs font-medium text-white">
+          <SignUser userNav={sidebar.user_nav} />
+        </div>
+      </div>
+    </>
+  );
 
   return (
-    <ConsoleLayout
-      title={title}
-      nav={nav}
-      topNav={topNav}
-      className="py-16 md:py-20"
-    >
+    <DashboardLayout sidebar={sidebar} header={header} footer={footer}>
       {children}
-    </ConsoleLayout>
+    </DashboardLayout>
   );
 }
