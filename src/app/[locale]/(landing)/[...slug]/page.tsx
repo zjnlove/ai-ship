@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { V } from 'node_modules/framer-motion/dist/types.d-Cjd591yU';
 
 import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';

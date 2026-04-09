@@ -1839,8 +1839,9 @@ export function VideoGenerator({
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
-                          className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-1 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                          className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-2 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
                         >
+                          <Settings className="h-4 w-4" />
                           {(() => {
                             const visibleTypes = advancedTypes.filter(
                               (type) =>
@@ -1912,10 +1913,13 @@ export function VideoGenerator({
                                 </span>
                               ));
                           })()}
-                          <Settings className="ml-1 h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-80" side="top" align="start">
+                      <PopoverContent
+                        className="w-[420px]"
+                        side="top"
+                        align="start"
+                      >
                         <div className="space-y-5">
                           {advancedTypes.map((type: VideoOptionType) => {
                             // audio 类型使用 Switch 开关

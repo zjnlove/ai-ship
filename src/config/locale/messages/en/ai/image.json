@@ -7,7 +7,7 @@
     "sections": {
       "hero": {
         "title": "AI Image Generator",
-        "highlight_text": "Image Generator",
+        "highlight_text": "AI Image Generator",
         "description": "Unleash your creativity with Marble AI. Generate stunning, high-quality images from text descriptions or transform existing images using the world's most advanced AI models.",
         "show_bg": false,
         "className": "hero-custom"

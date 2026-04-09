@@ -69,6 +69,13 @@ export const klingModels: VideoModelOption[] = [
           label: 'advanced_options.mode_options.professional',
         },
       ],
+      duration: {
+        type: 'range',
+        min: 3,
+        max: 15,
+        step: 1,
+        unit: 's',
+      },
     },
     discount: {
       rate: 0.5,

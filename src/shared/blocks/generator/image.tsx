@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
-  CreditCard,
+  ChevronUp,
   Download,
   ImageIcon,
   Loader2,
@@ -21,21 +22,12 @@ import {
   LazyImage,
 } from '@/shared/blocks/common';
 import { Button } from '@/shared/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/shared/components/ui/dialog';
 import { Label } from '@/shared/components/ui/label';
-import { Progress } from '@/shared/components/ui/progress';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/shared/components/ui/popover';
 import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import {
   Select,
@@ -44,16 +36,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
-import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
 import { cn } from '@/shared/lib/utils';
 
 import {
+  calculateDiscountedCredits,
+  DEFAULT_CREDITS,
+  getAdvancedOptionValue,
+  getAvailableModels,
+  getAvailableProviders,
+  getDefaultAdvancedOptions,
+  getDiscountLabel,
+  getModelCredits,
+  getModelCustomFields,
+  getModelImageFieldName,
+  getModelSceneConfig,
+  getModelSceneId,
   getOptionLabel,
-  getOptionsForType,
+  getOptionsForModel,
   MODEL_OPTIONS,
   PROVIDER_OPTIONS,
+  type ImageAdvancedOptionValues,
+  type ImageBrand,
+  type ImageScene,
   type ModelOption,
   type OptionType,
 } from './image-config';
@@ -84,16 +90,25 @@ interface BackendTask {
   taskResult: string | null;
 }
 
-type ImageGeneratorTab = 'text-to-image' | 'image-to-image';
+type ImageGeneratorTab = ImageScene;
 
 const POLL_INTERVAL = 5000;
 const GENERATION_TIMEOUT = 180000;
 const MAX_PROMPT_LENGTH = 2000;
+const optionKeyMap: Record<string, OptionType> = {
+  image_size: 'imageSize',
+  aspect_ratio: 'aspectRatio',
+  output_format: 'outputFormat',
+  quality: 'quality',
+  resolution: 'resolution',
+};
+
+function normalizeOptionKey(key: string): string {
+  return optionKeyMap[key] ?? key;
+}
 
 function parseTaskResult(taskResult: string | null): any {
-  if (!taskResult) {
-    return null;
-  }
+  if (!taskResult) return null;
 
   try {
     return JSON.parse(taskResult);
@@ -104,19 +119,28 @@ function parseTaskResult(taskResult: string | null): any {
 }
 
 function extractImageUrls(result: any): string[] {
-  if (!result) {
-    return [];
+  if (!result) return [];
+
+  const images = result.images;
+  if (Array.isArray(images)) {
+    return images
+      .flatMap((item) => {
+        if (!item) return [];
+        if (typeof item === 'string') return [item];
+        if (typeof item === 'object') {
+          const candidate =
+            item.url ?? item.uri ?? item.image ?? item.src ?? item.imageUrl;
+          return typeof candidate === 'string' ? [candidate] : [];
+        }
+        return [];
+      })
+      .filter(Boolean);
   }
 
-  const output = result.output ?? result.images ?? result.data;
+  const output = result.output ?? result.image ?? result.data;
+  if (!output) return [];
 
-  if (!output) {
-    return [];
-  }
-
-  if (typeof output === 'string') {
-    return [output];
-  }
+  if (typeof output === 'string') return [output];
 
   if (Array.isArray(output)) {
     return output
@@ -136,9 +160,7 @@ function extractImageUrls(result: any): string[] {
   if (typeof output === 'object') {
     const candidate =
       output.url ?? output.uri ?? output.image ?? output.src ?? output.imageUrl;
-    if (typeof candidate === 'string') {
-      return [candidate];
-    }
+    if (typeof candidate === 'string') return [candidate];
   }
 
   return [];
@@ -152,20 +174,27 @@ export function ImageGenerator({
   className,
 }: ImageGeneratorProps) {
   const t = useTranslations('ai.image.generator');
+  const pathname = usePathname();
+  const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
+    useAppContext();
 
   const [activeTab, setActiveTab] =
     useState<ImageGeneratorTab>('text-to-image');
-
-  const [costCredits, setCostCredits] = useState<number>(2);
-  const [provider, setProvider] = useState(PROVIDER_OPTIONS[0]?.value ?? '');
-  const [model, setModel] = useState(
-    MODEL_OPTIONS[0]?.sceneValues?.['text-to-image'] ?? ''
+  const [provider, setProvider] = useState<ImageBrand>(
+    PROVIDER_OPTIONS[0]?.value ?? 'qwen'
+  );
+  const [model, setModel] = useState(() =>
+    getModelSceneId(MODEL_OPTIONS[0], 'text-to-image')
   );
   const [prompt, setPrompt] = useState('');
-  const [referenceImageItems, setReferenceImageItems] = useState<
-    ImageUploaderValue[]
-  >([]);
-  const [referenceImageUrls, setReferenceImageUrls] = useState<string[]>([]);
+  const [modeImages, setModeImages] = useState<
+    Record<ImageGeneratorTab, ImageUploaderValue[]>
+  >({
+    'text-to-image': [],
+    'image-to-image': [],
+  });
+  const [advancedOptions, setAdvancedOptions] =
+    useState<ImageAdvancedOptionValues>({});
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -178,130 +207,92 @@ export function ImageGenerator({
     null
   );
   const [isMounted, setIsMounted] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
+  const [advancedPopoverOpen, setAdvancedPopoverOpen] = useState(false);
 
-  // 高级设置状态
-  const [imageSize, setImageSize] = useState<string>('');
-  const [outputFormat, setOutputFormat] = useState<string>('');
-  const [quality, setQuality] = useState<string>('');
-  const [resolution, setResolution] = useState<string>('');
+  const previousModelRef = useRef<string | null>(null);
+  const hasInitializedFromPathRef = useRef(false);
 
-  // 记录上一次的模型配置，用于检测模型是否实际变化
-  const prevModelConfigRef = useRef<ModelOption | undefined>(undefined);
+  const referenceImageItems = modeImages[activeTab] ?? [];
+  const referenceImageUrls = useMemo(
+    () =>
+      referenceImageItems
+        .filter((item) => item.status === 'uploaded' && item.url)
+        .map((item) => item.url as string),
+    [referenceImageItems]
+  );
 
-  const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
-    useAppContext();
+  const selectedModelConfig = useMemo(
+    () =>
+      MODEL_OPTIONS.find(
+        (option) => getModelSceneId(option, activeTab) === model
+      ),
+    [activeTab, model]
+  );
+  const sceneConfig = useMemo(() => {
+    const baseConfig = {
+      id: getModelSceneId(selectedModelConfig, activeTab),
+      credits: selectedModelConfig?.credits?.[activeTab],
+      defaultOptions: selectedModelConfig?.defaultOptions,
+      advancedOptions: selectedModelConfig?.advancedOptions,
+      customOptions: selectedModelConfig?.customOptions,
+      customFields: selectedModelConfig?.customFields,
+      discount: selectedModelConfig?.discount,
+      creditRules: selectedModelConfig?.creditRules,
+      dependencyRules: selectedModelConfig?.dependencyRules,
+      inputValidation: selectedModelConfig?.inputValidation,
+    };
 
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // 获取当前模型配置
-  const currentModelConfig = useMemo(() => {
-    return MODEL_OPTIONS.find(
-      (option) => option.sceneValues?.[activeTab] === model
-    );
-  }, [model, activeTab]);
-
-  // 监听模型变化，自动更新积分和高级选项默认值
-  useEffect(() => {
-    if (currentModelConfig?.credits?.[activeTab]) {
-      setCostCredits(parseInt(currentModelConfig.credits[activeTab]));
-    } else {
-      if (activeTab === 'text-to-image') {
-        setCostCredits(2);
-      } else {
-        setCostCredits(4);
-      }
+    const sceneValue = getModelSceneConfig(selectedModelConfig, activeTab);
+    if (!sceneValue) {
+      return baseConfig;
     }
 
-    // 只在模型实际变化时才重置高级选项
-    const prevModelConfig = prevModelConfigRef.current;
-    const modelChanged = prevModelConfig?.label !== currentModelConfig?.label;
+    return {
+      ...baseConfig,
+      id: sceneValue.id,
+      credits: sceneValue.credits ?? baseConfig.credits,
+      defaultOptions: sceneValue.defaultOptions ?? baseConfig.defaultOptions,
+      advancedOptions: sceneValue.advancedOptions ?? baseConfig.advancedOptions,
+      customOptions: sceneValue.customOptions ?? baseConfig.customOptions,
+      customFields: sceneValue.customFields ?? baseConfig.customFields,
+      discount: sceneValue.discount ?? baseConfig.discount,
+      creditRules: sceneValue.creditRules ?? baseConfig.creditRules,
+      dependencyRules: sceneValue.dependencyRules ?? baseConfig.dependencyRules,
+      inputValidation: sceneValue.inputValidation ?? baseConfig.inputValidation,
+    };
+  }, [activeTab, selectedModelConfig]);
+  const availableProviders = useMemo(
+    () => getAvailableProviders(activeTab),
+    [activeTab]
+  );
+  const availableModels = useMemo(
+    () => getAvailableModels(activeTab, provider),
+    [activeTab, provider]
+  );
+  const advancedTypes = sceneConfig.advancedOptions?.supportedTypes ?? [];
 
-    if (modelChanged && currentModelConfig?.defaultOptions) {
-      const defaults = currentModelConfig.defaultOptions;
-      if (defaults.image_size) setImageSize(defaults.image_size);
-      if (defaults.aspect_ratio) setImageSize(defaults.aspect_ratio);
-      if (defaults.output_format) setOutputFormat(defaults.output_format);
-      if (defaults.quality) setQuality(defaults.quality);
-      if (defaults.resolution) setResolution(defaults.resolution);
-    }
-
-    // 更新 ref 记录当前模型配置
-    prevModelConfigRef.current = currentModelConfig;
-  }, [currentModelConfig, activeTab]);
-
-  useEffect(() => {
-    if (pathname.includes('image-to-image')) {
-      setActiveTab('image-to-image');
-    }
-
-    // 检查是否是 image-models 路径，自动选择对应的模型
-    const imageModelMatch = pathname.match(/\/image-models\/([^/]+)/);
-    if (imageModelMatch) {
-      const modelPath = imageModelMatch[1];
-      const matchedModel = MODEL_OPTIONS.find(
-        (option) => option.modelPath === modelPath
-      );
-      if (matchedModel) {
-        setProvider(matchedModel.brand);
-        // 根据当前活动标签页选择对应的模型值
-        const modelValue = matchedModel.sceneValues?.[activeTab];
-        if (modelValue) {
-          setModel(modelValue);
-        }
-      }
-    }
-  }, [pathname, activeTab]);
+  const costCredits = useMemo(() => {
+    return getModelCredits(selectedModelConfig, activeTab, DEFAULT_CREDITS);
+  }, [activeTab, selectedModelConfig]);
 
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
+  const isCreditsLoaded = user?.credits !== undefined;
   const isPromptTooLong = promptLength > MAX_PROMPT_LENGTH;
   const isTextToImageMode = activeTab === 'text-to-image';
 
-  const handleTabChange = (value: string) => {
-    const tab = value as ImageGeneratorTab;
-    setActiveTab(tab);
-
-    const availableModels = MODEL_OPTIONS.filter(
-      (option) =>
-        option.sceneValues[tab] !== undefined && option.brand === provider
-    );
-
-    if (availableModels.length > 0) {
-      setModel(availableModels[0].sceneValues[tab] ?? '');
-    } else {
-      setModel('');
-    }
-
-    if (tab === 'text-to-image') {
-      setCostCredits(2);
-    } else {
-      setCostCredits(4);
-    }
-  };
-
-  const handleProviderChange = (value: string) => {
-    setProvider(value);
-
-    const availableModels = MODEL_OPTIONS.filter(
-      (option) =>
-        option.sceneValues[activeTab] !== undefined && option.brand === value
-    );
-
-    if (availableModels.length > 0) {
-      setModel(availableModels[0].sceneValues[activeTab] ?? '');
-    } else {
-      setModel('');
-    }
-  };
-
+  const isReferenceUploading = useMemo(
+    () => referenceImageItems.some((item) => item.status === 'uploading'),
+    [referenceImageItems]
+  );
+  const hasReferenceUploadError = useMemo(
+    () => referenceImageItems.some((item) => item.status === 'error'),
+    [referenceImageItems]
+  );
   const taskStatusLabel = useMemo(() => {
-    if (!taskStatus) {
-      return '';
-    }
+    if (!taskStatus) return '';
 
     switch (taskStatus) {
       case AITaskStatus.PENDING:
@@ -317,26 +308,57 @@ export function ImageGenerator({
     }
   }, [taskStatus]);
 
-  const handleReferenceImagesChange = useCallback(
-    (items: ImageUploaderValue[]) => {
-      setReferenceImageItems(items);
-      const uploadedUrls = items
-        .filter((item) => item.status === 'uploaded' && item.url)
-        .map((item) => item.url as string);
-      setReferenceImageUrls(uploadedUrls);
-    },
-    []
+  const calculateCurrentCredits = useCallback(() => {
+    if (!selectedModelConfig) {
+      return { original: 0, discounted: 0, discountRate: 1 };
+    }
+
+    const selectedOptions: Record<string, string | boolean> = {};
+
+    Object.entries(sceneConfig.defaultOptions ?? {}).forEach(([key, value]) => {
+      if (value !== undefined && typeof value !== 'boolean') {
+        selectedOptions[normalizeOptionKey(key)] = value;
+      }
+    });
+
+    Object.entries(advancedOptions).forEach(([key, value]) => {
+      if (value !== undefined) {
+        selectedOptions[key] = value;
+      }
+    });
+
+    return calculateDiscountedCredits(
+      selectedModelConfig,
+      activeTab,
+      selectedOptions
+    );
+  }, [
+    activeTab,
+    advancedOptions,
+    sceneConfig.defaultOptions,
+    selectedModelConfig,
+  ]);
+  const currentCreditInfo = useMemo(
+    () => calculateCurrentCredits(),
+    [calculateCurrentCredits]
   );
 
-  const isReferenceUploading = useMemo(
-    () => referenceImageItems.some((item) => item.status === 'uploading'),
-    [referenceImageItems]
-  );
+  const disabledOptions = useMemo(() => {
+    const disabled = new Set<string>();
 
-  const hasReferenceUploadError = useMemo(
-    () => referenceImageItems.some((item) => item.status === 'error'),
-    [referenceImageItems]
-  );
+    sceneConfig.dependencyRules?.forEach((rule) => {
+      const isMatch = Object.entries(rule.when).every(
+        ([key, value]) =>
+          advancedOptions[normalizeOptionKey(key) as OptionType] === value
+      );
+
+      if (isMatch) {
+        rule.then.disabled?.forEach((item) => disabled.add(item));
+      }
+    });
+
+    return disabled;
+  }, [advancedOptions, sceneConfig.dependencyRules]);
 
   const resetTaskState = useCallback(() => {
     setIsGenerating(false);
@@ -346,17 +368,262 @@ export function ImageGenerator({
     setTaskStatus(null);
   }, []);
 
-  // 重置高级选项为当前模型默认值
-  const resetAdvancedOptions = useCallback(() => {
-    if (currentModelConfig?.defaultOptions) {
-      const defaults = currentModelConfig.defaultOptions;
-      if (defaults.image_size) setImageSize(defaults.image_size);
-      if (defaults.aspect_ratio) setImageSize(defaults.aspect_ratio);
-      if (defaults.output_format) setOutputFormat(defaults.output_format);
-      if (defaults.quality) setQuality(defaults.quality);
-      if (defaults.resolution) setResolution(defaults.resolution);
+  const resetAdvancedOptions = useCallback(
+    (nextModelConfig?: ModelOption | null) => {
+      setAdvancedOptions(
+        getDefaultAdvancedOptions(
+          nextModelConfig ?? selectedModelConfig,
+          activeTab
+        )
+      );
+    },
+    [activeTab, selectedModelConfig]
+  );
+
+  useEffect(() => {
+    if (!sceneConfig.dependencyRules?.length) return;
+
+    let hasUpdates = false;
+    const nextOptions: ImageAdvancedOptionValues = {};
+    let messageToShow: string | null = null;
+
+    sceneConfig.dependencyRules.forEach((rule) => {
+      const isMatch = Object.entries(rule.when).every(
+        ([key, value]) =>
+          advancedOptions[normalizeOptionKey(key) as OptionType] === value
+      );
+
+      if (!isMatch || !rule.then.autoSelect) return;
+
+      Object.entries(rule.then.autoSelect).forEach(([key, value]) => {
+        const normalizedKey = normalizeOptionKey(key) as OptionType;
+        if (advancedOptions[normalizedKey] !== value) {
+          nextOptions[normalizedKey] = value;
+          hasUpdates = true;
+        }
+      });
+
+      if (rule.then.message) {
+        messageToShow = rule.then.message;
+      }
+    });
+
+    if (hasUpdates) {
+      setAdvancedOptions((prev) => ({
+        ...prev,
+        ...nextOptions,
+      }));
+
+      if (messageToShow) {
+        toast.info(messageToShow);
+      }
     }
-  }, [currentModelConfig]);
+  }, [advancedOptions, sceneConfig.dependencyRules]);
+
+  const handleReferenceImagesChange = useCallback(
+    (items: ImageUploaderValue[]) => {
+      setModeImages((prev) => ({
+        ...prev,
+        [activeTab]: items,
+      }));
+    },
+    [activeTab]
+  );
+
+  const handleReferenceImageValidateFile = useCallback(
+    (file: File) => {
+      const validation = sceneConfig.inputValidation?.image;
+      if (!validation) return true;
+
+      const size = Math.round(file.size / 1024 / 1024);
+      const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+      if (validation.maxFileSize && size > validation.maxFileSize) {
+        toast.error(
+          `Image is too large. Max ${validation.maxFileSize} MB, got ${size} MB.`
+        );
+        return false;
+      }
+
+      if (
+        validation.supportedFormats?.length &&
+        !validation.supportedFormats.includes(format)
+      ) {
+        toast.error(
+          `Unsupported image format. Use ${validation.supportedFormats.join(', ').toUpperCase()}.`
+        );
+        return false;
+      }
+
+      return true;
+    },
+    [sceneConfig.inputValidation]
+  );
+
+  const handleTabChange = useCallback(
+    (value: string) => {
+      const tab = value as ImageGeneratorTab;
+      const providers = getAvailableProviders(tab);
+      const nextProvider =
+        providers.find((item) => item.value === provider)?.value ??
+        providers[0]?.value ??
+        '';
+      const models = getAvailableModels(tab, nextProvider);
+      const nextModel = getModelSceneId(models[0], tab);
+
+      setActiveTab(tab);
+      setProvider(nextProvider);
+      setModel(nextModel);
+      setGeneratedImages([]);
+      setShowPreview(false);
+    },
+    [provider]
+  );
+
+  const handleProviderChange = useCallback(
+    (value: string) => {
+      const nextProvider = value as ImageBrand;
+      const nextModels = getAvailableModels(activeTab, nextProvider);
+      setProvider(nextProvider);
+      setModel(getModelSceneId(nextModels[0], activeTab));
+    },
+    [activeTab]
+  );
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (hasInitializedFromPathRef.current) return;
+
+    const routeTab: ImageGeneratorTab | null = pathname.includes(
+      'image-to-image'
+    )
+      ? 'image-to-image'
+      : pathname.includes('text-to-image')
+        ? 'text-to-image'
+        : null;
+
+    const imageModelMatch = pathname.match(/\/image-models\/([^/]+)/);
+    if (imageModelMatch) {
+      const matchedModel = MODEL_OPTIONS.find(
+        (option) => option.modelPath === imageModelMatch[1]
+      );
+
+      if (matchedModel) {
+        const matchedTab =
+          routeTab && getModelSceneId(matchedModel, routeTab)
+            ? routeTab
+            : getModelSceneId(matchedModel, 'text-to-image')
+              ? 'text-to-image'
+              : 'image-to-image';
+
+        setActiveTab(matchedTab);
+        setProvider(matchedModel.brand);
+        setModel(getModelSceneId(matchedModel, matchedTab));
+      }
+
+      hasInitializedFromPathRef.current = true;
+      return;
+    }
+
+    if (routeTab && routeTab !== activeTab) {
+      const providers = getAvailableProviders(routeTab);
+      const nextProvider =
+        providers.find((item) => item.value === provider)?.value ??
+        providers[0]?.value ??
+        '';
+      const models = getAvailableModels(routeTab, nextProvider);
+
+      setActiveTab(routeTab);
+      setProvider(nextProvider);
+      setModel(getModelSceneId(models[0], routeTab));
+    }
+
+    hasInitializedFromPathRef.current = true;
+  }, [activeTab, pathname, provider]);
+
+  useEffect(() => {
+    if (!availableProviders.some((item) => item.value === provider)) {
+      const nextProvider = availableProviders[0]?.value ?? '';
+      const nextModel = getModelSceneId(
+        getAvailableModels(activeTab, nextProvider)[0],
+        activeTab
+      );
+      setProvider(nextProvider);
+      setModel(nextModel);
+      return;
+    }
+
+    if (
+      !availableModels.some(
+        (item) => getModelSceneId(item, activeTab) === model
+      )
+    ) {
+      setModel(getModelSceneId(availableModels[0], activeTab));
+    }
+  }, [activeTab, availableModels, availableProviders, model, provider]);
+
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    if (previousModelRef.current !== model) {
+      resetAdvancedOptions(selectedModelConfig);
+      previousModelRef.current = model;
+    }
+  }, [model, resetAdvancedOptions, selectedModelConfig]);
+
+  useEffect(() => {
+    if (
+      !sceneConfig.inputValidation?.image ||
+      referenceImageItems.length === 0
+    ) {
+      return;
+    }
+
+    const { maxFileSize, supportedFormats } = sceneConfig.inputValidation.image;
+    const validItems: ImageUploaderValue[] = [];
+    let hasInvalid = false;
+
+    for (const item of referenceImageItems) {
+      if (item.status !== 'uploaded') {
+        validItems.push(item);
+        continue;
+      }
+
+      let isValid = true;
+      if (maxFileSize && item.size) {
+        const size = Math.round(item.size / 1024 / 1024);
+        if (size > maxFileSize) {
+          isValid = false;
+        }
+      }
+
+      if (supportedFormats?.length && item.url) {
+        const format = item.url.split('.').pop()?.toLowerCase() || '';
+        if (!supportedFormats.includes(format)) {
+          isValid = false;
+        }
+      }
+
+      if (isValid) {
+        validItems.push(item);
+      } else {
+        hasInvalid = true;
+      }
+    }
+
+    if (hasInvalid) {
+      setModeImages((prev) => ({
+        ...prev,
+        [activeTab]: validItems,
+      }));
+      toast.info(
+        'Some reference images were removed because the selected model does not support them.'
+      );
+    }
+  }, [activeTab, referenceImageItems, sceneConfig.inputValidation]);
 
   const pollTaskStatus = useCallback(
     async (id: string) => {
@@ -389,10 +656,11 @@ export function ImageGenerator({
 
         const task = data as BackendTask;
         const currentStatus = task.status as AITaskStatus;
-        setTaskStatus(currentStatus);
-
-        const parsedResult = parseTaskResult(task.taskInfo);
+        const parsedResult =
+          parseTaskResult(task.taskInfo) ?? parseTaskResult(task.taskResult);
         const imageUrls = extractImageUrls(parsedResult);
+
+        setTaskStatus(currentStatus);
 
         if (currentStatus === AITaskStatus.PENDING) {
           setProgress((prev) => Math.max(prev, 20));
@@ -435,18 +703,14 @@ export function ImageGenerator({
 
           setProgress(100);
           resetTaskState();
-          resetAdvancedOptions();
+          await fetchUserCredits();
           return true;
         }
 
         if (currentStatus === AITaskStatus.FAILED) {
-          const errorMessage =
-            parsedResult?.errorMessage || 'Generate image failed';
-          toast.error(errorMessage);
+          toast.error(parsedResult?.errorMessage || 'Generate image failed');
           resetTaskState();
-
-          fetchUserCredits();
-
+          await fetchUserCredits();
           return true;
         }
 
@@ -456,30 +720,21 @@ export function ImageGenerator({
         console.error('Error polling image task:', error);
         toast.error(`Query task failed: ${error.message}`);
         resetTaskState();
-
-        fetchUserCredits();
-
+        await fetchUserCredits();
         return true;
       }
     },
-    [generationStartTime, resetTaskState]
+    [fetchUserCredits, generationStartTime, resetTaskState]
   );
 
   useEffect(() => {
-    if (!taskId || !isGenerating) {
-      return;
-    }
+    if (!taskId || !isGenerating) return;
 
     let cancelled = false;
 
     const tick = async () => {
-      if (!taskId) {
-        return;
-      }
       const completed = await pollTaskStatus(taskId);
-      if (completed) {
-        cancelled = true;
-      }
+      if (completed) cancelled = true;
     };
 
     tick();
@@ -489,6 +744,7 @@ export function ImageGenerator({
         clearInterval(interval);
         return;
       }
+
       const completed = await pollTaskStatus(taskId);
       if (completed) {
         clearInterval(interval);
@@ -499,15 +755,14 @@ export function ImageGenerator({
       cancelled = true;
       clearInterval(interval);
     };
-  }, [taskId, isGenerating, pollTaskStatus]);
-
-  const handleGenerate = async () => {
+  }, [isGenerating, pollTaskStatus, taskId]);
+  const handleGenerate = useCallback(async () => {
     if (!user) {
       setIsShowSignModal(true);
       return;
     }
 
-    if (remainingCredits < costCredits) {
+    if (remainingCredits < currentCreditInfo.discounted) {
       toast.error('Insufficient credits. Please top up to keep creating.');
       return;
     }
@@ -518,7 +773,7 @@ export function ImageGenerator({
       return;
     }
 
-    if (!provider || !model) {
+    if (!provider || !model || !selectedModelConfig) {
       toast.error('Provider or model is not configured correctly.');
       return;
     }
@@ -528,52 +783,65 @@ export function ImageGenerator({
       return;
     }
 
+    const options: Record<string, any> = {
+      ...(sceneConfig.defaultOptions ?? {}),
+    };
+
+    advancedTypes.forEach((type) => {
+      const value = getAdvancedOptionValue(
+        type,
+        advancedOptions,
+        selectedModelConfig,
+        activeTab
+      );
+      if (!value) return;
+
+      if (type === 'imageSize' || type === 'aspectRatio') {
+        const imageSizeField =
+          sceneConfig.advancedOptions?.imageSizeField ??
+          (type === 'aspectRatio' ? 'aspect_ratio' : 'image_size');
+        options[imageSizeField] = value;
+        return;
+      }
+
+      if (type === 'outputFormat') {
+        options.output_format = value;
+        return;
+      }
+
+      if (type === 'quality') {
+        options.quality = value;
+        return;
+      }
+
+      if (type === 'resolution') {
+        options.resolution = value;
+      }
+    });
+
+    if (!isTextToImageMode && referenceImageUrls.length > 0) {
+      const imageFieldName = getModelImageFieldName(
+        selectedModelConfig,
+        activeTab
+      );
+      const imageField = getModelCustomFields(
+        selectedModelConfig,
+        activeTab
+      ).find((field) => field.type === 'image');
+      options[imageFieldName] =
+        imageField?.isArray === false
+          ? referenceImageUrls[0]
+          : referenceImageUrls;
+    }
+
     setIsGenerating(true);
     setProgress(15);
     setTaskStatus(AITaskStatus.PENDING);
     setGeneratedImages([]);
+    setShowPreview(true);
     setGenerationStartTime(Date.now());
 
     try {
-      // 根据当前选中的模型获取对应的配置
-      const selectedModel = MODEL_OPTIONS.find(
-        (option) => option.sceneValues[activeTab] === model
-      );
-
-      // 构建 options：先合并模型的默认参数
-      const options: any = {
-        ...selectedModel?.defaultOptions,
-      };
-
-      // 合并用户选择的高级选项
-      if (selectedModel?.advancedOptions?.imageSizeField) {
-        const imageSizeField = selectedModel.advancedOptions.imageSizeField;
-        if (imageSize) {
-          options[imageSizeField] = imageSize;
-        }
-      }
-      if (outputFormat) {
-        options.output_format = outputFormat;
-      }
-      if (quality) {
-        options.quality = quality;
-      }
-      if (resolution) {
-        options.resolution = resolution;
-      }
-
-      // 动态设置图片字段（根据模型配置的 imageField）
-      if (!isTextToImageMode && referenceImageUrls.length > 0) {
-        const imageField = selectedModel?.imageField || 'image_input';
-        options[imageField] = referenceImageUrls;
-      }
-
-      // 获取积分消耗
-      const modelCredits = selectedModel?.credits?.[activeTab]
-        ? parseInt(selectedModel.credits[activeTab])
-        : costCredits;
-
-      // zjnlove 2024-10-16: currently we only use kie provider for image generation, so we directly call our backend api. In the future, if we support more providers for image generation, we may need to call different endpoints or add provider field in the request body.
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
         headers: {
@@ -581,12 +849,12 @@ export function ImageGenerator({
         },
         body: JSON.stringify({
           mediaType: AIMediaType.IMAGE,
-          scene: isTextToImageMode ? 'text-to-image' : 'image-to-image',
-          provider: selectedModel?.provider ?? provider, // 使用模型的 provider
+          scene: sceneConfig.id || activeTab,
+          provider: selectedModelConfig.provider ?? provider,
           model,
           prompt: trimmedPrompt,
           options,
-          credits: modelCredits,
+          credits: currentCreditInfo.discounted,
         }),
       });
 
@@ -604,51 +872,66 @@ export function ImageGenerator({
         throw new Error('Task id missing in response');
       }
 
-      if (data.status === AITaskStatus.SUCCESS && data.taskInfo) {
-        const parsedResult = parseTaskResult(data.taskInfo);
-        const imageUrls = extractImageUrls(parsedResult);
+      const immediateResult =
+        parseTaskResult(data.taskInfo ?? null) ??
+        parseTaskResult(data.taskResult ?? null);
+      const immediateImageUrls = extractImageUrls(immediateResult);
 
-        if (imageUrls.length > 0) {
-          setGeneratedImages(
-            imageUrls.map((url, index) => ({
-              id: `${newTaskId}-${index}`,
-              url,
-              provider,
-              model,
-              prompt: trimmedPrompt,
-            }))
-          );
-          toast.success('Image generated successfully');
-          setProgress(100);
-          resetTaskState();
-          resetAdvancedOptions();
-          await fetchUserCredits();
-          return;
-        }
+      if (
+        data.status === AITaskStatus.SUCCESS &&
+        immediateImageUrls.length > 0
+      ) {
+        setGeneratedImages(
+          immediateImageUrls.map((url, index) => ({
+            id: `${newTaskId}-${index}`,
+            url,
+            provider,
+            model,
+            prompt: trimmedPrompt,
+          }))
+        );
+        toast.success('Image generated successfully');
+        setProgress(100);
+        resetTaskState();
+        await fetchUserCredits();
+        return;
       }
 
       setTaskId(newTaskId);
       setProgress(25);
-
       await fetchUserCredits();
     } catch (error: any) {
       console.error('Failed to generate image:', error);
       toast.error(`Failed to generate image: ${error.message}`);
       resetTaskState();
     }
-  };
+  }, [
+    activeTab,
+    advancedOptions,
+    advancedTypes,
+    currentCreditInfo.discounted,
+    fetchUserCredits,
+    isTextToImageMode,
+    model,
+    prompt,
+    provider,
+    referenceImageUrls,
+    remainingCredits,
+    resetTaskState,
+    selectedModelConfig,
+    setIsShowSignModal,
+    user,
+  ]);
 
-  const handleDownloadImage = async (image: GeneratedImage) => {
-    if (!image.url) {
-      return;
-    }
+  const handleDownloadImage = useCallback(async (image: GeneratedImage) => {
+    if (!image.url) return;
 
     try {
       setDownloadingImageId(image.id);
-      // fetch image via proxy
       const resp = await fetch(
         `/api/proxy/file?url=${encodeURIComponent(image.url)}`
       );
+
       if (!resp.ok) {
         throw new Error('Failed to fetch image');
       }
@@ -669,9 +952,8 @@ export function ImageGenerator({
     } finally {
       setDownloadingImageId(null);
     }
-  };
+  }, []);
 
-  // 粒子背景组件
   function ParticleBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -682,19 +964,16 @@ export function ImageGenerator({
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // 获取主题色
       const getPrimaryColor = () => {
         const primary = getComputedStyle(document.documentElement)
           .getPropertyValue('--primary')
           .trim();
-        // oklch 格式: oklch(0.65 0.18 45)
-        // 转换为 rgb
         const match = primary.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+
         if (match) {
           const l = parseFloat(match[1]);
           const c = parseFloat(match[2]);
           const h = parseFloat(match[3]);
-          // oklch 转 rgb 的简化计算
           const a = c * Math.cos((h * Math.PI) / 180);
           const b = c * Math.sin((h * Math.PI) / 180);
           const r = Math.round(
@@ -706,23 +985,23 @@ export function ImageGenerator({
           const blue = Math.round(
             Math.max(0, Math.min(255, (l - 0.0894 * a - 1.2914 * b) * 255))
           );
+
           return { r, g, b: blue };
         }
-        // 默认橙金色
+
         return { r: 255, g: 180, b: 50 };
       };
 
       const primaryColor = getPrimaryColor();
 
-      // 设置画布大小
       const resizeCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       };
+
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      // 粒子数组
       const particles: Array<{
         x: number;
         y: number;
@@ -732,48 +1011,37 @@ export function ImageGenerator({
         opacity: number;
       }> = [];
 
-      // 创建粒子
-      const createParticles = () => {
-        const particleCount = Math.floor(
-          (canvas.width * canvas.height) / 15000
-        );
-        for (let i = 0; i < particleCount; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 0.5,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            opacity: Math.random() * 0.5 + 0.2,
-          });
-        }
-      };
-      createParticles();
+      const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+      for (let i = 0; i < particleCount; i += 1) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2 + 0.5,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          opacity: Math.random() * 0.5 + 0.2,
+        });
+      }
 
-      // 动画循环
       let animationId: number;
       const animate = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 绘制粒子
         particles.forEach((particle) => {
           particle.x += particle.vx;
           particle.y += particle.vy;
 
-          // 边界检测
           if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
           if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
 
-          // 绘制粒子
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${particle.opacity})`;
           ctx.fill();
         });
 
-        // 绘制连线
-        particles.forEach((p1, i) => {
-          particles.slice(i + 1).forEach((p2) => {
+        particles.forEach((p1, index) => {
+          particles.slice(index + 1).forEach((p2) => {
             const dx = p1.x - p2.x;
             const dy = p1.y - p2.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -791,6 +1059,7 @@ export function ImageGenerator({
 
         animationId = requestAnimationFrame(animate);
       };
+
       animate();
 
       return () => {
@@ -807,230 +1076,366 @@ export function ImageGenerator({
       />
     );
   }
+
+  function ProgressBar({ progress }: { progress: number }) {
+    return (
+      <div className="bg-muted/50 relative h-3 w-full overflow-hidden rounded-full backdrop-blur-sm">
+        <motion.div
+          className="from-primary to-primary/80 h-full rounded-full bg-gradient-to-r"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+        <motion.div
+          className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+          animate={{ x: [-80, 400] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+    );
+  }
   return (
-    // <section className={cn('py-16 md:py-24', className)}>
-    <section className={cn('pb-10', className)}>
-      {/* 粒子背景 */}
-      <ParticleBackground />
+    <section className={cn('relative pb-10', className)}>
       <ScrollAnimation>
-        <div className="container">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-              <Card>
-                <CardHeader>
-                  {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-                  <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                    {t('title')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-8">
-                  <Tabs value={activeTab} onValueChange={handleTabChange}>
-                    <TabsList className="bg-primary/10 grid w-full grid-cols-2">
-                      <TabsTrigger value="text-to-image">
-                        {t('tabs.text-to-image')}
-                      </TabsTrigger>
-                      <TabsTrigger value="image-to-image">
-                        {t('tabs.image-to-image')}
-                      </TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+        <ParticleBackground />
 
-                  <div className="grid grid-cols-[1fr_2fr] gap-4">
-                    <div className="space-y-2">
-                      <Label>{t('form.provider')}</Label>
-                      <Select
-                        value={provider}
-                        onValueChange={handleProviderChange}
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue
-                            placeholder={t('form.select_provider')}
-                          />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {PROVIDER_OPTIONS.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+        <div className="relative z-10 container">
+          <div className="mx-auto max-w-5xl">
+            <motion.div
+              layout
+              className="from-primary/5 via-background to-primary/10 border-primary/10 shadow-primary/5 relative overflow-hidden rounded-3xl border bg-gradient-to-br shadow-xl backdrop-blur-xl"
+            >
+              <div className="p-6 md:p-8">
+                {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
 
-                    <div className="space-y-2">
-                      <Label>{t('form.model')}</Label>
-                      <div className="flex gap-2">
-                        <Select value={model} onValueChange={setModel}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t('form.select_model')} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {MODEL_OPTIONS.filter(
-                              (option) =>
-                                option.sceneValues[activeTab] !== undefined &&
-                                option.brand === provider
-                            ).map((option) => (
-                              <SelectItem
-                                key={option.label}
-                                value={option.sceneValues[activeTab] ?? ''}
-                              >
-                                <span className="flex items-center gap-1">
-                                  <span>{option.label}</span>
-                                  {option.credits?.[activeTab] && (
-                                    <span className="text-primary">
-                                      ({option.credits[activeTab]} credits)
-                                    </span>
-                                  )}
-                                </span>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-
-                        {(currentModelConfig?.advancedOptions?.supportedTypes
-                          ?.length ?? 0) > 0 && (
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="outline" size="icon">
-                                <Settings className="h-4 w-4" />
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Advanced Settings</DialogTitle>
-                              </DialogHeader>
-                              <div className="mt-6 grid grid-cols-3 gap-4">
-                                {currentModelConfig?.advancedOptions?.supportedTypes?.map(
-                                  (optionType) => (
-                                    <div key={optionType} className="space-y-2">
-                                      <Label>
-                                        {getOptionLabel(optionType)}
-                                      </Label>
-                                      <Select
-                                        value={
-                                          optionType === 'imageSize' ||
-                                          optionType === 'aspectRatio'
-                                            ? imageSize
-                                            : optionType === 'outputFormat'
-                                              ? outputFormat
-                                              : optionType === 'quality'
-                                                ? quality
-                                                : resolution
-                                        }
-                                        onValueChange={(value) => {
-                                          if (
-                                            optionType === 'imageSize' ||
-                                            optionType === 'aspectRatio'
-                                          ) {
-                                            setImageSize(value);
-                                          } else if (
-                                            optionType === 'outputFormat'
-                                          ) {
-                                            setOutputFormat(value);
-                                          } else if (optionType === 'quality') {
-                                            setQuality(value);
-                                          } else if (
-                                            optionType === 'resolution'
-                                          ) {
-                                            setResolution(value);
-                                          }
-                                        }}
-                                      >
-                                        <SelectTrigger>
-                                          <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                          {getOptionsForType(optionType).map(
-                                            (opt) => (
-                                              <SelectItem
-                                                key={opt.value}
-                                                value={opt.value}
-                                              >
-                                                {opt.label}
-                                              </SelectItem>
-                                            )
-                                          )}
-                                        </SelectContent>
-                                      </Select>
-                                    </div>
-                                  )
-                                )}
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        )}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
+                  <div className="flex min-h-[160px] items-start justify-center">
+                    {!isTextToImageMode ? (
+                      <div>
+                        <ImageUploader
+                          key={`image-${activeTab}`}
+                          defaultPreviews={referenceImageUrls}
+                          title={t('form.reference_image')}
+                          allowMultiple={allowMultipleImages}
+                          maxImages={allowMultipleImages ? maxImages : 1}
+                          maxSizeMB={maxSizeMB}
+                          onChange={handleReferenceImagesChange}
+                          emptyHint={t('form.reference_image_placeholder')}
+                          onBeforeUpload={() => {
+                            if (!user) {
+                              setIsShowSignModal(true);
+                              return false;
+                            }
+                            return true;
+                          }}
+                          onValidateFile={handleReferenceImageValidateFile}
+                          imageWidth="w-16"
+                          imageHeight="h-20"
+                        />
                       </div>
-                    </div>
+                    ) : null}
                   </div>
 
-                  {!isTextToImageMode && (
-                    <div className="space-y-4">
-                      <ImageUploader
-                        title={t('form.reference_image')}
-                        allowMultiple={allowMultipleImages}
-                        maxImages={allowMultipleImages ? maxImages : 1}
-                        maxSizeMB={maxSizeMB}
-                        onChange={handleReferenceImagesChange}
-                        emptyHint={t('form.reference_image_placeholder')}
-                        onBeforeUpload={() => {
-                          if (!user) {
-                            setIsShowSignModal(true);
-                            return false;
-                          }
-                          return true;
-                        }}
-                      />
-
-                      {hasReferenceUploadError && (
-                        <p className="text-destructive text-xs">
-                          {t('form.some_images_failed_to_upload')}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
                   <div className="space-y-2">
-                    <Label htmlFor="image-prompt">{t('form.prompt')}</Label>
                     <Textarea
                       id="image-prompt"
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
                       placeholder={t('form.prompt_placeholder')}
-                      className="min-h-32"
+                      className="placeholder:text-muted-foreground/60 min-h-32 border-0 transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      style={{ backgroundColor: 'transparent' }}
                     />
                     <div className="text-muted-foreground flex items-center justify-between text-xs">
                       <span>
                         {promptLength} / {MAX_PROMPT_LENGTH}
                       </span>
-                      {isPromptTooLong && (
-                        <span className="text-destructive">
-                          {t('form.prompt_too_long')}
-                        </span>
-                      )}
                     </div>
+                    {isPromptTooLong && (
+                      <div className="text-destructive text-xs">
+                        {t('form.prompt_too_long')}
+                      </div>
+                    )}
+                    {hasReferenceUploadError && (
+                      <div className="text-destructive text-xs">
+                        {t('form.some_images_failed_to_upload')}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <Select value={activeTab} onValueChange={handleTabChange}>
+                    <SelectTrigger className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 w-auto min-w-[140px] border backdrop-blur-sm transition-all duration-200 hover:shadow-md">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="text-to-image">
+                        {t('tabs.text-to-image')}
+                      </SelectItem>
+                      <SelectItem value="image-to-image">
+                        {t('tabs.image-to-image')}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Popover
+                    open={modelPopoverOpen}
+                    onOpenChange={setModelPopoverOpen}
+                  >
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                      >
+                        <span className="flex items-center gap-2">
+                          {selectedModelConfig?.label || 'Select Model'}
+                          {selectedModelConfig &&
+                            getDiscountLabel(
+                              selectedModelConfig,
+                              activeTab
+                            ) && (
+                              <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                {getDiscountLabel(
+                                  selectedModelConfig,
+                                  activeTab
+                                )}
+                              </span>
+                            )}
+                        </span>
+                        <ChevronUp className="ml-2 h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-[420px]"
+                      side="top"
+                      align="start"
+                    >
+                      <div className="grid grid-cols-[120px_1fr] gap-2">
+                        <div className="border-border space-y-1 border-r pr-2">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Providers
+                          </p>
+                          {availableProviders.map((item) => (
+                            <button
+                              key={item.value}
+                              type="button"
+                              onClick={() => handleProviderChange(item.value)}
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground flex w-full items-center gap-2 rounded-lg p-2 text-sm transition-colors',
+                                provider === item.value &&
+                                  'bg-primary/20 text-primary font-medium'
+                              )}
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="max-h-60 space-y-1 overflow-y-auto">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Models
+                          </p>
+                          {availableModels.map((item) => (
+                            <button
+                              key={item.label}
+                              type="button"
+                              onClick={() => {
+                                const nextModel = getModelSceneId(
+                                  item,
+                                  activeTab
+                                );
+                                if (nextModel === model) {
+                                  setModelPopoverOpen(false);
+                                  return;
+                                }
+
+                                setModel(nextModel);
+                                setModelPopoverOpen(false);
+                              }}
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-lg p-2 text-sm transition-colors',
+                                model === getModelSceneId(item, activeTab) &&
+                                  'bg-primary/20 text-primary font-medium'
+                              )}
+                            >
+                              <span className="flex items-center gap-1">
+                                {item.label}
+                                {getDiscountLabel(item, activeTab) && (
+                                  <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                    {getDiscountLabel(item, activeTab)}
+                                  </span>
+                                )}
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                {getModelCredits(
+                                  item,
+                                  activeTab,
+                                  DEFAULT_CREDITS
+                                )}{' '}
+                                credits
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
+                  {advancedTypes.length > 0 && (
+                    <Popover
+                      open={advancedPopoverOpen}
+                      onOpenChange={setAdvancedPopoverOpen}
+                    >
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-2 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                        >
+                          <Settings className="h-4 w-4" />
+                          <span className="flex items-center gap-1">
+                            {advancedTypes.slice(0, 3).map((type, index) => (
+                              <span
+                                key={type}
+                                className="flex items-center gap-1"
+                              >
+                                {index > 0 && (
+                                  <span className="text-muted-foreground">
+                                    |
+                                  </span>
+                                )}
+                                <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                  {getAdvancedOptionValue(
+                                    type,
+                                    advancedOptions,
+                                    selectedModelConfig,
+                                    activeTab
+                                  )}
+                                </span>
+                              </span>
+                            ))}
+                          </span>
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-[420px]"
+                        side="top"
+                        align="start"
+                      >
+                        <div className="space-y-4">
+                          {advancedTypes.map((type) => {
+                            const currentValue = getAdvancedOptionValue(
+                              type,
+                              advancedOptions,
+                              selectedModelConfig,
+                              activeTab
+                            );
+
+                            return (
+                              <div key={type} className="space-y-2">
+                                <Label className="text-muted-foreground text-xs font-medium">
+                                  {getOptionLabel(type)}
+                                </Label>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {getOptionsForModel(
+                                    selectedModelConfig,
+                                    type,
+                                    activeTab
+                                  ).map((option) => {
+                                    const isDisabled = disabledOptions.has(
+                                      `${type}:${option.value}`
+                                    );
+
+                                    return (
+                                      <motion.button
+                                        key={option.value}
+                                        type="button"
+                                        whileHover={
+                                          isDisabled ? {} : { scale: 1.02 }
+                                        }
+                                        whileTap={
+                                          isDisabled ? {} : { scale: 0.98 }
+                                        }
+                                        onClick={() =>
+                                          !isDisabled &&
+                                          setAdvancedOptions((prev) => ({
+                                            ...prev,
+                                            [type]: option.value,
+                                          }))
+                                        }
+                                        className={cn(
+                                          'flex items-center justify-center rounded-md border p-2 text-xs font-medium transition-all duration-200',
+                                          currentValue === option.value
+                                            ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
+                                            : isDisabled
+                                              ? 'bg-muted/50 border-muted-foreground/20 text-muted-foreground/40 cursor-not-allowed opacity-60'
+                                              : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
+                                        )}
+                                        disabled={isDisabled}
+                                      >
+                                        {option.label}
+                                      </motion.button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+
+                  <div className="ml-auto flex items-center gap-2 text-sm">
+                    {isMounted &&
+                    isCreditsLoaded &&
+                    user &&
+                    remainingCredits <= 100 ? (
+                      <>
+                        <span>
+                          {t('credits_remaining', {
+                            credits: remainingCredits,
+                          })}
+                        </span>
+                        <Link href="/pricing">
+                          <Button
+                            variant="link"
+                            size="sm"
+                            className="text-primary h-auto p-0"
+                          >
+                            {t('buy_credits')}
+                          </Button>
+                        </Link>
+                      </>
+                    ) : null}
                   </div>
 
                   {!isMounted ? (
-                    <Button className="w-full" disabled size="lg">
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       {t('loading')}
                     </Button>
                   ) : isCheckSign ? (
-                    <Button className="w-full" disabled size="lg">
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       {t('checking_account')}
                     </Button>
                   ) : user ? (
                     <Button
-                      size="lg"
-                      className="w-full"
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
                       onClick={handleGenerate}
                       disabled={
                         isGenerating ||
-                        !prompt.trim() ||
                         isPromptTooLong ||
                         isReferenceUploading ||
-                        hasReferenceUploadError
+                        hasReferenceUploadError ||
+                        !prompt.trim() ||
+                        (!isTextToImageMode && referenceImageUrls.length === 0)
                       }
                     >
                       {isGenerating ? (
@@ -1042,147 +1447,185 @@ export function ImageGenerator({
                         <>
                           <Sparkles className="mr-2 h-4 w-4" />
                           {t('generate')}
+                          {(() => {
+                            const { original, discounted, discountRate } =
+                              calculateCurrentCredits();
+
+                            return (
+                              <span className="ml-2 flex items-center gap-1 text-xs opacity-80">
+                                {discountRate < 1 && (
+                                  <span className="text-muted-foreground line-through">
+                                    {original}
+                                  </span>
+                                )}
+                                <span>{discounted}</span>
+                                <span>credits</span>
+                              </span>
+                            );
+                          })()}
                         </>
                       )}
                     </Button>
                   ) : (
                     <Button
-                      size="lg"
-                      className="w-full"
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
                       onClick={() => setIsShowSignModal(true)}
                     >
                       <User className="mr-2 h-4 w-4" />
                       {t('sign_in_to_generate')}
                     </Button>
                   )}
-
-                  {!isMounted ? (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-primary">
-                        {t('credits_cost', { credits: costCredits })}
-                      </span>
-                      <span>{t('credits_remaining', { credits: 0 })}</span>
-                    </div>
-                  ) : user && remainingCredits > 0 ? (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-primary">
-                        {t('credits_cost', { credits: costCredits })}
-                      </span>
-                      <span>
-                        {t('credits_remaining', { credits: remainingCredits })}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-primary">
-                          {t('credits_cost', { credits: costCredits })}
-                        </span>
-                        <span>
-                          {t('credits_remaining', {
-                            credits: remainingCredits,
-                          })}
-                        </span>
-                      </div>
-                      <Link href="/pricing">
-                        <Button variant="outline" className="w-full" size="lg">
-                          <CreditCard className="mr-2 h-4 w-4" />
-                          {t('buy_credits')}
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
-
-                  {isGenerating && (
-                    <div className="space-y-2 rounded-lg border p-4">
-                      <div className="flex items-center justify-between text-sm">
-                        <span>{t('progress')}</span>
-                        <span>{progress}%</span>
-                      </div>
-                      <Progress value={progress} />
-                      {taskStatusLabel && (
-                        <p className="text-muted-foreground text-center text-xs">
-                          {taskStatusLabel}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                    <ImageIcon className="h-5 w-5" />
-                    {t('generated_images')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pb-8">
-                  {generatedImages.length > 0 ? (
-                    <div
-                      className={
-                        generatedImages.length === 1
-                          ? 'grid grid-cols-1 gap-6'
-                          : 'grid gap-6 sm:grid-cols-2'
-                      }
+                </div>
+                <AnimatePresence>
+                  {showPreview && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, y: 20 }}
+                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      exit={{ opacity: 0, height: 0, y: 20 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
+                      className="overflow-hidden"
                     >
-                      {generatedImages.map((image) => (
-                        <div key={image.id} className="space-y-3">
-                          <div
-                            className={
-                              generatedImages.length === 1
-                                ? 'relative overflow-hidden rounded-lg border'
-                                : 'relative aspect-square overflow-hidden rounded-lg border'
-                            }
-                          >
-                            <LazyImage
-                              src={image.url}
-                              alt={image.prompt || 'Generated image'}
-                              className={
-                                generatedImages.length === 1
-                                  ? 'h-auto w-full'
-                                  : 'h-full w-full object-cover'
-                              }
-                            />
+                      <div className="border-primary/10 mt-6 border-t pt-6">
+                        <AnimatePresence mode="wait">
+                          {isGenerating ? (
+                            <motion.div
+                              key="progress"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                              className="space-y-4"
+                            >
+                              <div className="text-center">
+                                <p className="mb-2 text-lg font-medium">
+                                  {t('generating')}
+                                </p>
+                                <ProgressBar progress={progress} />
+                                <p className="text-muted-foreground mt-3 text-sm">
+                                  {taskStatusLabel}
+                                </p>
+                                <p className="text-primary mt-2 text-2xl font-bold">
+                                  {progress}%
+                                </p>
 
-                            <div className="absolute right-2 bottom-2 flex justify-end text-sm">
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                className="ml-auto"
-                                onClick={() => handleDownloadImage(image)}
-                                disabled={downloadingImageId === image.id}
-                              >
-                                {downloadingImageId === image.id ? (
-                                  <>
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                  </>
-                                ) : (
-                                  <>
-                                    <Download className="h-4 w-4" />
-                                  </>
+                                <div className="bg-primary/5 border-primary/20 mt-4 rounded-xl border p-4 text-left">
+                                  <p className="text-sm font-medium">
+                                    {t('progress')}
+                                  </p>
+                                  <p className="text-muted-foreground mt-2 text-sm">
+                                    {taskStatusLabel ||
+                                      'Your task is running in the background.'}
+                                  </p>
+                                  <Link
+                                    href="/activity/ai-tasks"
+                                    target="_blank"
+                                    className="text-primary hover:text-primary/80 mt-3 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+                                  >
+                                    /activity/ai-tasks
+                                  </Link>
+                                </div>
+                              </div>
+                            </motion.div>
+                          ) : generatedImages.length > 0 ? (
+                            <motion.div
+                              key="result"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="space-y-4"
+                            >
+                              <div
+                                className={cn(
+                                  'grid gap-4',
+                                  generatedImages.length === 1
+                                    ? 'grid-cols-1'
+                                    : 'sm:grid-cols-2 xl:grid-cols-3'
                                 )}
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center justify-center py-16 text-center">
-                      <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                        <ImageIcon className="text-muted-foreground h-10 w-10" />
+                              >
+                                {generatedImages.map((image) => (
+                                  <div key={image.id} className="space-y-3">
+                                    <div
+                                      className={cn(
+                                        'border-primary/20 relative overflow-hidden rounded-2xl border bg-black/5',
+                                        generatedImages.length === 1
+                                          ? 'max-h-[520px]'
+                                          : 'aspect-square'
+                                      )}
+                                    >
+                                      <LazyImage
+                                        src={image.url}
+                                        alt={image.prompt || 'Generated image'}
+                                        className={cn(
+                                          'w-full',
+                                          generatedImages.length === 1
+                                            ? 'h-auto'
+                                            : 'h-full object-cover'
+                                        )}
+                                      />
+                                    </div>
+                                    <div className="flex items-center justify-center gap-3">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() =>
+                                          handleDownloadImage(image)
+                                        }
+                                        disabled={
+                                          downloadingImageId === image.id
+                                        }
+                                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                      >
+                                        {downloadingImageId === image.id ? (
+                                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        ) : (
+                                          <Download className="mr-2 h-4 w-4" />
+                                        )}
+                                        Download
+                                      </Button>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="flex justify-center">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    setShowPreview(false);
+                                    setGeneratedImages([]);
+                                  }}
+                                  className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                >
+                                  {t('generate')}
+                                </Button>
+                              </div>
+                            </motion.div>
+                          ) : (
+                            <motion.div
+                              key="empty"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className="flex flex-col items-center justify-center py-12 text-center"
+                            >
+                              <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                                <ImageIcon className="text-muted-foreground h-10 w-10" />
+                              </div>
+                              <p className="text-muted-foreground">
+                                {t('no_images_generated')}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                      <p className="text-muted-foreground">
-                        {isGenerating
-                          ? t('ready_to_generate')
-                          : t('no_images_generated')}
-                      </p>
-                    </div>
+                    </motion.div>
                   )}
-                </CardContent>
-              </Card>
-            </div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
           </div>
         </div>
       </ScrollAnimation>
