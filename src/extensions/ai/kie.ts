@@ -410,17 +410,22 @@ export class KieProvider implements AIProvider {
   async queryVideo({
     taskId,
     aiTaskId,
+    model,
   }: {
     taskId: string;
     aiTaskId: string;
+    model: string;
   }): Promise<AITaskResult> {
-    const apiUrl = `${this.baseUrl}/jobs/recordInfo?taskId=${taskId}`;
+    let apiUrl = `${this.baseUrl}/jobs/recordInfo?taskId=${taskId}`;
+    if (model.includes('veo3')) {
+      apiUrl = `${this.baseUrl}/veo/record-info?taskId=${taskId}`;
+    }
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.configs.apiKey}`,
     };
-    console.log('query video parmas+', taskId, aiTaskId);
-
+    console.log('query video parmas+', taskId, aiTaskId, model);
+    console.log(apiUrl);
     const resp = await fetch(apiUrl, {
       method: 'GET',
       headers,
@@ -431,55 +436,113 @@ export class KieProvider implements AIProvider {
 
     const { code, msg, data } = await resp.json();
 
-    if (code !== 200) {
-      throw new Error(msg);
-    }
-
-    if (!data || !data.state) {
-      throw new Error(`query failed`);
-    }
-
-    let videos: AIVideo[] | undefined = undefined;
-
-    if (data.resultJson) {
-      const resultJson = JSON.parse(data.resultJson);
-      const resultUrls = resultJson.resultUrls;
-      if (Array.isArray(resultUrls)) {
-        videos = resultUrls.map((video: any) => ({
-          id: '',
-          createTime: new Date(data.createTime),
-          videoUrl: video,
-        }));
+    // veo分支判断不一样
+    if (model.includes('veo3')) {
+      if (code !== 200) {
+        throw new Error(msg);
       }
-    }
+      if (!data || !data.errorCode) {
+        throw new Error(`query failed`);
+      }
 
-    const taskStatus = this.mapImageStatus(data.state);
-    // ✅ 异步后台转存，不阻塞当前请求响应
-    if (
-      taskStatus === AITaskStatus.SUCCESS &&
-      videos &&
-      videos.length > 0 &&
-      this.configs.customStorage &&
-      !savingTasks.has(taskId)
-    ) {
-      // 启用自定义存储， 立即启动异步转存，不等待结果
-      setTimeout(async () => {
-        await this.saveVideoWithRetry(taskId, aiTaskId, [...videos], data, 3);
-      }, 0);
-    }
+      let videos: AIVideo[] | undefined = undefined;
 
-    return {
-      taskId,
-      taskStatus,
-      taskInfo: {
-        videos,
-        status: data.state,
-        errorCode: data.failCode,
-        errorMessage: data.failMsg,
-        createTime: new Date(data.createTime),
-      },
-      taskResult: data,
-    };
+      if (data.response) {
+        const resultJson = JSON.parse(data.response);
+        const resultUrls = resultJson.resultUrls;
+        if (Array.isArray(resultUrls)) {
+          videos = resultUrls.map((video: any) => ({
+            id: '',
+            createTime: new Date(data.createTime),
+            videoUrl: video,
+          }));
+        }
+      }
+      let taskStatus = AITaskStatus.SUCCESS;
+      if (data.successFlag === 0) {
+        taskStatus = AITaskStatus.PROCESSING;
+      } else if (data.successFlag === 1) {
+        taskStatus = AITaskStatus.SUCCESS;
+      } else {
+        taskStatus = AITaskStatus.FAILED;
+      }
+      console.log(taskStatus);
+      // ✅ 异步后台转存，不阻塞当前请求响应
+      if (
+        taskStatus === AITaskStatus.SUCCESS &&
+        videos &&
+        videos.length > 0 &&
+        this.configs.customStorage &&
+        !savingTasks.has(taskId)
+      ) {
+        // 启用自定义存储， 立即启动异步转存，不等待结果
+        setTimeout(async () => {
+          await this.saveVideoWithRetry(taskId, aiTaskId, [...videos], data, 3);
+        }, 0);
+      }
+
+      return {
+        taskId,
+        taskStatus,
+        taskInfo: {
+          videos,
+          status: taskStatus,
+          errorCode: data.errorCode,
+          errorMessage: data.errorMessage,
+          createTime: new Date(data.createTime),
+        },
+        taskResult: data,
+      };
+    } else {
+      if (code !== 200) {
+        throw new Error(msg);
+      }
+      if (!data || !data.state) {
+        throw new Error(`query failed`);
+      }
+
+      let videos: AIVideo[] | undefined = undefined;
+
+      if (data.resultJson) {
+        const resultJson = JSON.parse(data.resultJson);
+        const resultUrls = resultJson.resultUrls;
+        if (Array.isArray(resultUrls)) {
+          videos = resultUrls.map((video: any) => ({
+            id: '',
+            createTime: new Date(data.createTime),
+            videoUrl: video,
+          }));
+        }
+      }
+
+      const taskStatus = this.mapImageStatus(data.state);
+      // ✅ 异步后台转存，不阻塞当前请求响应
+      if (
+        taskStatus === AITaskStatus.SUCCESS &&
+        videos &&
+        videos.length > 0 &&
+        this.configs.customStorage &&
+        !savingTasks.has(taskId)
+      ) {
+        // 启用自定义存储， 立即启动异步转存，不等待结果
+        setTimeout(async () => {
+          await this.saveVideoWithRetry(taskId, aiTaskId, [...videos], data, 3);
+        }, 0);
+      }
+
+      return {
+        taskId,
+        taskStatus,
+        taskInfo: {
+          videos,
+          status: data.state,
+          errorCode: data.failCode,
+          errorMessage: data.failMsg,
+          createTime: new Date(data.createTime),
+        },
+        taskResult: data,
+      };
+    }
   }
 
   // query task
@@ -487,17 +550,19 @@ export class KieProvider implements AIProvider {
     taskId,
     aiTaskId,
     mediaType,
+    model,
   }: {
     taskId: string;
     aiTaskId: string;
     mediaType?: AIMediaType;
+    model: '';
   }): Promise<AITaskResult> {
     if (mediaType === AIMediaType.IMAGE) {
       return this.queryImage({ taskId, aiTaskId });
     }
 
     if (mediaType === AIMediaType.VIDEO) {
-      return this.queryVideo({ taskId, aiTaskId });
+      return this.queryVideo({ taskId, aiTaskId, model });
     }
 
     const apiUrl = `${this.baseUrl}/generate/record-info?taskId=${taskId}`;
@@ -506,6 +571,8 @@ export class KieProvider implements AIProvider {
       Authorization: `Bearer ${this.configs.apiKey}`,
     };
 
+    console.log(taskId, this.configs.apiKey, apiUrl);
+
     const resp = await fetch(apiUrl, {
       method: 'GET',
       headers,
@@ -515,6 +582,8 @@ export class KieProvider implements AIProvider {
     }
 
     const { code, msg, data } = await resp.json();
+
+    console.log(code, msg, data);
 
     if (code !== 200) {
       throw new Error(msg);
