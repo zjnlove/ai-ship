@@ -188,7 +188,7 @@ export default async function AiTasksPage({
                   key={index}
                   src={video.url ?? video.videoUrl ?? video}
                   controls
-                  className="h-20 w-auto rounded-lg shadow-sm"
+                  className="h-20 w-140 rounded-lg shadow-sm"
                   preload="metadata"
                 />
               ))}
@@ -203,7 +203,7 @@ export default async function AiTasksPage({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 border-b pb-4">
         {tabs.map((tab) => (
