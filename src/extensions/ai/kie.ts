@@ -153,61 +153,43 @@ export class KieProvider implements AIProvider {
     let payload: any = {
       model: params.model,
       callBackUrl: params.callbackUrl,
-      input: {
-        prompt: params.prompt,
-      },
+      input: {},
     };
 
-    if (params.options) {
-      const options = params.options;
-      // image_input : []
-      if (options.image_input && Array.isArray(options.image_input)) {
-        payload.input.image_input = options.image_input;
-      }
-      // image: string
-      if (options.image && typeof options.image === 'string') {
-        payload.input.image = options.image;
-      }
-      // input_urls: []
-      if (options.input_urls && Array.isArray(options.input_urls)) {
-        payload.input.input_urls = options.input_urls;
-      }
-      // image_url: string
-      if (options.image_url && typeof options.image_url === 'string') {
-        payload.input.image_url = options.image_url;
-      }
-      if (options.aspect_ratio) {
-        payload.input.aspect_ratio = options.aspect_ratio;
-      }
-      if (options.image_size) {
-        payload.input.image_size = options.image_size;
-      }
-      if (options.resolution) {
-        payload.input.resolution = options.resolution;
-      }
-      if (options.output_format) {
-        payload.input.output_format = options.output_format;
-      }
-      if (options.quality) {
-        payload.input.quality = options.quality;
-      }
-      if (options.nsfw_checker !== undefined) {
-        payload.input.nsfw_checker = options.nsfw_checker;
-      }
+    if (params.prompt) {
+      payload.input.prompt = params.prompt;
     }
-    // console.log('kie input', apiUrl, headers, payload);
-    // throw new Error('kie generate image is disabled for testing');
+
+    if (params.options) {
+      payload.input = { ...payload.input, ...params.options };
+    }
+
+    console.log('kie generate image payload', payload, apiUrl);
+
+    if (envConfigs.api_test_mode === 'true') {
+      return {
+        taskStatus: AITaskStatus.PENDING,
+        taskId: '850c4c5f98b97ce96281cc7a7b330ce9',
+        taskInfo: {},
+        taskResult: { taskId: '850c4c5f98b97ce96281cc7a7b330ce9' },
+      };
+    }
+
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
       body: JSON.stringify(payload),
     });
     if (!resp.ok) {
+      console.log(
+        'kie generate image response error',
+        resp.status,
+        await resp.text()
+      );
       throw new Error(`request failed with status: ${resp.status}`);
     }
 
     const { code, msg, data } = await resp.json();
-    console.log('kie generate image response', { code, msg, data });
 
     if (code !== 200) {
       throw new Error(`generate image failed: ${msg}`);
@@ -279,7 +261,7 @@ export class KieProvider implements AIProvider {
         taskResult: { taskId: 'eaf83578cb8ce56ab1e6cb10c2ee73b9' },
       };
     }
-    throw new Error('kie generate video is disabled for testing');
+
     const resp = await fetch(apiUrl, {
       method: 'POST',
       headers,
@@ -338,7 +320,13 @@ export class KieProvider implements AIProvider {
     throw new Error(`mediaType not supported: ${params.mediaType}`);
   }
 
-  async queryImage({ taskId }: { taskId: string }): Promise<AITaskResult> {
+  async queryImage({
+    taskId,
+    aiTaskId,
+  }: {
+    taskId: string;
+    aiTaskId?: string;
+  }): Promise<AITaskResult> {
     const apiUrl = `${this.baseUrl}/jobs/recordInfo?taskId=${taskId}`;
     const headers = {
       'Content-Type': 'application/json',
@@ -366,52 +354,42 @@ export class KieProvider implements AIProvider {
     let images: AIImage[] | undefined = undefined;
 
     if (data.resultJson) {
-      const resultJson = JSON.parse(data.resultJson);
-      const resultUrls = resultJson.resultUrls;
-      if (Array.isArray(resultUrls)) {
-        images = resultUrls.map((image: any) => ({
-          id: '',
-          createTime: new Date(data.createTime),
-          imageUrl: image,
-        }));
+      try {
+        const resultJson = JSON.parse(data.resultJson);
+        const resultUrls =
+          resultJson.resultUrls ?? resultJson.images ?? resultJson.output;
+        if (Array.isArray(resultUrls)) {
+          images = resultUrls.map((image: any) => ({
+            id: '',
+            createTime: new Date(data.createTime),
+            imageUrl:
+              typeof image === 'string'
+                ? image
+                : (image?.url ??
+                  image?.uri ??
+                  image?.image ??
+                  image?.src ??
+                  image?.imageUrl),
+          }));
+        }
+      } catch (error) {
+        console.error('parse kie image resultJson failed', error);
       }
     }
 
     const taskStatus = this.mapImageStatus(data.state);
 
-    // use custom storage to save images
+    // async save images to custom storage
     if (
       taskStatus === AITaskStatus.SUCCESS &&
       images &&
       images.length > 0 &&
-      this.configs.customStorage
+      this.configs.customStorage &&
+      !savingTasks.has(taskId)
     ) {
-      const filesToSave: AIFile[] = [];
-      images.forEach((image, index) => {
-        if (image.imageUrl) {
-          filesToSave.push({
-            url: image.imageUrl,
-            contentType: 'image/png',
-            key: `kie/image/${getUuid()}.png`,
-            index: index,
-            type: 'image',
-          });
-        }
-      });
-
-      if (filesToSave.length > 0) {
-        const uploadedFiles = await saveFiles(filesToSave);
-        if (uploadedFiles) {
-          uploadedFiles.forEach((file: AIFile) => {
-            if (file && file.url && images && file.index !== undefined) {
-              const image = images[file.index];
-              if (image) {
-                image.imageUrl = file.url;
-              }
-            }
-          });
-        }
-      }
+      setTimeout(async () => {
+        await this.saveImageWithRetry(taskId, aiTaskId, [...images], data, 3);
+      }, 0);
     }
 
     return {
@@ -514,7 +492,7 @@ export class KieProvider implements AIProvider {
     mediaType?: AIMediaType;
   }): Promise<AITaskResult> {
     if (mediaType === AIMediaType.IMAGE) {
-      return this.queryImage({ taskId });
+      return this.queryImage({ taskId, aiTaskId });
     }
 
     if (mediaType === AIMediaType.VIDEO) {
@@ -630,6 +608,97 @@ export class KieProvider implements AIProvider {
       },
       taskResult: data,
     };
+  }
+
+  private async saveImageWithRetry(
+    taskId: string,
+    aiTaskId: string | undefined,
+    images: AIImage[],
+    data: any,
+    retries = 3
+  ): Promise<void> {
+    try {
+      savingTasks.add(taskId);
+      const filesToSave: AIFile[] = images
+        .filter((image) => image.imageUrl)
+        .map((image, index) => ({
+          url: image.imageUrl!,
+          contentType: 'image/png',
+          key: `kie/image/${getUuid()}.png`,
+          index,
+          type: 'image',
+        }));
+
+      if (filesToSave.length === 0) return;
+
+      console.log(
+        `[image save start] taskId: ${taskId}, image count: ${filesToSave.length}, retries left: ${retries}`
+      );
+
+      const uploadedFiles = await saveFiles(filesToSave);
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        uploadedFiles.forEach((file) => {
+          if (file?.url && file.index !== undefined && images[file.index]) {
+            images[file.index].imageUrl = file.url;
+          }
+        });
+
+        console.log(
+          `[image save success] taskId: ${taskId}, uploaded count: ${uploadedFiles.length}`
+        );
+
+        if (aiTaskId) {
+          try {
+            const { updateAITaskById } = await import(
+              '@/shared/models/ai_task'
+            );
+
+            const updatedTaskInfo = {
+              images,
+              status: data.state,
+              errorCode: data.failCode,
+              errorMessage: data.failMsg,
+              createTime: new Date(data.createTime),
+            };
+
+            await updateAITaskById(aiTaskId, {
+              taskInfo: JSON.stringify(updatedTaskInfo),
+            });
+
+            console.log(
+              `[image db update success] aiTaskId: ${aiTaskId}, saved image urls persisted`
+            );
+          } catch (dbError: any) {
+            console.error(
+              `[image db update failed] aiTaskId: ${aiTaskId}`,
+              dbError.message
+            );
+          }
+        }
+      }
+    } catch (e: any) {
+      if (retries > 0) {
+        const delays = [2000, 5000, 10000];
+        const delay = delays[3 - retries];
+        console.log(
+          `[image save retry] taskId: ${taskId}, retry after ${delay}ms, retries left: ${retries}, error: ${e.message}`
+        );
+        savingTasks.delete(taskId);
+        setTimeout(() => {
+          this.saveImageWithRetry(taskId, aiTaskId, images, data, retries - 1);
+        }, delay);
+        return;
+      }
+
+      console.error(
+        `[image save failed] taskId: ${taskId}, all retries exhausted, keep original urls`,
+        e
+      );
+    } finally {
+      if (retries <= 0) {
+        savingTasks.delete(taskId);
+      }
+    }
   }
 
   /**

@@ -36,8 +36,8 @@ export const RESOLUTION_OPTIONS: ImageOptionValue[] = [
 ];
 
 export const PROVIDER_OPTIONS: ImageProviderOption[] = [
-  { value: 'qwen', label: 'Qwen' },
   { value: 'google', label: 'Google' },
+  { value: 'qwen', label: 'Qwen' },
   { value: 'openai', label: 'OpenAI' },
   { value: 'flux', label: 'Flux' },
   { value: 'grok', label: 'Grok' },
