@@ -66,6 +66,10 @@ export const googleModels: ImageModelOption[] = [
       imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'outputFormat', 'resolution'],
     },
+    discount: {
+      rate: 0.5,
+      label: '-50% OFF',
+    },
   },
   {
     label: 'Nano Banana',

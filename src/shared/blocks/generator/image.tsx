@@ -463,6 +463,19 @@ export function ImageGenerator({
   const handleTabChange = useCallback(
     (value: string) => {
       const tab = value as ImageGeneratorTab;
+      const currentModelSupportsTab = Boolean(
+        getModelSceneId(selectedModelConfig, tab)
+      );
+
+      if (currentModelSupportsTab && selectedModelConfig) {
+        setActiveTab(tab);
+        setProvider(selectedModelConfig.brand);
+        setModel(getModelSceneId(selectedModelConfig, tab));
+        setGeneratedImages([]);
+        setShowPreview(false);
+        return;
+      }
+
       const providers = getAvailableProviders(tab);
       const nextProvider =
         providers.find((item) => item.value === provider)?.value ??
@@ -477,7 +490,7 @@ export function ImageGenerator({
       setGeneratedImages([]);
       setShowPreview(false);
     },
-    [provider]
+    [provider, selectedModelConfig]
   );
 
   const handleProviderChange = useCallback(
