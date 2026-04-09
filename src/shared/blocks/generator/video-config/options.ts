@@ -69,7 +69,7 @@ export const PROVIDER_OPTIONS = [
   { value: 'google', label: 'Google' },
   { value: 'kling', label: 'Kling AI' },
   { value: 'wan', label: 'Wan' },
-  { value: 'grok', label: 'xAI' },
+  { value: 'grok', label: 'Grok' },
   { value: 'seedance', label: 'ByteDance' },
   // { value: 'runway', label: 'Runway' },
   { value: 'hailuo', label: 'Hailuo' },

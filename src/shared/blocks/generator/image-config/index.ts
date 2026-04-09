@@ -52,6 +52,7 @@ export {
   getModelCredits,
   getModelAdvancedOptions,
   getModelImageFieldName,
+  getModelOptionFieldName,
   calculateOriginalCredits,
   calculateDiscountedCredits,
 } from './utils';

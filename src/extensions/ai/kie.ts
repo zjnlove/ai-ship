@@ -1,4 +1,5 @@
 import { task } from 'better-auth/react';
+import { except } from 'drizzle-orm/gel-core';
 import { th } from 'zod/v4/locales';
 
 import { envConfigs } from '@/config';

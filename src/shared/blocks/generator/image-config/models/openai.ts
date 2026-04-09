@@ -10,11 +10,11 @@ export const openaiModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'gpt-image/1.5-text-to-image',
-        credits: '4',
+        credits: 4,
       },
       'image-to-image': {
         id: 'gpt-image/1.5-image-to-image',
-        credits: '6',
+        credits: 6,
         customFields: [
           {
             type: 'image',
@@ -28,8 +28,11 @@ export const openaiModels: ImageModelOption[] = [
       aspect_ratio: '1:1',
       quality: 'medium',
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+      { type: 'string', fieldName: 'quality', optionType: 'quality' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'quality'],
     },
   },

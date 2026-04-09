@@ -10,7 +10,7 @@ export const recraftModels: ImageModelOption[] = [
     sceneValues: {
       'image-to-image': {
         id: 'recraft/remove-background',
-        credits: '2',
+        credits: 2,
         customFields: [
           {
             type: 'image',
@@ -23,8 +23,10 @@ export const recraftModels: ImageModelOption[] = [
     defaultOptions: {
       aspect_ratio: 'auto',
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio'],
     },
   },
@@ -37,7 +39,7 @@ export const recraftModels: ImageModelOption[] = [
     sceneValues: {
       'image-to-image': {
         id: 'recraft/crisp-upscale',
-        credits: '2',
+        credits: 2,
         customFields: [
           {
             type: 'image',
@@ -50,8 +52,10 @@ export const recraftModels: ImageModelOption[] = [
     defaultOptions: {
       aspect_ratio: 'auto',
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio'],
     },
   },

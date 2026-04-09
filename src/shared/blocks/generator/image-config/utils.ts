@@ -26,7 +26,6 @@ import {
 
 export function getOptionsForType(type: ImageOptionType): ImageOptionValue[] {
   const optionsMap: Record<ImageOptionType, ImageOptionValue[]> = {
-    imageSize: IMAGE_SIZE_OPTIONS,
     aspectRatio: ASPECT_RATIO_OPTIONS,
     outputFormat: OUTPUT_FORMAT_OPTIONS,
     quality: QUALITY_OPTIONS,
@@ -200,8 +199,9 @@ export function getDefaultAdvancedOptions(
   const defaults = getModelDefaultOptions(modelConfig, scene);
   const next: ImageAdvancedOptionValues = {};
 
-  if (defaults.image_size) next.imageSize = defaults.image_size;
-  if (defaults.aspect_ratio) next.aspectRatio = defaults.aspect_ratio;
+  if (defaults.image_size || defaults.aspect_ratio) {
+    next.aspectRatio = defaults.aspect_ratio ?? defaults.image_size;
+  }
   if (defaults.output_format) next.outputFormat = defaults.output_format;
   if (defaults.quality) next.quality = defaults.quality;
   if (defaults.resolution) next.resolution = defaults.resolution;
@@ -240,7 +240,7 @@ export function getModelCredits(
 ) {
   const sceneCredits = getModelSceneConfig(modelConfig, scene)?.credits;
   const value = sceneCredits ?? modelConfig?.credits?.[scene];
-  return value ? parseInt(value, 10) : fallbackCredits[scene];
+  return value ?? fallbackCredits[scene];
 }
 
 export function getModelAdvancedOptions(
@@ -264,6 +264,29 @@ export function getModelImageFieldName(
   );
 }
 
+export function getModelOptionFieldName(
+  type: ImageOptionType,
+  modelConfig: ImageModelOption | null | undefined,
+  scene?: ImageScene
+) {
+  const customField = getModelCustomFields(modelConfig, scene).find(
+    (field) => field.optionType === type
+  );
+
+  if (customField?.fieldName) {
+    return customField.fieldName;
+  }
+
+  const fieldMap: Record<ImageOptionType, string> = {
+    aspectRatio: 'aspect_ratio',
+    outputFormat: 'output_format',
+    quality: 'quality',
+    resolution: 'resolution',
+  };
+
+  return fieldMap[type];
+}
+
 export function calculateOriginalCredits(
   modelConfig: ImageModelOption,
   scene: ImageScene,
@@ -272,11 +295,24 @@ export function calculateOriginalCredits(
   let totalCredits = getModelCredits(modelConfig, scene);
   const creditRules = getModelCreditRules(modelConfig, scene);
   const customOptions = getModelCustomOptions(modelConfig, scene);
+  const isConditionValueMatch = (
+    selectedValue: string | boolean | undefined,
+    expectedValue: string | boolean
+  ) => {
+    if (
+      typeof selectedValue === 'string' &&
+      typeof expectedValue === 'string'
+    ) {
+      return selectedValue.toLowerCase() === expectedValue.toLowerCase();
+    }
+
+    return selectedValue === expectedValue;
+  };
 
   if (creditRules.length > 0) {
     for (const rule of creditRules) {
-      const isMatch = Object.entries(rule.conditions).every(
-        ([key, value]) => selectedOptions[key] === value
+      const isMatch = Object.entries(rule.conditions).every(([key, value]) =>
+        isConditionValueMatch(selectedOptions[key], value)
       );
 
       if (!isMatch) continue;

@@ -498,6 +498,12 @@
       "some_images_failed_to_upload": "Some images failed to upload, please delete them and re-upload",
       "prompt_too_long": "Prompt is too long, please delete some content"
     },
+    "advanced_options": {
+      "aspect_ratio": "Aspect Ratio",
+      "output_format": "Output Format",
+      "quality": "Quality",
+      "resolution": "Resolution"
+    },
     "generate": "Generate Images",
     "checking_account": "Checking Account...",
     "loading": "Loading...",
@@ -510,6 +516,18 @@
     "generated_images": "Image Preview",
     "ready_to_generate": "Ready to Generate",
     "ready_for_generating": "Ready for Generating",
-    "no_images_generated": "No Images Generated"
+    "no_images_generated": "No Images Generated",
+    "share": "Share",
+    "download": "Download",
+    "regenerate": "Regenerate",
+    "waiting_hint": {
+      "title": "Image generation usually takes a little while, please be patient",
+      "description": "You don't need to stay on this page, the generation will be saved automatically.",
+      "link": "Go to My Tasks to view all generation history"
+    },
+    "validation": {
+      "image_too_large": "Image file size exceeds model limit. Maximum allowed: {max}MB, your image: {actual}MB",
+      "image_unsupported_format": "Unsupported image format. Supported formats: {supported}, your image: {actual}"
+    }
   }
 }

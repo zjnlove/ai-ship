@@ -11,7 +11,6 @@ export type ImageBrand =
 export type ImageApiProvider = 'kie';
 
 export type ImageOptionType =
-  | 'imageSize'
   | 'aspectRatio'
   | 'outputFormat'
   | 'quality'
@@ -61,18 +60,17 @@ export interface DependencyRule {
 export interface CustomFieldConfig {
   type: 'image' | 'boolean' | 'string' | 'number';
   fieldName: string;
+  optionType?: ImageOptionType;
   isArray?: boolean;
   defaultValue?: string | boolean | number;
   required?: boolean;
 }
 
 export interface ImageAdvancedOptions {
-  imageSizeField?: 'image_size' | 'aspect_ratio';
   supportedTypes: ImageOptionType[];
 }
 
 export interface CustomImageOptions {
-  imageSize?: ImageOptionValue[] | ImageOptionRange;
   aspectRatio?: ImageOptionValue[] | ImageOptionRange;
   outputFormat?: ImageOptionValue[] | ImageOptionRange;
   quality?: ImageOptionValue[] | ImageOptionRange;
@@ -91,7 +89,8 @@ export interface ImageDefaultOptions {
 
 export interface ImageSceneConfig {
   id: string;
-  credits?: string;
+  credits?: number;
+  maxImages?: number;
   defaultOptions?: ImageDefaultOptions;
   advancedOptions?: ImageAdvancedOptions;
   customOptions?: CustomImageOptions;
@@ -117,7 +116,8 @@ export interface ImageModelOption {
   provider: ImageApiProvider;
   brand: ImageBrand;
   modelPath: string;
-  credits: Partial<Record<ImageScene, string>>;
+  credits: Partial<Record<ImageScene, number>>;
+  maxImages?: number;
   sceneValues: Partial<Record<ImageScene, ImageSceneValue>>;
   customFields?: CustomFieldConfig[];
   customOptions?: CustomImageOptions;

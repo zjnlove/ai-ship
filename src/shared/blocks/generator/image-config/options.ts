@@ -20,8 +20,7 @@ export const ASPECT_RATIO_OPTIONS: ImageOptionValue[] = [
 
 export const OUTPUT_FORMAT_OPTIONS: ImageOptionValue[] = [
   { value: 'png', label: 'PNG' },
-  { value: 'jpeg', label: 'JPEG' },
-  { value: 'webp', label: 'WebP' },
+  { value: 'jpg', label: 'JPG' },
 ];
 
 export const QUALITY_OPTIONS: ImageOptionValue[] = [
@@ -45,11 +44,10 @@ export const PROVIDER_OPTIONS: ImageProviderOption[] = [
 ];
 
 export const IMAGE_OPTION_LABELS: Record<ImageOptionType, string> = {
-  imageSize: 'Size',
-  aspectRatio: 'Size',
-  outputFormat: 'Format',
-  quality: 'Quality',
-  resolution: 'Resolution',
+  aspectRatio: 'advanced_options.aspect_ratio',
+  outputFormat: 'advanced_options.output_format',
+  quality: 'advanced_options.quality',
+  resolution: 'advanced_options.resolution',
 };
 
 export const DEFAULT_CREDITS: ImageDefaultCreditMap = {

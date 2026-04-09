@@ -10,11 +10,11 @@ export const qwenModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'qwen2/text-to-image',
-        credits: '6',
+        credits: 6,
       },
       'image-to-image': {
         id: 'qwen2/image-edit',
-        credits: '8',
+        credits: 8,
         customFields: [
           {
             type: 'image',
@@ -28,9 +28,16 @@ export const qwenModels: ImageModelOption[] = [
       image_size: '16:9',
       output_format: 'png',
     },
+    customFields: [
+      { type: 'string', fieldName: 'image_size', optionType: 'aspectRatio' },
+      {
+        type: 'string',
+        fieldName: 'output_format',
+        optionType: 'outputFormat',
+      },
+    ],
     advancedOptions: {
-      imageSizeField: 'image_size',
-      supportedTypes: ['imageSize', 'outputFormat'],
+      supportedTypes: ['aspectRatio', 'outputFormat'],
     },
   },
   {
@@ -42,11 +49,11 @@ export const qwenModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'qwen/text-to-image',
-        credits: '4',
+        credits: 4,
       },
       'image-to-image': {
         id: 'qwen/image-to-image',
-        credits: '6',
+        credits: 6,
         customFields: [
           {
             type: 'image',
@@ -60,9 +67,16 @@ export const qwenModels: ImageModelOption[] = [
       image_size: '16:9',
       output_format: 'png',
     },
+    customFields: [
+      { type: 'string', fieldName: 'image_size', optionType: 'aspectRatio' },
+      {
+        type: 'string',
+        fieldName: 'output_format',
+        optionType: 'outputFormat',
+      },
+    ],
     advancedOptions: {
-      imageSizeField: 'image_size',
-      supportedTypes: ['imageSize', 'outputFormat'],
+      supportedTypes: ['aspectRatio', 'outputFormat'],
     },
   },
 ];

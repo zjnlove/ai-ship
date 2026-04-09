@@ -10,11 +10,11 @@ export const fluxModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'flux-2/flex-text-to-image',
-        credits: '14',
+        credits: 14,
       },
       'image-to-image': {
         id: 'flux-2/flex-image-to-image',
-        credits: '16',
+        credits: 16,
         customFields: [
           {
             type: 'image',
@@ -29,8 +29,11 @@ export const fluxModels: ImageModelOption[] = [
       resolution: '1K',
       nsfw_checker: true,
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+      { type: 'string', fieldName: 'resolution', optionType: 'resolution' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'resolution'],
     },
   },
@@ -43,11 +46,11 @@ export const fluxModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'flux-2/pro-text-to-image',
-        credits: '6',
+        credits: 6,
       },
       'image-to-image': {
         id: 'flux-2/pro-image-to-image',
-        credits: '8',
+        credits: 8,
         customFields: [
           {
             type: 'image',
@@ -62,8 +65,11 @@ export const fluxModels: ImageModelOption[] = [
       resolution: '1K',
       nsfw_checker: true,
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+      { type: 'string', fieldName: 'resolution', optionType: 'resolution' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'resolution'],
     },
   },

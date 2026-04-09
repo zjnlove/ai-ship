@@ -8,6 +8,7 @@ import {
   ImageIcon,
   Loader2,
   Settings,
+  Share2,
   Sparkles,
   User,
 } from 'lucide-react';
@@ -51,6 +52,7 @@ import {
   getModelCredits,
   getModelCustomFields,
   getModelImageFieldName,
+  getModelOptionFieldName,
   getModelSceneConfig,
   getModelSceneId,
   getOptionLabel,
@@ -62,7 +64,7 @@ import {
   type ImageScene,
   type ModelOption,
   type OptionType,
-} from './image-config';
+} from './image-config/index';
 
 interface ImageGeneratorProps {
   allowMultipleImages?: boolean;
@@ -96,8 +98,8 @@ const POLL_INTERVAL = 5000;
 const GENERATION_TIMEOUT = 180000;
 const MAX_PROMPT_LENGTH = 2000;
 const optionKeyMap: Record<string, OptionType> = {
-  image_size: 'imageSize',
   aspect_ratio: 'aspectRatio',
+  image_size: 'aspectRatio',
   output_format: 'outputFormat',
   quality: 'quality',
   resolution: 'resolution',
@@ -234,6 +236,7 @@ export function ImageGenerator({
     const baseConfig = {
       id: getModelSceneId(selectedModelConfig, activeTab),
       credits: selectedModelConfig?.credits?.[activeTab],
+      maxImages: selectedModelConfig?.maxImages,
       defaultOptions: selectedModelConfig?.defaultOptions,
       advancedOptions: selectedModelConfig?.advancedOptions,
       customOptions: selectedModelConfig?.customOptions,
@@ -253,6 +256,7 @@ export function ImageGenerator({
       ...baseConfig,
       id: sceneValue.id,
       credits: sceneValue.credits ?? baseConfig.credits,
+      maxImages: sceneValue.maxImages ?? baseConfig.maxImages,
       defaultOptions: sceneValue.defaultOptions ?? baseConfig.defaultOptions,
       advancedOptions: sceneValue.advancedOptions ?? baseConfig.advancedOptions,
       customOptions: sceneValue.customOptions ?? baseConfig.customOptions,
@@ -282,6 +286,13 @@ export function ImageGenerator({
   const isCreditsLoaded = user?.credits !== undefined;
   const isPromptTooLong = promptLength > MAX_PROMPT_LENGTH;
   const isTextToImageMode = activeTab === 'text-to-image';
+  const sceneMaxImages = useMemo(() => {
+    if (!allowMultipleImages) return 1;
+    return sceneConfig.maxImages ?? maxImages;
+  }, [allowMultipleImages, maxImages, sceneConfig.maxImages]);
+  const canUploadMultipleImages = allowMultipleImages && sceneMaxImages > 1;
+  const sceneMaxSizeMB =
+    sceneConfig.inputValidation?.image?.maxFileSize ?? maxSizeMB;
 
   const isReferenceUploading = useMemo(
     () => referenceImageItems.some((item) => item.status === 'uploading'),
@@ -440,7 +451,10 @@ export function ImageGenerator({
 
       if (validation.maxFileSize && size > validation.maxFileSize) {
         toast.error(
-          `Image is too large. Max ${validation.maxFileSize} MB, got ${size} MB.`
+          t('validation.image_too_large', {
+            max: validation.maxFileSize,
+            actual: size,
+          })
         );
         return false;
       }
@@ -450,7 +464,10 @@ export function ImageGenerator({
         !validation.supportedFormats.includes(format)
       ) {
         toast.error(
-          `Unsupported image format. Use ${validation.supportedFormats.join(', ').toUpperCase()}.`
+          t('validation.image_unsupported_format', {
+            supported: validation.supportedFormats.join(', ').toUpperCase(),
+            actual: format.toUpperCase(),
+          })
         );
         return false;
       }
@@ -638,6 +655,18 @@ export function ImageGenerator({
     }
   }, [activeTab, referenceImageItems, sceneConfig.inputValidation]);
 
+  useEffect(() => {
+    if (referenceImageItems.length <= sceneMaxImages) return;
+
+    setModeImages((prev) => ({
+      ...prev,
+      [activeTab]: prev[activeTab].slice(0, sceneMaxImages),
+    }));
+    toast.info(
+      `This model supports up to ${sceneMaxImages} reference image${sceneMaxImages > 1 ? 's' : ''}.`
+    );
+  }, [activeTab, referenceImageItems.length, sceneMaxImages]);
+
   const pollTaskStatus = useCallback(
     async (id: string) => {
       try {
@@ -809,27 +838,12 @@ export function ImageGenerator({
       );
       if (!value) return;
 
-      if (type === 'imageSize' || type === 'aspectRatio') {
-        const imageSizeField =
-          sceneConfig.advancedOptions?.imageSizeField ??
-          (type === 'aspectRatio' ? 'aspect_ratio' : 'image_size');
-        options[imageSizeField] = value;
-        return;
-      }
-
-      if (type === 'outputFormat') {
-        options.output_format = value;
-        return;
-      }
-
-      if (type === 'quality') {
-        options.quality = value;
-        return;
-      }
-
-      if (type === 'resolution') {
-        options.resolution = value;
-      }
+      const optionFieldName = getModelOptionFieldName(
+        type,
+        selectedModelConfig,
+        activeTab
+      );
+      options[optionFieldName] = value;
     });
 
     if (!isTextToImageMode && referenceImageUrls.length > 0) {
@@ -964,6 +978,24 @@ export function ImageGenerator({
       toast.error('Failed to download image');
     } finally {
       setDownloadingImageId(null);
+    }
+  }, []);
+
+  const handleShareImage = useCallback(async (image: GeneratedImage) => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: image.prompt || 'Generated image',
+          text: image.prompt || 'Check out this generated image',
+          url: image.url,
+        });
+      } else {
+        await navigator.clipboard.writeText(image.url);
+        toast.success('Image link copied to clipboard');
+      }
+    } catch (error) {
+      console.error('Failed to share image:', error);
+      toast.error('Failed to share image');
     }
   }, []);
 
@@ -1129,9 +1161,9 @@ export function ImageGenerator({
                           key={`image-${activeTab}`}
                           defaultPreviews={referenceImageUrls}
                           title={t('form.reference_image')}
-                          allowMultiple={allowMultipleImages}
-                          maxImages={allowMultipleImages ? maxImages : 1}
-                          maxSizeMB={maxSizeMB}
+                          allowMultiple={canUploadMultipleImages}
+                          maxImages={sceneMaxImages}
+                          maxSizeMB={sceneMaxSizeMB}
                           onChange={handleReferenceImagesChange}
                           emptyHint={t('form.reference_image_placeholder')}
                           onBeforeUpload={() => {
@@ -1346,7 +1378,7 @@ export function ImageGenerator({
                             return (
                               <div key={type} className="space-y-2">
                                 <Label className="text-muted-foreground text-xs font-medium">
-                                  {getOptionLabel(type)}
+                                  {t(getOptionLabel(type))}
                                 </Label>
                                 <div className="grid grid-cols-3 gap-2">
                                   {getOptionsForModel(
@@ -1525,20 +1557,26 @@ export function ImageGenerator({
                                 </p>
 
                                 <div className="bg-primary/5 border-primary/20 mt-4 rounded-xl border p-4 text-left">
-                                  <p className="text-sm font-medium">
-                                    {t('progress')}
-                                  </p>
-                                  <p className="text-muted-foreground mt-2 text-sm">
-                                    {taskStatusLabel ||
-                                      'Your task is running in the background.'}
-                                  </p>
-                                  <Link
-                                    href="/activity/ai-tasks"
-                                    target="_blank"
-                                    className="text-primary hover:text-primary/80 mt-3 inline-flex items-center gap-1 text-sm font-medium transition-colors"
-                                  >
-                                    /activity/ai-tasks
-                                  </Link>
+                                  <div className="flex items-start gap-3">
+                                    <div className="text-primary mt-0.5">
+                                      ⏱
+                                    </div>
+                                    <div className="space-y-2">
+                                      <p className="text-sm font-medium">
+                                        {t('waiting_hint.title')}
+                                      </p>
+                                      <p className="text-muted-foreground text-sm">
+                                        {t('waiting_hint.description')}
+                                      </p>
+                                      <Link
+                                        href="/activity/ai-tasks"
+                                        target="_blank"
+                                        className="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+                                      >
+                                        {t('waiting_hint.link')}
+                                      </Link>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </motion.div>
@@ -1560,26 +1598,23 @@ export function ImageGenerator({
                               >
                                 {generatedImages.map((image) => (
                                   <div key={image.id} className="space-y-3">
-                                    <div
-                                      className={cn(
-                                        'border-primary/20 relative overflow-hidden rounded-2xl border bg-black/5',
-                                        generatedImages.length === 1
-                                          ? 'max-h-[520px]'
-                                          : 'aspect-square'
-                                      )}
-                                    >
+                                    <div className="border-primary/20 relative flex h-[260px] items-center justify-center overflow-hidden rounded-2xl border bg-black/5 sm:h-[320px]">
                                       <LazyImage
                                         src={image.url}
                                         alt={image.prompt || 'Generated image'}
-                                        className={cn(
-                                          'w-full',
-                                          generatedImages.length === 1
-                                            ? 'h-auto'
-                                            : 'h-full object-cover'
-                                        )}
+                                        className="h-[320px] w-full object-contain object-center"
                                       />
                                     </div>
                                     <div className="flex items-center justify-center gap-3">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => handleShareImage(image)}
+                                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                      >
+                                        <Share2 className="mr-2 h-4 w-4" />
+                                        {t('share')}
+                                      </Button>
                                       <Button
                                         variant="outline"
                                         size="sm"
@@ -1596,25 +1631,22 @@ export function ImageGenerator({
                                         ) : (
                                           <Download className="mr-2 h-4 w-4" />
                                         )}
-                                        Download
+                                        {t('download')}
+                                      </Button>
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                          setShowPreview(false);
+                                          setGeneratedImages([]);
+                                        }}
+                                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                      >
+                                        🔄 {t('regenerate')}
                                       </Button>
                                     </div>
                                   </div>
                                 ))}
-                              </div>
-
-                              <div className="flex justify-center">
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => {
-                                    setShowPreview(false);
-                                    setGeneratedImages([]);
-                                  }}
-                                  className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
-                                >
-                                  {t('generate')}
-                                </Button>
                               </div>
                             </motion.div>
                           ) : (

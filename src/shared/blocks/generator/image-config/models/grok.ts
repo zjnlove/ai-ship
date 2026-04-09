@@ -10,11 +10,11 @@ export const grokModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'grok-imagine/text-to-image',
-        credits: '4',
+        credits: 4,
       },
       'image-to-image': {
         id: 'grok-imagine/image-to-image',
-        credits: '6',
+        credits: 6,
         customFields: [
           {
             type: 'image',

@@ -6,15 +6,23 @@ export const googleModels: ImageModelOption[] = [
     provider: 'kie',
     brand: 'google',
     modelPath: 'nano-banana-2',
-    credits: {},
+    credits: {
+      'text-to-image': 4,
+      'image-to-image': 4,
+    },
     sceneValues: {
       'text-to-image': {
         id: 'nano-banana-2',
-        credits: '10',
       },
       'image-to-image': {
         id: 'nano-banana-2',
-        credits: '12',
+        maxImages: 14,
+        inputValidation: {
+          image: {
+            maxFileSize: 30,
+            supportedFormats: ['jpeg', 'png', 'webp'],
+          },
+        },
         customFields: [
           {
             type: 'image',
@@ -24,15 +32,31 @@ export const googleModels: ImageModelOption[] = [
         ],
       },
     },
+    customOptions: {
+      resolution: [
+        { value: '1K', label: '1K' },
+        { value: '2K', label: '2K' },
+        { value: '4K', label: '4K' },
+      ],
+    },
     defaultOptions: {
       aspect_ratio: 'auto',
       resolution: '1K',
       output_format: 'png',
     },
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'outputFormat', 'resolution'],
     },
+    creditRules: [
+      {
+        conditions: { resolution: '2K' },
+        credits: 4,
+      },
+      {
+        conditions: { resolution: '4K' },
+        credits: 8,
+      },
+    ],
   },
   {
     label: 'Nano Banana Pro',
@@ -43,11 +67,11 @@ export const googleModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'nano-banana-pro',
-        credits: '12',
+        credits: 12,
       },
       'image-to-image': {
         id: 'nano-banana-pro',
-        credits: '14',
+        credits: 14,
         customFields: [
           {
             type: 'image',
@@ -62,8 +86,16 @@ export const googleModels: ImageModelOption[] = [
       resolution: '1K',
       output_format: 'png',
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+      {
+        type: 'string',
+        fieldName: 'output_format',
+        optionType: 'outputFormat',
+      },
+      { type: 'string', fieldName: 'resolution', optionType: 'resolution' },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'outputFormat', 'resolution'],
     },
     discount: {
@@ -80,11 +112,11 @@ export const googleModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'google/nano-banana',
-        credits: '4',
+        credits: 4,
       },
       'image-to-image': {
         id: 'google/nano-banana-edit',
-        credits: '6',
+        credits: 6,
         customFields: [
           {
             type: 'image',
@@ -98,9 +130,16 @@ export const googleModels: ImageModelOption[] = [
       image_size: '1:1',
       output_format: 'png',
     },
+    customFields: [
+      { type: 'string', fieldName: 'image_size', optionType: 'aspectRatio' },
+      {
+        type: 'string',
+        fieldName: 'output_format',
+        optionType: 'outputFormat',
+      },
+    ],
     advancedOptions: {
-      imageSizeField: 'image_size',
-      supportedTypes: ['imageSize', 'outputFormat'],
+      supportedTypes: ['aspectRatio', 'outputFormat'],
     },
   },
   {
@@ -112,7 +151,7 @@ export const googleModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'google/imagen4',
-        credits: '8',
+        credits: 8,
       },
       'image-to-image': {
         id: 'google/imagen4',
@@ -129,8 +168,15 @@ export const googleModels: ImageModelOption[] = [
       aspect_ratio: '1:1',
       output_format: 'png',
     },
+    customFields: [
+      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
+      {
+        type: 'string',
+        fieldName: 'output_format',
+        optionType: 'outputFormat',
+      },
+    ],
     advancedOptions: {
-      imageSizeField: 'aspect_ratio',
       supportedTypes: ['aspectRatio', 'outputFormat'],
     },
   },
