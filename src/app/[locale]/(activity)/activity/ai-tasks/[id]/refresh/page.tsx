@@ -8,10 +8,13 @@ import { getAIService } from '@/shared/services/ai';
 
 export default async function RefreshAITaskPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; id: string }>;
+  searchParams: Promise<{ page?: number; type?: string }>;
 }) {
   const { locale, id } = await params;
+  const { page, type } = await searchParams;
   const t = await getTranslations('activity.ai-tasks');
 
   const task = await findAITaskById(id);
@@ -49,5 +52,15 @@ export default async function RefreshAITaskPage({
     }
   }
 
-  redirect({ href: `/activity/ai-tasks`, locale });
+  let redirectUrl = `/activity/ai-tasks`;
+  if (page) {
+    redirectUrl += `?page=${page}`;
+    if (type && type !== 'all') {
+      redirectUrl += `&type=${type}`;
+    }
+  } else if (type && type !== 'all') {
+    redirectUrl += `?type=${type}`;
+  }
+
+  redirect({ href: redirectUrl, locale });
 }

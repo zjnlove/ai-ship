@@ -302,7 +302,7 @@ export default async function AiTasksPage({
                   {(task.status === AITaskStatus.PENDING ||
                     task.status === AITaskStatus.PROCESSING) && (
                     <Link
-                      href={`/activity/ai-tasks/${task.id}/refresh`}
+                      href={`/activity/ai-tasks/${task.id}/refresh?page=${page}${type && type !== 'all' ? `&type=${type}` : ''}`}
                       className="text-primary hover:text-primary/80 flex items-center gap-1 text-sm"
                     >
                       <RefreshCw className="h-3.5 w-3.5" />
