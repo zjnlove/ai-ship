@@ -72,7 +72,7 @@ export default async function ProfilePage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <FormCard
         title={t('edit.title')}
         description={t('edit.description')}

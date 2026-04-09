@@ -81,7 +81,7 @@ export default async function SecurityPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <PanelCard
         title={t('reset_password.title')}
         description={t('reset_password.description')}

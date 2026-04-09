@@ -118,7 +118,7 @@ export default async function CreditsPage({
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <PanelCard
         title={t('view.title')}
         buttons={[

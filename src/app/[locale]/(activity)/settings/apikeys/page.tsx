@@ -91,7 +91,7 @@ export default async function ApiKeysPage({
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <TableCard title={t('list.title')} buttons={buttons} table={table} />
     </div>
   );

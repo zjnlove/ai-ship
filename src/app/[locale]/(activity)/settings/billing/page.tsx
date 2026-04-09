@@ -229,7 +229,7 @@ export default async function BillingPage({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       <PanelCard
         label={currentSubscription?.status}
         title={t('view.title')}

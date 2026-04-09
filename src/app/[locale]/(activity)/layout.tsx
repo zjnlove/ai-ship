@@ -5,6 +5,7 @@ import { getThemeBlock } from '@/core/theme';
 import { SignUser } from '@/shared/blocks/common';
 import { DashboardLayout } from '@/shared/blocks/dashboard/layout';
 import { getAllConfigs } from '@/shared/models/config';
+import { getUserInfo } from '@/shared/models/user';
 import { Sidebar as SidebarType } from '@/shared/types/blocks/dashboard';
 
 export default async function ActivityLayout({
@@ -24,6 +25,8 @@ export default async function ActivityLayout({
   const footerConfig = tLanding.raw('footer');
 
   const configs = await getAllConfigs();
+  const user = await getUserInfo();
+
   if (configs.app_name) {
     sidebar.header!.brand!.title = configs.app_name;
     sidebar.header!.brand!.logo!.alt = configs.app_name;
@@ -43,13 +46,8 @@ export default async function ActivityLayout({
         <span className="font-medium"></span>
       </div>
 
-      <div className="ml-auto flex items-center gap-4">
-        <span className="text-sm font-medium text-green-600">
-          🪙 970 Credits
-        </span>
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-xs font-medium text-white">
-          <SignUser userNav={sidebar.user_nav} />
-        </div>
+      <div className="ml-auto flex items-center">
+        <SignUser userNav={sidebar.user_nav} showCredits />
       </div>
     </>
   );
