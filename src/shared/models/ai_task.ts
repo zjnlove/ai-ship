@@ -98,7 +98,6 @@ export async function updateAITaskById(id: string, updateAITask: UpdateAITask) {
       .set(updateAITask)
       .where(eq(aiTask.id, id))
       .returning();
-
     return result;
   });
 

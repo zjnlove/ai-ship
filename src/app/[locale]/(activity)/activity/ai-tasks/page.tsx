@@ -6,18 +6,18 @@ import {
   Image as ImageIcon,
   Loader2,
   Music,
-  RefreshCw,
   Video,
   XCircle,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { AIMediaType, AITaskStatus } from '@/extensions/ai';
+import { AITaskListClient } from '@/shared/blocks/activity/ai-tasks';
 import { AudioPlayer, Empty, LazyImage } from '@/shared/blocks/common';
 import { cn } from '@/shared/lib/utils';
 import { AITask, getAITasks, getAITasksCount } from '@/shared/models/ai_task';
 import { getUserInfo } from '@/shared/models/user';
-import { Button, Tab } from '@/shared/types/blocks/common';
+import { Tab } from '@/shared/types/blocks/common';
 
 export default async function AiTasksPage({
   searchParams,
@@ -55,12 +55,6 @@ export default async function AiTasksPage({
       is_active: !type || type === 'all',
     },
     {
-      name: 'music',
-      title: t('list.tabs.music'),
-      url: '/activity/ai-tasks?type=music',
-      is_active: type === 'music',
-    },
-    {
       name: 'image',
       title: t('list.tabs.image'),
       url: '/activity/ai-tasks?type=image',
@@ -72,18 +66,24 @@ export default async function AiTasksPage({
       url: '/activity/ai-tasks?type=video',
       is_active: type === 'video',
     },
-    {
-      name: 'audio',
-      title: t('list.tabs.audio'),
-      url: '/activity/ai-tasks?type=audio',
-      is_active: type === 'audio',
-    },
-    {
-      name: 'text',
-      title: t('list.tabs.text'),
-      url: '/activity/ai-tasks?type=text',
-      is_active: type === 'text',
-    },
+    // {
+    //   name: 'music',
+    //   title: t('list.tabs.music'),
+    //   url: '/activity/ai-tasks?type=music',
+    //   is_active: type === 'music',
+    // },
+    // {
+    //   name: 'audio',
+    //   title: t('list.tabs.audio'),
+    //   url: '/activity/ai-tasks?type=audio',
+    //   is_active: type === 'audio',
+    // },
+    // {
+    //   name: 'text',
+    //   title: t('list.tabs.text'),
+    //   url: '/activity/ai-tasks?type=text',
+    //   is_active: type === 'text',
+    // },
   ];
 
   const getStatusIcon = (status: string) => {
@@ -228,91 +228,12 @@ export default async function AiTasksPage({
         {aiTasks.length === 0 ? (
           <Empty message={t('list.empty_message')} />
         ) : (
-          aiTasks.map((task, index) => (
-            <div
-              key={task.id}
-              className="bg-card border-border/50 hover:border-primary/30 group hover:shadow-primary/5 rounded-2xl border p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex flex-col gap-4 md:flex-row md:items-start">
-                {/* Left: Icon + Info */}
-                <div className="flex-1 space-y-3">
-                  {/* Header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-muted/50 rounded-lg p-2">
-                        {getMediaTypeIcon(task.mediaType)}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p
-                          className="line-clamp-2 cursor-help font-medium"
-                          title={task.prompt || ''}
-                        >
-                          {task.prompt || t('list.empty_prompt')}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-shrink-0 items-center gap-2">
-                      {getStatusIcon(task.status)}
-                      <span
-                        className={cn(
-                          'rounded-full px-2 py-1 text-xs font-medium',
-                          task.status === AITaskStatus.SUCCESS &&
-                            'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-                          task.status === AITaskStatus.FAILED &&
-                            'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-                          (task.status === AITaskStatus.PENDING ||
-                            task.status === AITaskStatus.PROCESSING) &&
-                            'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                        )}
-                      >
-                        {getStatusLabel(task.status)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Meta info */}
-                  <div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                    <span className="flex items-center gap-1">
-                      <span className="text-foreground/80 font-medium">
-                        {task.provider}
-                      </span>
-                      <span>·</span>
-                      <span>{task.model}</span>
-                    </span>
-                    {task.costCredits && (
-                      <span>
-                        {t('fields.cost_credits')}:{task.costCredits}
-                      </span>
-                    )}
-                    <span className="ml-auto">
-                      {new Date(task.createdAt).toLocaleString('zh-CN')}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Right: Result Preview */}
-                <div className="flex-shrink-0 md:w-64">
-                  {renderTaskResult(task)}
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="border-border/30 mt-4 flex items-center justify-between border-t pt-4">
-                <div className="flex gap-2">
-                  {(task.status === AITaskStatus.PENDING ||
-                    task.status === AITaskStatus.PROCESSING) && (
-                    <Link
-                      href={`/activity/ai-tasks/${task.id}/refresh?page=${page}${type && type !== 'all' ? `&type=${type}` : ''}`}
-                      className="text-primary hover:text-primary/80 flex items-center gap-1 text-sm"
-                    >
-                      <RefreshCw className="h-3.5 w-3.5" />
-                      {t('list.buttons.refresh')}
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))
+          <AITaskListClient
+            initialTasks={aiTasks}
+            page={page}
+            type={type}
+            key={`task-list-${page}-${type || 'all'}`}
+          />
         )}
       </div>
 

@@ -64,6 +64,7 @@ export async function POST(req: Request) {
       taskResult: result.taskResult ? JSON.stringify(result.taskResult) : null,
       creditId: task.creditId, // credit consumption record id
     };
+
     if (updateAITask.taskInfo !== task.taskInfo) {
       await updateAITaskById(task.id, updateAITask);
     }
