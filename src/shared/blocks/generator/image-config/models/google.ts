@@ -63,15 +63,23 @@ export const googleModels: ImageModelOption[] = [
     provider: 'kie',
     brand: 'google',
     modelPath: 'nano-banana-pro',
-    credits: {},
+    credits: {
+      'text-to-image': 8,
+      'image-to-image': 8,
+    },
     sceneValues: {
       'text-to-image': {
         id: 'nano-banana-pro',
-        credits: 12,
       },
       'image-to-image': {
         id: 'nano-banana-pro',
-        credits: 14,
+        maxImages: 8,
+        inputValidation: {
+          image: {
+            maxFileSize: 30,
+            supportedFormats: ['jpeg', 'png', 'webp'],
+          },
+        },
         customFields: [
           {
             type: 'image',
@@ -81,43 +89,56 @@ export const googleModels: ImageModelOption[] = [
         ],
       },
     },
+    customOptions: {
+      resolution: [
+        { value: '1K', label: '1K' },
+        { value: '2K', label: '2K' },
+        { value: '4K', label: '4K' },
+      ],
+    },
     defaultOptions: {
       aspect_ratio: 'auto',
       resolution: '1K',
       output_format: 'png',
     },
-    customFields: [
-      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
-      {
-        type: 'string',
-        fieldName: 'output_format',
-        optionType: 'outputFormat',
-      },
-      { type: 'string', fieldName: 'resolution', optionType: 'resolution' },
-    ],
     advancedOptions: {
       supportedTypes: ['aspectRatio', 'outputFormat', 'resolution'],
     },
-    discount: {
-      rate: 0.5,
-      label: '-50% OFF',
-    },
+    creditRules: [
+      {
+        conditions: { resolution: '2K' },
+        credits: 2,
+      },
+      {
+        conditions: { resolution: '4K' },
+        credits: 6,
+      },
+    ],
   },
   {
-    label: 'Nano Banana',
+    label: 'Nano Banana Edit',
     provider: 'kie',
     brand: 'google',
-    modelPath: 'nano-banana',
-    credits: {},
+    modelPath: 'nano-banana-edit',
+    credits: {
+      'image-to-image': 4,
+    },
     sceneValues: {
-      'text-to-image': {
-        id: 'google/nano-banana',
-        credits: 4,
-      },
       'image-to-image': {
         id: 'google/nano-banana-edit',
-        credits: 6,
+        maxImages: 10,
+        inputValidation: {
+          image: {
+            maxFileSize: 10,
+            supportedFormats: ['jpeg', 'png', 'webp'],
+          },
+        },
         customFields: [
+          {
+            type: 'string',
+            fieldName: 'image_size',
+            optionType: 'aspectRatio',
+          },
           {
             type: 'image',
             fieldName: 'image_urls',
@@ -126,21 +147,46 @@ export const googleModels: ImageModelOption[] = [
         ],
       },
     },
+    customOptions: {},
     defaultOptions: {
-      image_size: '1:1',
       output_format: 'png',
+      nsfw_checker: true,
     },
-    customFields: [
-      { type: 'string', fieldName: 'image_size', optionType: 'aspectRatio' },
-      {
-        type: 'string',
-        fieldName: 'output_format',
-        optionType: 'outputFormat',
-      },
-    ],
     advancedOptions: {
       supportedTypes: ['aspectRatio', 'outputFormat'],
     },
+    creditRules: [],
+  },
+  {
+    label: 'Nano Banana',
+    provider: 'kie',
+    brand: 'google',
+    modelPath: 'nano-banana',
+    credits: {
+      'text-to-image': 4,
+    },
+    sceneValues: {
+      'text-to-image': {
+        id: 'google/nano-banana',
+        customFields: [
+          {
+            type: 'string',
+            fieldName: 'image_size',
+            optionType: 'aspectRatio',
+          },
+        ],
+      },
+    },
+    customOptions: {
+      resolution: [],
+    },
+    defaultOptions: {
+      output_format: 'png',
+    },
+    advancedOptions: {
+      supportedTypes: ['aspectRatio', 'outputFormat'],
+    },
+    creditRules: [],
   },
   {
     label: 'Imagen 4',
