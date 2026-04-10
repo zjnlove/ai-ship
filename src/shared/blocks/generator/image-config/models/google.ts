@@ -16,7 +16,7 @@ export const googleModels: ImageModelOption[] = [
       },
       'image-to-image': {
         id: 'nano-banana-2',
-        maxImages: 14,
+        maxImages: 8,
         inputValidation: {
           image: {
             maxFileSize: 30,
@@ -126,7 +126,7 @@ export const googleModels: ImageModelOption[] = [
     sceneValues: {
       'image-to-image': {
         id: 'google/nano-banana-edit',
-        maxImages: 10,
+        maxImages: 8,
         inputValidation: {
           image: {
             maxFileSize: 10,
