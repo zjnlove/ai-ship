@@ -502,7 +502,8 @@
       "aspect_ratio": "Aspect Ratio",
       "output_format": "Output Format",
       "quality": "Quality",
-      "resolution": "Resolution"
+      "resolution": "Resolution",
+      "seed": "Seed"
     },
     "generate": "Generate Images",
     "checking_account": "Checking Account...",
@@ -520,6 +521,7 @@
     "share": "Share",
     "download": "Download",
     "regenerate": "Regenerate",
+    "random_seed": "RandomSeed",
     "waiting_hint": {
       "title": "Image generation usually takes a little while, please be patient",
       "description": "You don't need to stay on this page, the generation will be saved automatically.",

@@ -4,7 +4,7 @@ import { getStorageService } from '@/shared/services/storage';
 
 const extFromMime = (mimeType: string) => {
   const map: Record<string, string> = {
-    'image/jpeg': 'jpg',
+    'image/jpeg': 'jpeg',
     'image/jpg': 'jpg',
     'image/png': 'png',
     'image/webp': 'webp',

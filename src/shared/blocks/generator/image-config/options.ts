@@ -39,6 +39,8 @@ export const RESOLUTION_OPTIONS: ImageOptionValue[] = [
   { value: '2K', label: '2K' },
 ];
 
+export const SEED_OPTIONS: ImageOptionValue[] = [];
+
 export const PROVIDER_OPTIONS: ImageProviderOption[] = [
   { value: 'google', label: 'Google' },
   { value: 'qwen', label: 'Qwen' },
@@ -53,6 +55,7 @@ export const IMAGE_OPTION_LABELS: Record<ImageOptionType, string> = {
   outputFormat: 'advanced_options.output_format',
   quality: 'advanced_options.quality',
   resolution: 'advanced_options.resolution',
+  seed: 'advanced_options.seed',
 };
 
 export const DEFAULT_CREDITS: ImageDefaultCreditMap = {

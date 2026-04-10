@@ -23,6 +23,7 @@ import {
   LazyImage,
 } from '@/shared/blocks/common';
 import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import {
   Popover,
@@ -99,14 +100,22 @@ const GENERATION_TIMEOUT = 180000;
 const MAX_PROMPT_LENGTH = 2000;
 const optionKeyMap: Record<string, OptionType> = {
   aspect_ratio: 'aspectRatio',
-  image_size: 'aspectRatio',
   output_format: 'outputFormat',
   quality: 'quality',
   resolution: 'resolution',
+  seed: 'seed',
 };
 
 function normalizeOptionKey(key: string): string {
   return optionKeyMap[key] ?? key;
+}
+
+const reverseOptionKeyMap: Record<string, string> = Object.fromEntries(
+  Object.entries(optionKeyMap).map(([k, v]) => [v, k])
+);
+
+function denormalizeOptionKey(key: string): string {
+  return reverseOptionKeyMap[key] ?? key;
 }
 
 function parseTaskResult(taskResult: string | null): any {
@@ -324,7 +333,7 @@ export function ImageGenerator({
       return { original: 0, discounted: 0, discountRate: 1 };
     }
 
-    const selectedOptions: Record<string, string | boolean> = {};
+    const selectedOptions: Record<string, string | boolean | number> = {};
 
     Object.entries(sceneConfig.defaultOptions ?? {}).forEach(([key, value]) => {
       if (value !== undefined && typeof value !== 'boolean') {
@@ -629,7 +638,6 @@ export function ImageGenerator({
           isValid = false;
         }
       }
-
       if (supportedFormats?.length && item.url) {
         const format = item.url.split('.').pop()?.toLowerCase() || '';
         if (!supportedFormats.includes(format)) {
@@ -843,7 +851,12 @@ export function ImageGenerator({
         selectedModelConfig,
         activeTab
       );
+
       options[optionFieldName] = value;
+      // 有自定义字段，要删除旧字段
+      if (optionFieldName != denormalizeOptionKey(type))
+        delete options[denormalizeOptionKey(type)];
+      console.log(options);
     });
 
     if (!isTextToImageMode && referenceImageUrls.length > 0) {
@@ -1374,6 +1387,45 @@ export function ImageGenerator({
                               selectedModelConfig,
                               activeTab
                             );
+
+                            if (type === 'seed') {
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t(getOptionLabel(type))}
+                                  </Label>
+                                  <div className="flex gap-2">
+                                    <Input
+                                      type="number"
+                                      value={currentValue}
+                                      onChange={(e) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: e.target.value,
+                                        }))
+                                      }
+                                      placeholder="0"
+                                      className="flex-1"
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: String(
+                                            Math.floor(Math.random() * 1000000)
+                                          ),
+                                        }))
+                                      }
+                                    >
+                                      {t('random_seed')}
+                                    </Button>
+                                  </div>
+                                </div>
+                              );
+                            }
 
                             return (
                               <div key={type} className="space-y-2">

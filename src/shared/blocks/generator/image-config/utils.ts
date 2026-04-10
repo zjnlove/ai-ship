@@ -8,6 +8,7 @@ import {
   PROVIDER_OPTIONS,
   QUALITY_OPTIONS,
   RESOLUTION_OPTIONS,
+  SEED_OPTIONS,
 } from './options';
 import {
   CreditCalculationResult,
@@ -30,6 +31,7 @@ export function getOptionsForType(type: ImageOptionType): ImageOptionValue[] {
     outputFormat: OUTPUT_FORMAT_OPTIONS,
     quality: QUALITY_OPTIONS,
     resolution: RESOLUTION_OPTIONS,
+    seed: SEED_OPTIONS,
   };
 
   return optionsMap[type] ?? [];
@@ -205,6 +207,7 @@ export function getDefaultAdvancedOptions(
   if (defaults.output_format) next.outputFormat = defaults.output_format;
   if (defaults.quality) next.quality = defaults.quality;
   if (defaults.resolution) next.resolution = defaults.resolution;
+  if (defaults.seed !== undefined) next.seed = String(defaults.seed);
 
   return next;
 }
@@ -282,6 +285,7 @@ export function getModelOptionFieldName(
     outputFormat: 'output_format',
     quality: 'quality',
     resolution: 'resolution',
+    seed: 'seed',
   };
 
   return fieldMap[type];
@@ -290,14 +294,14 @@ export function getModelOptionFieldName(
 export function calculateOriginalCredits(
   modelConfig: ImageModelOption,
   scene: ImageScene,
-  selectedOptions: Record<string, string | boolean>
+  selectedOptions: Record<string, string | boolean | number>
 ) {
   let totalCredits = getModelCredits(modelConfig, scene);
   const creditRules = getModelCreditRules(modelConfig, scene);
   const customOptions = getModelCustomOptions(modelConfig, scene);
   const isConditionValueMatch = (
-    selectedValue: string | boolean | undefined,
-    expectedValue: string | boolean
+    selectedValue: string | boolean | number | undefined,
+    expectedValue: string | boolean | number
   ) => {
     if (
       typeof selectedValue === 'string' &&
@@ -345,7 +349,7 @@ export function calculateOriginalCredits(
 export function calculateDiscountedCredits(
   modelConfig: ImageModelOption,
   scene: ImageScene,
-  selectedOptions: Record<string, string | boolean>
+  selectedOptions: Record<string, string | boolean | number>
 ): CreditCalculationResult {
   const original = calculateOriginalCredits(
     modelConfig,

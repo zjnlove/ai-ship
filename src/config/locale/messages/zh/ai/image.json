@@ -502,7 +502,8 @@
       "aspect_ratio": "尺寸",
       "output_format": "输出格式",
       "quality": "图片质量",
-      "resolution": "清晰度"
+      "resolution": "清晰度",
+      "seed": "种子"
     },
     "generate": "生成图像",
     "checking_account": "检查账户...",
@@ -520,6 +521,7 @@
     "share": "分享",
     "download": "下载",
     "regenerate": "重新生成",
+    "random_seed": "随机种子",
     "waiting_hint": {
       "title": "图片生成通常需要一点时间，请耐心等待",
       "description": "您无需停留在当前页面，生成结果会自动保存。",

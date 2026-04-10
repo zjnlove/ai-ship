@@ -14,7 +14,8 @@ export type ImageOptionType =
   | 'aspectRatio'
   | 'outputFormat'
   | 'quality'
-  | 'resolution';
+  | 'resolution'
+  | 'seed';
 
 export interface ImageOptionValue {
   value: string;
@@ -75,6 +76,7 @@ export interface CustomImageOptions {
   outputFormat?: ImageOptionValue[] | ImageOptionRange;
   quality?: ImageOptionValue[] | ImageOptionRange;
   resolution?: ImageOptionValue[] | ImageOptionRange;
+  seed?: ImageOptionValue[] | ImageOptionRange;
 }
 
 export interface ImageDefaultOptions {
@@ -83,8 +85,9 @@ export interface ImageDefaultOptions {
   output_format?: string;
   quality?: string;
   resolution?: string;
+  seed?: number;
   nsfw_checker?: boolean;
-  [key: string]: string | boolean | undefined;
+  [key: string]: string | boolean | number | undefined;
 }
 
 export interface ImageSceneConfig {
