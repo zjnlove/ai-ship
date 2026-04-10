@@ -493,7 +493,7 @@
       "select_model": "Select Model",
       "prompt": "Prompt",
       "prompt_placeholder": "Describe the details of the image, such as color, shape, texture, etc.",
-      "reference_image": "Reference Image",
+      "reference_image": "Images",
       "reference_image_placeholder": "Upload reference images, support multiple images",
       "some_images_failed_to_upload": "Some images failed to upload, please delete them and re-upload",
       "prompt_too_long": "Prompt is too long, please delete some content"
