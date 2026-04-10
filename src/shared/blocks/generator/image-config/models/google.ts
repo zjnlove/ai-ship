@@ -188,42 +188,4 @@ export const googleModels: ImageModelOption[] = [
     },
     creditRules: [],
   },
-  {
-    label: 'Imagen 4',
-    provider: 'kie',
-    brand: 'google',
-    modelPath: 'imagen-4',
-    credits: {},
-    sceneValues: {
-      'text-to-image': {
-        id: 'google/imagen4',
-        credits: 8,
-      },
-      'image-to-image': {
-        id: 'google/imagen4',
-        customFields: [
-          {
-            type: 'image',
-            fieldName: 'image_input',
-            isArray: true,
-          },
-        ],
-      },
-    },
-    defaultOptions: {
-      aspect_ratio: '1:1',
-      output_format: 'png',
-    },
-    customFields: [
-      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
-      {
-        type: 'string',
-        fieldName: 'output_format',
-        optionType: 'outputFormat',
-      },
-    ],
-    advancedOptions: {
-      supportedTypes: ['aspectRatio', 'outputFormat'],
-    },
-  },
 ];
