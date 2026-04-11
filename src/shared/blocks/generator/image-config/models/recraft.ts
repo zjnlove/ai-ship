@@ -10,7 +10,8 @@ export const recraftModels: ImageModelOption[] = [
     sceneValues: {
       'image-to-image': {
         id: 'recraft/remove-background',
-        credits: 2,
+        credits: 1,
+        maxImages: 1,
         customFields: [
           {
             type: 'image',
@@ -18,16 +19,18 @@ export const recraftModels: ImageModelOption[] = [
             isArray: false,
           },
         ],
+        inputValidation: {
+          image: {
+            maxFileSize: 5,
+            supportedFormats: ['jpeg', 'png', 'webp'],
+          },
+        },
       },
     },
-    defaultOptions: {
-      aspect_ratio: 'auto',
-    },
-    customFields: [
-      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
-    ],
+    defaultOptions: { nsfw_checker: true },
+    customFields: [],
     advancedOptions: {
-      supportedTypes: ['aspectRatio'],
+      supportedTypes: [],
     },
   },
   {
@@ -39,7 +42,8 @@ export const recraftModels: ImageModelOption[] = [
     sceneValues: {
       'image-to-image': {
         id: 'recraft/crisp-upscale',
-        credits: 2,
+        credits: 1,
+        maxImages: 1,
         customFields: [
           {
             type: 'image',
@@ -47,16 +51,18 @@ export const recraftModels: ImageModelOption[] = [
             isArray: false,
           },
         ],
+        inputValidation: {
+          image: {
+            maxFileSize: 10,
+            supportedFormats: ['jpeg', 'png', 'webp'],
+          },
+        },
       },
     },
-    defaultOptions: {
-      aspect_ratio: 'auto',
-    },
-    customFields: [
-      { type: 'string', fieldName: 'aspect_ratio', optionType: 'aspectRatio' },
-    ],
+    defaultOptions: { nsfw_checker: true },
+    customFields: [],
     advancedOptions: {
-      supportedTypes: ['aspectRatio'],
+      supportedTypes: [],
     },
   },
 ];

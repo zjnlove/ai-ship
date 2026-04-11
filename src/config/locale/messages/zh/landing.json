@@ -63,11 +63,6 @@
           "title": "图像模型",
           "children": [
             {
-              "title": "Qwen Image",
-              "url": "/image-models/qwen-image",
-              "target": "_blank"
-            },
-            {
               "title": "Qwen Image 2",
               "url": "/image-models/qwen-image-2",
               "target": "_blank"
