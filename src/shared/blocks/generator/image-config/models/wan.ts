@@ -16,9 +16,16 @@ export const wanModels: ImageModelOption[] = [
         defaultOptions: {
           aspect_ratio: '1:1',
           nsfw_checker: true,
+          enable_sequential: false,
+          seed: 0,
         },
         advancedOptions: {
-          supportedTypes: ['aspectRatio', 'resolution', 'seed'],
+          supportedTypes: [
+            'aspectRatio',
+            'resolution',
+            'seed',
+            'enable_sequential',
+          ],
         },
       },
       'image-to-image': {

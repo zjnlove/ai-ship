@@ -501,7 +501,12 @@
       "output_format": "Output Format",
       "quality": "Quality",
       "resolution": "Resolution",
-      "seed": "Seed"
+      "seed": "Seed",
+      "enable_sequential": "Enable Sequential",
+      "switch_options": {
+        "on": "On",
+        "off": "Off"
+      }
     },
     "generate": "Generate Images",
     "checking_account": "Checking Account...",

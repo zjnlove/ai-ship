@@ -16,10 +16,11 @@ export type ImageOptionType =
   | 'outputFormat'
   | 'quality'
   | 'resolution'
-  | 'seed';
+  | 'seed'
+  | 'enable_sequential';
 
 export interface ImageOptionValue {
-  value: string;
+  value: string | boolean | number;
   label: string;
   credits?: number;
 }
@@ -78,6 +79,7 @@ export interface CustomImageOptions {
   quality?: ImageOptionValue[] | ImageOptionRange;
   resolution?: ImageOptionValue[] | ImageOptionRange;
   seed?: ImageOptionValue[] | ImageOptionRange;
+  enable_sequential?: ImageOptionValue[];
 }
 
 export interface ImageDefaultOptions {
@@ -88,6 +90,7 @@ export interface ImageDefaultOptions {
   resolution?: string;
   seed?: number;
   nsfw_checker?: boolean;
+  enable_sequential?: boolean;
   [key: string]: string | boolean | number | undefined;
 }
 
@@ -134,7 +137,7 @@ export interface ImageModelOption {
 }
 
 export type ImageAdvancedOptionValues = Partial<
-  Record<ImageOptionType, string>
+  Record<ImageOptionType, string | number | boolean>
 >;
 
 export type ImageDefaultCreditMap = Record<ImageScene, number>;

@@ -38,6 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
+import { Switch } from '@/shared/components/ui/switch';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
 import { cn } from '@/shared/lib/utils';
@@ -104,6 +105,7 @@ const optionKeyMap: Record<string, OptionType> = {
   quality: 'quality',
   resolution: 'resolution',
   seed: 'seed',
+  enable_sequential: 'enable_sequential',
 };
 
 function normalizeOptionKey(key: string): string {
@@ -844,6 +846,8 @@ export function ImageGenerator({
         selectedModelConfig,
         activeTab
       );
+      console.log(value);
+
       if (!value) return;
 
       const optionFieldName = getModelOptionFieldName(
@@ -1351,26 +1355,36 @@ export function ImageGenerator({
                         >
                           <Settings className="h-4 w-4" />
                           <span className="flex items-center gap-1">
-                            {advancedTypes.slice(0, 3).map((type, index) => (
-                              <span
-                                key={type}
-                                className="flex items-center gap-1"
-                              >
-                                {index > 0 && (
-                                  <span className="text-muted-foreground">
-                                    |
-                                  </span>
-                                )}
-                                <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                  {getAdvancedOptionValue(
-                                    type,
-                                    advancedOptions,
-                                    selectedModelConfig,
-                                    activeTab
+                            {advancedTypes.slice(0, 3).map((type, index) => {
+                              const value = getAdvancedOptionValue(
+                                type,
+                                advancedOptions,
+                                selectedModelConfig,
+                                activeTab
+                              );
+                              const displayValue =
+                                typeof value === 'boolean'
+                                  ? value
+                                    ? t('advanced_options.switch_options.on')
+                                    : t('advanced_options.switch_options.off')
+                                  : value;
+
+                              return (
+                                <span
+                                  key={type}
+                                  className="flex items-center gap-1"
+                                >
+                                  {index > 0 && (
+                                    <span className="text-muted-foreground">
+                                      |
+                                    </span>
                                   )}
+                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                    {displayValue}
+                                  </span>
                                 </span>
-                              </span>
-                            ))}
+                              );
+                            })}
                           </span>
                         </Button>
                       </PopoverTrigger>
@@ -1388,6 +1402,36 @@ export function ImageGenerator({
                               activeTab
                             );
 
+                            if (type === 'enable_sequential') {
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t(getOptionLabel(type))}
+                                  </Label>
+                                  <div className="flex items-center gap-2">
+                                    <Switch
+                                      checked={currentValue as boolean}
+                                      onCheckedChange={(checked) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: checked,
+                                        }))
+                                      }
+                                    />
+                                    <span className="text-muted-foreground text-xs">
+                                      {currentValue
+                                        ? t(
+                                            'advanced_options.switch_options.on'
+                                          )
+                                        : t(
+                                            'advanced_options.switch_options.off'
+                                          )}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
                             if (type === 'seed') {
                               return (
                                 <div key={type} className="space-y-2">
@@ -1397,11 +1441,14 @@ export function ImageGenerator({
                                   <div className="flex gap-2">
                                     <Input
                                       type="number"
-                                      value={currentValue}
+                                      value={currentValue as any}
                                       onChange={(e) =>
                                         setAdvancedOptions((prev) => ({
                                           ...prev,
-                                          [type]: e.target.value,
+                                          [type]:
+                                            e.target.value === ''
+                                              ? undefined
+                                              : Number(e.target.value),
                                         }))
                                       }
                                       placeholder="0"
@@ -1414,8 +1461,8 @@ export function ImageGenerator({
                                       onClick={() =>
                                         setAdvancedOptions((prev) => ({
                                           ...prev,
-                                          [type]: String(
-                                            Math.floor(Math.random() * 1000000)
+                                          [type]: Math.floor(
+                                            Math.random() * 1000000
                                           ),
                                         }))
                                       }
@@ -1444,7 +1491,7 @@ export function ImageGenerator({
 
                                     return (
                                       <motion.button
-                                        key={option.value}
+                                        key={String(option.value)}
                                         type="button"
                                         whileHover={
                                           isDisabled ? {} : { scale: 1.02 }

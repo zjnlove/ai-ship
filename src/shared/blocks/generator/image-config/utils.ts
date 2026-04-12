@@ -32,6 +32,7 @@ export function getOptionsForType(type: ImageOptionType): ImageOptionValue[] {
     quality: QUALITY_OPTIONS,
     resolution: RESOLUTION_OPTIONS,
     seed: SEED_OPTIONS,
+    enable_sequential: [],
   };
 
   return optionsMap[type] ?? [];
@@ -84,7 +85,7 @@ export function getOptionsForModel(
       value += customOptions.step
     ) {
       options.push({
-        value: String(value),
+        value,
         label: customOptions.unit
           ? `${value}${customOptions.unit}`
           : `${value}`,
@@ -207,7 +208,9 @@ export function getDefaultAdvancedOptions(
   if (defaults.output_format) next.outputFormat = defaults.output_format;
   if (defaults.quality) next.quality = defaults.quality;
   if (defaults.resolution) next.resolution = defaults.resolution;
-  if (defaults.seed !== undefined) next.seed = String(defaults.seed);
+  if (defaults.seed !== undefined) next.seed = defaults.seed;
+  if (defaults.enable_sequential !== undefined)
+    next.enable_sequential = defaults.enable_sequential;
 
   return next;
 }
@@ -286,6 +289,7 @@ export function getModelOptionFieldName(
     quality: 'quality',
     resolution: 'resolution',
     seed: 'seed',
+    enable_sequential: 'enable_sequential',
   };
 
   return fieldMap[type];
