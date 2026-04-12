@@ -247,8 +247,7 @@
               "alt": "introduce"
             }
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "benefits": {
         "block": "features-accordion",
@@ -332,8 +331,7 @@
               "alt": "usage"
             }
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -391,8 +389,7 @@
             "title": "50+",
             "description": "AI Models"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "testimonials": {
         "id": "testimonials",
@@ -486,8 +483,7 @@
             "question": "What AI models does Marble AI use?",
             "answer": "Marble AI uses state-of-the-art AI models including Qwen, Flux, Ideogram for images, Seedance, Kling, Veo for videos, and advanced music generation models. We continuously update our models to provide the best quality."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "id": "cta",
@@ -515,8 +511,7 @@
             "title": "Subscribe"
           },
           "action": "/api/subscribe"
-        },
-        "className": "bg-muted/80"
+        }
       }
     }
   }

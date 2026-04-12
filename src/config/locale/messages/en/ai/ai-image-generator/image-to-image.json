@@ -96,8 +96,7 @@
               "alt": "Ideogram"
             }
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "model": {
         "id": "features-model",
@@ -447,8 +446,7 @@
             "question": "Can I customize the style of edited images?",
             "answer": "Absolutely! Marble AI offers extensive customization options including style presets, negative prompts, aspect ratios, and advanced transformation parameters. You have full control over the artistic direction of your edited images."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Transform Your Images?",

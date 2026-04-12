@@ -44,8 +44,7 @@
             "description": "Make targeted edits to images with accurate and coherent results.",
             "icon": "RiImageEditLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Create consistent brand imagery and visual assets.",
             "icon": "RiBuildingLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "Is it good for complex instructions?",
             "description": "Yes! GPT Image 1.5 is specifically designed for strong instruction following, handling complex and detailed prompts accurately."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try GPT Image 1.5?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

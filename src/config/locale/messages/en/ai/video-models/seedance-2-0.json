@@ -44,8 +44,7 @@
             "description": "Professional-grade cinematic visuals with advanced camera control.",
             "icon": "RiMovieLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Produce engaging educational videos with clear visuals.",
             "icon": "RiGraduationCapLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "What video quality can I expect?",
             "description": "Seedance 2.0 generates high-resolution videos up to 1080p with cinematic quality and professional-grade visuals."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try Seedance 2.0?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

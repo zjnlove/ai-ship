@@ -3,6 +3,7 @@ export type ImageScene = 'text-to-image' | 'image-to-image';
 export type ImageBrand =
   | 'google'
   | 'qwen'
+  | 'wan'
   | 'openai'
   | 'flux'
   | 'grok'

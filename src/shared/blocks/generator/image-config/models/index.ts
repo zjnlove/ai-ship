@@ -1,3 +1,4 @@
+import { wanModels } from '..';
 import { ImageModelOption } from '../types';
 import { fluxModels } from './flux';
 import { googleModels } from './google';
@@ -13,6 +14,7 @@ export const MODEL_OPTIONS: ImageModelOption[] = [
   ...fluxModels,
   ...grokModels,
   ...recraftModels,
+  ...wanModels,
 ];
 
 export { qwenModels } from './qwen';
@@ -21,3 +23,4 @@ export { openaiModels } from './openai';
 export { fluxModels } from './flux';
 export { grokModels } from './grok';
 export { recraftModels } from './recraft';
+export { wanModels } from './wan';

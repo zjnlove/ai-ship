@@ -44,8 +44,7 @@
             "description": "Advanced image editing with precise control over style, content, and composition while preserving original image quality.",
             "icon": "RiImageEditLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Generate educational illustrations, diagrams, and visual learning materials.",
             "icon": "RiBookOpenLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "How fast is the generation?",
             "description": "Qwen Image 2.0 is optimized for speed. Most images are generated or edited within 5-15 seconds, depending on complexity and resolution requirements."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try Qwen Image 2.0?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

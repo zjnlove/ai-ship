@@ -96,8 +96,7 @@
               "alt": "Ideogram"
             }
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "model": {
         "id": "features-model",
@@ -393,8 +392,7 @@
             "question": "Can I customize the style of generated images?",
             "answer": "Absolutely! Marble AI offers extensive customization options including style presets, negative prompts, aspect ratios, and advanced parameters. You have full control over the artistic direction of your images."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Create Amazing Images?",
@@ -406,8 +404,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

@@ -44,8 +44,7 @@
             "description": "Seamless style transformations while maintaining visual coherence and quality.",
             "icon": "RiPaletteLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Produce eye-catching social media content with style transformations.",
             "icon": "RiShareLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "Is it good for realistic images?",
             "description": "Yes! It excels at producing hyper-realistic, physics-aware visuals with natural lighting and spatial relationships."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try NanoBanana-Gemini 2.5 Flash?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

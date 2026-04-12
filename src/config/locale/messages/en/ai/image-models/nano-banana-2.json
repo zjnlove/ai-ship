@@ -44,8 +44,7 @@
             "description": "Strong character consistency across multiple generations, ideal for storytelling and branding.",
             "icon": "RiUserSmileLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Rapid visual prototyping for design concepts and creative exploration.",
             "icon": "RiLightbulbLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "What makes it different from other models?",
             "description": "Nano Banana 2 combines speed, quality, and cost-efficiency, making it ideal for developers and businesses requiring scalable image generation."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try Nano Banana 2?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

@@ -96,8 +96,7 @@
               "alt": "Runway"
             }
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "model": {
         "id": "features-model",
@@ -456,8 +455,7 @@
             "question": "Can I customize the style of generated videos?",
             "answer": "Absolutely! Marble AI offers extensive customization options including style presets, aspect ratios, and advanced parameters. You have full control over the artistic direction of your videos."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Create Amazing Videos?",
@@ -469,8 +467,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

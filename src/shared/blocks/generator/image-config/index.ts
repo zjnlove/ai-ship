@@ -65,4 +65,5 @@ export {
   fluxModels,
   grokModels,
   recraftModels,
+  wanModels,
 } from './models';

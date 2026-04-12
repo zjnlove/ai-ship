@@ -44,8 +44,7 @@
             "description": "Native audio output synchronized with video content.",
             "icon": "RiVolumeUpLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "features": {
         "id": "features",
@@ -121,8 +120,7 @@
             "description": "Produce engaging educational videos with clear visuals.",
             "icon": "RiGraduationCapLine"
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "faq": {
         "title": "Frequently Asked Questions",
@@ -153,8 +151,7 @@
             "title": "What resolution does it output?",
             "description": "Veo 3.1 outputs native 1080p high-resolution videos with synchronized audio."
           }
-        ],
-        "className": "bg-muted/80"
+        ]
       },
       "cta": {
         "title": "Ready to Try Veo 3.1?",
@@ -166,8 +163,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   }

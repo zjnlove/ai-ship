@@ -44,6 +44,7 @@ export const SEED_OPTIONS: ImageOptionValue[] = [];
 export const PROVIDER_OPTIONS: ImageProviderOption[] = [
   { value: 'google', label: 'Google' },
   { value: 'qwen', label: 'Qwen' },
+  { value: 'wan', label: 'Wan' },
   { value: 'openai', label: 'OpenAI' },
   { value: 'flux', label: 'Flux' },
   { value: 'grok', label: 'Grok' },
