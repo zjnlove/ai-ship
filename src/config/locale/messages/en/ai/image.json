@@ -503,6 +503,7 @@
       "resolution": "Resolution",
       "seed": "Seed",
       "enable_sequential": "Enable Sequential",
+      "thinking_mode": "Thinking Mode",
       "switch_options": {
         "on": "On",
         "off": "Off"

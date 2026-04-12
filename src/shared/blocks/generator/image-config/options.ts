@@ -57,7 +57,7 @@ export const IMAGE_OPTION_LABELS: Record<ImageOptionType, string> = {
   quality: 'advanced_options.quality',
   resolution: 'advanced_options.resolution',
   seed: 'advanced_options.seed',
-  enable_sequential: 'advanced_options.enable_sequential',
+  switch: 'advanced_options.switch',
 };
 
 export const DEFAULT_CREDITS: ImageDefaultCreditMap = {

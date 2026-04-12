@@ -32,7 +32,7 @@ export function getOptionsForType(type: ImageOptionType): ImageOptionValue[] {
     quality: QUALITY_OPTIONS,
     resolution: RESOLUTION_OPTIONS,
     seed: SEED_OPTIONS,
-    enable_sequential: [],
+    switch: [],
   };
 
   return optionsMap[type] ?? [];
@@ -209,8 +209,15 @@ export function getDefaultAdvancedOptions(
   if (defaults.quality) next.quality = defaults.quality;
   if (defaults.resolution) next.resolution = defaults.resolution;
   if (defaults.seed !== undefined) next.seed = defaults.seed;
-  if (defaults.enable_sequential !== undefined)
-    next.enable_sequential = defaults.enable_sequential;
+
+  const advOptions = getModelAdvancedOptions(modelConfig, scene);
+  if (advOptions?.switches) {
+    advOptions.switches.forEach((sw) => {
+      if (defaults[sw.id] !== undefined) {
+        next[sw.id] = defaults[sw.id];
+      }
+    });
+  }
 
   return next;
 }
@@ -289,7 +296,7 @@ export function getModelOptionFieldName(
     quality: 'quality',
     resolution: 'resolution',
     seed: 'seed',
-    enable_sequential: 'enable_sequential',
+    switch: '',
   };
 
   return fieldMap[type];

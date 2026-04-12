@@ -13,20 +13,6 @@ export const wanModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'wan/2-7-image',
-        defaultOptions: {
-          aspect_ratio: '1:1',
-          nsfw_checker: true,
-          enable_sequential: false,
-          seed: 0,
-        },
-        advancedOptions: {
-          supportedTypes: [
-            'aspectRatio',
-            'resolution',
-            'seed',
-            'enable_sequential',
-          ],
-        },
       },
       'image-to-image': {
         id: 'wan/2-7-image',
@@ -58,10 +44,40 @@ export const wanModels: ImageModelOption[] = [
         { value: '21:9', label: '21:9' },
       ],
     },
-    defaultOptions: {},
-    customFields: [],
-    advancedOptions: {
-      supportedTypes: [],
+    defaultOptions: {
+      aspect_ratio: '1:1',
+      nsfw_checker: true,
+      enable_sequential: false,
+      thinking_mode: false,
+      seed: 0,
     },
+    advancedOptions: {
+      supportedTypes: ['aspectRatio', 'resolution', 'seed', 'switch'],
+      switches: [
+        {
+          id: 'enable_sequential',
+          label: 'advanced_options.enable_sequential',
+          defaultValue: false,
+        },
+        {
+          id: 'thinking_mode',
+          label: 'advanced_options.thinking_mode',
+          defaultValue: false,
+        },
+      ],
+    },
+    dependencyRules: [
+      {
+        when: {
+          enable_sequential: true,
+        },
+        then: {
+          disabled: ['thinking_mode'],
+          autoSelect: {
+            thinking_mode: false,
+          },
+        },
+      },
+    ],
   },
 ];

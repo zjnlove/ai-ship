@@ -17,7 +17,8 @@ export type ImageOptionType =
   | 'quality'
   | 'resolution'
   | 'seed'
-  | 'enable_sequential';
+  | 'switch'
+  | (string & {});
 
 export interface ImageOptionValue {
   value: string | boolean | number;
@@ -55,7 +56,7 @@ export interface DependencyRule {
   when: Record<string, string | boolean>;
   then: {
     disabled?: string[];
-    autoSelect?: Record<string, string>;
+    autoSelect?: Record<string, string | boolean | number>;
     message?: string;
   };
 }
@@ -69,8 +70,15 @@ export interface CustomFieldConfig {
   required?: boolean;
 }
 
+export interface ImageSwitchOption {
+  id: string;
+  label: string;
+  defaultValue?: boolean;
+}
+
 export interface ImageAdvancedOptions {
   supportedTypes: ImageOptionType[];
+  switches?: ImageSwitchOption[];
 }
 
 export interface CustomImageOptions {
@@ -79,7 +87,7 @@ export interface CustomImageOptions {
   quality?: ImageOptionValue[] | ImageOptionRange;
   resolution?: ImageOptionValue[] | ImageOptionRange;
   seed?: ImageOptionValue[] | ImageOptionRange;
-  enable_sequential?: ImageOptionValue[];
+  [key: string]: ImageOptionValue[] | ImageOptionRange | undefined;
 }
 
 export interface ImageDefaultOptions {
@@ -90,7 +98,6 @@ export interface ImageDefaultOptions {
   resolution?: string;
   seed?: number;
   nsfw_checker?: boolean;
-  enable_sequential?: boolean;
   [key: string]: string | boolean | number | undefined;
 }
 

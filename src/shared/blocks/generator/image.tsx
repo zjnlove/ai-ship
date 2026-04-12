@@ -840,6 +840,17 @@ export function ImageGenerator({
     };
 
     advancedTypes.forEach((type) => {
+      if (type === 'switch') {
+        const switches = sceneConfig.advancedOptions?.switches ?? [];
+        switches.forEach((sw) => {
+          const value = advancedOptions[sw.id] ?? sw.defaultValue;
+          if (value !== undefined) {
+            options[sw.id] = value;
+          }
+        });
+        return;
+      }
+
       const value = getAdvancedOptionValue(
         type,
         advancedOptions,
@@ -1355,36 +1366,72 @@ export function ImageGenerator({
                         >
                           <Settings className="h-4 w-4" />
                           <span className="flex items-center gap-1">
-                            {advancedTypes.slice(0, 3).map((type, index) => {
-                              const value = getAdvancedOptionValue(
-                                type,
-                                advancedOptions,
-                                selectedModelConfig,
-                                activeTab
-                              );
-                              const displayValue =
-                                typeof value === 'boolean'
-                                  ? value
-                                    ? t('advanced_options.switch_options.on')
-                                    : t('advanced_options.switch_options.off')
-                                  : value;
+                            {advancedTypes
+                              .slice(0, 3)
+                              .flatMap((type, index) => {
+                                if (type === 'switch') {
+                                  const switches =
+                                    sceneConfig.advancedOptions?.switches ?? [];
+                                  return switches.map((sw, swIndex) => {
+                                    const value = getAdvancedOptionValue(
+                                      sw.id,
+                                      advancedOptions,
+                                      selectedModelConfig,
+                                      activeTab
+                                    );
+                                    return (
+                                      <span
+                                        key={`${type}:${sw.id}`}
+                                        className="flex items-center gap-1"
+                                      >
+                                        {(index > 0 || swIndex > 0) && (
+                                          <span className="text-muted-foreground">
+                                            |
+                                          </span>
+                                        )}
+                                        <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                          {value
+                                            ? t(
+                                                'advanced_options.switch_options.on'
+                                              )
+                                            : t(
+                                                'advanced_options.switch_options.off'
+                                              )}
+                                        </span>
+                                      </span>
+                                    );
+                                  });
+                                }
 
-                              return (
-                                <span
-                                  key={type}
-                                  className="flex items-center gap-1"
-                                >
-                                  {index > 0 && (
-                                    <span className="text-muted-foreground">
-                                      |
+                                const value = getAdvancedOptionValue(
+                                  type,
+                                  advancedOptions,
+                                  selectedModelConfig,
+                                  activeTab
+                                );
+                                const displayValue =
+                                  typeof value === 'boolean'
+                                    ? value
+                                      ? t('advanced_options.switch_options.on')
+                                      : t('advanced_options.switch_options.off')
+                                    : value;
+
+                                return (
+                                  <span
+                                    key={type}
+                                    className="flex items-center gap-1"
+                                  >
+                                    {index > 0 && (
+                                      <span className="text-muted-foreground">
+                                        |
+                                      </span>
+                                    )}
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {displayValue}
                                     </span>
-                                  )}
-                                  <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
-                                    {displayValue}
                                   </span>
-                                </span>
-                              );
-                            })}
+                                );
+                              })}
                           </span>
                         </Button>
                       </PopoverTrigger>
@@ -1402,32 +1449,59 @@ export function ImageGenerator({
                               activeTab
                             );
 
-                            if (type === 'enable_sequential') {
+                            if (type === 'switch') {
+                              const switches =
+                                sceneConfig.advancedOptions?.switches ?? [];
+                              if (switches.length === 0) return null;
+
                               return (
-                                <div key={type} className="space-y-2">
-                                  <Label className="text-muted-foreground text-xs font-medium">
-                                    {t(getOptionLabel(type))}
-                                  </Label>
-                                  <div className="flex items-center gap-2">
-                                    <Switch
-                                      checked={currentValue as boolean}
-                                      onCheckedChange={(checked) =>
-                                        setAdvancedOptions((prev) => ({
-                                          ...prev,
-                                          [type]: checked,
-                                        }))
-                                      }
-                                    />
-                                    <span className="text-muted-foreground text-xs">
-                                      {currentValue
-                                        ? t(
-                                            'advanced_options.switch_options.on'
-                                          )
-                                        : t(
-                                            'advanced_options.switch_options.off'
-                                          )}
-                                    </span>
-                                  </div>
+                                <div key={type} className="space-y-4">
+                                  {switches.map((sw) => {
+                                    const swValue = getAdvancedOptionValue(
+                                      sw.id,
+                                      advancedOptions,
+                                      selectedModelConfig,
+                                      activeTab
+                                    );
+                                    const isDisabled = disabledOptions.has(
+                                      sw.id
+                                    );
+                                    return (
+                                      <div
+                                        key={sw.id}
+                                        className={cn(
+                                          'space-y-2',
+                                          isDisabled &&
+                                            'cursor-not-allowed opacity-50'
+                                        )}
+                                      >
+                                        <Label className="text-muted-foreground text-xs font-medium">
+                                          {t(sw.label)}
+                                        </Label>
+                                        <div className="flex items-center gap-2">
+                                          <Switch
+                                            checked={swValue as boolean}
+                                            disabled={isDisabled}
+                                            onCheckedChange={(checked) =>
+                                              setAdvancedOptions((prev) => ({
+                                                ...prev,
+                                                [sw.id]: checked,
+                                              }))
+                                            }
+                                          />
+                                          <span className="text-muted-foreground text-xs">
+                                            {swValue
+                                              ? t(
+                                                  'advanced_options.switch_options.on'
+                                                )
+                                              : t(
+                                                  'advanced_options.switch_options.off'
+                                                )}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               );
                             }
