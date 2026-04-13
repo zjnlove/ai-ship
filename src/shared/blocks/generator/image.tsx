@@ -1707,7 +1707,7 @@ export function ImageGenerator({
                     </Button>
                   ) : isCheckSign ? (
                     <Button
-                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      className="border-border bg-primary/80 hover:bg-primary/95 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
                       disabled
                     >
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -1715,7 +1715,7 @@ export function ImageGenerator({
                     </Button>
                   ) : user ? (
                     <Button
-                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                      className="border-border bg-primary/80 hover:bg-primary/95 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
                       onClick={handleGenerate}
                       disabled={
                         isGenerating ||
