@@ -101,7 +101,25 @@ export const wanModels: ImageModelOption[] = [
           autoSelect: {
             thinking_mode: false,
           },
+          updateOptions: {
+            outputs: {
+              max: 12,
+            },
+          },
         },
+      },
+    ],
+    creditRules: [
+      {
+        conditions: { resolution: '2K' },
+        credits: 5,
+      },
+      {
+        conditions: {},
+        credits: 5,
+        perUnit: true,
+        unitField: 'outputs',
+        startFrom: 2,
       },
     ],
   },

@@ -41,9 +41,13 @@ export interface ImageProviderOption {
 }
 
 export interface CreditRule {
-  conditions: Record<string, string | boolean>;
+  conditions: Record<string, string | boolean | number>;
   credits?: number;
   multiplier?: number;
+  perUnit?: boolean;
+  unitField?: string;
+  startFrom?: number;
+  unitStep?: number;
 }
 
 export interface DiscountConfig {
@@ -58,6 +62,10 @@ export interface DependencyRule {
   then: {
     disabled?: string[];
     autoSelect?: Record<string, string | boolean | number>;
+    updateOptions?: Record<
+      string,
+      Partial<ImageOptionValue[] | ImageOptionRange>
+    >;
     message?: string;
   };
 }

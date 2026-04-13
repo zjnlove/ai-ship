@@ -443,6 +443,32 @@ export function ImageGenerator({
     }
   }, [advancedOptions, sceneConfig.dependencyRules]);
 
+  const effectiveCustomOptions = useMemo(() => {
+    const options = { ...(sceneConfig.customOptions ?? {}) };
+
+    sceneConfig.dependencyRules?.forEach((rule) => {
+      const isMatch = Object.entries(rule.when).every(
+        ([key, value]) =>
+          advancedOptions[normalizeOptionKey(key) as OptionType] === value
+      );
+
+      if (isMatch && rule.then.updateOptions) {
+        Object.entries(rule.then.updateOptions).forEach(([key, value]) => {
+          if (options[key]) {
+            options[key] = {
+              ...(options[key] as any),
+              ...(value as any),
+            };
+          } else {
+            options[key] = value as any;
+          }
+        });
+      }
+    });
+
+    return options;
+  }, [advancedOptions, sceneConfig.customOptions, sceneConfig.dependencyRules]);
+
   const handleReferenceImagesChange = useCallback(
     (items: ImageUploaderValue[]) => {
       setModeImages((prev) => ({
@@ -1509,13 +1535,12 @@ export function ImageGenerator({
 
                             // 检查是否是范围类型
                             const isRangeType =
-                              sceneConfig.customOptions?.[type] &&
-                              'type' in sceneConfig.customOptions?.[type]! &&
-                              sceneConfig.customOptions?.[type].type ===
-                                'range';
+                              effectiveCustomOptions?.[type] &&
+                              'type' in effectiveCustomOptions?.[type]! &&
+                              effectiveCustomOptions?.[type].type === 'range';
 
                             if (isRangeType) {
-                              const rangeConfig = sceneConfig.customOptions?.[
+                              const rangeConfig = effectiveCustomOptions?.[
                                 type
                               ] as any;
                               const currentNum =
@@ -1601,7 +1626,8 @@ export function ImageGenerator({
                                   {getOptionsForModel(
                                     selectedModelConfig,
                                     type,
-                                    activeTab
+                                    activeTab,
+                                    effectiveCustomOptions
                                   ).map((option) => {
                                     const isDisabled = disabledOptions.has(
                                       `${type}:${option.value}`

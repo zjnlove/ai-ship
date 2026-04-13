@@ -70,9 +70,12 @@ export function getModelSceneId(
 export function getOptionsForModel(
   modelConfig: ImageModelOption | null | undefined,
   type: ImageOptionType,
-  scene?: ImageScene
+  scene?: ImageScene,
+  customOptionsOverride?: CustomImageOptions
 ): ImageOptionValue[] {
-  const customOptions = getModelCustomOptions(modelConfig, scene)?.[type];
+  const customOptions =
+    customOptionsOverride?.[type] ??
+    getModelCustomOptions(modelConfig, scene)?.[type];
 
   if (
     customOptions &&
@@ -336,7 +339,23 @@ export function calculateOriginalCredits(
       if (!isMatch) continue;
 
       if (rule.credits !== undefined) {
-        totalCredits += rule.credits;
+        if (rule.perUnit && rule.unitField) {
+          const units = parseInt(
+            String(selectedOptions[rule.unitField]) || '0'
+          );
+          const startFrom = rule.startFrom || 1;
+          const unitStep = rule.unitStep || 1;
+
+          let effectiveUnits = Math.max(0, units - startFrom + 1);
+
+          if (unitStep > 1) {
+            effectiveUnits = Math.ceil(effectiveUnits / unitStep);
+          }
+
+          totalCredits += rule.credits * effectiveUnits;
+        } else {
+          totalCredits += rule.credits;
+        }
       }
 
       if (rule.multiplier !== undefined) {
