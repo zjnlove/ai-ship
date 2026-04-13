@@ -505,6 +505,9 @@
       "resolution": "清晰度",
       "seed": "种子",
       "enable_sequential": "顺序生成",
+      "thinking_mode": "思考模式",
+      "num_outputs": "输出数量",
+      "switch": "开关",
       "switch_options": {
         "on": "开",
         "off": "关"

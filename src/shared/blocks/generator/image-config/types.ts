@@ -17,6 +17,7 @@ export type ImageOptionType =
   | 'quality'
   | 'resolution'
   | 'seed'
+  | 'outputs'
   | 'switch'
   | (string & {});
 
@@ -87,6 +88,7 @@ export interface CustomImageOptions {
   quality?: ImageOptionValue[] | ImageOptionRange;
   resolution?: ImageOptionValue[] | ImageOptionRange;
   seed?: ImageOptionValue[] | ImageOptionRange;
+  numOutputs?: ImageOptionValue[] | ImageOptionRange;
   [key: string]: ImageOptionValue[] | ImageOptionRange | undefined;
 }
 
@@ -97,6 +99,7 @@ export interface ImageDefaultOptions {
   quality?: string;
   resolution?: string;
   seed?: number;
+  outputs?: number;
   nsfw_checker?: boolean;
   [key: string]: string | boolean | number | undefined;
 }

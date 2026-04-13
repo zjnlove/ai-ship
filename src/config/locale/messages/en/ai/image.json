@@ -472,8 +472,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   },
@@ -504,6 +503,8 @@
       "seed": "Seed",
       "enable_sequential": "Enable Sequential",
       "thinking_mode": "Thinking Mode",
+      "num_outputs": "Number of Outputs",
+      "switch": "Switch",
       "switch_options": {
         "on": "On",
         "off": "Off"

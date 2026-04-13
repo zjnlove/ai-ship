@@ -106,6 +106,7 @@ const optionKeyMap: Record<string, OptionType> = {
   resolution: 'resolution',
   seed: 'seed',
   enable_sequential: 'enable_sequential',
+  outputs: 'outputs',
 };
 
 function normalizeOptionKey(key: string): string {
@@ -1502,6 +1503,49 @@ export function ImageGenerator({
                                       </div>
                                     );
                                   })}
+                                </div>
+                              );
+                            }
+
+                            // 检查是否是范围类型
+                            const isRangeType =
+                              sceneConfig.customOptions?.[type] &&
+                              'type' in sceneConfig.customOptions?.[type]! &&
+                              sceneConfig.customOptions?.[type].type ===
+                                'range';
+
+                            if (isRangeType) {
+                              const rangeConfig = sceneConfig.customOptions?.[
+                                type
+                              ] as any;
+                              const currentNum =
+                                Number(currentValue) || rangeConfig.min;
+
+                              return (
+                                <div key={type} className="space-y-3">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t(getOptionLabel(type))}
+                                  </Label>
+                                  <div className="flex items-center gap-4">
+                                    <input
+                                      type="range"
+                                      min={rangeConfig.min}
+                                      max={rangeConfig.max}
+                                      step={rangeConfig.step}
+                                      value={currentNum}
+                                      onChange={(e) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: Number(e.target.value),
+                                        }))
+                                      }
+                                      className="bg-muted accent-primary h-2 flex-1 cursor-pointer appearance-none rounded-lg"
+                                    />
+                                    <span className="bg-primary/10 min-w-[60px] rounded-full px-3 py-1 text-center text-sm font-medium">
+                                      {currentNum}
+                                      {rangeConfig.unit || ''}
+                                    </span>
+                                  </div>
                                 </div>
                               );
                             }

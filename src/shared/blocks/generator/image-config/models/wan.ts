@@ -5,7 +5,7 @@ export const wanModels: ImageModelOption[] = [
     label: 'Wan 2.7 Image',
     provider: 'kie',
     brand: 'wan',
-    modelPath: 'wan-2-7-image',
+    modelPath: 'wan-2-7',
     credits: {
       'text-to-image': 5,
       'image-to-image': 5,
@@ -13,23 +13,35 @@ export const wanModels: ImageModelOption[] = [
     sceneValues: {
       'text-to-image': {
         id: 'wan/2-7-image',
+        customFields: [
+          {
+            type: 'number',
+            fieldName: 'n',
+            optionType: 'outputs',
+          },
+        ],
       },
       'image-to-image': {
         id: 'wan/2-7-image',
         maxImages: 9,
-        customFields: [
-          {
-            type: 'image',
-            fieldName: 'input_urls',
-            isArray: false,
-          },
-        ],
         inputValidation: {
           image: {
             maxFileSize: 5,
             supportedFormats: ['jpeg', 'png', 'webp'],
           },
         },
+        customFields: [
+          {
+            type: 'image',
+            fieldName: 'input_urls',
+            isArray: false,
+          },
+          {
+            type: 'number',
+            fieldName: 'n',
+            optionType: 'outputs',
+          },
+        ],
       },
     },
     customOptions: {
@@ -43,16 +55,29 @@ export const wanModels: ImageModelOption[] = [
         { value: '16:9', label: '16:9' },
         { value: '21:9', label: '21:9' },
       ],
+      outputs: {
+        type: 'range',
+        min: 1,
+        max: 4,
+        step: 1,
+      },
     },
     defaultOptions: {
       aspect_ratio: '1:1',
+      outputs: 1,
       nsfw_checker: true,
       enable_sequential: false,
       thinking_mode: false,
       seed: 0,
     },
     advancedOptions: {
-      supportedTypes: ['aspectRatio', 'resolution', 'seed', 'switch'],
+      supportedTypes: [
+        'aspectRatio',
+        'outputs',
+        'resolution',
+        'seed',
+        'switch',
+      ],
       switches: [
         {
           id: 'enable_sequential',

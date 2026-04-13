@@ -531,8 +531,7 @@
             "url": "#",
             "icon": "Sparkles"
           }
-        ],
-        "className": "bg-muted"
+        ]
       }
     }
   },

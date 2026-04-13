@@ -32,6 +32,7 @@ export function getOptionsForType(type: ImageOptionType): ImageOptionValue[] {
     quality: QUALITY_OPTIONS,
     resolution: RESOLUTION_OPTIONS,
     seed: SEED_OPTIONS,
+    outputs: [],
     switch: [],
   };
 
@@ -209,6 +210,7 @@ export function getDefaultAdvancedOptions(
   if (defaults.quality) next.quality = defaults.quality;
   if (defaults.resolution) next.resolution = defaults.resolution;
   if (defaults.seed !== undefined) next.seed = defaults.seed;
+  if (defaults.outputs) next.numOutputs = defaults.outputs;
 
   const advOptions = getModelAdvancedOptions(modelConfig, scene);
   if (advOptions?.switches) {
@@ -296,6 +298,7 @@ export function getModelOptionFieldName(
     quality: 'quality',
     resolution: 'resolution',
     seed: 'seed',
+    outputs: 'outputs',
     switch: '',
   };
 
