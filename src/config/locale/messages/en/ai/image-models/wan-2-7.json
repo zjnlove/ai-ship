@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Wan 2.7 Image - AI Image Generation & Editing | Marble AI",
+    "description": "Alibaba's Wan 2.7 image family. Advanced unified model for image generation and editing, delivering realistic details, precise color control, and accurate text rendering."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Wan 2.7 Image",
+        "highlight_text": "Wan 2.7 Image",
+        "description": "Alibaba's advanced unified image model. Seamlessly integrates generation and editing with exceptional photorealistic detail and precise control.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Wan 2.7 Image",
+        "highlight_text": "Wan 2.7 Image",
+        "label": "Model Overview",
+        "description": "Wan 2.7 is Alibaba's next-generation image model that bridges the gap between creation and editing. It offers unparalleled control over faces, colors, and text, making it ideal for professional creative workflows.",
+        "image": {
+          "src": "/imgs/models/image/wan-2-7.png",
+          "alt": "Wan 2.7 Image"
+        },
+        "items": [
+          {
+            "title": "Unified Workflow",
+            "description": "Streamline your creative process with a single model for both image generation and instruction-based editing.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Realistic Portraits",
+            "description": "Deep customization of facial features, bone structure, and skin details for authentic-looking portraits.",
+            "icon": "RiUserSmileLine"
+          },
+          {
+            "title": "Precise Color Control",
+            "description": "Maintain brand consistency with reference-based palette extraction and HEX-defined color distribution.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Advanced Text Rendering",
+            "description": "Support for complex text layouts and long-form content across 12 different languages.",
+            "icon": "RiText"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover the advanced capabilities that define the Wan 2.7 series.",
+        "items": [
+          {
+            "title": "Multi-Image Editing",
+            "description": "Work with up to 9 input images for complex reference fusion and multi-layered editing tasks.",
+            "icon": "RiStackLine"
+          },
+          {
+            "title": "High-Resolution Output",
+            "description": "Support for up to 4K resolution in Pro scenarios, delivering professional production-grade quality.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Thinking Mode",
+            "description": "Enhanced reasoning capabilities for better prompt adherence and understanding of complex visual logic.",
+            "icon": "RiLightbulbLine"
+          },
+          {
+            "title": "Sequential Consistency",
+            "description": "Generate up to 12 consistent images in a single request, perfect for storyboards and catalogs.",
+            "icon": "RiGalleryLine"
+          },
+          {
+            "title": "Interactive Control",
+            "description": "Region-based editing with box selection and natural language instructions for localized refinements.",
+            "icon": "RiFocus3Line"
+          },
+          {
+            "title": "Physical Simulation",
+            "description": "Advanced VAE architecture for realistic simulation of textures, lighting, and complex physics.",
+            "icon": "RiFlashlightLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore how Wan 2.7 can transform your industry-specific workflows.",
+        "items": [
+          {
+            "title": "Commercial Photography",
+            "description": "Create high-fidelity product shots and realistic character imagery with precise aesthetic control.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Brand Marketing",
+            "description": "Develop campaign assets with consistent color palettes and accurate text rendering for infographics.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Comic & Storyboarding",
+            "description": "Maintain perfect subject and style consistency across sequential scenes and multi-angle shots.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Digital Illustration",
+            "description": "Refine and transform artistic visions using instruction-based editing and reference-guided modification.",
+            "icon": "RiBrushLine"
+          },
+          {
+            "title": "UX/UI Design",
+            "description": "Generate realistic interface elements and high-quality mockups with integrated text and icons.",
+            "icon": "RiLayoutMasonryLine"
+          },
+          {
+            "title": "Creative Education",
+            "description": "Visualize complex concepts with accurate text-image compositions for infographics and reports.",
+            "icon": "RiBookOpenLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about the Wan 2.7 Image model.",
+        "items": [
+          {
+            "title": "What is Wan 2.7 Image?",
+            "description": "Wan 2.7 Image is Alibaba's unified foundation model that excels in both image generation and editing tasks within a single workflow."
+          },
+          {
+            "title": "What makes it different from other models?",
+            "description": "It uniquely combines high-fidelity portrait control, 12-language text rendering, and precise color palette management in one system."
+          },
+          {
+            "title": "Can I edit existing images with Wan 2.7?",
+            "description": "Yes! It supports prompt-based editing, multi-image reference fusion, and region-based interactive control for precise localized edits."
+          },
+          {
+            "title": "Does it support high-resolution output?",
+            "description": "Wan 2.7 Image supports up to 2K resolution, while the Wan 2.7 Image Pro variant supports up to 4K resolution."
+          },
+          {
+            "title": "How does Sequential Storytelling work?",
+            "description": "The model can generate up to 12 stylistically and subject-consistent images in one request, ensuring coherence across a series of frames."
+          },
+          {
+            "title": "Is 'Thinking Mode' available?",
+            "description": "Yes, Thinking Mode can be enabled in supported text-to-image scenarios to improve reasoning and prompt following accuracy."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Experience Wan 2.7 Image Today",
+        "highlight_text": "Wan 2.7 Image",
+        "description": "Unlock professional-grade image generation and editing. Start creating with Alibaba's most advanced model.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

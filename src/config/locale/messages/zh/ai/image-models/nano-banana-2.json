@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Nano Banana 2 - AI Image Generator & Editor | Marble AI",
+    "description": "Nano Banana 2 by Google. Gemini 3.1 Flash Image model with lightning-fast speed, Pro-level quality, accurate text rendering, and strong character consistency. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Nano Banana 2",
+        "highlight_text": "Nano Banana 2",
+        "description": "Google's Gemini 3.1 Flash Image model. Lightning-fast speed with Pro-level quality, accurate text rendering, and strong character consistency for scalable image workflows.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Nano Banana 2",
+        "highlight_text": "Nano Banana 2",
+        "label": "Model Overview",
+        "description": "Meet Nano Banana 2, Google's Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers with lightning-fast speed and Pro-level quality.",
+        "image": {
+          "src": "/imgs/models/image/nano-banana-2.png",
+          "alt": "Nano Banana 2"
+        },
+        "items": [
+          {
+            "title": "Lightning Fast",
+            "description": "Optimized for speed with rapid inference times, perfect for high-volume and real-time applications.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Pro-Level Quality",
+            "description": "Delivers professional-grade image quality rivaling larger, more resource-intensive models.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Accurate Text Rendering",
+            "description": "Excellent text rendering capabilities for images containing typography and written content.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Character Consistency",
+            "description": "Strong character consistency across multiple generations, ideal for storytelling and branding.",
+            "icon": "RiUserSmileLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Nano Banana 2 ideal for scalable image workflows.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for versatile creative workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Scalable Workflows",
+            "description": "Designed for high-volume applications with consistent quality across batch processing.",
+            "icon": "RiStackLine"
+          },
+          {
+            "title": "Developer Friendly",
+            "description": "Easy API integration with comprehensive documentation for seamless implementation.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Cost Efficient",
+            "description": "Optimized pricing model for developers and businesses requiring high-volume generation.",
+            "icon": "RiCoinLine"
+          },
+          {
+            "title": "Style Versatility",
+            "description": "Support for diverse artistic styles and visual aesthetics for various creative needs.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images, suitable for business use.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Nano Banana 2.",
+        "items": [
+          {
+            "title": "High-Volume Content",
+            "description": "Generate large batches of images for content platforms, social media, and marketing campaigns.",
+            "icon": "RiArticleLine"
+          },
+          {
+            "title": "Real-Time Applications",
+            "description": "Power real-time image generation in applications requiring instant visual feedback.",
+            "icon": "RiTimeLine"
+          },
+          {
+            "title": "Character Design",
+            "description": "Create consistent character designs for games, animations, and storytelling projects.",
+            "icon": "RiUserLine"
+          },
+          {
+            "title": "E-commerce",
+            "description": "Generate product images and lifestyle shots at scale for online retail platforms.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Create engaging visual content for social media platforms with fast turnaround.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Prototyping",
+            "description": "Rapid visual prototyping for design concepts and creative exploration.",
+            "icon": "RiLightbulbLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Nano Banana 2.",
+        "items": [
+          {
+            "title": "What is Nano Banana 2?",
+            "description": "Nano Banana 2 is Google's Gemini 3.1 Flash Image model, optimized for speed and quality with accurate text rendering and strong character consistency."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Nano Banana 2 supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "How fast is Nano Banana 2?",
+            "description": "Nano Banana 2 is optimized for lightning-fast inference, delivering results in seconds for most generation tasks."
+          },
+          {
+            "title": "Is it good for batch processing?",
+            "description": "Yes! Nano Banana 2 is designed for scalable workflows with consistent quality across high-volume generation."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited with Nano Banana 2 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What makes it different from other models?",
+            "description": "Nano Banana 2 combines speed, quality, and cost-efficiency, making it ideal for developers and businesses requiring scalable image generation."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Nano Banana 2?",
+        "highlight_text": "Nano Banana 2",
+        "description": "Experience Google's lightning-fast image generation model. Create stunning visuals with speed and quality.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

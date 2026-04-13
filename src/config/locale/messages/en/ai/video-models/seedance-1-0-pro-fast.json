@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Seedance 1.0 Pro Fast - AI Video Generator | Marble AI",
+    "description": "Seedance 1.0 Pro Fast by ByteDance. Fast AI video-generation model that inherits Seedance 1.0 Pro's core quality while delivering 3x faster rendering with stable motion."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Seedance 1.0 Pro Fast",
+        "highlight_text": "Seedance 1.0 Pro Fast",
+        "description": "ByteDance's fast AI video generation model. 3x faster rendering while maintaining core quality with stable motion and efficient compute performance.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Seedance 1.0 Pro Fast",
+        "highlight_text": "Seedance 1.0 Pro Fast",
+        "label": "Model Overview",
+        "description": "Seedance 1.0 Pro Fast is ByteDance's optimized video generation model that inherits Seedance 1.0 Pro's core quality while delivering 3x faster rendering, producing coherent 1080p clips with stable motion.",
+        "image": {
+          "src": "/imgs/models/video/seedance-1-0-pro-fast.mp4",
+          "alt": "Seedance 1.0 Pro Fast"
+        },
+        "items": [
+          {
+            "title": "3x Faster",
+            "description": "Optimized rendering speed for rapid video generation workflows.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Core Quality",
+            "description": "Maintains Seedance 1.0 Pro's high-quality output standards.",
+            "icon": "RiStarLine"
+          },
+          {
+            "title": "Stable Motion",
+            "description": "Coherent video clips with smooth and stable motion dynamics.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Efficient Compute",
+            "description": "Optimized for cost-effective and efficient video generation.",
+            "icon": "RiCpuLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Seedance 1.0 Pro Fast a leading fast AI video model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions quickly.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content rapidly.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with fast processing.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Rapid Generation",
+            "description": "3x faster rendering compared to standard models.",
+            "icon": "RiSpeedLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p quality.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Seedance 1.0 Pro Fast.",
+        "items": [
+          {
+            "title": "Rapid Prototyping",
+            "description": "Quickly iterate on video concepts with fast generation.",
+            "icon": "RiRocketLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content quickly for time-sensitive posts.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce marketing content efficiently with fast turnaround.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Content Creation",
+            "description": "Create high-volume content with efficient processing.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Generate product videos quickly for e-commerce.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Batch Processing",
+            "description": "Process multiple video requests efficiently.",
+            "icon": "RiListCheck"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Seedance 1.0 Pro Fast.",
+        "items": [
+          {
+            "title": "What is Seedance 1.0 Pro Fast?",
+            "description": "Seedance 1.0 Pro Fast is ByteDance's optimized video generation model that delivers 3x faster rendering while maintaining core quality."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Seedance 1.0 Pro Fast supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes."
+          },
+          {
+            "title": "Who created Seedance 1.0 Pro Fast?",
+            "description": "Seedance 1.0 Pro Fast is created by ByteDance, the company behind TikTok and other popular video platforms."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Seedance 1.0 Pro Fast excels at speed, delivering 3x faster rendering while maintaining the core quality of Seedance 1.0 Pro."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Seedance 1.0 Pro Fast through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How fast is it?",
+            "description": "Seedance 1.0 Pro Fast delivers 3x faster rendering compared to standard models, making it ideal for rapid content creation."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Seedance 1.0 Pro Fast?",
+        "highlight_text": "Seedance 1.0 Pro Fast",
+        "description": "Experience ByteDance's fast video generation. Create videos 3x faster with quality output.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -2,10 +2,10 @@
   "header": {
     "id": "header",
     "brand": {
-      "title": "ShipAny Two",
+      "title": "Marble AI",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny Two",
+        "alt": "Marble AI",
         "width": 100,
         "height": 100
       },
@@ -14,74 +14,216 @@
     "nav": {
       "items": [
         {
-          "title": "Features",
-          "url": "/#features",
-          "icon": "Sparkles"
+          "title": "AI Tools",
+          "children": [
+            {
+              "title": "AI Video Generator",
+              "url": "/ai-video-generator",
+              "target": "_blank",
+              "tip": "New",
+              "tip_color": "bg-emerald-500",
+              "children": [
+                {
+                  "title": "Text-to-Video",
+                  "url": "/ai-video-generator/text-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Image-to-Video",
+                  "url": "/ai-video-generator/image-to-video",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Video-to-Video",
+                  "url": "/ai-video-generator/video-to-video",
+                  "target": "_blank"
+                }
+              ]
+            },
+            {
+              "title": "AI Image Generator",
+              "url": "/ai-image-generator",
+              "target": "_blank",
+              "children": [
+                {
+                  "title": "Text-to-Image",
+                  "url": "/ai-image-generator/text-to-image",
+                  "target": "_blank"
+                },
+                {
+                  "title": "Image-to-Image",
+                  "url": "/ai-image-generator/image-to-image",
+                  "target": "_blank"
+                }
+              ]
+            }
+          ]
         },
         {
-          "title": "Showcases",
-          "url": "/showcases",
-          "icon": "Box"
+          "title": "Image Models",
+          "children": [
+            {
+              "title": "Qwen Image 2",
+              "url": "/image-models/qwen-image-2",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.7",
+              "url": "/image-models/wan-2-7",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana",
+              "url": "/image-models/nano-banana",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana 2",
+              "url": "/image-models/nano-banana-2",
+              "target": "_blank"
+            },
+            {
+              "title": "Nano Banana Pro",
+              "url": "/image-models/nano-banana-pro",
+              "target": "_blank",
+              "tip": "Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Imagen 4",
+              "url": "/image-models/imagen-4",
+              "target": "_blank"
+            },
+            {
+              "title": "GPT Image 1.5",
+              "url": "/image-models/gpt-image-1-5",
+              "target": "_blank"
+            },
+            {
+              "title": "FLUX.2 Flex",
+              "url": "/image-models/flux-2-flex",
+              "target": "_blank"
+            },
+            {
+              "title": "FLUX.2 Pro",
+              "url": "/image-models/flux-2-pro",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/image-models/grok-imagine",
+              "target": "_blank"
+            },
+            {
+              "title": "Recraft Remove Background",
+              "url": "/image-models/recraft-remove-background",
+              "target": "_blank"
+            },
+            {
+              "title": "Recraft Crisp Upscale",
+              "url": "/image-models/recraft-crisp-upscale",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "title": "Video Models",
+          "children": [
+            {
+              "title": "Seedance 2.0",
+              "url": "/video-models/seedance-2-0",
+              "target": "_blank",
+              "tip": "New",
+              "tip_color": "bg-emerald-500"
+            },
+            {
+              "title": "Seedance 1.5 Pro",
+              "url": "/video-models/seedance-1-5-pro",
+              "target": "_blank",
+              "tip": "Hot",
+              "tip_color": "bg-rose-500"
+            },
+            {
+              "title": "Seedance 1.0 Pro Fast",
+              "url": "/video-models/seedance-1-0-pro-fast",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 3.0",
+              "url": "/video-models/kling-3-0",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6",
+              "url": "/video-models/kling-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 3.0 Motion Control",
+              "url": "/video-models/kling-3-0-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Kling 2.6 Motion Control",
+              "url": "/video-models/kling-2-6-motion-control",
+              "target": "_blank"
+            },
+            {
+              "title": "Wan 2.6",
+              "url": "/video-models/wan-2-6",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 2.3",
+              "url": "/video-models/hailuo-2-3",
+              "target": "_blank"
+            },
+            {
+              "title": "Hailuo 02",
+              "url": "/video-models/hailuo-02",
+              "target": "_blank"
+            },
+            {
+              "title": "Veo 3.1",
+              "url": "/video-models/veo-3-1",
+              "target": "_blank"
+            },
+            {
+              "title": "Grok Imagine",
+              "url": "/video-models/grok-imagine",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "title": "Resources",
+          "children": [
+            {
+              "title": "Blog",
+              "url": "/blog",
+              "icon": "RiArticleFill"
+            },
+            {
+              "title": "Help Center",
+              "url": "/help-center",
+              "icon": "RiQuestionLine"
+            },
+            {
+              "title": "About Us",
+              "url": "/about-us",
+              "icon": "RiInformationLine"
+            },
+            {
+              "title": "Contact",
+              "url": "/contact",
+              "icon": "RiContactsLine"
+            }
+          ]
         },
         {
           "title": "Pricing",
           "url": "/pricing",
-          "icon": "DollarSign"
-        },
-        {
-          "title": "AI",
-          "icon": "RiRobot2Line",
-          "children": [
-            {
-              "title": "AI Image Generator",
-              "description": "Use AI to generate images",
-              "url": "/ai-image-generator",
-              "icon": "RiImage2Line"
-            },
-            {
-              "title": "AI Music Generator",
-              "description": "Use AI to generate music",
-              "url": "/ai-music-generator",
-              "icon": "RiMusic2Line"
-            },
-            {
-              "title": "AI Video Generator",
-              "description": "Use AI to generate videos",
-              "url": "/ai-video-generator",
-              "icon": "RiVideoLine"
-            },
-            {
-              "title": "AI Chatbot",
-              "description": "Chat with AI chatbot",
-              "url": "/chat",
-              "icon": "RiMessage2Line"
-            }
-          ]
-        },
-        {
-          "title": "Content",
-          "icon": "FileText",
-          "children": [
-            {
-              "title": "Blog",
-              "description": "Read Blog Posts",
-              "url": "/blog",
-              "icon": "Newspaper"
-            },
-            {
-              "title": "Updates",
-              "description": "Read Update Logs",
-              "url": "/updates",
-              "icon": "Clock"
-            },
-            {
-              "title": "Docs",
-              "description": "Read Documentation",
-              "url": "/docs",
-              "target": "_blank",
-              "icon": "BookOpenText"
-            }
-          ]
+          "target": "_blank"
         }
       ]
     },
@@ -107,17 +249,17 @@
     "show_theme": true,
     "show_locale": true,
     "topbanner": {
-      "text": "This website is a demo site for the ShipAny template. To purchase the ShipAny template, please visit the <a href='https://shipany.ai/pricing' class='text-orange-300' target='_blank'>ShipAny website</a>"
+      "text": "🚀 Marble AI - Where Imagination Meets Innovation"
     }
   },
   "footer": {
     "id": "footer",
     "brand": {
-      "title": "ShipAny Two",
-      "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
+      "title": "Marble AI",
+      "description": "Your all-in-one AI platform for generating stunning images, videos, and music with cutting-edge technology.",
       "logo": {
         "src": "/logo.png",
-        "alt": "ShipAny Two",
+        "alt": "Marble AI",
         "width": 1024,
         "height": 1024
       },
@@ -169,18 +311,13 @@
           "title": "Friends",
           "children": [
             {
-              "title": "ShipAny",
-              "url": "https://shipany.ai",
+              "title": "AI Image Generator",
+              "url": "/ai-image-generator",
               "target": "_blank"
             },
             {
-              "title": "ThinkAny",
-              "url": "https://thinkany.ai",
-              "target": "_blank"
-            },
-            {
-              "title": "MCP.so",
-              "url": "https://mcp.so",
+              "title": "AI Video Generator",
+              "url": "/ai-video-generator",
               "target": "_blank"
             }
           ]
@@ -190,27 +327,9 @@
     "social": {
       "items": [
         {
-          "title": "X",
-          "icon": "RiTwitterXFill",
-          "url": "https://x.com/your-app-name",
-          "target": "_blank"
-        },
-        {
-          "title": "Github",
-          "icon": "Github",
-          "url": "https://github.com/your-app-name",
-          "target": "_blank"
-        },
-        {
-          "title": "Discord",
-          "icon": "RiDiscordFill",
-          "url": "https://discord.gg/your-app-name",
-          "target": "_blank"
-        },
-        {
           "title": "Email",
           "icon": "Mail",
-          "url": "mailto:support@your-domain.com",
+          "url": "mailto:support@marbleai.app",
           "target": "_self"
         }
       ]

@@ -1,7 +1,12 @@
 @import 'tailwindcss';
-@import './theme.css';
+@import './theme-aiship.css';
 
 @custom-variant dark (&:is(.dark *));
+
+/* 防止下拉框打开时滚动条消失导致页面跳动 */
+html {
+  scrollbar-gutter: stable;
+}
 
 @plugin 'tailwindcss-animate';
 
@@ -29,6 +34,39 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* Custom scrollbar - hidden by default, visible on scroll/hover */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+/* Show scrollbar on hover, focus, or active state */
+*:hover::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb,
+*:active::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.5);
+}
+
+*:hover,
+*:focus,
+*:active {
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
 input,
 select,
 textarea {
@@ -49,6 +87,24 @@ pre {
 }
 
 @theme inline {
+  --animate-accordion-down: accordion-down 0.3s ease-out;
+  --animate-accordion-up: accordion-up 0.3s ease-out;
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
   --animate-grid: grid 15s linear infinite;
   @keyframes grid {
     0% {
@@ -107,6 +163,16 @@ pre {
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+/* Hero custom styles for ai-image-generator page */
+.hero-custom {
+  padding-top: 8em !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.hero-custom h1 {
+  font-size: 3.5rem !important;
 }
 
 @layer base {

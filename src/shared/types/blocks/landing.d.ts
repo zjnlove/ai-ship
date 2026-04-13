@@ -21,6 +21,7 @@ export interface Section {
   label?: string;
   sr_only_title?: string;
   title?: string;
+  highlight_text?: string;
   description?: string;
   tip?: string;
   buttons?: Button[];
@@ -69,7 +70,6 @@ export interface Hero extends Section {
   show_avatars?: boolean;
   avatars_tip?: string;
   show_award?: boolean;
-  highlight_text?: string;
 }
 
 export interface Logos extends Section {}

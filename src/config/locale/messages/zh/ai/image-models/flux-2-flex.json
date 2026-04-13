@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "FLUX.2 Flet - AI Image Editor | Marble AI",
+    "description": "FLUX.2 Flet by Black Forest Labs. Advanced image editing API that transforms photos with simple text commands, delivering professional results. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "FLUX.2 Flet",
+        "highlight_text": "FLUX.2 Flet",
+        "description": "Black Forest Labs' cutting-edge image editing API. Transform photos with simple text commands, delivering professional results that save time and boost creativity.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About FLUX.2 Flet",
+        "highlight_text": "FLUX.2 Flet",
+        "label": "Model Overview",
+        "description": "FLUX.2 Flet empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands for professional results.",
+        "image": {
+          "src": "/imgs/models/image/flux-kontext.png",
+          "alt": "FLUX.2 Flet"
+        },
+        "items": [
+          {
+            "title": "Text-Command Editing",
+            "description": "Transform images using simple text commands for intuitive and efficient editing workflows.",
+            "icon": "RiChatSmile2Line"
+          },
+          {
+            "title": "Professional Results",
+            "description": "Deliver professional-quality edits suitable for commercial and creative projects.",
+            "icon": "RiStarLine"
+          },
+          {
+            "title": "Time-Saving",
+            "description": "Streamline editing workflows with AI-powered transformations that save hours of manual work.",
+            "icon": "RiTimeLine"
+          },
+          {
+            "title": "Creative Freedom",
+            "description": "Boost creativity with flexible editing capabilities for e-commerce and marketing.",
+            "icon": "RiLightbulbLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes FLUX.2 Flet ideal for efficient image innovation.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for comprehensive workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Simple Commands",
+            "description": "Intuitive text-based commands make complex edits accessible to everyone.",
+            "icon": "RiCommandLine"
+          },
+          {
+            "title": "High-Quality Output",
+            "description": "Maintain image quality while applying transformations and edits.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Fast Processing",
+            "description": "Quick turnaround times for efficient workflow integration.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Seamless API access for developers to integrate into applications.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of FLUX.2 Flet.",
+        "items": [
+          {
+            "title": "E-commerce Optimization",
+            "description": "Optimize product images for e-commerce listings with quick, professional edits.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Marketing Materials",
+            "description": "Create marketing masterpieces with efficient image transformations.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Product Photography",
+            "description": "Enhance product photos with background changes and style adjustments.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Social Media Content",
+            "description": "Produce engaging social media visuals with quick text-command edits.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Brand Consistency",
+            "description": "Maintain brand consistency across visual assets with efficient editing.",
+            "icon": "RiBuildingLine"
+          },
+          {
+            "title": "Creative Projects",
+            "description": "Accelerate creative projects with AI-powered image innovation.",
+            "icon": "RiBrushLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about FLUX.2 Flet.",
+        "items": [
+          {
+            "title": "What is FLUX.2 Flet?",
+            "description": "FLUX.2 Flet is Black Forest Labs' advanced image editing API that transforms photos with simple text commands for professional results."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "FLUX.2 Flet supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "How does text-command editing work?",
+            "description": "Simply describe the changes you want in text, and FLUX.2 Flet applies professional-quality transformations to your images."
+          },
+          {
+            "title": "Is it good for e-commerce?",
+            "description": "Yes! FLUX.2 Flet is optimized for e-commerce, helping optimize product listings with quick, professional edits."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited with FLUX.2 Flet through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How fast is the editing?",
+            "description": "FLUX.2 Flet delivers quick turnaround times, making it ideal for efficient workflow integration."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try FLUX.2 Flet?",
+        "highlight_text": "FLUX.2 Flet",
+        "description": "Experience Black Forest Labs' cutting-edge image editing. Transform photos with simple text commands.",
+        "buttons": [
+          {
+            "title": "Start Editing",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

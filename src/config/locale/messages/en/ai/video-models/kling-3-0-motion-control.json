@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Kling 3.0 Motion Control - AI Video Generator | Marble AI",
+    "description": "Kling 3.0 Motion Control by Kling AI. AI video motion model that transfers movement from reference videos to character images while preserving facial identity and expressions."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Kling 3.0 Motion Control",
+        "highlight_text": "Kling 3.0 Motion Control",
+        "description": "Kling AI's motion control model. Transfer movement from reference videos to character images while preserving facial identity and realistic motion dynamics.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Kling 3.0 Motion Control",
+        "highlight_text": "Kling 3.0 Motion Control",
+        "label": "Model Overview",
+        "description": "Kling 3.0 Motion Control is Kling AI's advanced motion transfer model that transfers movement from reference videos to character images while preserving facial identity, expressions, and realistic motion dynamics.",
+        "image": {
+          "src": "/imgs/models/video/kling-3-motion-control.mp4",
+          "alt": "Kling 3.0 Motion Control"
+        },
+        "items": [
+          {
+            "title": "Motion Transfer",
+            "description": "Transfer movement from reference videos to character images seamlessly.",
+            "icon": "RiRefreshLine"
+          },
+          {
+            "title": "Facial Preservation",
+            "description": "Maintain facial identity and expressions during motion transfer.",
+            "icon": "RiUserSmileLine"
+          },
+          {
+            "title": "Realistic Dynamics",
+            "description": "Natural and realistic motion dynamics in generated videos.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Character Animation",
+            "description": "Animate static character images with dynamic movements.",
+            "icon": "RiRunLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Kling 3.0 Motion Control a leading motion transfer model.",
+        "items": [
+          {
+            "title": "Image To Video",
+            "description": "Transform static character images into animated videos with motion transfer.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Reference Video",
+            "description": "Use reference videos to guide motion and movement patterns.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Expression Control",
+            "description": "Preserve and control facial expressions during animation.",
+            "icon": "RiEmotionLine"
+          },
+          {
+            "title": "Motion Dynamics",
+            "description": "Realistic motion dynamics with natural movement physics.",
+            "icon": "RiRunLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Kling 3.0 Motion Control.",
+        "items": [
+          {
+            "title": "Character Animation",
+            "description": "Animate character illustrations with realistic movements.",
+            "icon": "RiUserLine"
+          },
+          {
+            "title": "Virtual Avatars",
+            "description": "Create animated virtual avatars with natural motion.",
+            "icon": "RiRobotLine"
+          },
+          {
+            "title": "Game Development",
+            "description": "Generate character animations for games and interactive content.",
+            "icon": "RiGamepadLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Create engaging animated content for social platforms.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Marketing",
+            "description": "Produce animated marketing content with character motion.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Entertainment",
+            "description": "Create entertaining animated videos with dynamic characters.",
+            "icon": "RiMovieLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Kling 3.0 Motion Control.",
+        "items": [
+          {
+            "title": "What is Kling 3.0 Motion Control?",
+            "description": "Kling 3.0 Motion Control is Kling AI's motion transfer model that transfers movement from reference videos to character images."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Kling 3.0 Motion Control specializes in Image To Video generation with motion transfer from reference videos."
+          },
+          {
+            "title": "Who created Kling 3.0 Motion Control?",
+            "description": "Kling 3.0 Motion Control is created by Kling AI, a leading AI video generation company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Kling 3.0 Motion Control excels at transferring motion while preserving facial identity and expressions."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Kling 3.0 Motion Control through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How does motion transfer work?",
+            "description": "Upload a character image and a reference video, and the model will animate the character with the reference video's movements."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Kling 3.0 Motion Control?",
+        "highlight_text": "Kling 3.0 Motion Control",
+        "description": "Experience Kling AI's motion transfer. Animate characters with realistic movements.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

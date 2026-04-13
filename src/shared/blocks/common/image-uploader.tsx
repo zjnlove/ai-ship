@@ -16,6 +16,7 @@ export interface ImageUploaderValue {
   url?: string;
   status: UploadStatus;
   size?: number;
+  file?: File;
 }
 
 interface ImageUploaderProps {
@@ -27,6 +28,10 @@ interface ImageUploaderProps {
   className?: string;
   defaultPreviews?: string[];
   onChange?: (items: ImageUploaderValue[]) => void;
+  onBeforeUpload?: () => boolean;
+  onValidateFile?: (file: File) => Promise<boolean> | boolean;
+  imageWidth?: string;
+  imageHeight?: string;
 }
 
 interface UploadItem extends ImageUploaderValue {
@@ -58,6 +63,7 @@ const uploadImageFile = async (file: File) => {
 
   const result = await response.json();
   if (result.code !== 0 || !result.data?.urls?.length) {
+    console.error('Upload error response:', result);
     throw new Error(result.message || 'Upload failed');
   }
 
@@ -73,6 +79,10 @@ export function ImageUploader({
   className,
   defaultPreviews,
   onChange,
+  onBeforeUpload,
+  onValidateFile,
+  imageWidth = 'w-32',
+  imageHeight = 'h-32',
 }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isInitializedRef = useRef(false);
@@ -165,12 +175,13 @@ export function ImageUploader({
     isInternalChangeRef.current = true;
 
     onChangeRef.current?.(
-      items.map(({ id, preview, url, status, size }) => ({
+      items.map(({ id, preview, url, status, size, file }) => ({
         id,
         preview,
         url,
         status,
         size,
+        file,
       }))
     );
   }, [items]);
@@ -236,7 +247,7 @@ export function ImageUploader({
     });
   };
 
-  const handleFiles = (selectedFiles: File[]) => {
+  const handleFiles = async (selectedFiles: File[]) => {
     const replaceTargetId = replaceTargetIdRef.current;
     if (replaceTargetId) {
       // reset immediately to avoid sticky replace mode
@@ -254,24 +265,43 @@ export function ImageUploader({
         if (inputRef.current) inputRef.current.value = '';
         return;
       }
+
+      // ✅ 自定义文件校验
+      if (onValidateFile) {
+        const valid = await onValidateFile(file);
+        if (!valid) {
+          if (inputRef.current) inputRef.current.value = '';
+          return;
+        }
+      }
+
       replaceItems([{ id: replaceTargetId, file }]);
       return;
     }
 
     const availableSlots = maxCount - items.length;
-    const filesToAdd = selectedFiles
-      .filter((file) => {
-        if (!file.type?.startsWith('image/')) {
-          toast.error(`"${file.name}" is not an image`);
-          return false;
-        }
-        if (file.size > maxBytes) {
-          toast.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit`);
-          return false;
-        }
-        return true;
-      })
-      .slice(0, Math.max(availableSlots, 0));
+    const validFiles: File[] = [];
+
+    for (const file of selectedFiles) {
+      if (!file.type?.startsWith('image/')) {
+        toast.error(`"${file.name}" is not an image`);
+        continue;
+      }
+      if (file.size > maxBytes) {
+        toast.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit`);
+        continue;
+      }
+
+      // ✅ 自定义文件校验
+      if (onValidateFile) {
+        const valid = await onValidateFile(file);
+        if (!valid) continue;
+      }
+
+      validFiles.push(file);
+    }
+
+    const filesToAdd = validFiles.slice(0, Math.max(availableSlots, 0));
 
     if (!filesToAdd.length) {
       // when full: replace from the end backwards
@@ -435,6 +465,9 @@ export function ImageUploader({
   };
 
   const openFilePicker = () => {
+    if (onBeforeUpload && !onBeforeUpload()) {
+      return;
+    }
     inputRef.current?.click();
   };
 
@@ -504,7 +537,11 @@ export function ImageUploader({
               <img
                 src={item.preview}
                 alt="Reference"
-                className="h-32 w-32 rounded-lg object-cover"
+                className={cn(
+                  imageHeight,
+                  imageWidth,
+                  'rounded-lg object-cover'
+                )}
               />
               {item.size && (
                 <span className="bg-background text-muted-foreground absolute bottom-2 left-2 rounded-md px-2 py-1 text-[10px] font-medium">
@@ -553,13 +590,17 @@ export function ImageUploader({
             <div className="relative overflow-hidden rounded-lg">
               <button
                 type="button"
-                className="flex h-32 w-32 flex-col items-center justify-center gap-2"
+                className={cn(
+                  'flex flex-col items-center justify-center gap-2',
+                  imageHeight,
+                  imageWidth
+                )}
                 onClick={openFilePicker}
               >
                 <div className="border-border flex h-10 w-10 items-center justify-center rounded-full border border-dashed">
-                  <IconUpload className="h-5 w-5" />
+                  <ImageIcon className="h-5 w-5" />
                 </div>
-                <span className="text-xs font-medium">Upload</span>
+                {/* <span className="text-xs font-medium">Upload</span> */}
                 <span className="text-primary text-xs">Max {maxSizeMB}MB</span>
               </button>
             </div>

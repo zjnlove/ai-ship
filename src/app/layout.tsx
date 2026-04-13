@@ -1,6 +1,13 @@
 import '@/config/style/global.css';
 
-import { JetBrains_Mono, Merriweather, Noto_Sans_Mono } from 'next/font/google';
+import {
+  DM_Sans,
+  Inter,
+  JetBrains_Mono,
+  Merriweather,
+  Outfit,
+  Plus_Jakarta_Sans,
+} from 'next/font/google';
 import { getLocale, setRequestLocale } from 'next-intl/server';
 import NextTopLoader from 'nextjs-toploader';
 
@@ -13,7 +20,7 @@ import { getAffiliateService } from '@/shared/services/affiliate';
 import { getAnalyticsService } from '@/shared/services/analytics';
 import { getCustomerService } from '@/shared/services/customer_service';
 
-const notoSansMono = Noto_Sans_Mono({
+const notoSansMono = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',

@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Wan 2.5 - AI Video Generator | Marble AI",
+    "description": "Wan 2.5 by Alibaba. Cinematic AI video generation supporting text-to-video and image-to-video with native audio synchronization. Multiple resolutions and aspect ratios available."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Wan 2.5",
+        "highlight_text": "Wan 2.5",
+        "description": "Alibaba's cinematic AI video generation model. Create videos with native audio synchronization for dialogue, ambient sound, and background music.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Wan 2.5",
+        "highlight_text": "Wan 2.5",
+        "label": "Model Overview",
+        "description": "Wan 2.5 API from Alibaba is designed for cinematic AI video generation, supporting both text-to-video and image-to-video. It natively synchronizes visuals with dialogue, ambient sound, and background music with multiple resolutions and aspect ratios.",
+        "image": {
+          "src": "/imgs/models/video/wan-2-5.mp4",
+          "alt": "Wan 2.5"
+        },
+        "items": [
+          {
+            "title": "Native Audio Sync",
+            "description": "Synchronize visuals with dialogue, ambient sound, and background music.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Multiple Resolutions",
+            "description": "Support for 720p and 1080p resolutions for different use cases.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Flexible Aspect Ratios",
+            "description": "Support for 16:9, 9:16, and 1:1 aspect ratios.",
+            "icon": "RiAspectRatioLine"
+          },
+          {
+            "title": "Cinematic Quality",
+            "description": "Professional-grade cinematic video output.",
+            "icon": "RiMovieLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Wan 2.5 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with cinematic quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Audio Generation",
+            "description": "Generate synchronized audio including dialogue and ambient sounds.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Multi-Resolution",
+            "description": "Output in 720p or 1080p resolution based on needs.",
+            "icon": "RiSettings3Line"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Wan 2.5.",
+        "items": [
+          {
+            "title": "Social Media",
+            "description": "Create content in multiple aspect ratios for different platforms.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with synchronized audio.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Advertising",
+            "description": "Create advertising content with cinematic quality.",
+            "icon": "RiAdvertisementLine"
+          },
+          {
+            "title": "Creative Storytelling",
+            "description": "Bring stories to life with synchronized audio and visuals.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear narration.",
+            "icon": "RiGraduationCapLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Wan 2.5.",
+        "items": [
+          {
+            "title": "What is Wan 2.5?",
+            "description": "Wan 2.5 is Alibaba's cinematic AI video generation model with native audio synchronization."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Wan 2.5 supports Text To Video (T2V) and Image To Video (I2V) generation modes."
+          },
+          {
+            "title": "Who created Wan 2.5?",
+            "description": "Wan 2.5 is created by Alibaba, a leading technology company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Wan 2.5 excels at native audio synchronization and flexible output options."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Wan 2.5 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What resolutions does it support?",
+            "description": "Wan 2.5 supports 720p and 1080p resolutions with 16:9, 9:16, and 1:1 aspect ratios."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Try Wan 2.5?",
+        "highlight_text": "Wan 2.5",
+        "description": "Experience Alibaba's cinematic AI video generation. Create videos with native audio sync.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Imagen 4 - AI Image Generator & Editor | Marble AI",
+    "description": "Google Imagen 4 by DeepMind. State-of-the-art text-to-image generation model with photorealistic, high-quality visuals and exceptional detail. Supports both text-to-image and image-to-image."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Imagen 4",
+        "highlight_text": "Imagen 4",
+        "description": "Google DeepMind's state-of-the-art image generation model. Transform prompts into photorealistic, high-quality visuals with exceptional detail and creative versatility.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Imagen 4",
+        "highlight_text": "Imagen 4",
+        "label": "Model Overview",
+        "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art text-to-image generation model ideal for commercial, marketing, design, and creative applications.",
+        "image": {
+          "src": "/imgs/models/image/imagen-4.webp",
+          "alt": "Imagen 4"
+        },
+        "items": [
+          {
+            "title": "Photorealistic Quality",
+            "description": "Generate stunning photorealistic images with exceptional detail, natural lighting, and realistic textures.",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "Creative Versatility",
+            "description": "Support for diverse artistic styles and creative directions for various applications.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "High Resolution",
+            "description": "Produce high-resolution images suitable for commercial and professional use.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Fast Generation",
+            "description": "Optimized inference for quick image generation without compromising quality.",
+            "icon": "RiFlashlightLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Imagen 4 a leading image generation model.",
+        "items": [
+          {
+            "title": "Dual Generation Modes",
+            "description": "Supports both text-to-image generation and image-to-image editing for comprehensive workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Exceptional Detail",
+            "description": "Industry-leading detail rendering for professional-quality output.",
+            "icon": "RiZoomInLine"
+          },
+          {
+            "title": "Style Control",
+            "description": "Extensive style control options for diverse artistic directions.",
+            "icon": "RiBrushLine"
+          },
+          {
+            "title": "Prompt Understanding",
+            "description": "Advanced prompt comprehension for accurate image generation from descriptions.",
+            "icon": "RiBrainLine"
+          },
+          {
+            "title": "API Integration",
+            "description": "Seamless API access for developers to integrate into applications.",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated and edited images.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Imagen 4.",
+        "items": [
+          {
+            "title": "Commercial Marketing",
+            "description": "Create professional marketing visuals, advertisements, and promotional materials.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Product Design",
+            "description": "Generate product concepts, mockups, and visualizations for design projects.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Creative Art",
+            "description": "Produce stunning digital artwork and creative illustrations.",
+            "icon": "RiBrushLine"
+          },
+          {
+            "title": "E-commerce",
+            "description": "Generate product images and lifestyle shots for online retail.",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "Content Creation",
+            "description": "Create engaging visual content for social media and digital platforms.",
+            "icon": "RiArticleLine"
+          },
+          {
+            "title": "Brand Identity",
+            "description": "Develop visual brand elements and consistent imagery for businesses.",
+            "icon": "RiBuildingLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Imagen 4.",
+        "items": [
+          {
+            "title": "What is Imagen 4?",
+            "description": "Imagen 4 is Google DeepMind's state-of-the-art text-to-image generation model, introduced at Google I/O 2025, known for photorealistic quality and creative versatility."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Imagen 4 supports both Text To Image (generating images from text descriptions) and Image To Image (editing and transforming existing images)."
+          },
+          {
+            "title": "What makes Imagen 4 special?",
+            "description": "Imagen 4 delivers exceptional photorealistic quality, creative versatility, and advanced prompt understanding for professional-grade image generation."
+          },
+          {
+            "title": "Is there an enhanced version?",
+            "description": "Yes, Google Imagen 4 Ultra delivers even greater precision, speed, and resolution for demanding applications."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All images generated or edited with Imagen 4 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What applications is it best for?",
+            "description": "Imagen 4 is ideal for commercial, marketing, design, and creative applications requiring high-quality visuals."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Imagen 4?",
+        "highlight_text": "Imagen 4",
+        "description": "Experience Google DeepMind's state-of-the-art image generation. Create photorealistic visuals with exceptional detail.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

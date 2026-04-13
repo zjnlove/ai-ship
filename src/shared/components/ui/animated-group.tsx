@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode } from "react";
-import { motion, Variants } from "motion/react";
-import React from "react";
+import { motion, Variants, useInView } from "motion/react";
+import React, { useRef } from "react";
 
 export type PresetType =
   | "fade"
@@ -25,6 +25,8 @@ export type AnimatedGroupProps = {
   preset?: PresetType;
   as?: React.ElementType;
   asChild?: React.ElementType;
+  scrollTrigger?: boolean;
+  delay?: number;
 };
 
 const defaultContainerVariants: Variants = {
@@ -107,10 +109,27 @@ function AnimatedGroup({
   preset,
   as = "div",
   asChild = "div",
+  scrollTrigger = false,
+  delay = 0,
 }: AnimatedGroupProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: "-50px",
+  });
+
   const selectedVariants = {
     item: addDefaultVariants(preset ? presetVariants[preset] : {}),
-    container: addDefaultVariants(defaultContainerVariants),
+    container: addDefaultVariants({
+      ...defaultContainerVariants,
+      visible: {
+        ...defaultContainerVariants.visible,
+        transition: {
+          ...(defaultContainerVariants.visible as any)?.transition,
+          delayChildren: delay,
+        },
+      },
+    }),
   };
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
@@ -118,10 +137,13 @@ function AnimatedGroup({
   const MotionComponent = React.useMemo(() => motion(as), [as]);
   const MotionChild = React.useMemo(() => motion(asChild), [asChild]);
 
+  const animate = scrollTrigger ? (isInView ? "visible" : "hidden") : "visible";
+
   return (
     <MotionComponent
+      ref={ref}
       initial="hidden"
-      animate="visible"
+      animate={animate}
       variants={containerVariants}
       className={className}
     >

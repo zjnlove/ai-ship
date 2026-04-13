@@ -1,19 +1,11 @@
-# ShipAny Template Two
+# Marble AI Image & Video Generator
 
 ## Getting Started
 
-read [ShipAny Document](https://shipany.ai/docs/quick-start) to start your AI SaaS project.
-
-## Buy Templates
-
-check [ShipAny Templates](https://shipany.ai/templates) to buy Business Templates.
-
-## Feedback
-
-submit your feedbacks on [Github Issues](https://github.com/shipanyai/shipany-template-two/issues)
+read [Marble AI Document](https://marbleai.app/docs/quick-start) to start your image and video generation project.
 
 ## LICENSE
 
-!!! Please do not publicly release ShipAny's Code. Illegal use will be prosecuted
+!!! Please do not publicly release Marble AI's Code. Illegal use will be prosecuted
 
-[ShipAny LICENSE](./LICENSE)
+[Marble AI LICENSE](./LICENSE)

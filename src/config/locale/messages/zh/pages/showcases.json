@@ -1,148 +1,329 @@
 {
   "metadata": {
-    "title": "案例展示",
-    "description": "用 ShipAny 打造的精彩项目"
+    "title": "展示",
+    "description": "使用 Marble AI 构建的精彩项目"
   },
   "page": {
-    "title": "案例展示",
+    "title": "展示",
     "sections": {
       "showcases": {
         "id": "showcases",
-        "title": "用 ShipAny 构建的 AI SaaS 创业项目",
-        "description": "简单、快速、高效。",
+        "title": "Marble AI 驱动的创意项目",
+        "description": "发现使用我们尖端 AI 模型创建的精彩内容。",
         "groups": [
           {
             "name": "all",
-            "title": "所有项目"
+            "title": "全部"
           },
           {
-            "name": "ai-chatbot",
-            "title": "AI 聊天机器人"
+            "name": "qwen",
+            "title": "Qwen (阿里)"
           },
           {
-            "name": "ai-image",
-            "title": "AI 图片"
+            "name": "google",
+            "title": "Google"
           },
           {
-            "name": "ai-video",
-            "title": "AI 视频"
+            "name": "openai",
+            "title": "OpenAI"
           },
           {
-            "name": "ai-audio",
-            "title": "AI 音频"
+            "name": "black-forest-labs",
+            "title": "Black Forest Labs"
           },
           {
-            "name": "ai-music",
-            "title": "AI 音乐"
+            "name": "bytedance",
+            "title": "字节跳动"
           },
           {
-            "name": "ai-coding",
-            "title": "AI 编程"
+            "name": "kling",
+            "title": "Kling"
           },
           {
-            "name": "other",
-            "title": "其他"
+            "name": "wan",
+            "title": "Wan (阿里)"
+          },
+          {
+            "name": "grok",
+            "title": "Grok (xAI)"
+          },
+          {
+            "name": "ideogram",
+            "title": "Ideogram"
+          },
+          {
+            "name": "hailuo",
+            "title": "Hailuo"
+          },
+          {
+            "name": "runway",
+            "title": "Runway"
           }
         ],
         "items": [
           {
-            "title": "ThinkAny",
-            "description": "AI 搜索引擎",
-            "url": "https://thinkany.ai",
+            "title": "Qwen Image 2.0",
+            "description": "先进的 AI 图像生成，具有卓越品质",
+            "url": "/image-models/qwen-image-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/7.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
             },
-            "group": "ai-chatbot"
+            "group": "qwen"
           },
           {
-            "title": "HeyBeauty",
-            "description": "AI 虚拟试妆",
-            "url": "https://heybeauty.ai",
+            "title": "Qwen Image",
+            "description": "高质量 AI 图像生成",
+            "url": "/image-models/qwen-image",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/5.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
             },
-            "group": "ai-image"
+            "group": "qwen"
           },
           {
-            "title": "AI Wallpaper",
-            "description": "AI 壁纸生成器",
-            "url": "https://aiwallpaper.shop",
+            "title": "Qwen Image Edit",
+            "description": "AI 驱动的图像编辑和增强",
+            "url": "/image-models/qwen-image-edit",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/1.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
             },
-            "group": "ai-image"
+            "group": "qwen"
           },
           {
-            "title": "AI Cover",
-            "description": "AI 封面生成器",
-            "url": "https://aicover.design",
+            "title": "Nano Banana Pro",
+            "description": "专业 AI 图像生成，具有热门功能",
+            "url": "/image-models/nano-banana-pro",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/2.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
             },
-            "group": "ai-image"
+            "group": "google"
           },
           {
-            "title": "GPTs Works",
-            "description": "GPTs 导航",
-            "url": "https://gpts.works",
+            "title": "Nano Banana 2",
+            "description": "下一代 AI 图像生成",
+            "url": "/image-models/nano-banana-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/3.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
             },
-            "group": "other"
+            "group": "google"
           },
           {
-            "title": "Melodisco",
-            "description": "AI 音乐播放器",
-            "url": "https://melodis.co",
+            "title": "Imagen 4",
+            "description": "Google 最先进的文本到图像生成模型",
+            "url": "/image-models/imagen-4",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/4.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
             },
-            "group": "ai-music"
+            "group": "google"
           },
           {
-            "title": "Pagen",
-            "description": "AI 落地页生成器",
-            "url": "https://pagen.so",
+            "title": "GPT Image 1.5",
+            "description": "OpenAI 的旗舰图像生成模型",
+            "url": "/image-models/gpt-image-1.5",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/6.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "GPT Image 1.5"
             },
-            "group": "ai-coding"
+            "group": "openai"
           },
           {
-            "title": "SoraFM",
-            "description": "AI 视频生成器",
-            "url": "https://sorafm.trys.ai",
+            "title": "4o Image",
+            "description": "OpenAI 最新的 AI 图像生成模型",
+            "url": "/image-models/4o-image",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/8.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
             },
-            "group": "ai-video"
+            "group": "openai"
           },
           {
-            "title": "PodLM",
-            "description": "AI 播客生成器",
-            "url": "https://podlm.ai",
+            "title": "FLUX.2",
+            "description": "尖端 AI 图像生成",
+            "url": "/image-models/flux-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/9.png",
-              "alt": "案例展示"
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
             },
-            "group": "ai-audio"
+            "group": "black-forest-labs"
+          },
+          {
+            "title": "Flux Kontext",
+            "description": "上下文感知的 AI 图像生成",
+            "url": "/image-models/flux-kontext",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            },
+            "group": "black-forest-labs"
+          },
+          {
+            "title": "Grok Imagine",
+            "description": "xAI 的多模态图像和视频生成模型",
+            "url": "/image-models/grok-imagine",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            },
+            "group": "grok"
+          },
+          {
+            "title": "Ideogram V3",
+            "description": "专业 AI 图像生成",
+            "url": "/image-models/ideogram-v3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            },
+            "group": "ideogram"
+          },
+          {
+            "title": "Ideogram V3 Reframe",
+            "description": "具有重构功能的 AI 图像生成",
+            "url": "/image-models/ideogram-v3-reframe",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            },
+            "group": "ideogram"
+          },
+          {
+            "title": "Seedance 2.0",
+            "description": "最新的 AI 视频生成，具有新功能",
+            "url": "/video-models/seedance-2-0",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/seedance-2-0.mp4",
+              "alt": "Seedance 2.0"
+            },
+            "group": "bytedance"
+          },
+          {
+            "title": "Seedance 1.5 Pro",
+            "description": "专业 AI 视频生成",
+            "url": "/video-models/seedance-1-5-pro",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/seedance-1-5-pro.mp4",
+              "alt": "Seedance 1.5 Pro"
+            },
+            "group": "bytedance"
+          },
+          {
+            "title": "Kling 3.0",
+            "description": "先进的 AI 视频生成技术",
+            "url": "/video-models/kling-3-0",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/kling-3-0.mp4",
+              "alt": "Kling 3.0"
+            },
+            "group": "kling"
+          },
+          {
+            "title": "Kling 2.6",
+            "description": "高质量 AI 视频生成",
+            "url": "/video-models/kling-2-6",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/kling-2-6.mp4",
+              "alt": "Kling 2.6"
+            },
+            "group": "kling"
+          },
+          {
+            "title": "Wan 2.6",
+            "description": "阿里最新的 AI 视频模型",
+            "url": "/video-models/wan-2-6",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/wan-2-6.mp4",
+              "alt": "Wan 2.6"
+            },
+            "group": "wan"
+          },
+          {
+            "title": "Wan 2.5",
+            "description": "阿里的电影级 AI 视频生成",
+            "url": "/video-models/wan-2-5",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/wan-2-5.mp4",
+              "alt": "Wan 2.5"
+            },
+            "group": "wan"
+          },
+          {
+            "title": "Veo 3.1",
+            "description": "最新的 AI 视频生成模型",
+            "url": "/video-models/veo-3-1",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/veo-3-1.png",
+              "alt": "Veo 3.1"
+            },
+            "group": "google"
+          },
+          {
+            "title": "Veo 3",
+            "description": "先进的 AI 视频生成",
+            "url": "/video-models/veo-3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/veo-3.mp4",
+              "alt": "Veo 3"
+            },
+            "group": "google"
+          },
+          {
+            "title": "Hailuo 2.3",
+            "description": "MiniMax 的高保真 AI 视频生成模型",
+            "url": "/video-models/hailuo-2-3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/hailuo-2-3.mp4",
+              "alt": "Hailuo 2.3"
+            },
+            "group": "hailuo"
+          },
+          {
+            "title": "Hailuo 02",
+            "description": "MiniMax 的先进 AI 视频生成模型",
+            "url": "/video-models/hailuo-02",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/hailuo-02.mp4",
+              "alt": "Hailuo 02"
+            },
+            "group": "hailuo"
+          },
+          {
+            "title": "Runway 视频生成",
+            "description": "Runway AI 的突破性视频生成",
+            "url": "/video-models/runway-video-generation",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/runway.webp",
+              "alt": "Runway 视频生成"
+            },
+            "group": "runway"
           }
         ]
       }

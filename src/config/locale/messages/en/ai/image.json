@@ -1,11 +1,480 @@
 {
   "metadata": {
-    "title": "AI Image Generator",
-    "description": "Generate images with AI models, support text-to-image and image-to-image."
+    "title": "Marble AI - AI Image Generator | Text To Image & Image To Image",
+    "description": "Transform your ideas into stunning visuals with Marble AI's Image Generator. Supports both Text To Image and Image To Image modes. Powered by leading AI models including Qwen Image, Imagen 4, FLUX.2, GPT Image, Grok Imagine, and more."
   },
   "page": {
-    "title": "AI Image Generator",
-    "description": "Generate images with AI models, support text-to-image and image-to-image."
+    "sections": {
+      "hero": {
+        "title": "AI Image Generator",
+        "highlight_text": "AI Image Generator",
+        "description": "Unleash your creativity with Marble AI. Generate stunning, high-quality images from text descriptions or transform existing images using the world's most advanced AI models.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "Powered by Leading AI Models",
+        "highlight_text": "Leading AI Models",
+        "label": "AI Models",
+        "description": "Marble AI integrates the most powerful image generation AI models, giving you access to cutting-edge Text To Image and Image To Image technology in one platform.",
+        "image": {
+          "src": "/imgs/models/image/ideogram-v3-reframe.png",
+          "alt": "Marble AI Image Generator"
+        },
+        "items": [
+          {
+            "title": "Qwen",
+            "description": "Alibaba's Qwen team delivers powerful image generation models with multilingual text rendering and advanced editing capabilities.",
+            "icon": "RiRobot2Line",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "Qwen"
+            }
+          },
+          {
+            "title": "Google",
+            "description": "Google DeepMind's Imagen and Gemini series excel at photorealism, text rendering, and understanding complex spatial relationships.",
+            "icon": "RiGoogleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Google"
+            }
+          },
+          {
+            "title": "OpenAI",
+            "description": "GPT-powered image models that understand both text and visual context, delivering precise instruction following and consistent styles.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/3.png",
+              "alt": "OpenAI"
+            }
+          },
+          {
+            "title": "Black Forest Labs",
+            "description": "The original Stable Diffusion team's next-generation models with exceptional detail, accurate text rendering, and flexible control.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/4.png",
+              "alt": "Black Forest Labs"
+            }
+          },
+          {
+            "title": "Midjourney",
+            "description": "Renowned for creating artistic, dreamlike visuals with exceptional aesthetic quality and creative interpretation.",
+            "icon": "RiPaletteLine",
+            "image": {
+              "src": "/imgs/features/5.png",
+              "alt": "Midjourney"
+            }
+          },
+          {
+            "title": "Stability AI",
+            "description": "Creators of Stable Diffusion, offering open-source and commercial models with incredible flexibility and community-driven innovation.",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Stability AI"
+            }
+          },
+          {
+            "title": "Grok (xAI)",
+            "description": "xAI's multimodal image and video generation model with coherent motion and synchronized audio capabilities.",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Grok"
+            }
+          },
+          {
+            "title": "Ideogram",
+            "description": "Specializes in accurate text rendering within images, perfect for logos, posters, and typography-focused designs.",
+            "icon": "RiText",
+            "image": {
+              "src": "/imgs/features/8.png",
+              "alt": "Ideogram"
+            }
+          }
+        ]
+      },
+      "model": {
+        "id": "features-model",
+        "title": "Explore Our AI Image Models",
+        "highlight_text": "AI Image Models",
+        "description": "Choose from the world's most advanced image generation models, each with unique strengths for different creative needs. Supports both Text To Image and Image To Image generation.",
+        "items": [
+          {
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "Alibaba Qwen Image 2.0 is a unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative and visual design workflows.",
+            "image": {
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
+            }
+          },
+          {
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "The Qwen Image API empowers creators, developers, and businesses to generate and edit photorealistic images effortlessly. Whether you're crafting intricate designs or refining existing visuals, this powerful Qwen API integrates seamlessly into your workflow, delivering multilingual text rendering and advanced editing capabilities that rival top models.",
+            "image": {
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
+            }
+          },
+          {
+            "title": "Qwen Image Edit",
+            "text": "Qwen",
+            "description": "Qwen-Image-Edit is an open-source image editing model based on Qwen-Image, supporting semantic and appearance editing with precise, visually coherent results. It also handles bilingual (Chinese and English) text editing while preserving font, size, and style, making it a versatile tool for advanced visual content manipulation.",
+            "image": {
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
+            }
+          },
+          {
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "Meet Nano Banana 2, Google's Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers, it combines lightning-fast speed with Pro-level quality, accurate text rendering, strong character consistency, and scalable image generation and editing workflows.",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
+            }
+          },
+          {
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind's Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency—offering a major leap in visual quality for creative and API-driven workflows.",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
+          },
+          {
+            "title": "NanoBanana-Gemini 2.5 Flash Image Preview",
+            "text": "Google",
+            "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image generation and editing. It produces hyper-realistic, physics-aware visuals with seamless style transformations.",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash Image Preview"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art text-to-image generation model that transforms prompts into photorealistic, high-quality visuals with exceptional detail and creative versatility. Its enhanced variant, Google Imagen 4 Ultra, delivers even greater precision, speed, and resolution, making both models ideal for commercial, marketing, design, and creative applications.",
+            "image": {
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 is OpenAI's flagship image generation model for high-quality image creation and precise image editing, with strong instruction following and improved text rendering.",
+            "image": {
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "The GPT-Image-1 model, also known as ChatGPT 4o Image, is OpenAI's latest AI image generation model. It understands both text and visual context, allowing developers to create and edit images with remarkable accuracy. Unlike traditional diffusion models, GPT-Image-1 follows instructions precisely, supports consistent styles, and renders legible text — making it ideal for applications in design, marketing, and creative automation.",
+            "image": {
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 is Black Forest Labs' advanced image generation model that delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
+            "image": {
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "In a world where visuals drive engagement, FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands, delivering professional results that save time and boost creativity. Whether you're optimizing e-commerce listings or crafting marketing masterpieces, Kie.ai's FLUX.1 Kontext API is your gateway to efficient, high-quality image innovation.",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine is xAI's multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio.",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3 Reframe Image",
+            "text": "Ideogram",
+            "description": "Ideogram V3 Reframe is a specialized image-to-image model built on Ideogram 3.0, designed to intelligently extend and adapt images across diverse aspect ratios and resolutions. Leveraging advanced AI outpainting, it preserves visual consistency while enabling creative reframing for digital, print, and video content.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            }
+          },
+          {
+            "title": "Ideogram Character",
+            "text": "Ideogram",
+            "description": "Ideogram Character is the latest feature released by Ideogram AI, ensuring characters retain core features such as facial traits, proportions, and hairstyles across different scenes, artistic styles, and contexts. Whether creating characters from a single reference image or fine-tuning existing ones, Kie.ai's Ideogram Character API offers flexibility and precision through its Base, Edit, and Remix operations.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-character.png",
+              "alt": "Ideogram Character"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API is the latest generation of Ideogram's image generation model, offering text-to-image, image editing, reframing, and remixing with improved consistency and creative control.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Topaz Image Upscale",
+            "text": "Topaz",
+            "description": "Topaz Labs Image Upscale is an AI image enhancement model that increases resolution and restores detail with high-fidelity upscaling, natural texture reconstruction, and improved clarity across low-quality images.",
+            "image": {
+              "src": "/imgs/models/image/topaz-image-upscale.png",
+              "alt": "Topaz Image Upscale"
+            }
+          },
+          {
+            "title": "Recraft Remove Background",
+            "text": "Recraft",
+            "description": "Built by Recraft AI, the Remove Background API accurately separates subjects from any background and delivers clean, transparent outputs—optimized for seamless integration into websites, eCommerce platforms, and creative workflows.",
+            "image": {
+              "src": "/imgs/models/image/recraft-remove-background.png",
+              "alt": "Recraft Remove Background"
+            }
+          },
+          {
+            "title": "Recraft Crisp Upscale",
+            "text": "Recraft",
+            "description": "Transform blurry photos into crystal-clear masterpieces using the Recraft Crisp Upscale API. As the ultimate free image upscaler, this tool leverages advanced AI to deliver professional-grade results without costing a dime. Whether you're a designer, marketer, or hobbyist, experience seamless picture upscaler capabilities that make free image upscaling a breeze.",
+            "image": {
+              "src": "/imgs/models/image/recraft-crisp-upscale.webp",
+              "alt": "Recraft Crisp Upscale"
+            }
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Image Generator?",
+        "highlight_text": "Image Generator",
+        "description": "Experience the most powerful and versatile AI image generation platform with unmatched quality and speed. Supports both Text To Image and Image To Image modes.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access 11+ leading models including Qwen Image, Imagen 4, FLUX.2, and GPT Image in one platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Text To Image",
+            "description": "Generate stunning images from text descriptions using the world's most advanced AI models.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Image",
+            "description": "Transform and edit existing images with AI-powered tools and style transfers.",
+            "icon": "RiImageEditLine"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Generate stunning images in 5-15 seconds with our optimized infrastructure.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "4K Quality",
+            "description": "Create high-resolution images up to 4K with exceptional detail and clarity.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated images. Use them anywhere without restrictions.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Style Control",
+            "description": "Extensive customization with style presets, aspect ratios, and advanced parameters.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Seamless API integration for developers to build AI-powered applications.",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "What Creators Say About Marble AI Image Generator",
+        "highlight_text": "What Creators Say",
+        "description": "Join thousands of artists, designers, and creators who trust Marble AI for their image generation needs.",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "Digital Artist",
+            "quote": "Marble AI has revolutionized my creative workflow. Having Qwen Image, Imagen 4, and FLUX.2 in one place saves me hours of switching between tools. The quality is outstanding!",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "Marketing Director",
+            "quote": "We generate all our campaign visuals with Marble AI. The commercial license and variety of models give us everything we need for professional marketing materials.",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "Game Developer",
+            "quote": "The FLUX.2 model on Marble AI produces incredible concept art for our games. The detail and consistency are exactly what we need for rapid prototyping.",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "Content Creator",
+            "quote": "I've tried every AI image generator out there. Marble AI stands out with its speed, quality, and the ability to compare results across different models instantly.",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "E-commerce Entrepreneur",
+            "quote": "Marble AI helps us create stunning product visualizations without expensive photoshoots. Our conversion rates have increased by 40% since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "Graphic Designer",
+            "quote": "The style diversity is unmatched. Whether I need photorealistic renders or artistic illustrations, Marble AI delivers perfect results every time.",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "Social Media Manager",
+            "quote": "Imagen 4 on Marble AI creates the most realistic product mockups I've ever seen. Our Instagram engagement has doubled since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "Architect",
+            "quote": "The batch generation feature is a game-changer. I can explore dozens of design concepts in minutes instead of hours. Absolutely essential for my workflow.",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "Startup Founder",
+            "quote": "The API integration was seamless. We built our entire product visualization pipeline with Marble AI in just one week. The documentation is excellent!",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "Freelance Illustrator",
+            "quote": "As a freelancer, Marble AI's commercial license gives me peace of mind. I can create for clients without worrying about usage rights. Worth every penny!",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "Education Content Creator",
+            "quote": "The 24/7 support team is incredible. They helped me optimize my prompts and now I'm creating educational visuals that my students absolutely love!",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "FAQ - AI Image Generator",
+        "highlight_text": "FAQ",
+        "description": "Everything you need to know about Marble AI's Image Generator, including Text To Image and Image To Image features.",
+        "items": [
+          {
+            "title": "What is Marble AI Image Generator?",
+            "description": "Marble AI Image Generator is a powerful platform that supports both Text To Image and Image To Image generation. Text To Image transforms written descriptions into visual images, while Image To Image allows you to transform and edit existing images using AI."
+          },
+          {
+            "question": "Which AI models does Marble AI support?",
+            "answer": "Marble AI integrates the leading image generation models including Qwen Image 2.0 (Qwen), Imagen 4 (Google), Nano Banana 2 (Google), Nano Banana Pro (Google), gpt-image-1.5 (OpenAI), 4o Image (OpenAI), FLUX.2 (Black Forest Labs), Flux Kontext (Black Forest Labs), Grok Imagine (Grok), and Ideogram V3 (Ideogram). Each model has unique strengths, and you can choose the best one for your specific needs."
+          },
+          {
+            "question": "What's the difference between Text To Image and Image To Image?",
+            "answer": "Text To Image creates new images from text descriptions - you describe what you want to see, and the AI generates it. Image To Image takes an existing image and transforms it based on your instructions, allowing you to edit, enhance, or completely reimagine the original image."
+          },
+          {
+            "question": "How do I use Marble AI's Image Generator?",
+            "answer": "For Text To Image: Enter a text description, select your preferred AI model and style settings, then click generate. For Image To Image: Upload a reference image, provide transformation instructions, and let the AI work its magic. Our intuitive interface makes it easy for anyone to create professional-quality images."
+          },
+          {
+            "question": "What image quality can I expect?",
+            "answer": "Marble AI generates high-resolution images up to 4K quality. The exact output depends on the model you choose, but all our models are optimized for exceptional detail, color accuracy, and visual appeal."
+          },
+          {
+            "question": "Can I use generated images commercially?",
+            "answer": "Yes! All images generated through Marble AI come with full commercial rights. You can use them for marketing, products, websites, social media, and any other business purposes without restrictions."
+          },
+          {
+            "question": "How fast is the image generation?",
+            "answer": "Most images are generated within 5-15 seconds depending on the model and complexity. Our optimized infrastructure ensures you get your results quickly without compromising quality."
+          },
+          {
+            "question": "Can I customize the style of generated images?",
+            "answer": "Absolutely! Marble AI offers extensive customization options including style presets, negative prompts, aspect ratios, and advanced parameters. You have full control over the artistic direction of your images."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Create Amazing Images?",
+        "highlight_text": "Amazing Images",
+        "description": "Start generating stunning visuals with Marble AI's powerful Image Generator. Choose from Text To Image or Image To Image modes with the world's best AI models.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
   },
   "generator": {
     "title": "Image Generator",
@@ -21,10 +490,25 @@
       "select_model": "Select Model",
       "prompt": "Prompt",
       "prompt_placeholder": "Describe the details of the image, such as color, shape, texture, etc.",
-      "reference_image": "Reference Image",
+      "reference_image": "Images",
       "reference_image_placeholder": "Upload reference images, support multiple images",
       "some_images_failed_to_upload": "Some images failed to upload, please delete them and re-upload",
       "prompt_too_long": "Prompt is too long, please delete some content"
+    },
+    "advanced_options": {
+      "aspect_ratio": "Aspect Ratio",
+      "output_format": "Output Format",
+      "quality": "Quality",
+      "resolution": "Resolution",
+      "seed": "Seed",
+      "enable_sequential": "Enable Sequential",
+      "thinking_mode": "Thinking Mode",
+      "num_outputs": "Number of Outputs",
+      "switch": "Switch",
+      "switch_options": {
+        "on": "On",
+        "off": "Off"
+      }
     },
     "generate": "Generate Images",
     "checking_account": "Checking Account...",
@@ -38,6 +522,19 @@
     "generated_images": "Image Preview",
     "ready_to_generate": "Ready to Generate",
     "ready_for_generating": "Ready for Generating",
-    "no_images_generated": "No Images Generated"
+    "no_images_generated": "No Images Generated",
+    "share": "Share",
+    "download": "Download",
+    "regenerate": "Regenerate",
+    "random_seed": "RandomSeed",
+    "waiting_hint": {
+      "title": "Image generation usually takes a little while, please be patient",
+      "description": "You don't need to stay on this page, the generation will be saved automatically.",
+      "link": "Go to My Tasks to view all generation history"
+    },
+    "validation": {
+      "image_too_large": "Image file size exceeds model limit. Maximum allowed: {max}MB, your image: {actual}MB",
+      "image_unsupported_format": "Unsupported image format. Supported formats: {supported}, your image: {actual}"
+    }
   }
 }

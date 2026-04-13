@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { loadMessages } from '@/core/i18n/request';
 import { getThemePage } from '@/core/theme';
 import { VideoGenerator } from '@/shared/blocks/generator';
 import { getMetadata } from '@/shared/lib/seo';
@@ -20,26 +21,43 @@ export default async function AiVideoGeneratorPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // get ai video data
-  const t = await getTranslations('ai.video');
+  // // get ai video data
+  // const t = await getTranslations('ai.video');
 
-  // build page sections
-  const page: DynamicPage = {
+  // // build page sections
+  // const page: DynamicPage = {
+  //   sections: {
+  //     hero: {
+  //       title: t.raw('page.title'),
+  //       description: t.raw('page.description'),
+  //       background_image: {
+  //         src: '/imgs/bg/tree.jpg',
+  //         alt: 'hero background',
+  //       },
+  //     },
+  //     generator: {
+  //       component: <VideoGenerator srOnlyTitle={t.raw('generator.title')} />,
+  //     },
+  //   },
+  // };
+
+  const aiMessages = await loadMessages(`ai/video`, locale);
+  const { hero, ...restSections } = aiMessages.page.sections || {};
+
+  const page = {
     sections: {
-      hero: {
-        title: t.raw('page.title'),
-        description: t.raw('page.description'),
-        background_image: {
-          src: '/imgs/bg/tree.jpg',
-          alt: 'hero background',
-        },
-      },
+      ...(hero && { hero }),
       generator: {
-        component: <VideoGenerator srOnlyTitle={t.raw('generator.title')} />,
+        component: (
+          <VideoGenerator
+            srOnlyTitle={aiMessages.generator?.title}
+            className=""
+          />
+        ),
       },
+      ...restSections,
     },
   };
-
   // load page component
   const Page = await getThemePage('dynamic-page');
 

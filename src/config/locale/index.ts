@@ -54,4 +54,9 @@ export const localeMessagesPaths = [
   'pages/showcases',
   'pages/blog',
   'pages/updates',
+  'ai/ai-image-generator/text-to-image',
+  'ai/ai-image-generator/image-to-image',
+  'ai/ai-video-generator/text-to-video',
+  'ai/ai-video-generator/image-to-video',
+  'ai/ai-video-generator/video-to-video',
 ];

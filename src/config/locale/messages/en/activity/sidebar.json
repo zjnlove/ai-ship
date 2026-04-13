@@ -1,31 +1,66 @@
 {
-  "title": "Activity",
-  "nav": {
-    "items": [
-      {
-        "title": "AI Tasks",
-        "url": "/activity/ai-tasks",
-        "icon": "RiTaskLine"
+  "header": {
+    "brand": {
+      "title": "Marble AI",
+      "logo": {
+        "src": "/logo.png",
+        "alt": "Marble AI"
       },
-      {
-        "title": "AI Chats",
-        "url": "/activity/chats",
-        "icon": "RiChat2Line"
-      }
-    ]
+      "url": "/#",
+      "target": "_blank"
+    },
+    "show_trigger": true
   },
-  "top_nav": {
-    "items": [
-      {
-        "title": "Activity",
-        "url": "/activity",
-        "icon": "Activity"
-      },
-      {
-        "title": "Settings",
-        "url": "/settings",
-        "icon": "Settings"
-      }
-    ]
-  }
+  "main_navs": [
+    {
+      "title": "Activity",
+      "items": [
+        {
+          "title": "History",
+          "url": "/activity/ai-tasks",
+          "icon": "Brain"
+        }
+      ]
+    },
+    {
+      "title": "Settings",
+      "items": [
+        {
+          "title": "Profile",
+          "url": "/settings/profile",
+          "icon": "User"
+        },
+        {
+          "title": "Billing",
+          "url": "/settings/billing",
+          "icon": "CreditCard"
+        },
+        {
+          "title": "Payments",
+          "url": "/settings/payments",
+          "icon": "DollarSign"
+        },
+        {
+          "title": "Credits",
+          "url": "/settings/credits",
+          "icon": "Coins"
+        },
+        {
+          "title": "API Keys",
+          "url": "/settings/apikeys",
+          "icon": "RiKeyLine"
+        }
+      ]
+    }
+  ],
+  "user_nav": {
+    "show_name": true,
+    "show_credits": false,
+    "show_sign_out": true
+  },
+  "footer": {
+    "show_theme": false,
+    "show_locale": false
+  },
+  "variant": "sidebar"
 }

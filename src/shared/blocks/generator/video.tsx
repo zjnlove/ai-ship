@@ -1,10 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { max } from 'drizzle-orm';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  ChevronUp,
   CreditCard,
   Download,
   Loader2,
+  Plus,
+  Settings,
+  Share2,
   Sparkles,
   User,
   Video,
@@ -12,18 +18,24 @@ import {
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { Link } from '@/core/i18n/navigation';
+import { Link, usePathname } from '@/core/i18n/navigation';
 import { AIMediaType, AITaskStatus } from '@/extensions/ai/types';
-import { ImageUploader, ImageUploaderValue } from '@/shared/blocks/common';
-import { Button } from '@/shared/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card';
+  ImageUploader,
+  ImageUploaderValue,
+} from '@/shared/blocks/common/image-uploader';
+import {
+  VideoUploader,
+  VideoUploaderValue,
+} from '@/shared/blocks/common/video-uploader';
+import { Button } from '@/shared/components/ui/button';
 import { Label } from '@/shared/components/ui/label';
-import { Progress } from '@/shared/components/ui/progress';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/shared/components/ui/popover';
+import { ScrollAnimation } from '@/shared/components/ui/scroll-animation';
 import {
   Select,
   SelectContent,
@@ -31,13 +43,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select';
-import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
+import { Switch } from '@/shared/components/ui/switch';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { useAppContext } from '@/shared/contexts/app';
+import { cn } from '@/shared/lib/utils';
+
+import {
+  calculateDiscountedCredits,
+  getDiscountLabel,
+  getOptionsForModel,
+  getVideoOptionLabel,
+  getVideoOptionsForType,
+  MODEL_OPTIONS,
+  PROVIDER_OPTIONS,
+  VideoOptionType,
+} from './video-config/index';
 
 interface VideoGeneratorProps {
-  maxSizeMB?: number;
+  video_maxSizeMB?: number;
+  image_maxSizeMB?: number;
   srOnlyTitle?: string;
+  className?: string;
 }
 
 interface GeneratedVideo {
@@ -60,82 +86,16 @@ interface BackendTask {
 
 type VideoGeneratorTab = 'text-to-video' | 'image-to-video' | 'video-to-video';
 
-const POLL_INTERVAL = 15000;
-const GENERATION_TIMEOUT = 600000; // 10 minutes for video
+const POLL_INTERVAL = 20000;
+const GENERATION_TIMEOUT = 600000;
 const MAX_PROMPT_LENGTH = 2000;
 
 const textToVideoCredits = 6;
 const imageToVideoCredits = 8;
 const videoToVideoCredits = 10;
 
-const MODEL_OPTIONS = [
-  // Replicate models
-  {
-    value: 'google/veo-3.1',
-    label: 'Veo 3.1',
-    provider: 'replicate',
-    scenes: ['text-to-video', 'image-to-video'],
-  },
-  {
-    value: 'openai/sora-2',
-    label: 'Sora 2',
-    provider: 'replicate',
-    scenes: ['text-to-video', 'image-to-video'],
-  },
-  // Fal models
-  {
-    value: 'fal-ai/veo3',
-    label: 'Veo 3',
-    provider: 'fal',
-    scenes: ['text-to-video'],
-  },
-  {
-    value: 'fal-ai/wan-pro/image-to-video',
-    label: 'Wan Pro',
-    provider: 'fal',
-    scenes: ['image-to-video'],
-  },
-  {
-    value: 'fal-ai/kling-video/o1/video-to-video/edit',
-    label: 'Kling Video O1',
-    provider: 'fal',
-    scenes: ['video-to-video'],
-  },
-  // Kie models
-  {
-    value: 'sora-2-pro-image-to-video',
-    label: 'Sora 2 Pro',
-    provider: 'kie',
-    scenes: ['image-to-video'],
-  },
-  {
-    value: 'sora-2-pro-text-to-video',
-    label: 'Sora 2 Pro',
-    provider: 'kie',
-    scenes: ['text-to-video'],
-  },
-];
-
-const PROVIDER_OPTIONS = [
-  {
-    value: 'replicate',
-    label: 'Replicate',
-  },
-  {
-    value: 'fal',
-    label: 'Fal',
-  },
-  {
-    value: 'kie',
-    label: 'Kie',
-  },
-];
-
 function parseTaskResult(taskResult: string | null): any {
-  if (!taskResult) {
-    return null;
-  }
-
+  if (!taskResult) return null;
   try {
     return JSON.parse(taskResult);
   } catch (error) {
@@ -145,11 +105,8 @@ function parseTaskResult(taskResult: string | null): any {
 }
 
 function extractVideoUrls(result: any): string[] {
-  if (!result) {
-    return [];
-  }
+  if (!result) return [];
 
-  // check videos array first
   const videos = result.videos;
   if (videos && Array.isArray(videos)) {
     return videos
@@ -166,16 +123,10 @@ function extractVideoUrls(result: any): string[] {
       .filter(Boolean);
   }
 
-  // check output
   const output = result.output ?? result.video ?? result.data;
+  if (!output) return [];
 
-  if (!output) {
-    return [];
-  }
-
-  if (typeof output === 'string') {
-    return [output];
-  }
+  if (typeof output === 'string') return [output];
 
   if (Array.isArray(output)) {
     return output
@@ -195,32 +146,58 @@ function extractVideoUrls(result: any): string[] {
   if (typeof output === 'object') {
     const candidate =
       output.url ?? output.uri ?? output.video ?? output.src ?? output.videoUrl;
-    if (typeof candidate === 'string') {
-      return [candidate];
-    }
+    if (typeof candidate === 'string') return [candidate];
   }
 
   return [];
 }
 
 export function VideoGenerator({
-  maxSizeMB = 50,
+  video_maxSizeMB = 50,
+  image_maxSizeMB = 10,
   srOnlyTitle,
+  className,
 }: VideoGeneratorProps) {
   const t = useTranslations('ai.video.generator');
 
   const [activeTab, setActiveTab] =
     useState<VideoGeneratorTab>('text-to-video');
-
   const [costCredits, setCostCredits] = useState<number>(textToVideoCredits);
   const [provider, setProvider] = useState(PROVIDER_OPTIONS[0]?.value ?? '');
-  const [model, setModel] = useState(MODEL_OPTIONS[0]?.value ?? '');
+  const [model, setModel] = useState(() => {
+    const value = MODEL_OPTIONS[0]?.sceneValues?.['text-to-video'];
+    return typeof value === 'string' ? value : (value?.id ?? '');
+  });
   const [prompt, setPrompt] = useState('');
-  const [referenceImageItems, setReferenceImageItems] = useState<
-    ImageUploaderValue[]
-  >([]);
-  const [referenceImageUrls, setReferenceImageUrls] = useState<string[]>([]);
-  const [referenceVideoUrl, setReferenceVideoUrl] = useState<string>('');
+  // 按模式独立存储上传内容
+  const [modeImages, setModeImages] = useState<
+    Record<string, ImageUploaderValue[]>
+  >({
+    'text-to-video': [],
+    'image-to-video': [],
+    'video-to-video': [],
+  });
+
+  const [modeVideos, setModeVideos] = useState<
+    Record<string, VideoUploaderValue[]>
+  >({
+    'text-to-video': [],
+    'image-to-video': [],
+    'video-to-video': [],
+  });
+
+  // 当前模式的上传内容
+  const referenceImageItems = modeImages[activeTab] || [];
+  const referenceVideoItems = modeVideos[activeTab] || [];
+
+  // 计算当前模式的图片URL和视频URL
+  const referenceImageUrls = referenceImageItems
+    .filter((item) => item.status === 'uploaded' && item.url)
+    .map((item) => item.url as string);
+
+  const referenceVideoUrl =
+    referenceVideoItems.find((item) => item.status === 'uploaded' && item.url)
+      ?.url || '';
   const [generatedVideos, setGeneratedVideos] = useState<GeneratedVideo[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -233,7 +210,20 @@ export function VideoGenerator({
     null
   );
   const [isMounted, setIsMounted] = useState(false);
+  const [advancedOptions, setAdvancedOptions] = useState<Record<string, any>>(
+    {}
+  );
+  const [showPreview, setShowPreview] = useState(false);
+  const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
+  const [advancedPopoverOpen, setAdvancedPopoverOpen] = useState(false);
+  const [videoMetadata, setVideoMetadata] = useState<{
+    duration: number;
+    size: number;
+    format: string;
+  } | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
+  const pathname = usePathname();
   const { user, isCheckSign, setIsShowSignModal, fetchUserCredits } =
     useAppContext();
 
@@ -241,24 +231,504 @@ export function VideoGenerator({
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    console.log('Selected model config changed:', sceneConfig.baseCredits);
+    if (sceneConfig.baseCredits) {
+      setCostCredits(sceneConfig.baseCredits);
+    } else {
+      if (activeTab === 'text-to-video') {
+        setCostCredits(textToVideoCredits);
+      } else if (activeTab === 'image-to-video') {
+        setCostCredits(imageToVideoCredits);
+      } else {
+        setCostCredits(videoToVideoCredits);
+      }
+    }
+  }, [model, activeTab]);
+
+  useEffect(() => {
+    let tab: VideoGeneratorTab = 'text-to-video';
+
+    if (pathname.includes('video-to-video')) {
+      tab = 'video-to-video';
+    } else if (pathname.includes('image-to-video')) {
+      tab = 'image-to-video';
+    }
+
+    // 检查是否是 video-models 路径，自动选择对应的模型
+    const imageModelMatch = pathname.match(/\/video-models\/([^/]+)/);
+    if (imageModelMatch) {
+      const modelPath = imageModelMatch[1];
+      const matchedModel = MODEL_OPTIONS.find(
+        (option) => option.modelPath === modelPath
+      );
+      console.log('Matched model based on URL:', matchedModel);
+      if (matchedModel && matchedModel.sceneValues) {
+        setProvider(matchedModel.brand);
+
+        // ✅ 取模型第一个支持的scene作为默认tab
+        const firstScene = Object.keys(
+          matchedModel.sceneValues
+        )[0] as VideoGeneratorTab;
+        if (firstScene) {
+          setActiveTab(firstScene);
+
+          // 设置对应模式的model值
+          const sceneValue = matchedModel.sceneValues[firstScene];
+          const modelId =
+            typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+          if (modelId) {
+            setModel(modelId);
+          }
+
+          // 提前设置对应积分消耗，不需要等后面的逻辑
+          const baseCredits = matchedModel.baseCredits as
+            | Record<string, number>
+            | undefined;
+          if (baseCredits?.[firstScene]) {
+            setCostCredits(baseCredits[firstScene]);
+          }
+        }
+      }
+    }
+
+    if (tab !== activeTab) {
+      setActiveTab(tab);
+
+      // 过滤出当前模式下有可用模型的提供商
+      const availableProviders = PROVIDER_OPTIONS.filter((p) => {
+        return MODEL_OPTIONS.some(
+          (m) => m.sceneValues?.[tab] !== undefined && m.brand === p.value
+        );
+      });
+
+      if (availableProviders.length > 0) {
+        // 选中第一个可用提供商
+        const firstProvider = availableProviders[0].value;
+        setProvider(firstProvider);
+
+        // 选中该提供商下的第一个模型
+        const availableModels = MODEL_OPTIONS.filter(
+          (option) =>
+            option.sceneValues?.[tab] !== undefined &&
+            option.brand === firstProvider
+        );
+
+        if (availableModels.length > 0) {
+          const sceneValue = availableModels[0].sceneValues?.[tab];
+          const modelId =
+            typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+          setModel(modelId ?? '');
+        } else {
+          setModel('');
+        }
+      } else {
+        // 没有可用提供商
+        setProvider('');
+        setModel('');
+      }
+
+      // 设置对应积分消耗
+      if (tab === 'text-to-video') {
+        setCostCredits(textToVideoCredits);
+      } else if (tab === 'image-to-video') {
+        setCostCredits(imageToVideoCredits);
+      } else {
+        setCostCredits(videoToVideoCredits);
+      }
+    }
+  }, [pathname]);
+
   const promptLength = prompt.trim().length;
   const remainingCredits = user?.credits?.remainingCredits ?? 0;
+  const isCreditsLoaded = user?.credits !== undefined;
   const isPromptTooLong = promptLength > MAX_PROMPT_LENGTH;
   const isTextToVideoMode = activeTab === 'text-to-video';
   const isImageToVideoMode = activeTab === 'image-to-video';
   const isVideoToVideoMode = activeTab === 'video-to-video';
 
+  const selectedModelConfig = MODEL_OPTIONS.find((option) => {
+    // 匹配所有场景，只要该模型的任意场景等于当前选中的model
+    return Object.values(option.sceneValues ?? {}).some((value) => {
+      const id = typeof value === 'string' ? value : value?.id;
+      return id === model;
+    });
+  });
+
+  // ✅ 场景配置兼容层 - 统一处理字符串和对象两种格式
+  const sceneConfig = useMemo(() => {
+    const sceneValue = selectedModelConfig?.sceneValues?.[activeTab];
+    if (typeof sceneValue === 'string') {
+      // 旧格式字符串兼容
+      return {
+        id: sceneValue,
+        maxImages: selectedModelConfig?.maxImages ?? 1,
+        maxVideos: activeTab === 'video-to-video' ? 1 : 0,
+        showImageUploader: true,
+        baseCredits: selectedModelConfig?.baseCredits?.[activeTab],
+        creditRules: selectedModelConfig?.creditRules,
+        defaultOptions: selectedModelConfig?.defaultOptions,
+        advancedOptions: selectedModelConfig?.advancedOptions,
+        customOptions: selectedModelConfig?.customOptions,
+        discount: selectedModelConfig?.discount,
+        inputValidation: selectedModelConfig?.inputValidation,
+        customFields: selectedModelConfig?.customFields,
+        dependencyRules: selectedModelConfig?.dependencyRules,
+      };
+    }
+    // 新格式对象 - 自动优先级降级：场景 > 全局 > 默认
+    return {
+      id: sceneValue?.id,
+      maxImages: sceneValue?.maxImages ?? selectedModelConfig?.maxImages ?? 1,
+      maxVideos:
+        sceneValue?.maxVideos ?? (activeTab === 'video-to-video' ? 1 : 0),
+      showImageUploader: sceneValue?.showImageUploader ?? true,
+      baseCredits:
+        sceneValue?.baseCredits ??
+        selectedModelConfig?.baseCredits?.[activeTab],
+      creditRules: sceneValue?.creditRules ?? selectedModelConfig?.creditRules,
+      defaultOptions:
+        sceneValue?.defaultOptions ?? selectedModelConfig?.defaultOptions,
+      advancedOptions:
+        sceneValue?.advancedOptions ?? selectedModelConfig?.advancedOptions,
+      customOptions:
+        sceneValue?.customOptions ?? selectedModelConfig?.customOptions,
+      discount: sceneValue?.discount ?? selectedModelConfig?.discount,
+      inputValidation:
+        sceneValue?.inputValidation ?? selectedModelConfig?.inputValidation,
+      customFields:
+        sceneValue?.customFields ?? selectedModelConfig?.customFields,
+      dependencyRules:
+        sceneValue?.dependencyRules ?? selectedModelConfig?.dependencyRules,
+    };
+  }, [selectedModelConfig, activeTab]);
+
+  // ✅ 动态获取模型配置的文件大小限制，没有配置则使用默认值
+  const imageMaxSize =
+    sceneConfig.inputValidation?.image?.maxFileSize ?? image_maxSizeMB;
+  const videoMaxSize =
+    sceneConfig.inputValidation?.video?.maxFileSize ?? video_maxSizeMB;
+
+  // 计算 maxImages 值
+  const maxImages = useMemo(() => {
+    // 优先使用 advancedOptions 中的值
+    const refFrameModeValue =
+      advancedOptions.refFrameMode ??
+      sceneConfig?.defaultOptions?.generationType;
+
+    if (refFrameModeValue === 'FIRST_AND_LAST_FRAMES_2_VIDEO') return 2;
+    return sceneConfig?.maxImages ?? 1;
+  }, [advancedOptions.refFrameMode, sceneConfig]);
+
+  // 计算当前积分（合并默认选项和用户选择）
+  const calculateCurrentCredits = useCallback(() => {
+    if (!selectedModelConfig)
+      return { original: 0, discounted: 0, discountRate: 1 };
+
+    const selectedOptions: Record<string, string | boolean> = {};
+
+    // 使用场景配置中的默认选项
+    if (sceneConfig.defaultOptions) {
+      Object.entries(sceneConfig.defaultOptions).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          selectedOptions[key] = value;
+        }
+      });
+    }
+
+    // 再用用户选择的选项覆盖
+    Object.entries(advancedOptions).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        selectedOptions[key] = value;
+      }
+    });
+
+    return calculateDiscountedCredits(
+      {
+        ...selectedModelConfig,
+        baseCredits: {
+          [activeTab]: sceneConfig.baseCredits,
+        } as any,
+        creditRules: sceneConfig.creditRules,
+        discount: sceneConfig.discount,
+      },
+      activeTab,
+      selectedOptions
+    );
+  }, [selectedModelConfig, sceneConfig, activeTab, advancedOptions]);
+
+  // 实时计算积分（基于高级选项）
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    const { discounted } = calculateCurrentCredits();
+    console.log('Calculated discounted credits:', discounted);
+    setCostCredits(discounted);
+  }, [calculateCurrentCredits, selectedModelConfig, advancedOptions]);
+
+  // ✅ 模型切换时重新校验已上传的图片和视频
+  useEffect(() => {
+    if (!selectedModelConfig) return;
+
+    const validateUploadedFiles = () => {
+      // 校验已上传的图片
+      if (referenceImageItems.length > 0) {
+        const validImages: ImageUploaderValue[] = [];
+        let hasInvalid = false;
+
+        for (const item of referenceImageItems) {
+          if (item.status === 'uploaded') {
+            // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
+            let isValid = true;
+
+            if (sceneConfig.inputValidation?.image) {
+              const { maxFileSize, supportedFormats } =
+                sceneConfig.inputValidation.image;
+
+              // 校验文件大小
+              if (maxFileSize && item.size) {
+                const size = Math.round(item.size / 1024 / 1024);
+                if (size > maxFileSize) {
+                  isValid = false;
+                }
+              }
+
+              // 校验文件格式
+              if (supportedFormats && supportedFormats.length > 0 && item.url) {
+                const format = item.url.split('.').pop()?.toLowerCase() || '';
+                if (!supportedFormats.includes(format)) {
+                  isValid = false;
+                }
+              }
+            }
+
+            if (isValid) {
+              validImages.push(item);
+            } else {
+              hasInvalid = true;
+            }
+          } else {
+            validImages.push(item);
+          }
+        }
+
+        if (hasInvalid) {
+          setModeImages((prev) => ({
+            ...prev,
+            [activeTab]: validImages,
+          }));
+          toast.info(t('validation.some_files_removed'));
+        }
+      }
+
+      // 校验已上传的视频
+      if (referenceVideoItems.length > 0) {
+        const validVideos: VideoUploaderValue[] = [];
+        let hasInvalid = false;
+
+        for (const item of referenceVideoItems) {
+          if (item.status === 'uploaded') {
+            // ✅ 方案2：不需要File对象，直接校验已有的size和url信息
+            let isValid = true;
+
+            if (sceneConfig.inputValidation?.video) {
+              const { maxFileSize, supportedFormats } =
+                sceneConfig.inputValidation.video;
+
+              // 校验文件大小
+              if (maxFileSize && item.size) {
+                const size = Math.round(item.size / 1024 / 1024);
+                if (size > maxFileSize) {
+                  isValid = false;
+                }
+              }
+
+              // 校验文件格式
+              if (supportedFormats && supportedFormats.length > 0 && item.url) {
+                const format = item.url.split('.').pop()?.toLowerCase() || '';
+                if (!supportedFormats.includes(format)) {
+                  isValid = false;
+                }
+              }
+            }
+
+            if (isValid) {
+              validVideos.push(item);
+            } else {
+              hasInvalid = true;
+            }
+          } else {
+            validVideos.push(item);
+          }
+        }
+
+        if (hasInvalid) {
+          setModeVideos((prev) => ({
+            ...prev,
+            [activeTab]: validVideos,
+          }));
+          toast.info(t('validation.some_files_removed'));
+        }
+      }
+    };
+
+    validateUploadedFiles();
+  }, [selectedModelConfig, activeTab]);
+
+  // 字段映射表（蛇形 -> 驼峰）
+  const snakeToCamelMap: Record<string, string> = {
+    aspect_ratio: 'aspectRatio',
+    resolution: 'resolution',
+    mode: 'mode',
+    duration: 'duration',
+    fps: 'fps',
+    motion_strength: 'motionStrength',
+    generationType: 'refFrameMode',
+  };
+
+  // ✅ 计算当前禁用的选项
+  const disabledOptions = useMemo(() => {
+    const disabled: Set<string> = new Set();
+
+    if (!sceneConfig.dependencyRules) {
+      return disabled;
+    }
+
+    sceneConfig.dependencyRules.forEach((rule: any) => {
+      // 检查when条件是否全部匹配
+      const match = Object.entries(rule.when).every(([key, value]) => {
+        // ✅ 映射到驼峰键名
+        const camelKey = snakeToCamelMap[key] || key;
+        return advancedOptions[camelKey] === value;
+      });
+
+      if (match && rule.then.disabled) {
+        rule.then.disabled.forEach((opt: any) => disabled.add(opt));
+      }
+    });
+
+    return disabled;
+  }, [selectedModelConfig, advancedOptions]);
+
+  // ✅ 自动执行依赖约束
+  useEffect(() => {
+    if (!sceneConfig.dependencyRules) return;
+
+    let hasUpdates = false;
+    const newOptions: Record<string, any> = {};
+    let messageToShow: string | null = null;
+
+    sceneConfig.dependencyRules.forEach((rule: any) => {
+      const match = Object.entries(rule.when).every(([key, value]) => {
+        // ✅ 映射到驼峰键名
+        const camelKey = snakeToCamelMap[key] || key;
+        return advancedOptions[camelKey] === value;
+      });
+
+      if (match && rule.then.autoSelect) {
+        // 检查是否有值真正需要更新
+        Object.entries(rule.then.autoSelect).forEach(([key, value]) => {
+          if (advancedOptions[key] !== value) {
+            newOptions[key] = value;
+            hasUpdates = true;
+          }
+        });
+
+        if (rule.then.message && hasUpdates) {
+          messageToShow = rule.then.message;
+        }
+      }
+    });
+
+    // ✅ 只有真正有变化时才更新状态，防止无限循环
+    if (hasUpdates) {
+      setAdvancedOptions((prev) => ({
+        ...prev,
+        ...newOptions,
+      }));
+
+      if (messageToShow) {
+        toast.info(messageToShow);
+      }
+    }
+  }, [advancedOptions, selectedModelConfig]);
+
+  const advancedTypes = sceneConfig.advancedOptions?.supportedTypes ?? [];
+
   const handleTabChange = (value: string) => {
     const tab = value as VideoGeneratorTab;
     setActiveTab(tab);
 
-    const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(tab) && option.provider === provider
-    );
+    // ✅ 先检查当前选中的模型是否支持新的模式，如果支持就不切换模型
+    const currentModel = MODEL_OPTIONS.find((option) => {
+      return Object.values(option.sceneValues ?? {}).some((value) => {
+        const id = typeof value === 'string' ? value : value?.id;
+        return id === model;
+      });
+    });
 
-    if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+    if (currentModel && currentModel.sceneValues?.[tab] !== undefined) {
+      // 当前模型支持新模式，保持当前provider不变，只更新model为新模式对应的值
+      const sceneValue = currentModel.sceneValues[tab];
+      const modelId =
+        typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+      setModel(modelId ?? '');
+      // 直接更新对应积分消耗
+      const baseCredits = currentModel.baseCredits as
+        | Record<string, number>
+        | undefined;
+      if (baseCredits?.[tab]) {
+        setCostCredits(baseCredits[tab]);
+      } else {
+        if (tab === 'text-to-video') {
+          setCostCredits(textToVideoCredits);
+        } else if (tab === 'image-to-video') {
+          setCostCredits(imageToVideoCredits);
+        } else {
+          setCostCredits(videoToVideoCredits);
+        }
+      }
+      return;
+    }
+
+    // ❌ 当前模型不支持新模式，才走原来的逻辑重置为第一个可用模型
+    // toast.info(
+    //   t('validation.model_not_support_mode', {
+    //     model: currentModel?.label,
+    //     mode: tab,
+    //   })
+    // );
+
+    // 过滤出当前模式下有可用模型的提供商
+    const availableProviders = PROVIDER_OPTIONS.filter((p) => {
+      return MODEL_OPTIONS.some(
+        (m) => m.sceneValues?.[tab] !== undefined && m.brand === p.value
+      );
+    });
+
+    if (availableProviders.length > 0) {
+      // 选中第一个可用提供商
+      const firstProvider = availableProviders[0].value;
+      setProvider(firstProvider);
+
+      // 选中该提供商下的第一个模型
+      const availableModels = MODEL_OPTIONS.filter(
+        (option) =>
+          option.sceneValues?.[tab] !== undefined &&
+          option.brand === firstProvider
+      );
+
+      if (availableModels.length > 0) {
+        const sceneValue = availableModels[0].sceneValues?.[tab];
+        const modelId =
+          typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+        setModel(modelId ?? '');
+      } else {
+        setModel('');
+      }
     } else {
+      // 没有可用提供商
+      setProvider('');
       setModel('');
     }
 
@@ -266,30 +736,29 @@ export function VideoGenerator({
       setCostCredits(textToVideoCredits);
     } else if (tab === 'image-to-video') {
       setCostCredits(imageToVideoCredits);
-    } else if (tab === 'video-to-video') {
+    } else {
       setCostCredits(videoToVideoCredits);
     }
   };
 
   const handleProviderChange = (value: string) => {
     setProvider(value);
-
     const availableModels = MODEL_OPTIONS.filter(
-      (option) => option.scenes.includes(activeTab) && option.provider === value
+      (option) =>
+        option.sceneValues?.[activeTab] !== undefined && option.brand === value
     );
-
     if (availableModels.length > 0) {
-      setModel(availableModels[0].value);
+      const sceneValue = availableModels[0].sceneValues?.[activeTab];
+      const modelId =
+        typeof sceneValue === 'string' ? sceneValue : sceneValue?.id;
+      setModel(modelId ?? '');
     } else {
       setModel('');
     }
   };
 
   const taskStatusLabel = useMemo(() => {
-    if (!taskStatus) {
-      return '';
-    }
-
+    if (!taskStatus) return '';
     switch (taskStatus) {
       case AITaskStatus.PENDING:
         return 'Waiting for the model to start';
@@ -306,13 +775,12 @@ export function VideoGenerator({
 
   const handleReferenceImagesChange = useCallback(
     (items: ImageUploaderValue[]) => {
-      setReferenceImageItems(items);
-      const uploadedUrls = items
-        .filter((item) => item.status === 'uploaded' && item.url)
-        .map((item) => item.url as string);
-      setReferenceImageUrls(uploadedUrls);
+      setModeImages((prev) => ({
+        ...prev,
+        [activeTab]: items,
+      }));
     },
-    []
+    [activeTab]
   );
 
   const isReferenceUploading = useMemo(
@@ -321,8 +789,206 @@ export function VideoGenerator({
   );
 
   const hasReferenceUploadError = useMemo(
-    () => referenceImageItems.some((item) => item.status === 'error'),
-    [referenceImageItems]
+    () =>
+      referenceImageItems.some((item) => item.status === 'error') ||
+      referenceVideoItems.some((item) => item.status === 'error'),
+    [referenceImageItems, referenceVideoItems]
+  );
+
+  // ✅ 视频上传前置校验 - 在上传前执行，不通过不上传
+  const handleReferenceVideoValidateFile = useCallback(
+    (file: File): Promise<boolean> => {
+      return new Promise<boolean>((resolve) => {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = () => {
+          window.URL.revokeObjectURL(video.src);
+
+          const duration = Math.ceil(video.duration);
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          // 执行所有校验规则
+          if (sceneConfig.inputValidation?.video) {
+            const { maxDuration, maxFileSize, supportedFormats } =
+              sceneConfig.inputValidation.video;
+
+            if (maxDuration && duration > maxDuration) {
+              const error = t('validation.video_too_long', {
+                max: maxDuration,
+                actual: duration,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (maxFileSize && size > maxFileSize) {
+              const error = t('validation.video_too_large', {
+                max: maxFileSize,
+                actual: size,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (
+              supportedFormats &&
+              supportedFormats.length > 0 &&
+              !supportedFormats.includes(format)
+            ) {
+              const error = t('validation.video_unsupported_format', {
+                supported: supportedFormats.join(', ').toUpperCase(),
+                actual: format.toUpperCase(),
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+          }
+
+          // 校验通过
+          setValidationError(null);
+          resolve(true);
+        };
+
+        video.onerror = () => {
+          window.URL.revokeObjectURL(video.src);
+          toast.error('Failed to read video metadata');
+          resolve(false);
+        };
+
+        video.src = URL.createObjectURL(file);
+      });
+    },
+    [selectedModelConfig]
+  );
+
+  // ✅ 图片上传前置校验 - 在上传前执行，不通过不上传
+  const handleReferenceImageValidateFile = useCallback(
+    (file: File): Promise<boolean> => {
+      return new Promise<boolean>((resolve) => {
+        const img = new Image();
+
+        img.onload = () => {
+          window.URL.revokeObjectURL(img.src);
+
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          // 执行所有校验规则
+          if (sceneConfig.inputValidation?.image) {
+            const { maxFileSize, supportedFormats } =
+              sceneConfig.inputValidation.image;
+
+            if (maxFileSize && size > maxFileSize) {
+              const error = t('validation.image_too_large', {
+                max: maxFileSize,
+                actual: size,
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+
+            if (
+              supportedFormats &&
+              supportedFormats.length > 0 &&
+              !supportedFormats.includes(format)
+            ) {
+              const error = t('validation.image_unsupported_format', {
+                supported: supportedFormats.join(', ').toUpperCase(),
+                actual: format.toUpperCase(),
+              });
+              toast.error(error);
+              setValidationError(error);
+              resolve(false);
+              return;
+            }
+          }
+
+          // 校验通过
+          setValidationError(null);
+          resolve(true);
+        };
+
+        img.onerror = () => {
+          window.URL.revokeObjectURL(img.src);
+          toast.error('Failed to read image metadata');
+          resolve(false);
+        };
+
+        img.src = URL.createObjectURL(file);
+      });
+    },
+    [selectedModelConfig]
+  );
+
+  const handleReferenceVideoChange = useCallback(
+    (items: VideoUploaderValue[]) => {
+      setModeVideos((prev) => ({
+        ...prev,
+        [activeTab]: items,
+      }));
+
+      // 上传成功后读取视频元数据
+      if (items.length > 0 && items[0].file) {
+        const file = items[0].file;
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = () => {
+          window.URL.revokeObjectURL(video.src);
+
+          const duration = Math.ceil(video.duration);
+          const size = Math.round(file.size / 1024 / 1024);
+          const format = file.name.split('.').pop()?.toLowerCase() || '';
+
+          console.log('✅ 视频元数据读取成功: ', {
+            duration,
+            size,
+            format,
+            selectedModel: selectedModelConfig?.label,
+          });
+
+          setVideoMetadata({
+            duration,
+            size,
+            format,
+          });
+
+          // ✅ 优化：不要修改全局defaultOptions，只更新本地状态advancedOptions
+          setAdvancedOptions((prev) => ({
+            ...prev,
+            duration: duration.toString(),
+          }));
+        };
+
+        video.onerror = () => {
+          window.URL.revokeObjectURL(video.src);
+          setVideoMetadata(null);
+        };
+
+        video.src = URL.createObjectURL(file);
+      } else if (items.length === 0) {
+        // ✅ 视频被删除时重置所有相关状态
+        setVideoMetadata(null);
+
+        // 只清除本地状态，不要修改全局配置
+        setAdvancedOptions((prev) => {
+          const newOptions = { ...prev };
+          delete newOptions.duration;
+          return newOptions;
+        });
+      }
+    },
+    [activeTab, selectedModelConfig]
   );
 
   const resetTaskState = useCallback(() => {
@@ -332,6 +998,56 @@ export function VideoGenerator({
     setGenerationStartTime(null);
     setTaskStatus(null);
   }, []);
+
+  // 重置高级选项为当前模型默认值
+  const resetAdvancedOptions = useCallback(() => {
+    if (sceneConfig.defaultOptions) {
+      const defaults = sceneConfig.defaultOptions;
+      const newAdvancedOptions: Record<string, any> = {};
+
+      // 根据模型支持的高级选项类型，设置默认值
+      sceneConfig.advancedOptions?.supportedTypes?.forEach((type) => {
+        const fieldMap: Record<string, string> = {
+          aspectRatio: 'aspect_ratio',
+          resolution: 'resolution',
+          mode: 'mode',
+          duration: 'duration',
+          fps: 'fps',
+          motionStrength: 'motion_strength',
+          refFrameMode: 'generationType',
+        };
+        const fieldName = fieldMap[type] || type;
+        if (defaults[fieldName] !== undefined) {
+          newAdvancedOptions[type] = defaults[fieldName];
+        }
+      });
+
+      setAdvancedOptions(newAdvancedOptions);
+    }
+  }, [selectedModelConfig]);
+
+  // 模型切换时自动重置高级选项为默认值
+  useEffect(() => {
+    resetAdvancedOptions();
+
+    // ✅ 模型切换后保留已上传视频的时长
+    if (videoMetadata && videoMetadata.duration > 0) {
+      // 👉 精确判断条件：
+      // 模型有默认duration配置，但是supportedTypes不包含duration
+      // 这种情况下自动注入视频实际时长，有手动选择器的模型不自动覆盖
+      const shouldAutoInjectDuration =
+        sceneConfig.defaultOptions &&
+        'duration' in sceneConfig.defaultOptions &&
+        !sceneConfig.advancedOptions?.supportedTypes?.includes('duration');
+
+      if (shouldAutoInjectDuration) {
+        setAdvancedOptions((prev) => ({
+          ...prev,
+          duration: videoMetadata.duration.toString(),
+        }));
+      }
+    }
+  }, [model, resetAdvancedOptions, videoMetadata, sceneConfig]);
 
   const pollTaskStatus = useCallback(
     async (id: string) => {
@@ -347,9 +1063,7 @@ export function VideoGenerator({
 
         const resp = await fetch('/api/ai/query', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ taskId: id }),
         });
 
@@ -407,9 +1121,9 @@ export function VideoGenerator({
             );
             toast.success('Video generated successfully');
           }
-
           setProgress(100);
           resetTaskState();
+          // resetAdvancedOptions();
           return true;
         }
 
@@ -418,42 +1132,30 @@ export function VideoGenerator({
             parsedResult?.errorMessage || 'Generate video failed';
           toast.error(errorMessage);
           resetTaskState();
-
           fetchUserCredits();
-
           return true;
         }
 
         setProgress((prev) => Math.min(prev + 3, 95));
         return false;
       } catch (error: any) {
-        console.error('Error polling video task:', error);
-        toast.error(`Query task failed: ${error.message}`);
-        resetTaskState();
-
-        fetchUserCredits();
-
-        return true;
+        console.error('Error polling video task (will retry):', error);
+        // ✅ 不抛出异常，不弹错误提示，静默继续下一次轮询
+        return false;
       }
     },
     [generationStartTime, resetTaskState]
   );
 
   useEffect(() => {
-    if (!taskId || !isGenerating) {
-      return;
-    }
+    if (!taskId || !isGenerating) return;
 
     let cancelled = false;
 
     const tick = async () => {
-      if (!taskId) {
-        return;
-      }
+      if (!taskId) return;
       const completed = await pollTaskStatus(taskId);
-      if (completed) {
-        cancelled = true;
-      }
+      if (completed) cancelled = true;
     };
 
     tick();
@@ -464,9 +1166,7 @@ export function VideoGenerator({
         return;
       }
       const completed = await pollTaskStatus(taskId);
-      if (completed) {
-        clearInterval(interval);
-      }
+      if (completed) clearInterval(interval);
     }, POLL_INTERVAL);
 
     return () => {
@@ -508,34 +1208,142 @@ export function VideoGenerator({
     }
 
     setIsGenerating(true);
+    setShowPreview(true);
     setProgress(15);
     setTaskStatus(AITaskStatus.PENDING);
     setGeneratedVideos([]);
     setGenerationStartTime(Date.now());
 
     try {
-      const options: any = {};
+      // 构建 options：先合并模型的默认参数
+      const options: any = {
+        ...sceneConfig.defaultOptions,
+      };
 
-      if (isImageToVideoMode) {
-        options.image_input = referenceImageUrls;
+      // 合并用户选择的高级选项
+      if (sceneConfig.advancedOptions?.supportedTypes) {
+        sceneConfig.advancedOptions.supportedTypes.forEach((type) => {
+          const value =
+            advancedOptions[type] ??
+            sceneConfig.defaultOptions?.[
+              type === 'aspectRatio'
+                ? 'aspect_ratio'
+                : type === 'motionStrength'
+                  ? 'motion_strength'
+                  : type == 'refFrameMode'
+                    ? 'generationType'
+                    : type
+            ];
+
+          if (value) {
+            const fieldMap: Record<string, string> = {
+              aspectRatio: 'aspect_ratio',
+              resolution: 'resolution',
+              mode: 'mode',
+              duration: 'duration',
+              fps: 'fps',
+              motionStrength: 'motion_strength',
+              refFrameMode: 'generationType',
+            };
+            options[fieldMap[type] || type] = value;
+          }
+        });
       }
 
-      if (isVideoToVideoMode) {
-        options.video_input = [referenceVideoUrl];
+      // 动态处理自定义字段
+      if (sceneConfig.customFields) {
+        sceneConfig.customFields.forEach((field: any) => {
+          switch (field.type) {
+            case 'image':
+              if (referenceImageUrls.length > 0) {
+                options[field.fieldName] = field.isArray
+                  ? referenceImageUrls
+                  : referenceImageUrls[0];
+              }
+              break;
+
+            case 'video':
+              if (isVideoToVideoMode && referenceVideoUrl) {
+                options[field.fieldName] = field.isArray
+                  ? [referenceVideoUrl]
+                  : referenceVideoUrl;
+              }
+              break;
+
+            case 'audio':
+              // 从组件选择的开关取值
+              const userSelectedAudio = advancedOptions.audio;
+              options[field.fieldName] =
+                userSelectedAudio !== undefined
+                  ? userSelectedAudio
+                  : field.defaultValue;
+              break;
+
+            case 'boolean':
+              options[field.fieldName] =
+                advancedOptions[field.fieldName] ?? field.defaultValue;
+              break;
+
+            case 'string':
+            case 'number':
+              if (advancedOptions[field.fieldName] !== undefined) {
+                options[field.fieldName] = advancedOptions[field.fieldName];
+              } else if (field.defaultValue !== undefined) {
+                options[field.fieldName] = field.defaultValue;
+              }
+              break;
+          }
+        });
       }
+
+      // // 兼容旧版 imageField
+      // if (isImageToVideoMode && referenceImageUrls.length > 0) {
+      //   const imageField = selectedModelConfig?.imageField;
+      //   if (imageField && !selectedModelConfig.customFields) {
+      //     if (imageField.isArray) {
+      //       options[imageField.fieldName] = referenceImageUrls;
+      //     } else {
+      //       options[imageField.fieldName] = referenceImageUrls[0];
+      //     }
+      //   }
+      // }
+
+      // 兼容旧版默认视频字段
+      // if (
+      //   isVideoToVideoMode &&
+      //   referenceVideoUrl &&
+      //   !selectedModelConfig?.customFields
+      // ) {
+      //   options.video_input = [referenceVideoUrl];
+      // }
+
+      // 剔除原 audio 字段，只保留自定义字段
+      delete options.audio;
+
+      // 强制加入自动检测的视频时长（不受supportedTypes过滤限制）
+      if (advancedOptions.duration) {
+        options.duration = advancedOptions.duration;
+      }
+
+      const baseCredits = sceneConfig?.baseCredits as
+        | Record<string, number>
+        | undefined;
+      const modelCredits = baseCredits?.[activeTab] ?? costCredits;
+
+      console.log('Sending generation request with options:', options);
+      // throw new Error('Testing error handling'); // 测试错误处理逻辑，生成请求会失败
 
       const resp = await fetch('/api/ai/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mediaType: AIMediaType.VIDEO,
           scene: activeTab,
-          provider,
+          provider: selectedModelConfig?.provider ?? provider, // 使用模型的 provider
           model,
           prompt: trimmedPrompt,
           options,
+          credits: modelCredits,
         }),
       });
 
@@ -563,7 +1371,7 @@ export function VideoGenerator({
               id: `${newTaskId}-${index}`,
               url,
               provider,
-              model,
+              model: model,
               prompt: trimmedPrompt,
             }))
           );
@@ -577,7 +1385,6 @@ export function VideoGenerator({
 
       setTaskId(newTaskId);
       setProgress(25);
-
       await fetchUserCredits();
     } catch (error: any) {
       console.error('Failed to generate video:', error);
@@ -587,19 +1394,14 @@ export function VideoGenerator({
   };
 
   const handleDownloadVideo = async (video: GeneratedVideo) => {
-    if (!video.url) {
-      return;
-    }
+    if (!video.url) return;
 
     try {
       setDownloadingVideoId(video.id);
-      // fetch video via proxy
       const resp = await fetch(
         `/api/proxy/file?url=${encodeURIComponent(video.url)}`
       );
-      if (!resp.ok) {
-        throw new Error('Failed to fetch video');
-      }
+      if (!resp.ok) throw new Error('Failed to fetch video');
 
       const blob = await resp.blob();
       const blobUrl = URL.createObjectURL(blob);
@@ -619,289 +1421,944 @@ export function VideoGenerator({
     }
   };
 
+  const handleShareVideo = async (video: GeneratedVideo) => {
+    if (!video.url) return;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Generated Video',
+          url: video.url,
+        });
+      } else {
+        await navigator.clipboard.writeText(video.url);
+        toast.success('Video link copied to clipboard');
+      }
+    } catch (error) {
+      console.error('Failed to share video:', error);
+    }
+  };
+
+  // 粒子背景组件
+  function ParticleBackground() {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const getPrimaryColor = () => {
+        const primary = getComputedStyle(document.documentElement)
+          .getPropertyValue('--primary')
+          .trim();
+        const match = primary.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+        if (match) {
+          const l = parseFloat(match[1]);
+          const c = parseFloat(match[2]);
+          const h = parseFloat(match[3]);
+          const a = c * Math.cos((h * Math.PI) / 180);
+          const b = c * Math.sin((h * Math.PI) / 180);
+          const r = Math.round(
+            Math.max(0, Math.min(255, (l + 0.3963 * a + 0.2158 * b) * 255))
+          );
+          const g = Math.round(
+            Math.max(0, Math.min(255, (l - 0.1055 * a - 0.0638 * b) * 255))
+          );
+          const blue = Math.round(
+            Math.max(0, Math.min(255, (l - 0.0894 * a - 1.2914 * b) * 255))
+          );
+          return { r, g, b: blue };
+        }
+        return { r: 255, g: 180, b: 50 };
+      };
+
+      const primaryColor = getPrimaryColor();
+
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const particles: Array<{
+        x: number;
+        y: number;
+        radius: number;
+        vx: number;
+        vy: number;
+        opacity: number;
+      }> = [];
+
+      const createParticles = () => {
+        const particleCount = Math.floor(
+          (canvas.width * canvas.height) / 15000
+        );
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 2 + 0.5,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.5 + 0.2,
+          });
+        }
+      };
+      createParticles();
+
+      let animationId: number;
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+
+          if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+          if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${particle.opacity})`;
+          ctx.fill();
+        });
+
+        particles.forEach((p1, i) => {
+          particles.slice(i + 1).forEach((p2) => {
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${0.1 * (1 - distance / 150)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          });
+        });
+
+        animationId = requestAnimationFrame(animate);
+      };
+      animate();
+
+      return () => {
+        window.removeEventListener('resize', resizeCanvas);
+        cancelAnimationFrame(animationId);
+      };
+    }, []);
+
+    return (
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ opacity: 0.6 }}
+      />
+    );
+  }
+
+  // 进度条组件
+  function ProgressBar({ progress }: { progress: number }) {
+    return (
+      <div className="bg-muted/50 relative h-3 w-full overflow-hidden rounded-full backdrop-blur-sm">
+        <motion.div
+          className="from-primary to-primary/80 h-full rounded-full bg-gradient-to-r"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+        <motion.div
+          className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+          animate={{ x: [-80, 400] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+    );
+  }
+
   return (
-    <section className="py-16 md:py-24">
-      <div className="container">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <Card>
-              <CardHeader>
+    <section className={cn('relative pb-10', className)}>
+      <ScrollAnimation>
+        <ParticleBackground />
+
+        <div className="relative z-10 container">
+          <div className="mx-auto max-w-5xl">
+            {/* 主容器 - 渐变背景 + 磨砂玻璃 */}
+            <motion.div
+              layout
+              className="from-primary/5 via-background to-primary/10 border-primary/10 shadow-primary/5 relative overflow-hidden rounded-3xl border bg-gradient-to-br shadow-xl backdrop-blur-xl"
+            >
+              <div className="p-6 md:p-8">
                 {srOnlyTitle && <h2 className="sr-only">{srOnlyTitle}</h2>}
-                <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                  {t('title')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 pb-8">
-                <Tabs value={activeTab} onValueChange={handleTabChange}>
-                  <TabsList className="bg-primary/10 grid w-full grid-cols-3">
-                    <TabsTrigger value="text-to-video">
-                      {t('tabs.text-to-video')}
-                    </TabsTrigger>
-                    <TabsTrigger value="image-to-video">
-                      {t('tabs.image-to-video')}
-                    </TabsTrigger>
-                    <TabsTrigger value="video-to-video">
-                      {t('tabs.video-to-video')}
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>{t('form.provider')}</Label>
-                    <Select
-                      value={provider}
-                      onValueChange={handleProviderChange}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('form.select_provider')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {PROVIDER_OPTIONS.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>{t('form.model')}</Label>
-                    <Select value={model} onValueChange={setModel}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('form.select_model')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {MODEL_OPTIONS.filter(
-                          (option) =>
-                            option.scenes.includes(activeTab) &&
-                            option.provider === provider
-                        ).map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {isImageToVideoMode && (
-                  <div className="space-y-4">
-                    <ImageUploader
-                      title={t('form.reference_image')}
-                      allowMultiple={true}
-                      maxImages={3}
-                      maxSizeMB={maxSizeMB}
-                      onChange={handleReferenceImagesChange}
-                      emptyHint={t('form.reference_image_placeholder')}
-                    />
-
-                    {hasReferenceUploadError && (
-                      <p className="text-destructive text-xs">
-                        {t('form.some_images_failed_to_upload')}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {isVideoToVideoMode && (
-                  <div className="space-y-2">
-                    <Label htmlFor="video-url">
-                      {t('form.reference_video')}
-                    </Label>
-                    <Textarea
-                      id="video-url"
-                      value={referenceVideoUrl}
-                      onChange={(e) => setReferenceVideoUrl(e.target.value)}
-                      placeholder={t('form.reference_video_placeholder')}
-                      className="min-h-20"
-                    />
-                  </div>
-                )}
-
-                <div className="space-y-2">
-                  <Label htmlFor="video-prompt">{t('form.prompt')}</Label>
-                  <Textarea
-                    id="video-prompt"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder={t('form.prompt_placeholder')}
-                    className="min-h-32"
-                  />
-                  <div className="text-muted-foreground flex items-center justify-between text-xs">
-                    <span>
-                      {promptLength} / {MAX_PROMPT_LENGTH}
-                    </span>
-                    {isPromptTooLong && (
-                      <span className="text-destructive">
-                        {t('form.prompt_too_long')}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {!isMounted ? (
-                  <Button className="w-full" disabled size="lg">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('loading')}
-                  </Button>
-                ) : isCheckSign ? (
-                  <Button className="w-full" disabled size="lg">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('checking_account')}
-                  </Button>
-                ) : user ? (
-                  <Button
-                    size="lg"
-                    className="w-full"
-                    onClick={handleGenerate}
-                    disabled={
-                      isGenerating ||
-                      (isTextToVideoMode && !prompt.trim()) ||
-                      isPromptTooLong ||
-                      isReferenceUploading ||
-                      hasReferenceUploadError ||
-                      (isImageToVideoMode && referenceImageUrls.length === 0) ||
-                      (isVideoToVideoMode && !referenceVideoUrl)
-                    }
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {t('generating')}
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        {t('generate')}
-                      </>
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    size="lg"
-                    className="w-full"
-                    onClick={() => setIsShowSignModal(true)}
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    {t('sign_in_to_generate')}
-                  </Button>
-                )}
-
-                {!isMounted ? (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('credits_cost', { credits: costCredits })}
-                    </span>
-                    <span>{t('credits_remaining', { credits: 0 })}</span>
-                  </div>
-                ) : user && remainingCredits > 0 ? (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-primary">
-                      {t('credits_cost', { credits: costCredits })}
-                    </span>
-                    <span>
-                      {t('credits_remaining', { credits: remainingCredits })}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-primary">
-                        {t('credits_cost', { credits: costCredits })}
-                      </span>
-                      <span>
-                        {t('credits_remaining', { credits: remainingCredits })}
-                      </span>
-                    </div>
-                    <Link href="/pricing">
-                      <Button variant="outline" className="w-full" size="lg">
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        {t('buy_credits')}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-
-                {isGenerating && (
-                  <div className="space-y-2 rounded-lg border p-4">
-                    <div className="flex items-center justify-between text-sm">
-                      <span>{t('progress')}</span>
-                      <span>{progress}%</span>
-                    </div>
-                    <Progress value={progress} />
-                    {taskStatusLabel && (
-                      <p className="text-muted-foreground text-center text-xs">
-                        {taskStatusLabel}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-                  <Video className="h-5 w-5" />
-                  {t('generated_videos')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pb-8">
-                {generatedVideos.length > 0 ? (
-                  <div className="space-y-6">
-                    {generatedVideos.map((video) => (
-                      <div key={video.id} className="space-y-3">
-                        <div className="relative overflow-hidden rounded-lg border">
-                          <video
-                            src={video.url}
-                            controls
-                            className="h-auto w-full"
-                            preload="metadata"
-                          />
-
-                          <div className="absolute right-2 bottom-2 flex justify-end text-sm">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="ml-auto"
-                              onClick={() => handleDownloadVideo(video)}
-                              disabled={downloadingVideoId === video.id}
-                            >
-                              {downloadingVideoId === video.id ? (
-                                <>
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                </>
-                              ) : (
-                                <>
-                                  <Download className="h-4 w-4" />
-                                </>
-                              )}
-                            </Button>
+                {/* 输入区域 */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr]">
+                  {/* 上传区域 - 固定高度 */}
+                  <div className="flex min-h-[160px] items-start justify-center">
+                    {isImageToVideoMode ? (
+                      <div>
+                        <ImageUploader
+                          key={`image-${activeTab}`}
+                          defaultPreviews={referenceImageUrls}
+                          title={t('form.reference_image')}
+                          allowMultiple={true}
+                          maxImages={maxImages}
+                          maxSizeMB={imageMaxSize}
+                          onChange={handleReferenceImagesChange}
+                          onBeforeUpload={() => {
+                            if (!user) {
+                              setIsShowSignModal(true);
+                              return false;
+                            }
+                            return true;
+                          }}
+                          onValidateFile={handleReferenceImageValidateFile}
+                          imageWidth="w-16"
+                          imageHeight="h-20"
+                        />
+                      </div>
+                    ) : isVideoToVideoMode ? (
+                      <div className="flex flex-col gap-4 md:flex-row">
+                        {sceneConfig.showImageUploader && (
+                          <div>
+                            <ImageUploader
+                              key={`image-${activeTab}`}
+                              defaultPreviews={referenceImageUrls}
+                              title={t('form.reference_image')}
+                              allowMultiple={true}
+                              maxImages={maxImages}
+                              maxSizeMB={imageMaxSize}
+                              onChange={handleReferenceImagesChange}
+                              onBeforeUpload={() => {
+                                if (!user) {
+                                  setIsShowSignModal(true);
+                                  return false;
+                                }
+                                return true;
+                              }}
+                              onValidateFile={handleReferenceImageValidateFile}
+                              imageWidth="w-16"
+                              imageHeight="h-20"
+                            />
                           </div>
+                        )}
+                        <div>
+                          <VideoUploader
+                            key={`video-${activeTab}`}
+                            defaultPreviews={
+                              referenceVideoUrl ? [referenceVideoUrl] : []
+                            }
+                            title={t('form.reference_video')}
+                            allowMultiple={false}
+                            maxVideos={1}
+                            maxSizeMB={videoMaxSize}
+                            onChange={handleReferenceVideoChange}
+                            onBeforeUpload={() => {
+                              if (!user) {
+                                setIsShowSignModal(true);
+                                return false;
+                              }
+                              return true;
+                            }}
+                            onValidateFile={handleReferenceVideoValidateFile}
+                            videoWidth="w-16"
+                            videoHeight="h-20"
+                          />
                         </div>
                       </div>
-                    ))}
+                    ) : null}
                   </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <div className="bg-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                      <Video className="text-muted-foreground h-10 w-10" />
-                    </div>
-                    <p className="text-muted-foreground">
-                      {isGenerating
-                        ? t('ready_to_generate')
-                        : t('no_videos_generated')}
-                    </p>
+
+                  {/* 提示词输入区 */}
+                  <div className="space-y-2">
+                    <Textarea
+                      id="video-prompt"
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder={t('form.prompt_placeholder')}
+                      className="placeholder:text-muted-foreground/60 min-h-32 border-0 transition-all duration-300 focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      style={{ backgroundColor: 'transparent' }}
+                    />
+                    {isPromptTooLong && (
+                      <div className="text-destructive text-xs">
+                        {t('form.prompt_too_long')}
+                      </div>
+                    )}
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                </div>
+
+                {/* 底部功能栏 */}
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  {/* 生成方式下拉 */}
+                  <Select value={activeTab} onValueChange={handleTabChange}>
+                    <SelectTrigger className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 w-auto min-w-[140px] border backdrop-blur-sm transition-all duration-200 hover:shadow-md">
+                      <SelectValue placeholder={t('select_generation_mode')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="text-to-video">
+                        📝 Text to Video
+                      </SelectItem>
+                      <SelectItem value="image-to-video">
+                        🖼️ Image to Video
+                      </SelectItem>
+                      <SelectItem value="video-to-video">
+                        🎬 Video to Video
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  {/* 模型选择弹出框 */}
+                  <Popover
+                    open={modelPopoverOpen}
+                    onOpenChange={setModelPopoverOpen}
+                  >
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                      >
+                        <span className="flex items-center gap-2">
+                          {selectedModelConfig?.label || 'Select Model'}
+                          {selectedModelConfig &&
+                            getDiscountLabel(selectedModelConfig) && (
+                              <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                {getDiscountLabel(selectedModelConfig)}
+                              </span>
+                            )}
+                        </span>
+                        <ChevronUp className="ml-2 h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-105" side="top" align="start">
+                      <div className="grid grid-cols-[120px_1fr] gap-2">
+                        {/* 左侧：提供商列表 */}
+                        <div className="border-border space-y-1 border-r pr-2">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Providers
+                          </p>
+                          {PROVIDER_OPTIONS.filter((p) => {
+                            // 检查当前激活模式下该提供商是否有可用模型
+                            return MODEL_OPTIONS.some(
+                              (m) =>
+                                m.sceneValues?.[activeTab] !== undefined &&
+                                m.brand === p.value
+                            );
+                          }).map((p) => (
+                            <button
+                              key={p.value}
+                              onClick={() => handleProviderChange(p.value)}
+                              className={cn(
+                                'flex w-full items-center gap-2 rounded-lg p-2 text-sm',
+                                'hover:bg-accent hover:text-accent-foreground transition-colors',
+                                provider === p.value &&
+                                  'bg-primary/20 text-primary font-medium'
+                              )}
+                            >
+                              {p.label}
+                            </button>
+                          ))}
+                        </div>
+                        {/* 右侧：模型列表 */}
+                        <div className="max-h-60 space-y-1 overflow-y-auto">
+                          <p className="text-muted-foreground mb-2 px-2 text-xs">
+                            Models
+                          </p>
+                          {MODEL_OPTIONS.filter(
+                            (m) =>
+                              m.sceneValues?.[activeTab] !== undefined &&
+                              m.brand === provider
+                          ).map((m) => {
+                            const discountLabel = getDiscountLabel(m);
+                            return (
+                              <button
+                                key={m.label}
+                                onClick={() => {
+                                  const sceneValue = m.sceneValues?.[activeTab];
+                                  const modelId =
+                                    typeof sceneValue === 'string'
+                                      ? sceneValue
+                                      : sceneValue?.id;
+
+                                  // ✅ 如果点击的已经是当前选中的模型，只关闭弹窗，不执行任何重置
+                                  if (model === modelId) {
+                                    setModelPopoverOpen(false);
+                                    return;
+                                  }
+
+                                  setModel(modelId ?? '');
+                                  setModelPopoverOpen(false);
+                                  // 重置高级选项为新模型的默认值
+                                  resetAdvancedOptions();
+                                }}
+                                className={cn(
+                                  'flex w-full items-center justify-between rounded-lg p-2 text-sm',
+                                  'hover:bg-accent hover:text-accent-foreground transition-colors',
+                                  model === m.sceneValues?.[activeTab] &&
+                                    'bg-primary/20 text-primary font-medium'
+                                )}
+                              >
+                                <span className="flex items-center gap-1">
+                                  {m.label}
+                                  {discountLabel && (
+                                    <span className="rounded bg-pink-100 px-1 text-[10px] text-pink-600">
+                                      {discountLabel}
+                                    </span>
+                                  )}
+                                </span>
+                                {(m.baseCredits as Record<string, number>)?.[
+                                  activeTab
+                                ] && (
+                                  <span className="text-muted-foreground text-xs">
+                                    {
+                                      (m.baseCredits as Record<string, number>)[
+                                        activeTab
+                                      ]
+                                    }{' '}
+                                    {t('credits')}
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
+                  {/* 高级参数弹出框 */}
+                  {advancedTypes.length > 0 && (
+                    <Popover
+                      open={advancedPopoverOpen}
+                      onOpenChange={setAdvancedPopoverOpen}
+                    >
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 gap-2 border backdrop-blur-sm transition-all duration-200 hover:shadow-md"
+                        >
+                          <Settings className="h-4 w-4" />
+                          {(() => {
+                            const visibleTypes = advancedTypes.filter(
+                              (type) =>
+                                type === 'duration' ||
+                                type === 'aspectRatio' ||
+                                type === 'resolution' ||
+                                type === 'mode' ||
+                                type === 'refFrameMode' ||
+                                type === 'audio' ||
+                                type === 'fix_camera'
+                            );
+                            return visibleTypes
+                              .slice(0, 3)
+                              .map((type, index) => (
+                                <span
+                                  key={type}
+                                  className="flex items-center gap-1"
+                                >
+                                  {index > 0 && (
+                                    <span className="text-muted-foreground">
+                                      |
+                                    </span>
+                                  )}
+                                  {type === 'duration' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.duration ??
+                                        sceneConfig?.defaultOptions?.duration ??
+                                        '10'}
+                                      s
+                                    </span>
+                                  )}
+                                  {type === 'aspectRatio' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.aspectRatio ??
+                                        sceneConfig?.defaultOptions
+                                          ?.aspect_ratio ??
+                                        '16:9'}
+                                    </span>
+                                  )}
+                                  {type === 'resolution' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.resolution ??
+                                        sceneConfig?.defaultOptions
+                                          ?.resolution ??
+                                        '720p'}
+                                    </span>
+                                  )}
+                                  {type === 'mode' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {advancedOptions.mode ??
+                                        sceneConfig?.defaultOptions?.mode ??
+                                        'std'}
+                                    </span>
+                                  )}
+                                  {type === 'refFrameMode' && (
+                                    <span className="bg-primary/10 rounded-full px-2 py-0.5 text-xs">
+                                      {(advancedOptions.refFrameMode ??
+                                        sceneConfig?.defaultOptions
+                                          ?.generationType) ===
+                                      'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                                        ? t(
+                                            'advanced_options.ref_frame_mode_options.first_and_last'
+                                          )
+                                        : t(
+                                            'advanced_options.ref_frame_mode_options.reference'
+                                          )}
+                                    </span>
+                                  )}
+                                </span>
+                              ));
+                          })()}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-[420px]"
+                        side="top"
+                        align="start"
+                      >
+                        <div className="space-y-5">
+                          {advancedTypes.map((type: VideoOptionType) => {
+                            // audio 类型使用 Switch 开关
+                            if (type === 'audio') {
+                              const currentValue =
+                                advancedOptions.audio ??
+                                sceneConfig?.defaultOptions?.audio ??
+                                false;
+
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t('advanced_options.audio')}
+                                  </Label>
+                                  <div className="flex items-center gap-2">
+                                    <Switch
+                                      checked={currentValue as boolean}
+                                      onCheckedChange={(checked) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          audio: checked,
+                                        }))
+                                      }
+                                    />
+                                    <span className="text-muted-foreground text-xs">
+                                      {currentValue
+                                        ? t(
+                                            'advanced_options.switch_options.on'
+                                          )
+                                        : t(
+                                            'advanced_options.switch_options.off'
+                                          )}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            // fix_camera 类型使用 Switch 开关
+                            if (type === 'fix_camera') {
+                              const currentValue =
+                                advancedOptions.fix_camera ??
+                                sceneConfig?.defaultOptions?.fix_camera ??
+                                false;
+
+                              return (
+                                <div key={type} className="space-y-2">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t('advanced_options.fix_camera')}
+                                  </Label>
+                                  <div className="flex items-center gap-2">
+                                    <Switch
+                                      checked={currentValue as boolean}
+                                      onCheckedChange={(checked) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          fix_camera: checked,
+                                        }))
+                                      }
+                                    />
+                                    <span className="text-muted-foreground text-xs">
+                                      {currentValue
+                                        ? t(
+                                            'advanced_options.switch_options.on'
+                                          )
+                                        : t(
+                                            'advanced_options.switch_options.off'
+                                          )}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            const options = sceneConfig.customOptions?.[type]
+                              ? sceneConfig.customOptions[type]
+                              : selectedModelConfig
+                                ? getOptionsForModel(selectedModelConfig, type)
+                                : getVideoOptionsForType(type);
+                            const label = getVideoOptionLabel(type);
+                            // 类型判断：数组是选项列表，对象是范围滑块
+                            const isRange = !Array.isArray(options);
+
+                            const currentValue =
+                              advancedOptions[type] ??
+                              sceneConfig?.defaultOptions?.[
+                                type === 'aspectRatio'
+                                  ? 'aspect_ratio'
+                                  : type === 'motionStrength'
+                                    ? 'motion_strength'
+                                    : type == 'refFrameMode'
+                                      ? 'generationType'
+                                      : type
+                              ] ??
+                              (!isRange && options.length > 0
+                                ? options[0]?.value
+                                : (options as any)?.min);
+
+                            // 检查是否是范围类型
+                            const isRangeType =
+                              sceneConfig.customOptions?.[type] &&
+                              'type' in sceneConfig.customOptions?.[type]! &&
+                              sceneConfig.customOptions?.[type].type ===
+                                'range';
+
+                            // 范围类型渲染滑块控件
+                            if (isRangeType) {
+                              const rangeConfig = sceneConfig.customOptions?.[
+                                type
+                              ] as any;
+                              const currentNum =
+                                Number(currentValue) || rangeConfig.min;
+
+                              return (
+                                <div key={type} className="space-y-3">
+                                  <Label className="text-muted-foreground text-xs font-medium">
+                                    {t(label)}
+                                  </Label>
+                                  <div className="flex items-center gap-4">
+                                    <input
+                                      type="range"
+                                      min={rangeConfig.min}
+                                      max={rangeConfig.max}
+                                      step={rangeConfig.step}
+                                      value={currentNum}
+                                      onChange={(e) =>
+                                        setAdvancedOptions((prev) => ({
+                                          ...prev,
+                                          [type]: e.target.value,
+                                        }))
+                                      }
+                                      className="bg-muted accent-primary h-2 flex-1 cursor-pointer appearance-none rounded-lg"
+                                    />
+                                    <span className="bg-primary/10 min-w-[60px] rounded-full px-3 py-1 text-center text-sm font-medium">
+                                      {currentNum}
+                                      {rangeConfig.unit || 's'}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            }
+
+                            // 普通类型渲染按钮网格
+                            return (
+                              <div key={type} className="space-y-2">
+                                <Label className="text-muted-foreground text-xs font-medium">
+                                  {t(label)}
+                                </Label>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {!isRange &&
+                                    options.map((option) => {
+                                      const isDisabled = disabledOptions.has(
+                                        `${type}:${option.value}`
+                                      );
+
+                                      return (
+                                        <motion.button
+                                          key={String(option.value)}
+                                          whileHover={
+                                            isDisabled ? {} : { scale: 1.02 }
+                                          }
+                                          whileTap={
+                                            isDisabled ? {} : { scale: 0.98 }
+                                          }
+                                          onClick={() => {
+                                            if (!isDisabled) {
+                                              setAdvancedOptions((prev) => ({
+                                                ...prev,
+                                                [type]: option.value,
+                                              }));
+                                            }
+                                          }}
+                                          className={cn(
+                                            'flex flex-col items-center justify-center gap-0.5 rounded-md border p-1.5 text-[10px] font-medium transition-all duration-200',
+                                            currentValue === option.value
+                                              ? 'bg-primary/20 border-primary text-primary shadow-primary/20 shadow-sm'
+                                              : isDisabled
+                                                ? 'bg-muted/50 border-muted-foreground/20 text-muted-foreground/40 cursor-not-allowed opacity-60'
+                                                : 'bg-background/60 border-primary/20 hover:border-primary/50 hover:shadow-sm'
+                                          )}
+                                          disabled={isDisabled}
+                                        >
+                                          <span>{t(option.label)}</span>
+                                        </motion.button>
+                                      );
+                                    })}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+
+                  {/* 积分信息 制作积分小于100的实际显示余额和充值按钮*/}
+                  <div className="ml-auto flex items-center gap-2 text-sm">
+                    {isMounted &&
+                    isCreditsLoaded &&
+                    user &&
+                    remainingCredits <= 100 ? (
+                      <>
+                        <span>
+                          {t('credits_remaining', {
+                            credits: remainingCredits,
+                          })}
+                        </span>
+                        <Link href="/pricing">
+                          <Button
+                            variant="link"
+                            size="sm"
+                            className="text-primary h-auto p-0"
+                          >
+                            {t('buy_credits')}
+                          </Button>
+                        </Link>
+                      </>
+                    ) : null}
+                  </div>
+
+                  {/* 生成按钮 */}
+                  {!isMounted ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('loading')}
+                    </Button>
+                  ) : isCheckSign ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300"
+                      disabled
+                    >
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('checking_account')}
+                    </Button>
+                  ) : user ? (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                      onClick={handleGenerate}
+                      disabled={
+                        isGenerating ||
+                        isPromptTooLong ||
+                        isReferenceUploading ||
+                        hasReferenceUploadError ||
+                        // ✅ 各模式启用条件
+                        (isTextToVideoMode && !prompt.trim()) ||
+                        (isImageToVideoMode &&
+                          (!prompt.trim() ||
+                            // ✅ 动态校验：首尾帧模式必须满2张图
+                            (advancedOptions.refFrameMode ===
+                            'FIRST_AND_LAST_FRAMES_2_VIDEO'
+                              ? referenceImageUrls.length < 2
+                              : referenceImageUrls.length < 1))) ||
+                        (isVideoToVideoMode &&
+                          (!prompt.trim() ||
+                            !referenceVideoUrl ||
+                            // ✅ 动态校验：如果模型要求最少上传N张图，就必须满足数量
+                            (maxImages > 0 &&
+                              referenceImageUrls.length < maxImages)))
+                      }
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          {t('generating')}
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-4 w-4" />
+                          {t('generate')}
+                          {(() => {
+                            if (!selectedModelConfig) {
+                              return (
+                                <span className="ml-2 text-xs opacity-80">
+                                  {costCredits} {t('credits')}
+                                </span>
+                              );
+                            }
+                            const { original, discounted, discountRate } =
+                              calculateCurrentCredits();
+                            return (
+                              <span className="ml-2 flex items-center gap-1 text-xs opacity-80">
+                                {discountRate < 1 && (
+                                  <span className="text-muted-foreground line-through">
+                                    {original}
+                                  </span>
+                                )}
+                                <span>{discounted}</span>
+                                {t('credits')}
+                              </span>
+                            );
+                          })()}
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="border-border bg-foreground/10 hover:bg-foreground/15 text-foreground rounded-full border px-6 text-sm font-medium transition-all duration-300 hover:shadow-lg"
+                      onClick={() => setIsShowSignModal(true)}
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      {t('sign_in_to_generate')}
+                    </Button>
+                  )}
+                </div>
+
+                {/* 视频预览区域 - 渐进式显示 */}
+                <AnimatePresence>
+                  {showPreview && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, y: 20 }}
+                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      exit={{ opacity: 0, height: 0, y: 20 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-primary/10 mt-6 border-t pt-6">
+                        <AnimatePresence mode="wait">
+                          {isGenerating ? (
+                            <motion.div
+                              key="progress"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                              className="space-y-4"
+                            >
+                              <div className="text-center">
+                                <p className="mb-2 text-lg font-medium">
+                                  ⏳ {t('generating')}
+                                </p>
+                                <ProgressBar progress={progress} />
+                                <p className="text-muted-foreground mt-3 text-sm">
+                                  {taskStatusLabel}
+                                </p>
+                                <p className="text-primary mt-2 text-2xl font-bold">
+                                  {progress}%
+                                </p>
+
+                                {/* 友好等待提示 */}
+                                <div className="bg-primary/5 border-primary/20 mt-4 rounded-xl border p-4 text-left">
+                                  <div className="flex items-start gap-3">
+                                    <div className="text-primary mt-0.5">
+                                      💡
+                                    </div>
+                                    <div className="space-y-2">
+                                      <p className="text-sm font-medium">
+                                        {t('generator.waiting_hint.title')}
+                                      </p>
+                                      <p className="text-muted-foreground text-sm">
+                                        {t(
+                                          'generator.waiting_hint.description'
+                                        )}
+                                      </p>
+                                      <Link
+                                        href="/activity/ai-tasks"
+                                        target="_blank"
+                                        className="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+                                      >
+                                        {t('generator.waiting_hint.link')}
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          ) : generatedVideos.length > 0 ? (
+                            <motion.div
+                              key="result"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="space-y-4"
+                            >
+                              {generatedVideos.map((video) => (
+                                <div key={video.id} className="space-y-3">
+                                  <div className="border-primary/20 relative overflow-hidden rounded-2xl border bg-black/5">
+                                    <video
+                                      src={video.url}
+                                      controls
+                                      className="h-auto max-h-[300px] w-full"
+                                      preload="metadata"
+                                    />
+                                  </div>
+                                  <div className="flex items-center justify-center gap-3">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleShareVideo(video)}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      <Share2 className="mr-2 h-4 w-4" />
+                                      {t('share')}
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleDownloadVideo(video)}
+                                      disabled={downloadingVideoId === video.id}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      {downloadingVideoId === video.id ? (
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                      ) : (
+                                        <Download className="mr-2 h-4 w-4" />
+                                      )}
+                                      {t('download')}
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        setShowPreview(false);
+                                        setGeneratedVideos([]);
+                                      }}
+                                      className="bg-background/60 border-primary/20 hover:bg-background/80 hover:border-primary/40 border backdrop-blur-sm transition-all duration-200"
+                                    >
+                                      🔄 {t('regenerate')}
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                            </motion.div>
+                          ) : null}
+                        </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

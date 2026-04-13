@@ -15,88 +15,186 @@
     "sections": {
       "hero": {
         "id": "hero",
-        "title": "Ship AI Startups in hours, not days",
-        "highlight_text": "in hours",
-        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
-        "announcement": {
-          "badge": "New",
-          "title": "🎉 ShipAny Template Two",
-          "url": "/pricing"
-        },
-        "tip": "🎁 Special offer for the first 1000 users",
+        "title": "What do you want to create? Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "Your all-in-one AI platform for generating stunning images, videos, and music.<br/>Create professional content with cutting-edge AI technology.",
         "buttons": [
           {
-            "title": "Get Started",
+            "title": "Start creating now",
             "icon": "Zap",
             "url": "/pricing",
             "target": "_self",
             "variant": "default"
-          },
-          {
-            "title": "Read Document",
-            "icon": "BookOpenText",
-            "url": "/docs",
-            "target": "_blank",
-            "variant": "outline"
           }
         ],
         "show_avatars": true,
-        "avatars_tip": "999+ users are using ShipAny",
+        "avatars_tip": "999+ users are using Marble AI",
         "show_award": false,
-        "image": {
-          "src": "/imgs/features/admin.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
-        "image_invert": {
-          "src": "/imgs/features/admin-dark.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
         "background_image": {
           "src": "/imgs/bg/tree.jpg",
           "alt": "hero"
-        }
-      },
-      "logos": {
-        "id": "logos",
-        "title": "ShipAny is built on the shoulders of giants",
+        },
         "items": [
           {
-            "title": "Next.js",
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "Alibaba Qwen Image 2.0 is a unified image model for realistic generation, structured text rendering, native 2K output, and flexible editing across creative and visual design workflows.",
             "image": {
-              "src": "/imgs/logos/nextjs.svg",
-              "alt": "Next.js"
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
             }
           },
           {
-            "title": "React",
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "The Qwen Image API empowers creators, developers, and businesses to generate and edit photorealistic images effortlessly. Whether you're crafting intricate designs or refining existing visuals, this powerful Qwen API integrates seamlessly into your workflow, delivering multilingual text rendering and advanced editing capabilities that rival top models.",
             "image": {
-              "src": "/imgs/logos/react.svg",
-              "alt": "React"
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
             }
           },
           {
-            "title": "TailwindCSS",
+            "title": "Qwen Image Edit",
+            "text": "Qwen",
+            "description": "Qwen-Image-Edit is an open-source image editing model based on Qwen-Image, supporting semantic and appearance editing with precise, visually coherent results. It also handles bilingual (Chinese and English) text editing while preserving font, size, and style, making it a versatile tool for advanced visual content manipulation.",
             "image": {
-              "src": "/imgs/logos/tailwindcss.svg",
-              "alt": "TailwindCSS"
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
             }
           },
           {
-            "title": "Shadcn/UI",
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "Meet Nano Banana 2, Google's Gemini 3.1 Flash Image model, now available via Kie AI API. Built for developers, it combines lightning-fast speed with Pro-level quality, accurate text rendering, strong character consistency, and scalable image generation and editing workflows.",
             "image": {
-              "src": "/imgs/logos/shadcn.svg",
-              "alt": "Shadcn/UI"
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
             }
           },
           {
-            "title": "Vercel",
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind's Nano Banana Pro delivers sharper 2K imagery, intelligent 4K scaling, improved text rendering, and enhanced character consistency—offering a major leap in visual quality for creative and API-driven workflows.",
             "image": {
-              "src": "/imgs/logos/vercel.svg",
-              "alt": "Vercel"
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
+          },
+          {
+            "title": "NanoBanana-Gemini 2.5 Flash Image Preview",
+            "text": "Google",
+            "description": "Gemini 3 Image Preview (aka Nano Banana) is an advanced AI model excelling in natural language-driven image generation and editing. It produces hyper-realistic, physics-aware visuals with seamless style transformations.",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash Image Preview"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4, developed by Google DeepMind and introduced at Google I/O 2025, is a state-of-the-art text-to-image generation model that transforms prompts into photorealistic, high-quality visuals with exceptional detail and creative versatility. Its enhanced variant, Google Imagen 4 Ultra, delivers even greater precision, speed, and resolution, making both models ideal for commercial, marketing, design, and creative applications.",
+            "image": {
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 is OpenAI's flagship image generation model for high-quality image creation and precise image editing, with strong instruction following and improved text rendering.",
+            "image": {
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "The GPT-Image-1 model, also known as ChatGPT 4o Image, is OpenAI's latest AI image generation model. It understands both text and visual context, allowing developers to create and edit images with remarkable accuracy. Unlike traditional diffusion models, GPT-Image-1 follows instructions precisely, supports consistent styles, and renders legible text — making it ideal for applications in design, marketing, and creative automation.",
+            "image": {
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 is Black Forest Labs' advanced image generation model that delivers photoreal detail, strong multi-reference consistency, and accurate text rendering with flexible control.",
+            "image": {
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "In a world where visuals drive engagement, FLUX.1 Kontext API on Kie.ai empowers you to edit images like never before. Harness cutting-edge AI to transform photos with simple text commands, delivering professional results that save time and boost creativity. Whether you're optimizing e-commerce listings or crafting marketing masterpieces, Kie.ai's FLUX.1 Kontext API is your gateway to efficient, high-quality image innovation.",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine is xAI's multimodal image and video generation model that converts text or images into short visual outputs with coherent motion and synchronized audio.",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3 Reframe Image",
+            "text": "Ideogram",
+            "description": "Ideogram V3 Reframe is a specialized image-to-image model built on Ideogram 3.0, designed to intelligently extend and adapt images across diverse aspect ratios and resolutions. Leveraging advanced AI outpainting, it preserves visual consistency while enabling creative reframing for digital, print, and video content.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            }
+          },
+          {
+            "title": "Ideogram Character",
+            "text": "Ideogram",
+            "description": "Ideogram Character is the latest feature released by Ideogram AI, ensuring characters retain core features such as facial traits, proportions, and hairstyles across different scenes, artistic styles, and contexts. Whether creating characters from a single reference image or fine-tuning existing ones, Kie.ai's Ideogram Character API offers flexibility and precision through its Base, Edit, and Remix operations.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-character.png",
+              "alt": "Ideogram Character"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API is the latest generation of Ideogram's image generation model, offering text-to-image, image editing, reframing, and remixing with improved consistency and creative control.",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Topaz Image Upscale",
+            "text": "Topaz",
+            "description": "Topaz Labs Image Upscale is an AI image enhancement model that increases resolution and restores detail with high-fidelity upscaling, natural texture reconstruction, and improved clarity across low-quality images.",
+            "image": {
+              "src": "/imgs/models/image/topaz-image-upscale.png",
+              "alt": "Topaz Image Upscale"
+            }
+          },
+          {
+            "title": "Recraft Remove Background",
+            "text": "Recraft",
+            "description": "Built by Recraft AI, the Remove Background API accurately separates subjects from any background and delivers clean, transparent outputs—optimized for seamless integration into websites, eCommerce platforms, and creative workflows.",
+            "image": {
+              "src": "/imgs/models/image/recraft-remove-background.png",
+              "alt": "Recraft Remove Background"
+            }
+          },
+          {
+            "title": "Recraft Crisp Upscale",
+            "text": "Recraft",
+            "description": "Transform blurry photos into crystal-clear masterpieces using the Recraft Crisp Upscale API. As the ultimate free image upscaler, this tool leverages advanced AI to deliver professional-grade results without costing a dime. Whether you're a designer, marketer, or hobbyist, experience seamless picture upscaler capabilities that make free image upscaling a breeze.",
+            "image": {
+              "src": "/imgs/models/image/recraft-crisp-upscale.webp",
+              "alt": "Recraft Crisp Upscale"
             }
           }
         ]
@@ -104,72 +202,73 @@
       "introduce": {
         "block": "features-list",
         "id": "introduce",
-        "title": "What is ShipAny",
+        "title": "What is Marble AI",
+        "highlight_text": "Marble AI",
         "label": "Introduce",
-        "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups, including templates, components, and documentation.",
+        "description": "Marble AI is an all-in-one AI platform for generating stunning images, videos, and music with cutting-edge technology.",
         "image": {
           "src": "/imgs/features/landing-page.png",
           "alt": "introduce"
         },
         "items": [
           {
-            "title": "Ready-to-use Templates",
-            "description": "Choose from dozens of production-ready AI SaaS templates to quickly start your project.",
-            "icon": "RiNextjsFill",
+            "title": "AI Image Generation",
+            "description": "Create stunning images with advanced AI models including Qwen, Flux, Ideogram, and more.",
+            "icon": "RiImage2Line",
             "image": {
               "src": "/imgs/features/1.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "Infrastructure Setup",
-            "description": "Get instant access to scalable infrastructure with best practices built-in.",
-            "icon": "RiDatabase2Line",
+            "title": "AI Video Generation",
+            "description": "Generate professional videos with AI-powered tools like Seedance, Kling, and Veo.",
+            "icon": "RiVideoLine",
             "image": {
               "src": "/imgs/features/2.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "Quick Deployment",
-            "description": "Deploy your AI SaaS application to production in hours, not days.",
-            "icon": "RiCloudyFill",
+            "title": "AI Music Generation",
+            "description": "Create beautiful music with AI technology for your creative projects.",
+            "icon": "RiMusic2Line",
             "image": {
               "src": "/imgs/features/3.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "AI Integration",
-            "description": "Integrate AI into your project with ease using our built-in AI SDK.",
+            "title": "Easy Integration",
+            "description": "Simple API integration for seamless workflow and creative automation.",
             "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/4.png",
               "alt": "introduce"
             }
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "benefits": {
         "block": "features-accordion",
         "id": "benefits",
-        "title": "Why Choose ShipAny",
+        "title": "Why Choose Marble AI",
+        "highlight_text": "Marble AI",
         "label": "Benefits",
-        "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
+        "description": "Get everything you need to create stunning AI content - from images to videos and music.",
         "items": [
           {
-            "title": "Complete Framework",
-            "description": "Built on Next.js with authentication, payments, and AI integration - everything works out of the box.",
-            "icon": "RiNextjsFill",
+            "title": "All-in-One Platform",
+            "description": "Access multiple AI generation tools in one place - images, videos, and music with a single subscription.",
+            "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/user-billing.png",
               "alt": "benefits"
             }
           },
           {
-            "title": "Rich Templates Library",
-            "description": "Choose from various AI SaaS templates to kickstart your project - chatbots, image generation, and more.",
+            "title": "Professional Quality",
+            "description": "Generate high-quality content with state-of-the-art AI models used by professionals worldwide.",
             "icon": "RiClapperboardAiLine",
             "image": {
               "src": "/imgs/features/admin-settings.png",
@@ -177,8 +276,8 @@
             }
           },
           {
-            "title": "Technical Guidance",
-            "description": "Get dedicated support and join our developer community to ensure your successful launch.",
+            "title": "Easy to Use",
+            "description": "Simple interface and API integration make it easy to create professional content without technical expertise.",
             "icon": "RiCodeFill",
             "image": {
               "src": "/imgs/features/landing-page.png",
@@ -190,8 +289,9 @@
       "usage": {
         "block": "features-step",
         "id": "usage",
-        "title": "How to Launch with ShipAny",
-        "description": "Get your AI SaaS startup running in three simple steps:",
+        "title": "How to Use Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "Create stunning AI content in three simple steps:",
         "image": {
           "src": "/imgs/features/1.png",
           "alt": "usage"
@@ -200,106 +300,107 @@
         "text_align": "center",
         "items": [
           {
-            "title": "Get ShipAny",
-            "description": "Buy ShipAny with a one-time payment. Check your email for the code and documentation.",
+            "title": "Sign Up",
+            "description": "Create your Marble AI account and choose a plan that fits your needs.",
             "image": {
               "src": "/imgs/features/5.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Start Your Project",
-            "description": "Read the documentation and clone the code of ShipAny. Start building your AI SaaS startup.",
+            "title": "Choose Your Tool",
+            "description": "Select from image, video, or music generation tools based on your creative needs.",
             "image": {
               "src": "/imgs/features/6.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Customize Your Project",
-            "description": "Modify the template with your data and contents. Specific AI functionality needs.",
+            "title": "Generate Content",
+            "description": "Describe what you want to create and let Marble AI generate professional content for you.",
             "image": {
               "src": "/imgs/features/7.png",
               "alt": "usage"
             }
           },
           {
-            "title": "Deploy to Production",
-            "description": "Deploy your project to production with a few steps and start serving customers immediately.",
+            "title": "Download & Share",
+            "description": "Download your generated content and use it for your projects or share with others.",
             "image": {
               "src": "/imgs/features/8.png",
               "alt": "usage"
             }
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "features": {
         "id": "features",
-        "title": "Key Features of ShipAny",
-        "description": "Everything you need to launch your AI SaaS startup quickly and efficiently.",
+        "title": "Key Features of Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "Everything you need to create stunning AI content quickly and efficiently.",
         "items": [
           {
-            "title": "Next.js Boilerplate",
-            "description": "Production-ready Next.js templates with SEO-friendly structure and i18n support.",
-            "icon": "RiNextjsFill"
+            "title": "AI Image Generation",
+            "description": "Create stunning images with advanced AI models including Qwen, Flux, Ideogram, and more.",
+            "icon": "RiImage2Line"
           },
           {
-            "title": "Authentication & Payments",
-            "description": "Integrated Google OAuth, one-tap login, and Stripe payment processing.",
-            "icon": "RiKey2Fill"
+            "title": "AI Video Generation",
+            "description": "Generate professional videos with AI-powered tools like Seedance, Kling, and Veo.",
+            "icon": "RiVideoLine"
           },
           {
-            "title": "Data Infrastructure",
-            "description": "Built-in Supabase integration for reliable and scalable data storage.",
-            "icon": "RiDatabase2Line"
+            "title": "AI Music Generation",
+            "description": "Create beautiful music with AI technology for your creative projects.",
+            "icon": "RiMusic2Line"
           },
           {
-            "title": "One-Click Deployment",
-            "description": "Seamless deployment to Vercel or Cloudflare with automated setup.",
-            "icon": "RiCloudy2Fill"
-          },
-          {
-            "title": "Business Analytics",
-            "description": "Integrated Google Analytics and Search Console for tracking growth.",
-            "icon": "RiBarChart2Line"
-          },
-          {
-            "title": "AI-Ready Infrastructure",
-            "description": "Pre-configured AI integration with built-in credits system and API sales.",
+            "title": "Easy Integration",
+            "description": "Simple API integration for seamless workflow and creative automation.",
             "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Professional Quality",
+            "description": "Generate high-quality content with state-of-the-art AI models used by professionals worldwide.",
+            "icon": "RiClapperboardAiLine"
+          },
+          {
+            "title": "Affordable Pricing",
+            "description": "Flexible pricing plans to suit your needs, from individual creators to enterprise teams.",
+            "icon": "RiMoneyDollarCircleLine"
           }
         ]
       },
       "stats": {
         "id": "stats",
-        "title": "People Love ShipAny",
-        "description": "for it's easy to use and fast to ship.",
+        "title": "People Love Marble AI",
+        "highlight_text": "Love Marble AI",
+        "description": "for its powerful AI generation capabilities.",
         "items": [
           {
             "title": "999+",
-            "description": "Customers"
+            "description": "Active Users"
           },
           {
-            "title": "200+",
-            "description": "Blocks"
+            "title": "1M+",
+            "description": "Content Generated"
           },
           {
             "title": "50+",
-            "description": "Templates"
+            "description": "AI Models"
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "testimonials": {
         "id": "testimonials",
-        "title": "What Users Say About ShipAny",
-        "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
+        "title": "What Users Say About Marble AI",
+        "highlight_text": "Users Say",
+        "description": "Hear from creators and professionals who use Marble AI for their creative projects.",
         "items": [
           {
             "name": "David Chen",
-            "role": "Founder of AIWallpaper.shop",
-            "quote": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
+            "role": "Digital Artist",
+            "quote": "Marble AI has transformed my creative workflow. The image generation quality is incredible, and I can create stunning visuals in minutes!",
             "image": {
               "src": "/imgs/avatars/1.png",
               "alt": "david"
@@ -307,8 +408,8 @@
           },
           {
             "name": "Rachel Kim",
-            "role": "CTO at HeyBeauty.ai",
-            "quote": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
+            "role": "Content Creator",
+            "quote": "The video generation feature is a game-changer. I can produce professional-quality content for my social media without any video editing skills.",
             "image": {
               "src": "/imgs/avatars/2.png",
               "alt": "rachel"
@@ -316,8 +417,8 @@
           },
           {
             "name": "Marcus Thompson",
-            "role": "Solo Developer",
-            "quote": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
+            "role": "Marketing Manager",
+            "quote": "Marble AI saves us thousands on stock photos and videos. The AI-generated content looks professional and perfectly matches our brand.",
             "image": {
               "src": "/imgs/avatars/3.png",
               "alt": "marcus"
@@ -325,8 +426,8 @@
           },
           {
             "name": "Sofia Garcia",
-            "role": "CEO of Melodisco",
-            "quote": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
+            "role": "Music Producer",
+            "quote": "The AI music generation is phenomenal. I use Marble AI to create background tracks and inspiration for my productions.",
             "image": {
               "src": "/imgs/avatars/4.png",
               "alt": "sofia"
@@ -334,8 +435,8 @@
           },
           {
             "name": "James Wilson",
-            "role": "Tech Lead at GPTs.works",
-            "quote": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
+            "role": "E-commerce Owner",
+            "quote": "Product images have never been easier. Marble AI generates beautiful product photos that boost our conversion rates significantly.",
             "image": {
               "src": "/imgs/avatars/5.png",
               "alt": "james"
@@ -343,8 +444,8 @@
           },
           {
             "name": "Anna Zhang",
-            "role": "Startup Founder",
-            "quote": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
+            "role": "Freelance Designer",
+            "quote": "Marble AI is my secret weapon. I can deliver more projects in less time while maintaining exceptional quality. My clients love it!",
             "image": {
               "src": "/imgs/avatars/6.png",
               "alt": "anna"
@@ -354,60 +455,54 @@
       },
       "faq": {
         "id": "faq",
-        "title": "Frequently Asked Questions About ShipAny",
-        "description": "Have another question? Contact us on Discord or by email.",
+        "title": "Frequently Asked Questions",
+        "highlight_text": "Questions",
+        "description": "Have another question? Contact us by email.",
         "items": [
           {
-            "question": "What exactly is ShipAny and how does it work?",
-            "answer": "ShipAny is a comprehensive NextJS boilerplate designed specifically for building AI SaaS startups. It provides ready-to-use templates, infrastructure setup, and deployment tools that help you launch your AI business in hours instead of days."
+            "question": "What is Marble AI and how does it work?",
+            "answer": "Marble AI is an all-in-one AI platform for generating stunning images, videos, and music. Simply choose your desired content type, provide a description, and our AI models will create professional content for you in minutes."
           },
           {
-            "question": "Do I need advanced technical skills to use ShipAny?",
-            "answer": "While basic programming knowledge is helpful, ShipAny is designed to be developer-friendly. Our templates and documentation make it easy to get started, even if you're not an expert in AI or cloud infrastructure."
+            "question": "What types of content can I create with Marble AI?",
+            "answer": "Marble AI supports image generation, video generation, and music generation. You can create anything from photorealistic images to professional videos and original music compositions."
           },
           {
-            "question": "What types of AI SaaS can I build with ShipAny?",
-            "answer": "ShipAny supports a wide range of AI applications, from content generation to data analysis tools. Our templates cover popular use cases like AI chatbots, content generators, image processing apps, and more."
+            "question": "Do I need technical skills to use Marble AI?",
+            "answer": "No technical skills are required! Marble AI is designed to be user-friendly. Simply describe what you want to create, and our AI will generate it for you. Advanced users can also use our API for integration."
           },
           {
-            "question": "How long does it typically take to launch with ShipAny?",
-            "answer": "With ShipAny, you can have a working prototype in hours and a production-ready application in hours. Our one-click deployment and pre-configured infrastructure significantly reduce the traditional months-long development cycle."
+            "question": "How long does it take to generate content?",
+            "answer": "Generation time depends on the content type and complexity. Images typically take seconds to minutes, videos take a few minutes, and music generation is usually quick. You'll see real-time progress updates."
           },
           {
-            "question": "What's included in the ShipAny infrastructure?",
-            "answer": "ShipAny provides a complete infrastructure stack including authentication, database setup, API integration, payment processing, and scalable cloud deployment. Everything is pre-configured following industry best practices."
+            "question": "Can I use the generated content commercially?",
+            "answer": "Yes! All content generated with Marble AI can be used for commercial purposes. You own the rights to your generated content and can use it however you like."
           },
           {
-            "question": "Can I customize the templates to match my brand?",
-            "answer": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
+            "question": "What AI models does Marble AI use?",
+            "answer": "Marble AI uses state-of-the-art AI models including Qwen, Flux, Ideogram for images, Seedance, Kling, Veo for videos, and advanced music generation models. We continuously update our models to provide the best quality."
           }
         ]
       },
       "cta": {
         "id": "cta",
-        "title": "Ship your first AI SaaS Startup",
-        "description": "Start from here, ship with ShipAny.",
+        "title": "Create Stunning AI Content Today",
+        "highlight_text": "AI Content",
+        "description": "Start generating professional images, videos, and music with Marble AI.",
         "buttons": [
           {
-            "title": "Get ShipAny",
-            "url": "https://shipany.ai",
-            "target": "_blank",
+            "title": "Start creating now",
+            "url": "/pricing",
+            "target": "_self",
             "icon": "Zap"
-          },
-          {
-            "title": "Read Document",
-            "url": "/docs",
-            "target": "_blank",
-            "variant": "outline",
-            "icon": "BookOpenText"
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "subscribe": {
         "id": "subscribe",
         "title": "Subscribe to our newsletter",
-        "description": "Get the latest news and updates from ShipAny.",
+        "description": "Get the latest news and updates from Marble AI.",
         "submit": {
           "input": {
             "placeholder": "Enter your email"
@@ -416,8 +511,7 @@
             "title": "Subscribe"
           },
           "action": "/api/subscribe"
-        },
-        "className": "bg-muted"
+        }
       }
     }
   }

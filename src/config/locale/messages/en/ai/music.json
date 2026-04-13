@@ -3,9 +3,262 @@
     "title": "AI Music Generator",
     "description": "Generate amazing music with AI"
   },
+
   "page": {
-    "title": "AI Music Generator",
-    "description": "Generate amazing music with AI"
+    "sections": {
+      "hero": {
+        "title": "AI Music Generator",
+        "highlight_text": "AI Music Generator",
+        "description": "Unleash your creativity with Marble AI. Generate stunning, professional-quality music from text descriptions using the world's most advanced AI models.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "Powered by Leading AI Models",
+        "highlight_text": "Leading AI Models",
+        "label": "AI Models",
+        "description": "Marble AI integrates the most powerful music generation AI models, giving you access to cutting-edge text-to-music technology in one platform.",
+        "image": {
+          "src": "/imgs/models/music/suno.png",
+          "alt": "Marble AI Music Generator"
+        },
+        "items": [
+          {
+            "title": "Suno",
+            "description": "Suno's AI music models deliver professional-quality music generation with vocals, instruments, and diverse genre support.",
+            "icon": "RiMusicLine",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "Suno"
+            }
+          },
+          {
+            "title": "Udio",
+            "description": "Udio's music generation models excel at creating expressive, high-fidelity music with natural vocals and rich instrumentation.",
+            "icon": "RiSoundModuleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Udio"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "Why Choose Marble AI Music Generator?",
+        "highlight_text": "Music Generator",
+        "description": "Experience the most powerful and versatile AI music generation platform with unmatched quality and creativity.",
+        "items": [
+          {
+            "title": "Multiple AI Models",
+            "description": "Access leading music generation models including Suno and Udio in one platform.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Text To Music",
+            "description": "Generate stunning music from text descriptions using the world's most advanced AI models.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Custom Lyrics",
+            "description": "Write your own lyrics or let AI generate them for you with intelligent content creation.",
+            "icon": "RiQuillPenLine"
+          },
+          {
+            "title": "Multiple Genres",
+            "description": "Create music in any genre from pop and rock to classical and electronic.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Lightning Fast",
+            "description": "Generate professional-quality music in minutes with our optimized infrastructure.",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "Studio Quality",
+            "description": "Create high-fidelity music with professional-grade audio quality and production.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated music. Use them anywhere without restrictions.",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "Vocals & Instruments",
+            "description": "Generate music with natural vocals and rich instrumentation for complete songs.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "API Access",
+            "description": "Seamless API integration for developers to build AI-powered music applications.",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "What Creators Say About Marble AI Music Generator",
+        "highlight_text": "What Creators Say",
+        "description": "Join thousands of musicians, producers, and creators who trust Marble AI for their music generation needs.",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "Music Producer",
+            "quote": "Marble AI has revolutionized my music production workflow. Having Suno and Udio in one place saves me hours of switching between tools. The quality is outstanding!",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "Marketing Director",
+            "quote": "We generate all our campaign music with Marble AI. The commercial license and variety of models give us everything we need for professional marketing materials.",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "Game Developer",
+            "quote": "The Suno model on Marble AI produces incredible soundtracks for our games. The detail and consistency are exactly what we need for rapid prototyping.",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "Content Creator",
+            "quote": "I've tried every AI music generator out there. Marble AI stands out with its speed, quality, and the ability to compare results across different models instantly.",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "E-commerce Entrepreneur",
+            "quote": "Marble AI helps us create stunning product music without expensive studio sessions. Our conversion rates have increased by 40% since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "Music Composer",
+            "quote": "The genre diversity is unmatched. Whether I need pop ballads or electronic beats, Marble AI delivers perfect results every time.",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "Social Media Manager",
+            "quote": "Suno on Marble AI creates the most realistic product jingles I've ever heard. Our Instagram engagement has doubled since we started using it!",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "Film Director",
+            "quote": "The batch generation feature is a game-changer. I can explore dozens of music concepts in minutes instead of hours. Absolutely essential for my workflow.",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "Startup Founder",
+            "quote": "The API integration was seamless. We built our entire product music pipeline with Marble AI in just one week. The documentation is excellent!",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "Freelance Musician",
+            "quote": "As a freelancer, Marble AI's commercial license gives me peace of mind. I can create for clients without worrying about usage rights. Worth every penny!",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "Education Content Creator",
+            "quote": "The 24/7 support team is incredible. They helped me optimize my prompts and now I'm creating educational music that my students absolutely love!",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "FAQ - AI Music Generator",
+        "highlight_text": "FAQ",
+        "description": "Everything you need to know about Marble AI's Music Generator.",
+        "items": [
+          {
+            "title": "What is AI Music Generation?",
+            "description": "AI Music Generation is an AI-powered technology that creates music from text prompts. Simply provide your description, and Marble AI's advanced models will generate stunning music for you."
+          },
+          {
+            "question": "Which AI models does Marble AI support?",
+            "answer": "Marble AI integrates the leading music generation models including Suno and Udio. Each model has unique strengths, and you can choose the best one for your specific needs."
+          },
+          {
+            "question": "How do I use Marble AI's Music Generator?",
+            "answer": "Simply enter a text description of the music you want, customize the style and lyrics if desired, select your preferred AI model, and click generate. Our intuitive interface makes it easy for anyone to create professional-quality music in minutes."
+          },
+          {
+            "question": "What music quality can I expect?",
+            "answer": "Marble AI generates studio-quality music with professional-grade audio. The exact output depends on the model you choose, but all our models are optimized for exceptional sound quality, natural vocals, and rich instrumentation."
+          },
+          {
+            "question": "Can I use generated music commercially?",
+            "answer": "Yes! All music generated through Marble AI comes with full commercial rights. You can use them for marketing, products, websites, social media, and any other business purposes without restrictions."
+          },
+          {
+            "question": "How fast is the music generation?",
+            "answer": "Most music is generated within 2-3 minutes depending on the model and complexity. Our optimized infrastructure ensures you get your results quickly without compromising quality."
+          },
+          {
+            "question": "Can I customize the lyrics of generated music?",
+            "answer": "Absolutely! Marble AI offers extensive customization options including custom lyrics, style presets, and genre selection. You have full control over the creative direction of your music."
+          },
+          {
+            "question": "What genres of music can I create?",
+            "answer": "Marble AI supports a wide range of genres including pop, rock, classical, electronic, jazz, country, folk, and more. You can specify the genre in your prompt or let the AI choose the best style for your description."
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "Ready to Create Amazing Music?",
+        "highlight_text": "Amazing Music",
+        "description": "Start generating stunning music with Marble AI's powerful Music Generator. Create professional-quality songs from text descriptions.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
   },
   "generator": {
     "title": "Music Generator",

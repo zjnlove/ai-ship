@@ -61,7 +61,7 @@ export function ConsoleLayout({
       {/* Top Navigation */}
       {topNav && (
         <div className="border-border border-b">
-          <div className="container">
+          <div className="px-8">
             <nav className="scrollbar-hide flex items-center gap-4 overflow-x-auto py-0 text-sm">
               {topNav.items.map((item, idx) => (
                 <Link
@@ -86,7 +86,7 @@ export function ConsoleLayout({
 
       {/* Page Header */}
       <div className="border-border">
-        <div className="container">
+        <div className="px-8">
           <div className="flex items-center gap-4 py-8">
             {/* Mobile Menu Trigger */}
             <Sheet>
@@ -111,8 +111,8 @@ export function ConsoleLayout({
       </div>
 
       {/* Main Content */}
-      <div className="container">
-        <div className="flex flex-wrap gap-8 py-8">
+      <div className="px-8">
+        <div className="flex flex-wrap gap-8">
           {/* Left Sidebar (Desktop) */}
           <div className="hidden w-64 flex-shrink-0 md:block">
             {/* Search Box */}

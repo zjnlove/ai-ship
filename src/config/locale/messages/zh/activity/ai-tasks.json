@@ -26,6 +26,19 @@
       "view": "查看任务",
       "refresh": "刷新任务"
     },
-    "empty_message": "无任务"
+    "empty_message": "无任务",
+    "empty_prompt": "无提示词",
+    "task_id": "任务 ID"
+  },
+  "pagination": {
+    "prev": "上一页",
+    "next": "下一页",
+    "total": "共 {total} 条记录"
+  },
+  "status": {
+    "success": "成功",
+    "pending": "排队中",
+    "processing": "生成中",
+    "failed": "失败"
   }
 }

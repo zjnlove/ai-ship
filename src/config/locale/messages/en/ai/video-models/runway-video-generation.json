@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Runway Video Generation - AI Video Generator | Marble AI",
+    "description": "Runway Video Generation by Runway AI. Groundbreaking Gen-4 architecture for video generation from text, images, and scene editing with professional results."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Runway Video Generation",
+        "highlight_text": "Runway Video Generation",
+        "description": "Runway AI's groundbreaking Gen-4 architecture. Transform ideas into stunning videos using text, images, and scene editing.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Runway Video Generation",
+        "highlight_text": "Runway Video Generation",
+        "label": "Model Overview",
+        "description": "Runway Video Generation is powered by Runway AI's groundbreaking Gen-4 architecture. This toolkit transforms ideas into stunning videos using text, images, and scene editing, delivering professional results instantly.",
+        "image": {
+          "src": "/imgs/models/video/runway.webp",
+          "alt": "Runway Video Generation"
+        },
+        "items": [
+          {
+            "title": "Gen-4 Architecture",
+            "description": "Built on Runway AI's latest Gen-4 architecture for superior quality.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Scene Editing",
+            "description": "Advanced scene editing capabilities for precise control.",
+            "icon": "RiEditLine"
+          },
+          {
+            "title": "Professional Results",
+            "description": "Generate professional-quality videos instantly.",
+            "icon": "RiStarLine"
+          },
+          {
+            "title": "Multi-Modal Input",
+            "description": "Support for text, image, and video inputs.",
+            "icon": "RiGalleryLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Runway Video Generation a leading AI video model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with professional quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Scene Editing",
+            "description": "Edit and transform video scenes with AI-powered tools.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Style Transfer",
+            "description": "Apply artistic styles and transformations to videos.",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "HD Output",
+            "description": "High-resolution video output with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Runway Video Generation.",
+        "items": [
+          {
+            "title": "Film Production",
+            "description": "Create cinematic content with professional scene editing.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with style transfer.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Creative Projects",
+            "description": "Explore creative ideas with advanced AI tools.",
+            "icon": "RiLightbulbLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Runway Video Generation.",
+        "items": [
+          {
+            "title": "What is Runway Video Generation?",
+            "description": "Runway Video Generation is Runway AI's Gen-4 architecture for creating videos from text, images, and scene editing."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Runway supports Text To Video (T2V), Image To Video (I2V), and scene editing modes."
+          },
+          {
+            "title": "Who created Runway Video Generation?",
+            "description": "Runway Video Generation is created by Runway AI, a leading creative AI company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Runway excels at Gen-4 architecture, scene editing, and professional-quality output."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Runway through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What is Gen-4 architecture?",
+            "description": "Gen-4 is Runway AI's latest architecture delivering superior video generation quality and capabilities."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Runway Video Generation?",
+        "highlight_text": "Runway Video Generation",
+        "description": "Experience Runway AI's Gen-4 architecture. Create professional videos with scene editing.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

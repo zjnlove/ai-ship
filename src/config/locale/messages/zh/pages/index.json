@@ -15,87 +15,186 @@
     "sections": {
       "hero": {
         "id": "hero",
-        "title": "一小时快速上线你的 AI 创业项目",
-        "highlight_text": "一小时",
-        "description": "ShipAny 是用于构建 AI SaaS 创业项目的 NextJS 项目模板。<br/>集成常用功能，快速上线你的产品。",
-        "announcement": {
-          "badge": "全新",
-          "title": "🎉 ShipAny 模板二已发布",
-          "url": "/pricing"
-        },
-        "tip": "🎁 前 1000 名用户特价优惠",
+        "title": "你想要创作什么？Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "您的一站式 AI 平台，用于生成惊艳的图像、视频和音乐。<br/>使用尖端 AI 技术创建专业内容。",
         "buttons": [
           {
-            "title": "立即开始",
+            "title": "立即开始创作",
             "icon": "Zap",
             "url": "/pricing",
             "target": "_self",
             "variant": "default"
-          },
-          {
-            "title": "阅读文档",
-            "icon": "BookOpenText",
-            "url": "/docs",
-            "target": "_blank",
-            "variant": "outline"
           }
         ],
         "show_avatars": true,
-        "avatars_tip": "999+ 用户在使用 ShipAny 上站",
+        "avatars_tip": "999+ 用户正在使用 Marble AI",
         "show_award": false,
-        "image": {
-          "src": "/imgs/features/admin.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
-        "image_invert": {
-          "src": "/imgs/features/admin-dark.png",
-          "alt": "hero",
-          "width": 1200,
-          "height": 800
-        },
         "background_image": {
           "src": "/imgs/bg/tree.jpg",
           "alt": "hero"
-        }
-      },
-      "logos": {
-        "title": "ShipAny 使用以下技术栈构建",
+        },
         "items": [
           {
-            "title": "Next.js",
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "阿里 Qwen Image 2.0 是一个统一的图像模型，支持逼真生成、结构化文本渲染、原生 2K 输出，以及在创意和视觉设计工作流中的灵活编辑。",
             "image": {
-              "src": "/imgs/logos/nextjs.svg",
-              "alt": "Next.js"
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
             }
           },
           {
-            "title": "React",
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "Qwen Image API 为创作者、开发者和企业提供轻松生成和编辑照片级真实图像的能力。无论您是制作复杂设计还是优化现有视觉效果，这个强大的 Qwen API 都能无缝集成到您的工作流中，提供多语言文本渲染和高级编辑功能，媲美顶级模型。",
             "image": {
-              "src": "/imgs/logos/react.svg",
-              "alt": "React"
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
             }
           },
           {
-            "title": "TailwindCSS",
+            "title": "Qwen Image Edit",
+            "text": "Qwen",
+            "description": "Qwen-Image-Edit 是一个基于 Qwen-Image 的开源图像编辑模型，支持语义和外观编辑，提供精确、视觉一致的结果。它还能处理中英文双语文本编辑，同时保留字体、大小和样式，是高级视觉内容操作的多功能工具。",
             "image": {
-              "src": "/imgs/logos/tailwindcss.svg",
-              "alt": "TailwindCSS"
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
             }
           },
           {
-            "title": "Shadcn/UI",
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "认识 Nano Banana 2，Google 的 Gemini 3.1 Flash Image 模型，现可通过 Kie AI API 使用。专为开发者打造，它结合了闪电般的速度和 Pro 级别的质量、准确的文本渲染、强大的角色一致性，以及可扩展的图像生成和编辑工作流。",
             "image": {
-              "src": "/imgs/logos/shadcn.svg",
-              "alt": "Shadcn/UI"
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
             }
           },
           {
-            "title": "Vercel",
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind 的 Nano Banana Pro 提供更清晰的 2K 图像、智能 4K 缩放、改进的文本渲染和增强的角色一致性——为创意和 API 驱动的工作流提供视觉质量的重大飞跃。",
             "image": {
-              "src": "/imgs/logos/vercel.svg",
-              "alt": "Vercel"
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
+          },
+          {
+            "title": "NanoBanana-Gemini 2.5 Flash Image Preview",
+            "text": "Google",
+            "description": "Gemini 3 Image Preview（又称 Nano Banana）是一个先进的 AI 模型，擅长自然语言驱动的图像生成和编辑。它能生成超逼真、具有物理感知的视觉效果，并实现无缝风格转换。",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash Image Preview"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4 由 Google DeepMind 开发，在 Google I/O 2025 上推出，是一个最先进的文本到图像生成模型，能将提示转换为照片级真实、高质量的视觉效果，具有卓越的细节和创意多样性。其增强版本 Google Imagen 4 Ultra 提供更高的精度、速度和分辨率，使两个模型都成为商业、营销、设计和创意应用的理想选择。",
+            "image": {
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 是 OpenAI 的旗舰图像生成模型，用于高质量图像创建和精确图像编辑，具有强大的指令遵循能力和改进的文本渲染。",
+            "image": {
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "GPT-Image-1 模型，也称为 ChatGPT 4o Image，是 OpenAI 最新的 AI 图像生成模型。它能理解文本和视觉上下文，允许开发者以卓越的准确性创建和编辑图像。与传统的扩散模型不同，GPT-Image-1 精确遵循指令，支持一致的样式，并渲染清晰的文本——使其成为设计、营销和创意自动化应用的理想选择。",
+            "image": {
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 是 Black Forest Labs 的先进图像生成模型，提供照片级细节、强大的多参考一致性和准确的文本渲染，具有灵活的控制能力。",
+            "image": {
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "在视觉驱动参与的世界中，Kie.ai 上的 FLUX.1 Kontext API 让您前所未有地编辑图像。利用尖端 AI 技术，通过简单的文本命令转换照片，提供专业效果，节省时间并提升创造力。无论您是优化电商列表还是制作营销杰作，Kie.ai 的 FLUX.1 Kontext API 都是您通往高效、高质量图像创新的大门。",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine 是 xAI 的多模态图像和视频生成模型，能将文本或图像转换为具有连贯运动和同步音频的短视觉输出。",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3 Reframe Image",
+            "text": "Ideogram",
+            "description": "Ideogram V3 Reframe 是一个基于 Ideogram 3.0 构建的专用图像到图像模型，旨在智能地扩展和调整图像以适应不同的宽高比和分辨率。利用先进的 AI 外绘技术，它在实现创意重构的同时保持视觉一致性，适用于数字、印刷和视频内容。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            }
+          },
+          {
+            "title": "Ideogram Character",
+            "text": "Ideogram",
+            "description": "Ideogram Character 是 Ideogram AI 发布的最新功能，确保角色在不同场景、艺术风格和环境中保留核心特征，如面部特征、比例和发型。无论是从单个参考图像创建角色还是微调现有角色，Kie.ai 的 Ideogram Character API 都通过其 Base、Edit 和 Remix 操作提供灵活性和精确性。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-character.png",
+              "alt": "Ideogram Character"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API 是 Ideogram 图像生成模型的最新一代，提供文本到图像、图像编辑、重构和混音功能，具有改进的一致性和创意控制。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Topaz Image Upscale",
+            "text": "Topaz",
+            "description": "Topaz Labs Image Upscale 是一个 AI 图像增强模型，通过高保真放大、自然纹理重建和改进的清晰度来提高分辨率并恢复低质量图像的细节。",
+            "image": {
+              "src": "/imgs/models/image/topaz-image-upscale.png",
+              "alt": "Topaz Image Upscale"
+            }
+          },
+          {
+            "title": "Recraft Remove Background",
+            "text": "Recraft",
+            "description": "由 Recraft AI 构建的 Remove Background API 能准确分离主体与任何背景，并提供干净、透明的输出——针对无缝集成到网站、电商平台和创意工作流进行了优化。",
+            "image": {
+              "src": "/imgs/models/image/recraft-remove-background.png",
+              "alt": "Recraft Remove Background"
+            }
+          },
+          {
+            "title": "Recraft Crisp Upscale",
+            "text": "Recraft",
+            "description": "使用 Recraft Crisp Upscale API 将模糊照片转换为水晶般清晰的杰作。作为终极免费图像放大器，这个工具利用先进的 AI 技术提供专业级效果，无需花费一分钱。无论您是设计师、营销人员还是爱好者，都能体验无缝的图片放大功能，让免费图像放大变得轻而易举。",
+            "image": {
+              "src": "/imgs/models/image/recraft-crisp-upscale.webp",
+              "alt": "Recraft Crisp Upscale"
             }
           }
         ]
@@ -103,44 +202,45 @@
       "introduce": {
         "block": "features-list",
         "id": "introduce",
-        "title": "ShipAny 是什么？",
-        "label": "产品简介",
-        "description": "ShipAny 是专为 AI SaaS 创业项目打造的 NextJS 脚手架，包括丰富模板、组件及文档。",
+        "title": "什么是 Marble AI",
+        "highlight_text": "Marble AI",
+        "label": "介绍",
+        "description": "Marble AI 是一个一站式 AI 平台，使用尖端技术生成惊艳的图像、视频和音乐。",
         "image": {
           "src": "/imgs/features/landing-page.png",
           "alt": "introduce"
         },
         "items": [
           {
-            "title": "开箱即用的模板",
-            "description": "从数十款生产级 AI SaaS 模板中选择，快速开启你的项目。",
-            "icon": "RiNextjsFill",
+            "title": "AI 图像生成",
+            "description": "使用先进的 AI 模型创建惊艳图像，包括 Qwen、Flux、Ideogram 等。",
+            "icon": "RiImage2Line",
             "image": {
               "src": "/imgs/features/1.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "基础设施搭建",
-            "description": "内置最佳实践，即刻拥有可扩展的基础设施。",
-            "icon": "RiDatabase2Line",
+            "title": "AI 视频生成",
+            "description": "使用 AI 驱动的工具生成专业视频，如 Seedance、Kling 和 Veo。",
+            "icon": "RiVideoLine",
             "image": {
               "src": "/imgs/features/2.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "极速部署",
-            "description": "AI SaaS 产品快速上线，助力小时级交付。",
-            "icon": "RiCloudyFill",
+            "title": "AI 音乐生成",
+            "description": "使用 AI 技术为您的创意项目创建美妙音乐。",
+            "icon": "RiMusic2Line",
             "image": {
               "src": "/imgs/features/3.png",
               "alt": "introduce"
             }
           },
           {
-            "title": "AI 集成",
-            "description": "通过内置的 AI SDK，轻松为你的项目集成 AI 能力。",
+            "title": "易于集成",
+            "description": "简单的 API 集成，实现无缝工作流和创意自动化。",
             "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/4.png",
@@ -148,27 +248,28 @@
             }
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "benefits": {
         "block": "features-accordion",
         "id": "benefits",
-        "title": "为何选择 ShipAny",
-        "label": "产品优势",
-        "description": "你获得一切 AI 创业所需——从开箱即用的模板到专业技术支持。",
+        "title": "为什么选择 Marble AI",
+        "highlight_text": "Marble AI",
+        "label": "优势",
+        "description": "获取创建惊艳 AI 内容所需的一切——从图像到视频和音乐。",
         "items": [
           {
-            "title": "全栈解决方案",
-            "description": "基于 Next.js，集成认证、支付、AI，一站式开箱即用。",
-            "icon": "RiNextjsFill",
+            "title": "一站式平台",
+            "description": "在一个地方访问多种 AI 生成工具——图像、视频和音乐，只需一个订阅。",
+            "icon": "RiRobot2Line",
             "image": {
               "src": "/imgs/features/user-billing.png",
               "alt": "benefits"
             }
           },
           {
-            "title": "丰富模板库",
-            "description": "多样的 AI SaaS 模板，点击即用，涵盖聊天、图像生成等多场景。",
+            "title": "专业品质",
+            "description": "使用全球专业人士使用的最先进的 AI 模型生成高质量内容。",
             "icon": "RiClapperboardAiLine",
             "image": {
               "src": "/imgs/features/admin-settings.png",
@@ -176,8 +277,8 @@
             }
           },
           {
-            "title": "专属技术指导",
-            "description": "享受专属技术支持与开发者社区，为你的成功保驾护航。",
+            "title": "易于使用",
+            "description": "简单的界面和 API 集成，无需技术专业知识即可轻松创建专业内容。",
             "icon": "RiCodeFill",
             "image": {
               "src": "/imgs/features/landing-page.png",
@@ -189,8 +290,9 @@
       "usage": {
         "block": "features-step",
         "id": "usage",
-        "title": "三步使用 ShipAny 极速上线",
-        "description": "只需三步，快速开启你的 AI SaaS 创业之路：",
+        "title": "如何使用 Marble AI",
+        "highlight_text": "Marble AI",
+        "description": "三个简单步骤创建惊艳的 AI 内容：",
         "image": {
           "src": "/imgs/features/1.png",
           "alt": "usage"
@@ -199,106 +301,109 @@
         "text_align": "center",
         "items": [
           {
-            "title": "获取 ShipAny",
-            "description": "一次性购买 ShipAny，查收邮件获取代码与文档。",
+            "title": "注册",
+            "description": "创建您的 Marble AI 账户并选择适合您需求的计划。",
             "image": {
               "src": "/imgs/features/5.png",
               "alt": "usage"
             }
           },
           {
-            "title": "启动你的项目",
-            "description": "阅读说明文档，克隆 ShipAny 代码，开始开发你的 AI SaaS 项目。",
+            "title": "选择工具",
+            "description": "根据您的创意需求选择图像、视频或音乐生成工具。",
             "image": {
               "src": "/imgs/features/6.png",
               "alt": "usage"
             }
           },
           {
-            "title": "个性化定制",
-            "description": "根据需求修改模板内容和数据，配置专属 AI 能力。",
+            "title": "生成内容",
+            "description": "描述您想要创建的内容，让 Marble AI 为您生成专业内容。",
             "image": {
               "src": "/imgs/features/7.png",
               "alt": "usage"
             }
           },
           {
-            "title": "部署上线",
-            "description": "简单几步将你的项目推向生产环境，立刻为客户提供服务。",
+            "title": "下载和分享",
+            "description": "下载您生成的内容并用于您的项目或与他人分享。",
             "image": {
               "src": "/imgs/features/8.png",
               "alt": "usage"
             }
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "features": {
         "id": "features",
-        "title": "ShipAny 核心功能",
-        "description": "一切你需要的工具，助力 AI SaaS 项目高效上线。",
+        "title": "Marble AI 的核心功能",
+        "highlight_text": "Marble AI",
+        "description": "快速高效创建惊艳 AI 内容所需的一切。",
         "items": [
           {
-            "title": "Next.js 项目模板",
-            "description": "生产就绪、支持 SEO 与多语言的 Next.js 脚手架。",
-            "icon": "RiNextjsFill"
+            "title": "AI 图像生成",
+            "description": "使用先进的 AI 模型创建惊艳图像，包括 Qwen、Flux、Ideogram 等。",
+            "icon": "RiImage2Line"
           },
           {
-            "title": "身份认证与支付",
-            "description": "集成谷歌 OAuth、一键登录，以及 Stripe 支付。",
-            "icon": "RiKey2Fill"
+            "title": "AI 视频生成",
+            "description": "使用 AI 驱动的工具生成专业视频，如 Seedance、Kling 和 Veo。",
+            "icon": "RiVideoLine"
           },
           {
-            "title": "数据基础设施",
-            "description": "内置 Supabase，稳定可靠的数据存储。",
-            "icon": "RiDatabase2Line"
+            "title": "AI 音乐生成",
+            "description": "使用 AI 技术为您的创意项目创建美妙音乐。",
+            "icon": "RiMusic2Line"
           },
           {
-            "title": "一键部署",
-            "description": "自动化部署到 Vercel 或 Cloudflare，极速上线。",
-            "icon": "RiCloudy2Fill"
-          },
-          {
-            "title": "商业分析",
-            "description": "集成 Google Analytics、Search Console，助力业务增长。",
-            "icon": "RiBarChart2Line"
-          },
-          {
-            "title": "AI 原生基础设施",
-            "description": "预置 AI 集成、积分系统和 API 售卖能力。",
+            "title": "易于集成",
+            "description": "简单的 API 集成，实现无缝工作流和创意自动化。",
             "icon": "RiRobot2Line"
+          },
+          {
+            "title": "专业品质",
+            "description": "使用全球专业人士使用的最先进的 AI 模型生成高质量内容。",
+            "icon": "RiClapperboardAiLine"
+          },
+          {
+            "title": "实惠定价",
+            "description": "灵活的定价计划满足您的需求，从个人创作者到企业团队。",
+            "icon": "RiMoneyDollarCircleLine"
           }
         ]
       },
       "stats": {
         "id": "stats",
-        "title": "用户喜爱 ShipAny",
-        "description": "因其易用且上线飞快。",
+        "title": "人们喜爱 Marble AI",
+        "highlight_text": "喜爱 Marble AI",
+        "description": "因为它强大的 AI 生成能力。",
         "items": [
           {
             "title": "999+",
-            "description": "位用户"
+            "description": "活跃用户"
           },
           {
-            "title": "200+",
-            "description": "组件块"
+            "title": "1M+",
+            "description": "内容已生成"
           },
           {
             "title": "50+",
-            "description": "专业模板"
+            "description": "AI 模型"
           }
         ],
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       },
       "testimonials": {
         "id": "testimonials",
-        "title": "用户对 ShipAny 的评价",
-        "description": "听听开发者与创始人用 ShipAny 快速上线 AI 创业项目的故事。",
+        "title": "用户对 Marble AI 的评价",
+        "highlight_text": "用户评价",
+        "description": "听听使用 Marble AI 进行创意项目的创作者和专业人士的声音。",
         "items": [
           {
             "name": "David Chen",
-            "role": "AIWallpaper.shop 创始人",
-            "quote": "ShipAny 为我们节省了数月开发时间。2 天上线 AI 壁纸业务，一周内就收到了第一笔付费订单！",
+            "role": "数字艺术家",
+            "quote": "Marble AI 改变了我的创意工作流程。图像生成质量令人难以置信，我可以在几分钟内创建惊艳的视觉效果！",
             "image": {
               "src": "/imgs/avatars/1.png",
               "alt": "david"
@@ -306,8 +411,8 @@
           },
           {
             "name": "Rachel Kim",
-            "role": "HeyBeauty.ai CTO",
-            "quote": "内置 AI 基础设施颠覆了开发体验，无需担心架构，只需专注核心功能，极快落地。",
+            "role": "内容创作者",
+            "quote": "视频生成功能改变了游戏规则。我可以在没有任何视频编辑技能的情况下为社交媒体制作专业质量的内容。",
             "image": {
               "src": "/imgs/avatars/2.png",
               "alt": "rachel"
@@ -315,8 +420,8 @@
           },
           {
             "name": "Marcus Thompson",
-            "role": "独立开发者",
-            "quote": "作为独立开发者，ShipAny 满足了全部需求——认证、支付、AI 集成、美观界面，一个周末上线 SaaS！",
+            "role": "营销经理",
+            "quote": "Marble AI 为我们节省了数千美元的库存照片和视频费用。AI 生成的内容看起来专业且完美匹配我们的品牌。",
             "image": {
               "src": "/imgs/avatars/3.png",
               "alt": "marcus"
@@ -324,8 +429,8 @@
           },
           {
             "name": "Sofia Garcia",
-            "role": "Melodisco CEO",
-            "quote": "模板高度可定制且生产级。我们几小时内搭建出了 AI 音乐平台，上市周期大大缩短！",
+            "role": "音乐制作人",
+            "quote": "AI 音乐生成非常出色。我使用 Marble AI 为我的作品创建背景音轨和灵感。",
             "image": {
               "src": "/imgs/avatars/4.png",
               "alt": "sofia"
@@ -333,8 +438,8 @@
           },
           {
             "name": "James Wilson",
-            "role": "GPTs.works 技术负责人",
-            "quote": "ShipAny 基础设施极其稳定。我们从 0 到 1 万用户，无需关心后端维护，是最棒的 AI 创业投资。",
+            "role": "电商老板",
+            "quote": "产品图片从未如此简单。Marble AI 生成的美丽产品照片显著提高了我们的转化率。",
             "image": {
               "src": "/imgs/avatars/5.png",
               "alt": "james"
@@ -342,8 +447,8 @@
           },
           {
             "name": "Anna Zhang",
-            "role": "创业者",
-            "quote": "从想法到上线，仅用 3 天！ShipAny 模板和部署工具让我们极快验证 AI 商业创意。",
+            "role": "自由设计师",
+            "quote": "Marble AI 是我的秘密武器。我可以在更短的时间内交付更多项目，同时保持卓越的质量。我的客户很喜欢！",
             "image": {
               "src": "/imgs/avatars/6.png",
               "alt": "anna"
@@ -353,70 +458,65 @@
       },
       "faq": {
         "id": "faq",
-        "title": "关于 ShipAny 的常见问题",
-        "description": "还有其他问题？欢迎加入 Discord 或发邮件联系我们。",
+        "title": "常见问题",
+        "highlight_text": "问题",
+        "description": "有其他问题？通过电子邮件联系我们。",
         "items": [
           {
-            "question": "ShipAny 是什么？怎么帮到我？",
-            "answer": "ShipAny 是专为 AI SaaS 创业设计的 NextJS 全套脚手架，内含开箱即用的模板、基础设施搭建和部署工具，让你数小时内上线 AI 产品。"
+            "question": "什么是 Marble AI，它是如何工作的？",
+            "answer": "Marble AI 是一个一站式 AI 平台，用于生成惊艳的图像、视频和音乐。只需选择您想要的内容类型，提供描述，我们的 AI 模型就会在几分钟内为您创建专业内容。"
           },
           {
-            "question": "使用 ShipAny 需要很高的技术水平吗？",
-            "answer": "有基础编程知识即可上手。ShipAny 面向开发者友好，详细文档和模板让初学者也能轻松起步，不需深厚 AI 或云计算背景。"
+            "question": "我可以使用 Marble AI 创建什么类型的内容？",
+            "answer": "Marble AI 支持图像生成、视频生成和音乐生成。您可以创建从照片级真实图像到专业视频和原创音乐作品的任何内容。"
           },
           {
-            "question": "ShipAny 支持哪些类型的 AI SaaS 项目？",
-            "answer": "ShipAny 支持内容生成、数据分析、AI 聊天机器人、图片/内容生成器等多种主流 AI 应用场景。"
+            "question": "使用 Marble AI 需要技术技能吗？",
+            "answer": "不需要技术技能！Marble AI 设计为用户友好。只需描述您想要创建的内容，我们的 AI 就会为您生成。高级用户也可以使用我们的 API 进行集成。"
           },
           {
-            "question": "用 ShipAny 一般多久能上线？",
-            "answer": "借助 ShipAny，可在数小时内拿到产品原型并上线生产环境，预配置的一键部署大幅缩短开发周期。"
+            "question": "生成内容需要多长时间？",
+            "answer": "生成时间取决于内容类型和复杂性。图像通常需要几秒到几分钟，视频需要几分钟，音乐生成通常很快。您会看到实时进度更新。"
           },
           {
-            "question": "ShipAny 的基础设施包括哪些内容？",
-            "answer": "包含认证、数据库、API 集成、支付、云端部署等全栈解决方案，全部遵循业界最佳实践预配置。"
+            "question": "我可以将生成的内容用于商业用途吗？",
+            "answer": "可以！使用 Marble AI 生成的所有内容都可以用于商业目的。您拥有生成内容的权利，可以随意使用。"
           },
           {
-            "question": "模板是否支持定制自己的品牌？",
-            "answer": "当然支持！所有模板均可自定义设计、功能和品牌，既保持基础架构稳定，又能满足个性扩展需求。"
+            "question": "Marble AI 使用什么 AI 模型？",
+            "answer": "Marble AI 使用最先进的 AI 模型，包括用于图像的 Qwen、Flux、Ideogram，用于视频的 Seedance、Kling、Veo，以及先进的音乐生成模型。我们会不断更新模型以提供最佳质量。"
           }
-        ]
+        ],
+        "className": "bg-muted/80"
       },
       "cta": {
         "id": "cta",
-        "title": "发布你的第一个 AI SaaS 项目",
-        "description": "从这里出发，用 ShipAny 极速交付。",
+        "title": "今天就开始创建惊艳的 AI 内容",
+        "highlight_text": "AI 内容",
+        "description": "使用 Marble AI 开始生成专业图像、视频和音乐。",
         "buttons": [
           {
-            "title": "获取 ShipAny",
-            "url": "https://shipany.ai",
-            "target": "_blank",
+            "title": "立即开始创作",
+            "url": "/pricing",
+            "target": "_self",
             "icon": "Zap"
-          },
-          {
-            "title": "阅读文档",
-            "url": "/docs",
-            "target": "_blank",
-            "variant": "outline",
-            "icon": "BookOpenText"
           }
-        ],
-        "className": "bg-muted"
+        ]
       },
       "subscribe": {
         "id": "subscribe",
-        "title": "订阅我们的邮件通知",
-        "description": "获取 ShipAny 最新资讯与产品动态。",
+        "title": "订阅我们的新闻通讯",
+        "description": "获取 Marble AI 的最新新闻和更新。",
         "submit": {
           "input": {
-            "placeholder": "输入邮箱"
+            "placeholder": "输入您的电子邮件"
           },
           "button": {
             "title": "订阅"
           },
           "action": "/api/subscribe"
         },
-        "className": "bg-muted"
+        "className": "bg-muted/80"
       }
     }
   }

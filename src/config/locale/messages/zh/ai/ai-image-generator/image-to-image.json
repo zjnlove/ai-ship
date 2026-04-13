@@ -1,0 +1,468 @@
+{
+  "metadata": {
+    "title": "Marble AI - 图像转图像生成器",
+    "description": "使用 Marble AI 的图像转图像生成器转换和增强您的图像。由领先的 AI 模型驱动，包括 Qwen Image、Imagen 4、FLUX.2、GPT Image、Grok Imagine 等。"
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "图像转图像",
+        "highlight_text": "图像转图像",
+        "description": "使用 AI 的力量转换您的图像。上传任何图像，让 Marble AI 的先进模型以惊艳的效果增强、编辑和重新构想它。",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "由领先的 AI 模型驱动",
+        "highlight_text": "领先的 AI 模型",
+        "label": "AI 模型",
+        "description": "Marble AI 集成了最强大的图像转图像 AI 模型，让您在一个平台上就能使用尖端的图像编辑和转换技术。",
+        "image": {
+          "src": "/imgs/models/image/grok-imagine.mp4",
+          "alt": "Marble AI 图像转图像"
+        },
+        "items": [
+          {
+            "title": "Qwen",
+            "description": "阿里 Qwen 团队提供强大的图像编辑模型，具有高级转换功能和对样式及内容的精确控制。",
+            "icon": "RiRobot2Line",
+            "image": {
+              "src": "/imgs/features/1.png",
+              "alt": "Qwen"
+            }
+          },
+          {
+            "title": "Google",
+            "description": "Google DeepMind 的 Imagen 和 Gemini 系列在图像增强、风格转换和理解复杂视觉关系以实现无缝编辑方面表现出色。",
+            "icon": "RiGoogleLine",
+            "image": {
+              "src": "/imgs/features/2.png",
+              "alt": "Google"
+            }
+          },
+          {
+            "title": "OpenAI",
+            "description": "GPT 驱动的图像模型，能理解视觉上下文，提供精确的图像编辑和一致的风格转换。",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/3.png",
+              "alt": "OpenAI"
+            }
+          },
+          {
+            "title": "Black Forest Labs",
+            "description": "原始 Stable Diffusion 团队的下一代模型，具有卓越的细节保留和灵活的图像操作控制。",
+            "icon": "RiImageLine",
+            "image": {
+              "src": "/imgs/features/4.png",
+              "alt": "Black Forest Labs"
+            }
+          },
+          {
+            "title": "Recraft",
+            "description": "Recraft AI 专注于图像增强和背景移除，提供干净、专业的输出，具有高保真放大和精确的主体分离功能，适用于电商和创意工作流。",
+            "icon": "RiImageEditLine",
+            "image": {
+              "src": "/imgs/features/5.png",
+              "alt": "Recraft"
+            }
+          },
+          {
+            "title": "Topaz",
+            "description": "Topaz Labs 提供行业领先的 AI 图像增强功能，具有卓越的细节恢复、自然纹理重建和专业摄影及视频的卓越放大质量。",
+            "icon": "RiHdLine",
+            "image": {
+              "src": "/imgs/features/6.png",
+              "alt": "Topaz"
+            }
+          },
+          {
+            "title": "Grok (xAI)",
+            "description": "xAI 的多模态图像和视频编辑模型，具有连贯的转换和同步音频功能。",
+            "icon": "RiSparklingLine",
+            "image": {
+              "src": "/imgs/features/7.png",
+              "alt": "Grok"
+            }
+          },
+          {
+            "title": "Ideogram",
+            "description": "专注于编辑图像中准确的文本渲染，非常适合更新徽标、海报和以排版为重点的设计。",
+            "icon": "RiText",
+            "image": {
+              "src": "/imgs/features/8.png",
+              "alt": "Ideogram"
+            }
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "model": {
+        "id": "features-model",
+        "title": "探索我们的 AI 图像编辑模型",
+        "highlight_text": "AI 图像编辑模型",
+        "description": "从世界上最先进的图像转图像模型中选择，每个模型都有独特的 strengths，满足不同的编辑和转换需求。",
+        "items": [
+          {
+            "title": "Qwen Image 2.0",
+            "text": "Qwen",
+            "description": "阿里 Qwen Image 2.0 是一个统一的图像模型，支持逼真生成、结构化文本渲染、原生 2K 输出，以及在创意和视觉设计工作流中的灵活编辑。",
+            "image": {
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
+            }
+          },
+          {
+            "title": "Qwen Image",
+            "text": "Qwen",
+            "description": "Qwen Image API 为创作者、开发者和企业提供轻松生成和编辑照片级真实图像的能力。无论您是制作复杂设计还是优化现有视觉效果，这个强大的 Qwen API 都能无缝集成到您的工作流中，提供多语言文本渲染和高级编辑功能，媲美顶级模型。",
+            "image": {
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
+            }
+          },
+          {
+            "title": "Qwen Image Edit",
+            "text": "Qwen",
+            "description": "Qwen-Image-Edit 是一个基于 Qwen-Image 的开源图像编辑模型，支持语义和外观编辑，提供精确、视觉一致的结果。它还能处理中英文双语文本编辑，同时保留字体、大小和样式，是高级视觉内容操作的多功能工具。",
+            "image": {
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
+            }
+          },
+          {
+            "title": "Nano Banana 2",
+            "text": "Google",
+            "description": "认识 Nano Banana 2，Google 的 Gemini 3.1 Flash Image 模型，现可通过 Kie AI API 使用。专为开发者打造，它结合了闪电般的速度和 Pro 级别的质量、准确的文本渲染、强大的角色一致性，以及可扩展的图像生成和编辑工作流。",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
+            }
+          },
+          {
+            "title": "Nano Banana Pro",
+            "text": "Google",
+            "description": "Google DeepMind 的 Nano Banana Pro 提供更清晰的 2K 图像、智能 4K 缩放、改进的文本渲染和增强的角色一致性——为创意和 API 驱动的工作流提供视觉质量的重大飞跃。",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
+            }
+          },
+          {
+            "title": "NanoBanana-Gemini 2.5 Flash Image Preview",
+            "text": "Google",
+            "description": "Gemini 3 Image Preview（又称 Nano Banana）是一个先进的 AI 模型，擅长自然语言驱动的图像生成和编辑。它能生成超逼真、具有物理感知的视觉效果，并实现无缝风格转换。",
+            "image": {
+              "src": "/imgs/models/image/nano-banana-gemini.png",
+              "alt": "NanoBanana-Gemini 2.5 Flash Image Preview"
+            }
+          },
+          {
+            "title": "Imagen 4",
+            "text": "Google",
+            "description": "Google Imagen 4 由 Google DeepMind 开发，在 Google I/O 2025 上推出，是一个最先进的文本到图像生成模型，能将提示转换为照片级真实、高质量的视觉效果，具有卓越的细节和创意多样性。其增强版本 Google Imagen 4 Ultra 提供更高的精度、速度和分辨率，使两个模型都成为商业、营销、设计和创意应用的理想选择。",
+            "image": {
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
+            }
+          },
+          {
+            "title": "gpt-image-1.5",
+            "text": "OpenAI",
+            "description": "GPT Image 1.5 是 OpenAI 的旗舰图像生成模型，用于高质量图像创建和精确图像编辑，具有强大的指令遵循能力和改进的文本渲染。",
+            "image": {
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "gpt-image-1.5"
+            }
+          },
+          {
+            "title": "4o Image",
+            "text": "OpenAI",
+            "description": "GPT-Image-1 模型，也称为 ChatGPT 4o Image，是 OpenAI 最新的 AI 图像生成模型。它能理解文本和视觉上下文，允许开发者以卓越的准确性创建和编辑图像。与传统的扩散模型不同，GPT-Image-1 精确遵循指令，支持一致的样式，并渲染清晰的文本——使其成为设计、营销和创意自动化应用的理想选择。",
+            "image": {
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
+            }
+          },
+          {
+            "title": "FLUX.2",
+            "text": "Black Forest Labs",
+            "description": "Flux 2 是 Black Forest Labs 的先进图像生成模型，提供照片级细节、强大的多参考一致性和准确的文本渲染，具有灵活的控制能力。",
+            "image": {
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
+            }
+          },
+          {
+            "title": "Flux Kontext",
+            "text": "Black Forest Labs",
+            "description": "在视觉驱动参与的世界中，Kie.ai 上的 FLUX.1 Kontext API 让您前所未有地编辑图像。利用尖端 AI 技术，通过简单的文本命令转换照片，提供专业效果，节省时间并提升创造力。无论您是优化电商列表还是制作营销杰作，Kie.ai 的 FLUX.1 Kontext API 都是您通往高效、高质量图像创新的大门。",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            }
+          },
+          {
+            "title": "Grok Imagine",
+            "text": "Grok",
+            "description": "Grok Imagine 是 xAI 的多模态图像和视频生成模型，能将文本或图像转换为具有连贯运动和同步音频的短视觉输出。",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            }
+          },
+          {
+            "title": "Ideogram V3 Reframe Image",
+            "text": "Ideogram",
+            "description": "Ideogram V3 Reframe 是一个基于 Ideogram 3.0 构建的专用图像到图像模型，旨在智能地扩展和调整图像以适应不同的宽高比和分辨率。利用先进的 AI 外绘技术，它在实现创意重构的同时保持视觉一致性，适用于数字、印刷和视频内容。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            }
+          },
+          {
+            "title": "Ideogram Character",
+            "text": "Ideogram",
+            "description": "Ideogram Character 是 Ideogram AI 发布的最新功能，确保角色在不同场景、艺术风格和环境中保留核心特征，如面部特征、比例和发型。无论是从单个参考图像创建角色还是微调现有角色，Kie.ai 的 Ideogram Character API 都通过其 Base、Edit 和 Remix 操作提供灵活性和精确性。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-character.png",
+              "alt": "Ideogram Character"
+            }
+          },
+          {
+            "title": "Ideogram V3",
+            "text": "Ideogram",
+            "description": "Ideogram V3 API 是 Ideogram 图像生成模型的最新一代，提供文本到图像、图像编辑、重构和混音功能，具有改进的一致性和创意控制。",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            }
+          },
+          {
+            "title": "Topaz Image Upscale",
+            "text": "Topaz",
+            "description": "Topaz Labs Image Upscale 是一个 AI 图像增强模型，通过高保真放大、自然纹理重建和改进的清晰度来提高分辨率并恢复低质量图像的细节。",
+            "image": {
+              "src": "/imgs/models/image/topaz-image-upscale.png",
+              "alt": "Topaz Image Upscale"
+            }
+          },
+          {
+            "title": "Recraft Remove Background",
+            "text": "Recraft",
+            "description": "由 Recraft AI 构建的 Remove Background API 能准确分离主体与任何背景，并提供干净、透明的输出——针对无缝集成到网站、电商平台和创意工作流进行了优化。",
+            "image": {
+              "src": "/imgs/models/image/recraft-remove-background.png",
+              "alt": "Recraft Remove Background"
+            }
+          },
+          {
+            "title": "Recraft Crisp Upscale",
+            "text": "Recraft",
+            "description": "使用 Recraft Crisp Upscale API 将模糊照片转换为水晶般清晰的杰作。作为终极免费图像放大器，这个工具利用先进的 AI 技术提供专业级效果，无需花费一分钱。无论您是设计师、营销人员还是爱好者，都能体验无缝的图片放大功能，让免费图像放大变得轻而易举。",
+            "image": {
+              "src": "/imgs/models/image/recraft-crisp-upscale.webp",
+              "alt": "Recraft Crisp Upscale"
+            }
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "为什么选择 Marble AI 图像转图像？",
+        "highlight_text": "图像转图像",
+        "description": "体验最强大、最通用的 AI 图像编辑平台，具有无与伦比的质量和速度。",
+        "items": [
+          {
+            "title": "多种 AI 模型",
+            "description": "在一个平台上访问 11+ 领先模型，包括 Qwen Image、Imagen 4、FLUX.2 和 GPT Image。",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "闪电般快速",
+            "description": "使用我们的优化基础设施，在 5-15 秒内转换您的图像。",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "4K 质量",
+            "description": "创建高达 4K 的高分辨率编辑图像，具有卓越的细节和清晰度。",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "商业许可",
+            "description": "所有编辑图像的完整商业权利。无限制地在任何地方使用。",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "样式控制",
+            "description": "通过样式预设、宽高比和高级转换参数进行广泛的自定义。",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "API 访问",
+            "description": "为开发者提供无缝的 API 集成，构建 AI 驱动的图像编辑应用程序。",
+            "icon": "RiCodeLine"
+          }
+        ]
+      },
+      "testimonials": {
+        "id": "testimonials",
+        "title": "创作者对 Marble AI 图像转图像的评价",
+        "highlight_text": "创作者评价",
+        "description": "加入数千名信任 Marble AI 满足其图像编辑和转换需求的艺术家、设计师和创作者。",
+        "items": [
+          {
+            "name": "Sarah Mitchell",
+            "role": "数字艺术家",
+            "quote": "Marble AI 彻底改变了我的创意工作流程。在一个地方拥有 Qwen Image、Imagen 4 和 FLUX.2 为我节省了在工具之间切换的 hours。质量非常出色！",
+            "image": {
+              "src": "/imgs/avatars/1.png",
+              "alt": "sarah"
+            }
+          },
+          {
+            "name": "James Rodriguez",
+            "role": "营销总监",
+            "quote": "我们使用 Marble AI 转换所有活动视觉效果。商业许可和各种模型为我们提供了专业图像编辑所需的一切。",
+            "image": {
+              "src": "/imgs/avatars/2.png",
+              "alt": "james"
+            }
+          },
+          {
+            "name": "Emily Chen",
+            "role": "游戏开发者",
+            "quote": "Marble AI 上的 FLUX.2 模型为我们的游戏制作了令人难以置信的概念艺术转换。细节保留和风格一致性正是我们快速原型制作所需要的。",
+            "image": {
+              "src": "/imgs/avatars/3.png",
+              "alt": "emily"
+            }
+          },
+          {
+            "name": "Michael Brown",
+            "role": "内容创作者",
+            "quote": "我尝试过市面上所有的 AI 图像编辑器。Marble AI 以其速度、质量和即时比较不同模型编辑结果的能力脱颖而出。",
+            "image": {
+              "src": "/imgs/avatars/4.png",
+              "alt": "michael"
+            }
+          },
+          {
+            "name": "Lisa Wang",
+            "role": "电商企业家",
+            "quote": "Marble AI 帮助我们通过转换现有照片创建令人惊叹的产品可视化效果。自从我们开始使用它以来，转化率提高了 40%！",
+            "image": {
+              "src": "/imgs/avatars/5.png",
+              "alt": "lisa"
+            }
+          },
+          {
+            "name": "David Kim",
+            "role": "平面设计师",
+            "quote": "样式多样性无与伦比。无论我需要照片级真实感编辑还是艺术转换，Marble AI 每次都能提供完美的结果。",
+            "image": {
+              "src": "/imgs/avatars/6.png",
+              "alt": "david"
+            }
+          },
+          {
+            "name": "Amanda Foster",
+            "role": "社交媒体经理",
+            "quote": "Marble AI 上的 Imagen 4 通过转换我们的照片创造了我见过的最逼真的产品模型。自从我们开始使用它以来，Instagram 互动率翻了一番！",
+            "image": {
+              "src": "/imgs/avatars/7.png",
+              "alt": "amanda"
+            }
+          },
+          {
+            "name": "Robert Taylor",
+            "role": "建筑师",
+            "quote": "批量编辑功能改变了游戏规则。我可以在几分钟内探索数十个设计变体，而不是 hours。对我的工作流程绝对必不可少。",
+            "image": {
+              "src": "/imgs/avatars/8.png",
+              "alt": "robert"
+            }
+          },
+          {
+            "name": "Jennifer Lee",
+            "role": "初创公司创始人",
+            "quote": "API 集成非常顺畅。我们仅用一周就用 Marble AI 构建了整个产品图像编辑管道。文档非常出色！",
+            "image": {
+              "src": "/imgs/avatars/9.png",
+              "alt": "jennifer"
+            }
+          },
+          {
+            "name": "Chris Anderson",
+            "role": "自由插画师",
+            "quote": "作为自由职业者，Marble AI 的商业许可让我安心。我可以为客户编辑图像，无需担心使用权。物有所值！",
+            "image": {
+              "src": "/imgs/avatars/10.png",
+              "alt": "chris"
+            }
+          },
+          {
+            "name": "Maria Garcia",
+            "role": "教育内容创作者",
+            "quote": "24/7 支持团队令人难以置信。他们帮助我优化了编辑提示词，现在我正在创建学生们非常喜欢的教育视觉效果！",
+            "image": {
+              "src": "/imgs/avatars/11.png",
+              "alt": "maria"
+            }
+          }
+        ]
+      },
+      "faq": {
+        "title": "常见问题 - 图像转图像生成器",
+        "highlight_text": "常见问题",
+        "description": "关于 Marble AI 图像转图像生成器您需要了解的一切。",
+        "items": [
+          {
+            "title": "什么是图像转图像？",
+            "description": "图像转图像是一种 AI 驱动的技术，使用先进的 AI 模型转换和编辑现有图像。只需上传您的图像，描述您想要的更改，Marble AI 的先进模型就会为您转换它。"
+          },
+          {
+            "question": "Marble AI 支持哪些 AI 模型？",
+            "answer": "Marble AI 集成了领先的图像转图像模型，包括 Qwen Image 2.0 (Qwen)、Imagen 4 (Google)、Nano Banana 2 (Google)、Nano Banana Pro (Google)、gpt-image-1.5 (OpenAI)、4o Image (OpenAI)、FLUX.2 (Black Forest Labs)、Flux Kontext (Black Forest Labs)、Grok Imagine (Grok) 和 Ideogram V3 (Ideogram)。每个模型都有独特的优势，您可以根据特定的编辑需求选择最佳模型。"
+          },
+          {
+            "question": "如何使用 Marble AI 的图像转图像生成器？",
+            "answer": "只需上传您想要编辑的图像，描述您想要应用的更改或转换，选择您喜欢的 AI 模型和样式设置，然后点击生成。我们直观的界面让任何人都能在几秒钟内创建专业质量的编辑图像。"
+          },
+          {
+            "question": "我可以期待什么样的图像质量？",
+            "answer": "Marble AI 生成高达 4K 质量的高分辨率编辑图像。具体输出取决于您选择的模型，但我们所有的模型都针对卓越的细节保留、色彩准确性和视觉吸引力进行了优化。"
+          },
+          {
+            "question": "我可以将编辑的图像用于商业用途吗？",
+            "answer": "可以！通过 Marble AI 编辑的所有图像都具有完整的商业权利。您可以将它们用于营销、产品、网站、社交媒体和任何其他商业目的，没有限制。"
+          },
+          {
+            "question": "图像编辑速度有多快？",
+            "answer": "大多数图像在 5-15 秒内完成编辑，具体取决于模型和复杂性。我们优化的基础设施确保您快速获得结果，同时不牺牲质量。"
+          },
+          {
+            "question": "我可以自定义编辑图像的样式吗？",
+            "answer": "当然可以！Marble AI 提供广泛的自定义选项，包括样式预设、负面提示、宽高比和高级转换参数。您可以完全控制编辑图像的艺术方向。"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "准备好转换您的图像了吗？",
+        "highlight_text": "转换您的图像",
+        "description": "开始使用 Marble AI 强大的图像转图像技术编辑和增强您的图像。从世界上最好的 AI 模型中选择。",
+        "buttons": [
+          {
+            "title": "开始编辑",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

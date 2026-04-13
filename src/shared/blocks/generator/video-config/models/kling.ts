@@ -1,0 +1,354 @@
+import { duration } from 'moment';
+import { vi } from 'zod/v4/locales';
+
+import { VideoModelOption } from '../types';
+
+export const klingModels: VideoModelOption[] = [
+  {
+    label: 'Kling 3.0',
+    provider: 'kie',
+    brand: 'kling',
+    modelPath: 'kling-3-0',
+    baseCredits: {
+      'text-to-video': 42,
+      'image-to-video': 42,
+    },
+    maxImages: 1,
+    sceneValues: {
+      'text-to-video': 'kling-3-0-text-to-video',
+      'image-to-video': 'kling-3-0-image-to-video',
+    },
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['jpg', 'jpeg', 'png'],
+      },
+    },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_urls',
+        isArray: true,
+      },
+      {
+        type: 'audio',
+        fieldName: 'sound',
+        defaultValue: false,
+      },
+    ],
+    defaultOptions: {
+      image_urls: [],
+      aspect_ratio: '16:9',
+      mode: 'std',
+      duration: '5',
+      sound: false,
+      multi_shots: false,
+      kling_elements: [],
+      multi_prompt: [],
+      generationType: 'FIRST_AND_LAST_FRAMES_2_VIDEO',
+    },
+    advancedOptions: {
+      supportedTypes: [
+        'aspectRatio',
+        'duration',
+        'mode',
+        'refFrameMode',
+        'audio',
+      ],
+    },
+    customOptions: {
+      aspectRatio: [
+        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+      ],
+      mode: [
+        { value: 'std', label: 'advanced_options.mode_options.standard' },
+        {
+          value: 'pro',
+          label: 'advanced_options.mode_options.professional',
+        },
+      ],
+      duration: {
+        type: 'range',
+        min: 3,
+        max: 15,
+        step: 1,
+        unit: 's',
+      },
+    },
+    discount: {
+      rate: 0.5,
+      label: '-50% OFF',
+    },
+    creditRules: [
+      // pro 模式基础积分
+      {
+        conditions: { mode: 'pro' },
+        credits: 12,
+      },
+      // std 模式 + 时长：每秒 14 积分
+      {
+        conditions: { mode: 'std' },
+        credits: 14,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 4,
+      },
+      // pro 模式 + 时长：每秒 18 积分
+      {
+        conditions: { mode: 'pro' },
+        credits: 18,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 4,
+      },
+      // std 模式 + 声音开启基础分
+      {
+        conditions: { mode: 'std', audio: true },
+        credits: 18,
+      },
+      // pro 模式 + 声音开启基础分
+      {
+        conditions: { mode: 'pro', audio: true },
+        credits: 27,
+      },
+      // std 模式 + 声音时长积分
+      {
+        conditions: { mode: 'std', audio: true },
+        credits: 6,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 4,
+      },
+      // pro 模式 + 声音时长积分
+      {
+        conditions: { mode: 'pro', audio: true },
+        credits: 9,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 4,
+      },
+    ],
+  },
+  {
+    label: 'Kling 3.0 Motion Control',
+    provider: 'kie',
+    brand: 'kling',
+    modelPath: 'kling-3-0-motion-control',
+    baseCredits: {
+      'video-to-video': 0,
+    },
+    maxImages: 1,
+    inputValidation: {
+      video: {
+        minDuration: 3,
+        maxDuration: 30,
+        maxFileSize: 100,
+        supportedFormats: ['mp4', 'quicktime'],
+      },
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['jpg', 'jpeg', 'png'],
+      },
+    },
+    creditRules: [
+      // std 模式 + 时长：每秒 14 积分
+      {
+        conditions: { mode: '720p' },
+        credits: 20,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
+      },
+      // pro 模式 + 时长：每秒 18 积分
+      {
+        conditions: { mode: '1080p' },
+        credits: 27,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
+      },
+    ],
+    sceneValues: {
+      'video-to-video': 'kling-3.0/motion-control',
+    },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'input_urls',
+        isArray: true,
+      },
+      {
+        type: 'video',
+        fieldName: 'video_urls',
+        isArray: true,
+      },
+    ],
+    defaultOptions: {
+      input_urls: [],
+      video_urls: [],
+      aspect_ratio: '16:9',
+      mode: '720p',
+      duration: '0',
+      character_orientation: 'image', // 角色参考默认参考图片，后续可以根据情况扩展为根据视频
+    },
+    advancedOptions: {
+      supportedTypes: ['aspectRatio', 'mode'],
+    },
+    customOptions: {
+      aspectRatio: [
+        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+      ],
+      mode: [
+        { value: '720p', label: 'advanced_options.resolution_options.720p' },
+        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
+      ],
+    },
+  },
+  {
+    label: 'Kling 2.6',
+    provider: 'kie',
+    brand: 'kling',
+    modelPath: 'kling-2-6',
+    baseCredits: {
+      'text-to-video': 55,
+      'image-to-video': 55,
+    },
+    maxImages: 1,
+    inputValidation: {
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['jpg', 'jpeg', 'png'],
+      },
+    },
+    customOptions: {
+      aspectRatio: [
+        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+      ],
+      duration: [
+        { value: '5', label: 'advanced_options.duration_options.5s' },
+        { value: '10', label: 'advanced_options.duration_options.10s' },
+      ],
+    },
+    creditRules: [
+      {
+        conditions: { duration: '10' },
+        credits: 55,
+      },
+      {
+        conditions: { duration: '5', audio: true },
+        credits: 55,
+      },
+      {
+        conditions: { duration: '10', audio: true },
+        credits: 110,
+      },
+    ],
+    sceneValues: {
+      'text-to-video': 'kling-2.6/text-to-video ',
+      'image-to-video': 'kling-2.6/image-to-video',
+    },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'image_urls',
+        isArray: true,
+      },
+      {
+        type: 'audio',
+        fieldName: 'sound',
+        defaultValue: false,
+      },
+    ],
+    defaultOptions: {
+      aspect_ratio: '16:9',
+      duration: '5',
+      audio: false,
+    },
+    advancedOptions: {
+      supportedTypes: ['aspectRatio', 'duration', 'audio'],
+    },
+  },
+  {
+    label: 'Kling 2.6 Motion Control',
+    provider: 'kie',
+    brand: 'kling',
+    modelPath: 'kling-2-6-motion-control',
+    baseCredits: {
+      'video-to-video': 0,
+    },
+    maxImages: 1,
+    inputValidation: {
+      video: {
+        minDuration: 3,
+        maxDuration: 30,
+        maxFileSize: 100,
+        supportedFormats: ['mp4', 'quicktime'],
+      },
+      image: {
+        maxFileSize: 10,
+        supportedFormats: ['jpg', 'jpeg', 'png'],
+      },
+    },
+    creditRules: [
+      // 720p 模式 + 时长：每秒 6 积分
+      {
+        conditions: { mode: '720p' },
+        credits: 6,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
+      },
+      // 1080p 模式 + 时长：每秒 10 积分
+      {
+        conditions: { mode: '1080p' },
+        credits: 10,
+        perUnit: true,
+        unitField: 'duration',
+        startFrom: 1,
+      },
+    ],
+    sceneValues: {
+      'video-to-video': 'kling-2.6/motion-control',
+    },
+    customFields: [
+      {
+        type: 'image',
+        fieldName: 'input_urls',
+        isArray: true,
+      },
+      {
+        type: 'video',
+        fieldName: 'video_urls',
+        isArray: true,
+      },
+    ],
+    defaultOptions: {
+      input_urls: [],
+      video_urls: [],
+      aspect_ratio: '16:9',
+      mode: '720p',
+      duration: '0',
+      character_orientation: 'image', // 角色参考默认参考图片，后续可以根据情况扩展为根据视频
+    },
+    advancedOptions: {
+      supportedTypes: ['aspectRatio', 'mode'],
+    },
+    customOptions: {
+      aspectRatio: [
+        { value: '16:9', label: 'advanced_options.aspect_ratio_options.16_9' },
+        { value: '9:16', label: 'advanced_options.aspect_ratio_options.9_16' },
+        { value: '1:1', label: 'advanced_options.aspect_ratio_options.1_1' },
+      ],
+      mode: [
+        { value: '720p', label: 'advanced_options.resolution_options.720p' },
+        { value: '1080p', label: 'advanced_options.resolution_options.1080p' },
+      ],
+    },
+  },
+];

@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Veo 3.1 - AI Video Generator | Marble AI",
+    "description": "Veo 3.1 by Google DeepMind. Upgraded AI video model for realistic motion generation, extended clip duration, multi-image reference control, and synchronized audio output in native 1080p."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Veo 3.1",
+        "highlight_text": "Veo 3.1",
+        "description": "Google DeepMind's upgraded AI video model. Realistic motion generation with extended clip duration, multi-image reference control, and synchronized audio.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Veo 3.1",
+        "highlight_text": "Veo 3.1",
+        "label": "Model Overview",
+        "description": "Veo 3.1 is Google DeepMind's upgraded AI video model for realistic motion generation, extended clip duration, multi-image reference control, and synchronized audio output in native 1080p resolution.",
+        "image": {
+          "src": "/imgs/models/video/veo-3-1.png",
+          "alt": "Veo 3.1"
+        },
+        "items": [
+          {
+            "title": "Realistic Motion",
+            "description": "Generate videos with natural and realistic motion dynamics.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Extended Duration",
+            "description": "Create longer video clips with consistent quality throughout.",
+            "icon": "RiTimeLine"
+          },
+          {
+            "title": "Multi-Image Reference",
+            "description": "Use multiple reference images to guide video generation.",
+            "icon": "RiGalleryLine"
+          },
+          {
+            "title": "Synchronized Audio",
+            "description": "Native audio output synchronized with video content.",
+            "icon": "RiVolumeUpLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Veo 3.1 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with realistic motion.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Audio Generation",
+            "description": "Generate synchronized audio including speech and ambient sounds.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Native 1080p",
+            "description": "High-resolution video output in native 1080p quality.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Veo 3.1.",
+        "items": [
+          {
+            "title": "Film Production",
+            "description": "Create cinematic content with realistic motion and audio.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with professional quality.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Veo 3.1.",
+        "items": [
+          {
+            "title": "What is Veo 3.1?",
+            "description": "Veo 3.1 is Google DeepMind's upgraded AI video model for realistic motion generation with synchronized audio."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Veo 3.1 supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes."
+          },
+          {
+            "title": "Who created Veo 3.1?",
+            "description": "Veo 3.1 is created by Google DeepMind, a leading AI research laboratory."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Veo 3.1 excels at realistic motion generation, extended duration, and multi-image reference control."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Veo 3.1 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What resolution does it output?",
+            "description": "Veo 3.1 outputs native 1080p high-resolution videos with synchronized audio."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Veo 3.1?",
+        "highlight_text": "Veo 3.1",
+        "description": "Experience Google DeepMind's upgraded AI video generation. Create realistic videos with synchronized audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import { ap } from 'node_modules/better-auth/dist/shared/better-auth.tThsKLej';
+
 import packageJson from '../../package.json';
 
 // Note: Environment variables are loaded via dotenv-cli in package.json scripts.
@@ -38,4 +40,6 @@ export const envConfigs: ConfigMap = {
   version: packageJson.version,
   locale_detect_enabled:
     process.env.NEXT_PUBLIC_LOCALE_DETECT_ENABLED ?? 'false',
+  kie_webhook_secret: process.env.KIE_WEBHOOK_SECRET ?? '',
+  api_test_mode: process.env.API_TEST_MODE ?? 'false',
 };

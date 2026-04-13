@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Seedance 2.0 - AI Video Generator | Marble AI",
+    "description": "Seedance 2.0 by ByteDance. Multimodal AI video model that generates consistent, cinematic videos with strong multi-shot consistency and native audio. Supports text-to-video, image-to-video, and video-to-video."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Seedance 2.0",
+        "highlight_text": "Seedance 2.0",
+        "description": "ByteDance's multimodal AI video model. Generate consistent, cinematic videos with strong multi-shot consistency and native audio using text, image, video, and audio references.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Seedance 2.0",
+        "highlight_text": "Seedance 2.0",
+        "label": "Model Overview",
+        "description": "Seedance 2.0 is ByteDance's latest multimodal AI video generation model. It excels at creating cinematic videos with strong multi-shot consistency and native audio synchronization, supporting multiple input modalities including text, images, video, and audio references.",
+        "image": {
+          "src": "/imgs/models/video/seedance-2-0.mp4",
+          "alt": "Seedance 2.0"
+        },
+        "items": [
+          {
+            "title": "Multimodal Input",
+            "description": "Supports text, image, video, and audio references for versatile video generation workflows.",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "Multi-Shot Consistency",
+            "description": "Strong consistency across multiple shots for cohesive visual storytelling.",
+            "icon": "RiLinksLine"
+          },
+          {
+            "title": "Native Audio",
+            "description": "Generate videos with synchronized speech, ambient sound, and background music.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Cinematic Quality",
+            "description": "Professional-grade cinematic visuals with advanced camera control.",
+            "icon": "RiMovieLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Seedance 2.0 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with cinematic quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Audio Reference",
+            "description": "Use audio references to guide video generation with synchronized sound.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Seedance 2.0.",
+        "items": [
+          {
+            "title": "Marketing Videos",
+            "description": "Create engaging marketing content with cinematic quality and native audio.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Creative Storytelling",
+            "description": "Bring stories to life with multi-shot cinematic sequences.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Seedance 2.0.",
+        "items": [
+          {
+            "title": "What is Seedance 2.0?",
+            "description": "Seedance 2.0 is ByteDance's multimodal AI video generation model that creates cinematic videos with strong multi-shot consistency and native audio using text, image, video, and audio references."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Seedance 2.0 supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes, along with audio reference capabilities."
+          },
+          {
+            "title": "Who created Seedance 2.0?",
+            "description": "Seedance 2.0 is created by ByteDance, the company behind TikTok and other popular video platforms."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Seedance 2.0 excels at multi-shot consistency, native audio generation, and multimodal input support, making it ideal for professional video production."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Seedance 2.0 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "What video quality can I expect?",
+            "description": "Seedance 2.0 generates high-resolution videos up to 1080p with cinematic quality and professional-grade visuals."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Seedance 2.0?",
+        "highlight_text": "Seedance 2.0",
+        "description": "Experience ByteDance's multimodal AI video generation. Create cinematic videos with native audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

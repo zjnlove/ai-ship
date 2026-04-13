@@ -4,6 +4,7 @@ import {
   UpdateAITask,
   updateAITaskById,
 } from '@/shared/models/ai_task';
+import { getAllConfigs } from '@/shared/models/config';
 import { getUserInfo } from '@/shared/models/user';
 import { getAIService } from '@/shared/services/ai';
 
@@ -28,6 +29,17 @@ export async function POST(req: Request) {
       return respErr('no permission');
     }
 
+    // 获取taskResult,判断是否为转存后的链接
+    // const configs = await getAllConfigs();
+    // const r2_domain: string = configs.r2_domain || '';
+    // console.log(
+    //   `[${new Date().toLocaleTimeString()}] r2_domain=========`,
+    //   r2_domain
+    // );
+    // const alreadySaved = task.taskInfo?.includes(r2_domain) === true;
+    // if (alreadySaved) {
+    //   return respData(task);
+    // } else {
     const aiService = await getAIService();
     const aiProvider = aiService.getProvider(task.provider);
     if (!aiProvider) {
@@ -36,6 +48,7 @@ export async function POST(req: Request) {
 
     const result = await aiProvider?.query?.({
       taskId: task.taskId,
+      aiTaskId: taskId,
       mediaType: task.mediaType,
       model: task.model,
     });
@@ -51,6 +64,7 @@ export async function POST(req: Request) {
       taskResult: result.taskResult ? JSON.stringify(result.taskResult) : null,
       creditId: task.creditId, // credit consumption record id
     };
+
     if (updateAITask.taskInfo !== task.taskInfo) {
       await updateAITaskById(task.id, updateAITask);
     }
@@ -60,6 +74,7 @@ export async function POST(req: Request) {
     task.taskResult = updateAITask.taskResult || null;
 
     return respData(task);
+    // }
   } catch (e: any) {
     console.log('ai query failed', e);
     return respErr(e.message);

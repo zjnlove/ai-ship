@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Kling 2.6 Motion Control - AI Video Generator | Marble AI",
+    "description": "Kling 2.6 Motion Control by Kling AI. Performance-driven image-to-video model that transfers real human motion, gestures, and expressions from reference video to character images."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Kling 2.6 Motion Control",
+        "highlight_text": "Kling 2.6 Motion Control",
+        "description": "Kling AI's performance-driven motion model. Transfer real human motion, gestures, and expressions from reference video to character images.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Kling 2.6 Motion Control",
+        "highlight_text": "Kling 2.6 Motion Control",
+        "label": "Model Overview",
+        "description": "Kling 2.6 Motion Control is Kling AI's performance-driven image-to-video model that transfers real human motion, gestures, and expressions from reference video to character images with stable timing and realism.",
+        "image": {
+          "src": "/imgs/models/video/kling-2-6-motion-control.mp4",
+          "alt": "Kling 2.6 Motion Control"
+        },
+        "items": [
+          {
+            "title": "Human Motion Transfer",
+            "description": "Transfer real human motion and gestures to character images.",
+            "icon": "RiRunLine"
+          },
+          {
+            "title": "Expression Capture",
+            "description": "Capture and transfer facial expressions from reference videos.",
+            "icon": "RiEmotionLine"
+          },
+          {
+            "title": "Stable Timing",
+            "description": "Maintain stable timing and realistic motion dynamics.",
+            "icon": "RiTimeLine"
+          },
+          {
+            "title": "Performance Driven",
+            "description": "Performance-driven animation with natural human movement.",
+            "icon": "RiFilmLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Kling 2.6 Motion Control a leading motion transfer model.",
+        "items": [
+          {
+            "title": "Image To Video",
+            "description": "Transform static character images into animated videos with motion transfer.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Reference Video",
+            "description": "Use reference videos to guide motion and movement patterns.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Gesture Transfer",
+            "description": "Transfer hand gestures and body movements accurately.",
+            "icon": "RiHandHeartLine"
+          },
+          {
+            "title": "Realistic Animation",
+            "description": "Natural and realistic animation with human-like motion.",
+            "icon": "RiUserLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Kling 2.6 Motion Control.",
+        "items": [
+          {
+            "title": "Character Animation",
+            "description": "Animate character illustrations with realistic human movements.",
+            "icon": "RiUserLine"
+          },
+          {
+            "title": "Virtual Performers",
+            "description": "Create virtual performers with human-like motion and expressions.",
+            "icon": "RiStarLine"
+          },
+          {
+            "title": "Dance Videos",
+            "description": "Generate dance videos by transferring choreography to characters.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Create engaging animated content for social platforms.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Marketing",
+            "description": "Produce animated marketing content with human motion.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Entertainment",
+            "description": "Create entertaining animated videos with dynamic characters.",
+            "icon": "RiMovieLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Kling 2.6 Motion Control.",
+        "items": [
+          {
+            "title": "What is Kling 2.6 Motion Control?",
+            "description": "Kling 2.6 Motion Control is Kling AI's motion transfer model that transfers real human motion and expressions to character images."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Kling 2.6 Motion Control specializes in Image To Video generation with motion transfer from reference videos."
+          },
+          {
+            "title": "Who created Kling 2.6 Motion Control?",
+            "description": "Kling 2.6 Motion Control is created by Kling AI, a leading AI video generation company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Kling 2.6 Motion Control excels at transferring real human motion, gestures, and expressions with stable timing."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Kling 2.6 Motion Control through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How does motion transfer work?",
+            "description": "Upload a character image and a reference video of human motion, and the model will animate the character with those movements."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Kling 2.6 Motion Control?",
+        "highlight_text": "Kling 2.6 Motion Control",
+        "description": "Experience Kling AI's motion transfer. Animate characters with real human motion.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

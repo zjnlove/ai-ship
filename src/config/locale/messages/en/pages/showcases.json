@@ -1,148 +1,329 @@
 {
   "metadata": {
     "title": "Showcases",
-    "description": "Awesome projects built with ShipAny"
+    "description": "Awesome projects built with Marble AI"
   },
   "page": {
     "title": "Showcases",
     "sections": {
       "showcases": {
         "id": "showcases",
-        "title": "AI SaaS Startups built with ShipAny",
-        "description": "Easy to use and fast to ship.",
+        "title": "Creative Projects Powered by Marble AI",
+        "description": "Discover amazing content created with our cutting-edge AI models.",
         "groups": [
           {
             "name": "all",
             "title": "All"
           },
           {
-            "name": "ai-chatbot",
-            "title": "AI Chatbot"
+            "name": "qwen",
+            "title": "Qwen (Alibaba)"
           },
           {
-            "name": "ai-image",
-            "title": "AI Image"
+            "name": "google",
+            "title": "Google"
           },
           {
-            "name": "ai-video",
-            "title": "AI Video"
+            "name": "openai",
+            "title": "OpenAI"
           },
           {
-            "name": "ai-audio",
-            "title": "AI Audio"
+            "name": "black-forest-labs",
+            "title": "Black Forest Labs"
           },
           {
-            "name": "ai-music",
-            "title": "AI Music"
+            "name": "bytedance",
+            "title": "ByteDance"
           },
           {
-            "name": "ai-coding",
-            "title": "AI Coding"
+            "name": "kling",
+            "title": "Kling"
           },
           {
-            "name": "other",
-            "title": "Other"
+            "name": "wan",
+            "title": "Wan (Alibaba)"
+          },
+          {
+            "name": "grok",
+            "title": "Grok (xAI)"
+          },
+          {
+            "name": "ideogram",
+            "title": "Ideogram"
+          },
+          {
+            "name": "hailuo",
+            "title": "Hailuo"
+          },
+          {
+            "name": "runway",
+            "title": "Runway"
           }
         ],
         "items": [
           {
-            "title": "ThinkAny",
-            "description": "AI Search Engine",
-            "url": "https://thinkany.ai",
+            "title": "Qwen Image 2.0",
+            "description": "Advanced AI image generation with superior quality",
+            "url": "/image-models/qwen-image-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/7.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/qwen-image-2.png",
+              "alt": "Qwen Image 2.0"
             },
-            "group": "ai-chatbot"
+            "group": "qwen"
           },
           {
-            "title": "HeyBeauty",
-            "description": "AI Virtual Try On",
-            "url": "https://heybeauty.ai",
+            "title": "Qwen Image",
+            "description": "High-quality AI image generation",
+            "url": "/image-models/qwen-image",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/5.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/qwen-image.png",
+              "alt": "Qwen Image"
             },
-            "group": "ai-image"
+            "group": "qwen"
           },
           {
-            "title": "AI Wallpaper",
-            "description": "AI Wallpaper Generator",
-            "url": "https://aiwallpaper.shop",
+            "title": "Qwen Image Edit",
+            "description": "AI-powered image editing and enhancement",
+            "url": "/image-models/qwen-image-edit",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/1.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/qwen-image-edit.png",
+              "alt": "Qwen Image Edit"
             },
-            "group": "ai-image"
+            "group": "qwen"
           },
           {
-            "title": "AI Cover",
-            "description": "AI Cover Generator",
-            "url": "https://aicover.design",
+            "title": "Nano Banana Pro",
+            "description": "Professional AI image generation with hot features",
+            "url": "/image-models/nano-banana-pro",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/2.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/nano-banana-pro.png",
+              "alt": "Nano Banana Pro"
             },
-            "group": "ai-image"
+            "group": "google"
           },
           {
-            "title": "GPTs Works",
-            "description": "GPTs Directory",
-            "url": "https://gpts.works",
+            "title": "Nano Banana 2",
+            "description": "Next-generation AI image generation",
+            "url": "/image-models/nano-banana-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/3.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/nano-banana-2.png",
+              "alt": "Nano Banana 2"
             },
-            "group": "other"
+            "group": "google"
           },
           {
-            "title": "Melodisco",
-            "description": "AI Music Player",
-            "url": "https://melodis.co",
+            "title": "Imagen 4",
+            "description": "Google's state-of-the-art text-to-image generation model",
+            "url": "/image-models/imagen-4",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/4.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/imagen-4.webp",
+              "alt": "Imagen 4"
             },
-            "group": "ai-music"
+            "group": "google"
           },
           {
-            "title": "Pagen",
-            "description": "AI Landing Page Generator",
-            "url": "https://pagen.so",
+            "title": "GPT Image 1.5",
+            "description": "OpenAI's flagship image generation model",
+            "url": "/image-models/gpt-image-1.5",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/6.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/gpt-image-1.5.webp",
+              "alt": "GPT Image 1.5"
             },
-            "group": "ai-coding"
+            "group": "openai"
           },
           {
-            "title": "SoraFM",
-            "description": "AI Video Generator",
-            "url": "https://sorafm.trys.ai",
+            "title": "4o Image",
+            "description": "OpenAI's latest AI image generation model",
+            "url": "/image-models/4o-image",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/8.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/4o-image.png",
+              "alt": "4o Image"
             },
-            "group": "ai-video"
+            "group": "openai"
           },
           {
-            "title": "PodLM",
-            "description": "AI Podcast Generator",
-            "url": "https://podlm.ai",
+            "title": "FLUX.2",
+            "description": "Cutting-edge AI image generation",
+            "url": "/image-models/flux-2",
             "target": "_blank",
             "image": {
-              "src": "/imgs/cases/9.png",
-              "alt": "showcases"
+              "src": "/imgs/models/image/flux-2.png",
+              "alt": "FLUX.2"
             },
-            "group": "ai-audio"
+            "group": "black-forest-labs"
+          },
+          {
+            "title": "Flux Kontext",
+            "description": "Context-aware AI image generation",
+            "url": "/image-models/flux-kontext",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/flux-kontext.png",
+              "alt": "Flux Kontext"
+            },
+            "group": "black-forest-labs"
+          },
+          {
+            "title": "Grok Imagine",
+            "description": "xAI's multimodal image and video generation model",
+            "url": "/image-models/grok-imagine",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/grok-imagine.png",
+              "alt": "Grok Imagine"
+            },
+            "group": "grok"
+          },
+          {
+            "title": "Ideogram V3",
+            "description": "Professional AI image generation",
+            "url": "/image-models/ideogram-v3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3.webp",
+              "alt": "Ideogram V3"
+            },
+            "group": "ideogram"
+          },
+          {
+            "title": "Ideogram V3 Reframe",
+            "description": "AI image generation with reframing",
+            "url": "/image-models/ideogram-v3-reframe",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/image/ideogram-v3-reframe.png",
+              "alt": "Ideogram V3 Reframe"
+            },
+            "group": "ideogram"
+          },
+          {
+            "title": "Seedance 2.0",
+            "description": "Latest AI video generation with new features",
+            "url": "/video-models/seedance-2-0",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/seedance-2-0.mp4",
+              "alt": "Seedance 2.0"
+            },
+            "group": "bytedance"
+          },
+          {
+            "title": "Seedance 1.5 Pro",
+            "description": "Professional AI video generation",
+            "url": "/video-models/seedance-1-5-pro",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/seedance-1-5-pro.mp4",
+              "alt": "Seedance 1.5 Pro"
+            },
+            "group": "bytedance"
+          },
+          {
+            "title": "Kling 3.0",
+            "description": "Advanced AI video generation technology",
+            "url": "/video-models/kling-3-0",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/kling-3-0.mp4",
+              "alt": "Kling 3.0"
+            },
+            "group": "kling"
+          },
+          {
+            "title": "Kling 2.6",
+            "description": "High-quality AI video generation",
+            "url": "/video-models/kling-2-6",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/kling-2-6.mp4",
+              "alt": "Kling 2.6"
+            },
+            "group": "kling"
+          },
+          {
+            "title": "Wan 2.6",
+            "description": "Alibaba's latest AI video model",
+            "url": "/video-models/wan-2-6",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/wan-2-6.mp4",
+              "alt": "Wan 2.6"
+            },
+            "group": "wan"
+          },
+          {
+            "title": "Wan 2.5",
+            "description": "Alibaba's cinematic AI video generation",
+            "url": "/video-models/wan-2-5",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/wan-2-5.mp4",
+              "alt": "Wan 2.5"
+            },
+            "group": "wan"
+          },
+          {
+            "title": "Veo 3.1",
+            "description": "Latest AI video generation model",
+            "url": "/video-models/veo-3-1",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/veo-3-1.png",
+              "alt": "Veo 3.1"
+            },
+            "group": "google"
+          },
+          {
+            "title": "Veo 3",
+            "description": "Advanced AI video generation",
+            "url": "/video-models/veo-3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/veo-3.mp4",
+              "alt": "Veo 3"
+            },
+            "group": "google"
+          },
+          {
+            "title": "Hailuo 2.3",
+            "description": "MiniMax's high-fidelity AI video generation model",
+            "url": "/video-models/hailuo-2-3",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/hailuo-2-3.mp4",
+              "alt": "Hailuo 2.3"
+            },
+            "group": "hailuo"
+          },
+          {
+            "title": "Hailuo 02",
+            "description": "MiniMax's advanced AI video generation model",
+            "url": "/video-models/hailuo-02",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/hailuo-02.mp4",
+              "alt": "Hailuo 02"
+            },
+            "group": "hailuo"
+          },
+          {
+            "title": "Runway Video Generation",
+            "description": "Runway AI's groundbreaking video generation",
+            "url": "/video-models/runway-video-generation",
+            "target": "_blank",
+            "image": {
+              "src": "/imgs/models/video/runway.webp",
+              "alt": "Runway Video Generation"
+            },
+            "group": "runway"
           }
         ]
       }

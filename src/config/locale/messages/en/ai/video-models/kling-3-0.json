@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Kling 3.0 - AI Video Generator | Marble AI",
+    "description": "Kling 3.0 by Kling AI. Video generation model that creates videos from text and images, supports multi-shot storytelling, and produces native audio with cinematic control up to 15 seconds."
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Kling 3.0",
+        "highlight_text": "Kling 3.0",
+        "description": "Kling AI's advanced video generation model. Create videos from text and images with multi-shot storytelling and native audio with cinematic control.",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "About Kling 3.0",
+        "highlight_text": "Kling 3.0",
+        "label": "Model Overview",
+        "description": "Kling 3.0 is Kling AI's latest video generation model that creates videos from text and images, supports multi-shot storytelling, and produces native audio with cinematic control up to 15 seconds.",
+        "image": {
+          "src": "/imgs/models/video/kling-3-0.mp4",
+          "alt": "Kling 3.0"
+        },
+        "items": [
+          {
+            "title": "Multi-Shot Storytelling",
+            "description": "Create cohesive narratives across multiple shots with consistent visuals.",
+            "icon": "RiFilmLine"
+          },
+          {
+            "title": "Native Audio",
+            "description": "Generate videos with synchronized speech, ambient sound, and music.",
+            "icon": "RiVolumeUpLine"
+          },
+          {
+            "title": "Cinematic Control",
+            "description": "Advanced camera movements and cinematic shot composition.",
+            "icon": "RiMovieLine"
+          },
+          {
+            "title": "15-Second Output",
+            "description": "Generate videos up to 15 seconds with professional quality.",
+            "icon": "RiTimeLine"
+          }
+        ]
+      },
+      "features": {
+        "id": "features",
+        "title": "Key Features",
+        "highlight_text": "Features",
+        "description": "Discover what makes Kling 3.0 a leading AI video generation model.",
+        "items": [
+          {
+            "title": "Text To Video",
+            "description": "Generate stunning videos from text descriptions with cinematic quality.",
+            "icon": "RiText"
+          },
+          {
+            "title": "Image To Video",
+            "description": "Transform static images into dynamic video content with natural motion.",
+            "icon": "RiImageLine"
+          },
+          {
+            "title": "Video To Video",
+            "description": "Edit and transform existing videos with AI-powered enhancement.",
+            "icon": "RiVideoLine"
+          },
+          {
+            "title": "Audio Generation",
+            "description": "Generate synchronized audio including speech and ambient sounds.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "1080p HD Output",
+            "description": "High-resolution video output up to 1080p with exceptional detail.",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "Commercial License",
+            "description": "Full commercial rights for all generated videos.",
+            "icon": "RiFileTextLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "Use Cases",
+        "highlight_text": "Use Cases",
+        "description": "Explore the diverse applications of Kling 3.0.",
+        "items": [
+          {
+            "title": "Storytelling",
+            "description": "Create multi-shot narratives with cinematic quality.",
+            "icon": "RiBookOpenLine"
+          },
+          {
+            "title": "Marketing Videos",
+            "description": "Produce engaging marketing content with native audio.",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "Social Media",
+            "description": "Generate viral-ready content for TikTok, Instagram, and YouTube.",
+            "icon": "RiShareLine"
+          },
+          {
+            "title": "Product Demos",
+            "description": "Showcase products with professional video presentations.",
+            "icon": "RiShoppingBagLine"
+          },
+          {
+            "title": "Music Videos",
+            "description": "Create music videos with synchronized audio and visuals.",
+            "icon": "RiMusicLine"
+          },
+          {
+            "title": "Educational Content",
+            "description": "Produce engaging educational videos with clear visuals.",
+            "icon": "RiGraduationCapLine"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "highlight_text": "FAQ",
+        "description": "Common questions about Kling 3.0.",
+        "items": [
+          {
+            "title": "What is Kling 3.0?",
+            "description": "Kling 3.0 is Kling AI's video generation model that creates videos from text and images with multi-shot storytelling and native audio."
+          },
+          {
+            "title": "What generation modes does it support?",
+            "description": "Kling 3.0 supports Text To Video (T2V), Image To Video (I2V), and Video To Video (V2V) generation modes."
+          },
+          {
+            "title": "Who created Kling 3.0?",
+            "description": "Kling 3.0 is created by Kling AI, a leading AI video generation company."
+          },
+          {
+            "title": "What makes it unique?",
+            "description": "Kling 3.0 excels at multi-shot storytelling, native audio generation, and cinematic control up to 15 seconds."
+          },
+          {
+            "title": "Can I use it commercially?",
+            "description": "Yes! All videos generated with Kling 3.0 through Marble AI come with full commercial rights."
+          },
+          {
+            "title": "How long can the videos be?",
+            "description": "Kling 3.0 can generate videos up to 15 seconds with professional quality and native audio."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to Try Kling 3.0?",
+        "highlight_text": "Kling 3.0",
+        "description": "Experience Kling AI's advanced video generation. Create cinematic videos with native audio.",
+        "buttons": [
+          {
+            "title": "Start Creating",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ]
+      }
+    }
+  }
+}

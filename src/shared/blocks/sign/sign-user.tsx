@@ -37,10 +37,12 @@ export function SignUser({
   isScrolled,
   signButtonSize = 'sm',
   userNav,
+  showCredits = false,
 }: {
   isScrolled?: boolean;
   signButtonSize?: 'default' | 'sm' | 'lg' | 'icon';
   userNav?: UserNav;
+  showCredits?: boolean;
 }) {
   const t = useTranslations('common.sign');
   const router = useRouter();
@@ -146,113 +148,137 @@ export function SignUser({
           <Loader2 className="size-4 animate-spin" />
         </div>
       ) : displayUser ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="relative h-10 w-10 rounded-full p-0"
-            >
-              <Avatar>
-                <AvatarImage
-                  src={displayUser.image || ''}
-                  alt={displayUser.name || ''}
-                />
-                <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {userNav?.show_name && (
-              <>
-                <DropdownMenuItem asChild>
-                  <Link
-                    className="w-full cursor-pointer"
-                    href="/settings/profile"
-                  >
-                    <User />
-                    {displayUser.name}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
-
-            {userNav?.show_credits && (
-              <>
-                <DropdownMenuItem asChild>
-                  <Link
-                    className="w-full cursor-pointer"
-                    href="/settings/credits"
-                  >
-                    <Coins />
-                    {t('credits_title', {
-                      credits: displayUser.credits?.remainingCredits || 0,
-                    })}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
-
-            {userNav?.items?.map((item: NavItem, idx: number) => (
-              <Fragment key={idx}>
-                <DropdownMenuItem asChild>
-                  <Link
-                    className="w-full cursor-pointer"
-                    href={item.url || ''}
-                    target={item.target || '_self'}
-                  >
-                    {item.icon && (
-                      <SmartIcon
-                        name={item.icon as string}
-                        className="h-4 w-4"
-                      />
-                    )}
-                    {item.title}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </Fragment>
-            ))}
-
-            {displayUser.isAdmin && (
-              <>
-                <DropdownMenuItem asChild>
-                  <Link className="w-full cursor-pointer" href="/admin">
-                    <LayoutDashboard />
-                    {t('admin_title')}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
-
-            {userNav?.show_sign_out && (
-              <DropdownMenuItem
-                className="w-full cursor-pointer"
-                onClick={() =>
-                  signOut({
-                    fetchOptions: {
-                      onSuccess: () => {
-                        router.push('/');
-                      },
-                    },
-                  })
-                }
+        <div className="flex items-center gap-4">
+          {showCredits && (
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-sm font-medium ${displayUser.credits?.remainingCredits && displayUser.credits.remainingCredits < 50 ? 'text-amber-600' : 'text-green-600'}`}
               >
-                <LogOut />
-                <span>{t('sign_out_title')}</span>
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                🪙 {displayUser.credits?.remainingCredits || 0} Credits
+              </span>
+              {displayUser.credits?.remainingCredits &&
+                displayUser.credits.remainingCredits < 100 && (
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="default"
+                    className="h-7 px-2 text-xs"
+                  >
+                    <Link href="/pricing" target="_blank">
+                      充值
+                    </Link>
+                  </Button>
+                )}
+            </div>
+          )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-10 w-10 rounded-full p-0"
+              >
+                <Avatar>
+                  <AvatarImage
+                    src={displayUser.image || ''}
+                    alt={displayUser.name || ''}
+                  />
+                  <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {userNav?.show_name && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      className="w-full cursor-pointer"
+                      href="/settings/profile"
+                    >
+                      <User />
+                      {displayUser.name}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+
+              {userNav?.show_credits && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      className="w-full cursor-pointer"
+                      href="/settings/credits"
+                    >
+                      <Coins />
+                      {t('credits_title', {
+                        credits: displayUser.credits?.remainingCredits || 0,
+                      })}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+
+              {userNav?.items?.map((item: NavItem, idx: number) => (
+                <Fragment key={idx}>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      className="w-full cursor-pointer"
+                      href={item.url || ''}
+                      target={item.target || '_self'}
+                    >
+                      {item.icon && (
+                        <SmartIcon
+                          name={item.icon as string}
+                          className="h-4 w-4"
+                        />
+                      )}
+                      {item.title}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </Fragment>
+              ))}
+
+              {displayUser.isAdmin && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link className="w-full cursor-pointer" href="/admin">
+                      <LayoutDashboard />
+                      {t('admin_title')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+
+              {userNav?.show_sign_out && (
+                <DropdownMenuItem
+                  className="w-full cursor-pointer"
+                  onClick={() =>
+                    signOut({
+                      fetchOptions: {
+                        onSuccess: () => {
+                          router.push('/');
+                        },
+                      },
+                    })
+                  }
+                >
+                  <LogOut />
+                  <span>{t('sign_out_title')}</span>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       ) : (
         <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
           <Button
             asChild
             size={signButtonSize}
             className={cn(
-              'border-foreground/10 ml-4 cursor-pointer ring-0',
+              'border-foreground/10 ml-4 cursor-pointer rounded-full ring-0',
               isScrolled && 'lg:hidden'
             )}
             onClick={() => setIsShowSignModal(true)}

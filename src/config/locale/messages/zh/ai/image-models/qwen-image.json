@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Qwen Image - AI 图像生成器和编辑器 | Marble AI",
+    "description": "阿里 Qwen 团队的 Qwen Image。使用多语言文本渲染和高级编辑功能生成和编辑照片级真实图像。支持文本转图像和图像转图像。"
+  },
+  "page": {
+    "sections": {
+      "hero": {
+        "title": "Qwen Image",
+        "highlight_text": "Qwen Image",
+        "description": "阿里强大的图像生成和编辑模型。使用多语言文本渲染和高级 AI 功能从文本创建照片级真实图像或转换现有视觉效果。",
+        "show_bg": false,
+        "className": "hero-custom"
+      },
+      "introduce": {
+        "block": "features-list",
+        "id": "introduce",
+        "title": "关于 Qwen Image",
+        "highlight_text": "Qwen Image",
+        "label": "模型概述",
+        "description": "Qwen Image API 为创作者、开发者和企业提供轻松生成和编辑照片级真实图像的能力，具有媲美顶级模型的强大编辑功能。",
+        "image": {
+          "src": "/imgs/models/image/qwen-image.png",
+          "alt": "Qwen Image"
+        },
+        "items": [
+          {
+            "title": "双生成模式",
+            "description": "支持文本转图像生成和图像转图像编辑，为各种创意工作流提供灵活性。",
+            "icon": "RiRobot2Line"
+          },
+          {
+            "title": "多语言文本渲染",
+            "description": "先进的文本渲染功能，支持多种语言，具有准确的字体再现和自然的文本放置。",
+            "icon": "RiText"
+          },
+          {
+            "title": "照片级真实质量",
+            "description": "生成具有卓越细节、自然光照和逼真纹理的惊艳照片级真实图像。",
+            "icon": "RiCameraLine"
+          },
+          {
+            "title": "高级编辑",
+            "description": "精确的图像编辑，可控制样式、内容和构图，同时保持视觉一致性。",
+            "icon": "RiImageEditLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "features": {
+        "id": "features",
+        "title": "核心功能",
+        "highlight_text": "功能",
+        "description": "探索 Qwen Image 成为图像生成和编辑强大选择的特点。",
+        "items": [
+          {
+            "title": "高质量输出",
+            "description": "为任何创意项目生成具有卓越细节和视觉吸引力的专业级图像。",
+            "icon": "RiHdLine"
+          },
+          {
+            "title": "样式多样性",
+            "description": "支持从照片级真实到艺术插图的多种艺术风格。",
+            "icon": "RiPaletteLine"
+          },
+          {
+            "title": "快速生成",
+            "description": "针对速度优化，几秒钟内即可获得结果，非常适合迭代创意工作流。",
+            "icon": "RiFlashlightLine"
+          },
+          {
+            "title": "API 集成",
+            "description": "为开发者提供无缝的 API 访问，将 Qwen Image 集成到应用程序和自动化工作流中。",
+            "icon": "RiCodeLine"
+          },
+          {
+            "title": "商业许可",
+            "description": "所有生成和编辑图像的完整商业权利，适合商业使用。",
+            "icon": "RiFileTextLine"
+          },
+          {
+            "title": "一致结果",
+            "description": "在多次生成中保持样式一致性，确保视觉项目的连贯性。",
+            "icon": "RiCheckDoubleLine"
+          }
+        ]
+      },
+      "use-cases": {
+        "id": "features",
+        "title": "使用案例",
+        "highlight_text": "使用案例",
+        "description": "探索 Qwen Image 在各行业中的多样化应用。",
+        "items": [
+          {
+            "title": "营销和广告",
+            "description": "创建引人注目的活动视觉效果、产品模型和专业质量的促销材料。",
+            "icon": "RiMegaphoneLine"
+          },
+          {
+            "title": "电商",
+            "description": "生成产品图像、生活方式照片和推动转化的分类横幅。",
+            "icon": "RiShoppingCartLine"
+          },
+          {
+            "title": "内容创作",
+            "description": "大规模为社交媒体、博客和数字内容制作引人入胜的视觉效果。",
+            "icon": "RiArticleLine"
+          },
+          {
+            "title": "平面设计",
+            "description": "使用 AI 生成的概念、背景和设计元素加速设计工作流。",
+            "icon": "RiPenNibLine"
+          },
+          {
+            "title": "游戏开发",
+            "description": "为游戏和互动媒体创建概念艺术、纹理和视觉资产。",
+            "icon": "RiGamepadLine"
+          },
+          {
+            "title": "教育",
+            "description": "生成教育插图、图表和视觉学习材料。",
+            "icon": "RiBookOpenLine"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "faq": {
+        "title": "常见问题",
+        "highlight_text": "常见问题",
+        "description": "关于 Qwen Image 的常见问题。",
+        "items": [
+          {
+            "title": "什么是 Qwen Image？",
+            "description": "Qwen Image 是阿里 Qwen 的强大图像生成和编辑模型，支持文本转图像生成和图像转图像编辑，具有多语言文本渲染功能。"
+          },
+          {
+            "title": "它支持哪些生成模式？",
+            "description": "Qwen Image 支持文本转图像（从文本描述生成图像）和图像转图像（编辑和转换现有图像）两种模式。"
+          },
+          {
+            "title": "它支持哪些语言？",
+            "description": "Qwen Image 支持多语言文本渲染，包括中文和英文，具有准确的字体再现和自然的文本放置。"
+          },
+          {
+            "title": "我可以商业使用吗？",
+            "description": "可以！通过 Marble AI 使用 Qwen Image 生成或编辑的所有图像都具有完整的商业权利。"
+          },
+          {
+            "title": "生成速度有多快？",
+            "description": "大多数图像在 5-15 秒内生成或编辑完成，具体取决于复杂性和分辨率要求。"
+          },
+          {
+            "title": "我可以期待什么样的图像质量？",
+            "description": "Qwen Image 生成高质量、照片级真实的图像，具有卓越的细节、自然光照和逼真纹理。"
+          }
+        ],
+        "className": "bg-muted/80"
+      },
+      "cta": {
+        "title": "准备好尝试 Qwen Image 了吗？",
+        "highlight_text": "Qwen Image",
+        "description": "体验阿里图像生成和编辑模型的强大功能。从文本创建惊艳视觉效果或转换现有图像。",
+        "buttons": [
+          {
+            "title": "开始创作",
+            "url": "#",
+            "icon": "Sparkles"
+          }
+        ],
+        "className": "bg-muted"
+      }
+    }
+  }
+}

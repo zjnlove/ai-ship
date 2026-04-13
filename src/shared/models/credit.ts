@@ -395,3 +395,13 @@ export async function grantCreditsForUser({
 
   return newCredit;
 }
+
+// update credit by id
+export async function updateCreditById(creditId: string, data: UpdateCredit) {
+  const [result] = await db()
+    .update(credit)
+    .set(data)
+    .where(eq(credit.id, creditId));
+
+  return result;
+}
