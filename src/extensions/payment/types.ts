@@ -139,6 +139,7 @@ export enum SubscriptionStatus {
   TRIALING = 'trialing',
   EXPIRED = 'expired',
   PAUSED = 'paused',
+  PENDING = 'pending',
 }
 
 export interface SubscriptionInfo {

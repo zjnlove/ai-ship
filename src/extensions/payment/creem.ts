@@ -493,6 +493,8 @@ export class CreemProvider implements PaymentProvider {
       subscriptionInfo.status = SubscriptionStatus.TRIALING;
     } else if (subscription.status === 'paused') {
       subscriptionInfo.status = SubscriptionStatus.PAUSED;
+    } else if (subscription.status === 'incomplete') {
+      subscriptionInfo.status = SubscriptionStatus.PENDING;
     } else {
       throw new Error(
         `Unknown Creem subscription status: ${subscription.status}`
